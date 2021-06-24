@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Router } from 'express'
 import { axiosRequestConfig } from '../configs/request.config'
 
-const externalApiEndpoint = 'https://lab42.idemo-ppc.com/awsapi/s3/json/event'
+const externalApiEndpoint = 'https://igot.in'
 
 export const externalEventsApi = Router()
 

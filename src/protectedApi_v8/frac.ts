@@ -140,7 +140,9 @@ fracApi.get('/:type/:key', async (req, res) => {
             res.status(400).send(ERROR.ERROR_NO_ORG_DATA)
             return
         }
+        // tslint:disable-next-line: no-useless-cast
         const key = req.params.key as string
+        // tslint:disable-next-line: no-useless-cast
         const type = req.params.type as string
         const searchBody = {
             childCount : true,

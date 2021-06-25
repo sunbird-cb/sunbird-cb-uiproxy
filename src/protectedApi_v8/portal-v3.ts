@@ -115,8 +115,10 @@ portalApi.get(spvDeptPath, async (req, res) => {
 portalApi.get(spvDeptPath + '/:deptId', async (req, res) => {
     try {
         const userId = req.headers.wid as string
+        // tslint:disable-next-line: no-useless-cast
         const deptId = req.params.deptId as string
-        let isUserInfoRequired = req.query.allUsers as boolean
+        // tslint:disable-next-line: no-useless-cast
+        let isUserInfoRequired = req.query.allUsers as unknown as boolean
         if (!isUserInfoRequired) {
             isUserInfoRequired = false
         }
@@ -171,8 +173,10 @@ portalApi.post(spvDeptPath, async (req, res) => {
 portalApi.delete(spvDeleteDepartment + '/:deptId', async (req, res) => {
     try {
         const userId = req.headers.wid as string
+        // tslint:disable-next-line: no-useless-cast
         const deptId = req.params.deptId as string
-        let isUserInfoRequired = req.query.allUsers as boolean
+        // tslint:disable-next-line: no-useless-cast
+        let isUserInfoRequired = req.query.allUsers as unknown as boolean
         if (!isUserInfoRequired) {
             isUserInfoRequired = false
         }
@@ -273,8 +277,9 @@ portalApi.get(cbcDeptPath, async (req, res) => {
 portalApi.get(cbcDeptPath + '/:deptId', async (req, res) => {
     try {
         const userId = req.headers.wid as string
+        // tslint:disable-next-line: no-useless-cast
         const deptId = req.params.deptId as string
-        let isUserInfoRequired = req.query.allUsers as boolean
+        let isUserInfoRequired = req.query.allUsers as unknown as boolean
         if (!isUserInfoRequired) {
             isUserInfoRequired = false
         }
@@ -333,6 +338,7 @@ portalApi.get('/deptRole', async (req, res) => {
 
 portalApi.get('/deptRole/:deptTypeName', async (req, res) => {
     try {
+        // tslint:disable-next-line: no-useless-cast
         const deptTypeName = req.params.deptTypeName as string
         const response = await axios.get(API_END_POINTS.roleByTypeApi(deptTypeName), {
             ...axiosRequestConfig,
@@ -447,6 +453,7 @@ portalApi.get(departmentType, async (req, res) => {
 
 portalApi.get(departmentType + '/:deptType', async (req, res) => {
     try {
+        // tslint:disable-next-line: no-useless-cast
         const deptType = req.params.deptType as string
         const response = await axios.get(API_END_POINTS.deptTypeByName(deptType))
         res.status(response.status).send(response.data)
@@ -462,6 +469,7 @@ portalApi.get(departmentType + '/:deptType', async (req, res) => {
 
 portalApi.get('/userrole/:userId', async (req, res) => {
     try {
+        // tslint:disable-next-line: no-useless-cast
         const userId = req.params.userId as string
         const response = await axios.get(API_END_POINTS.userRolesApi(userId))
         res.status(response.status).send(response.data)

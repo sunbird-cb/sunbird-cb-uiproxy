@@ -38,6 +38,7 @@ roleActivityApi.get('/:roleKey', async (req, res) => {
             res.status(400).send(ERROR.ERROR_NO_ORG_DATA)
             return
         }
+        // tslint:disable-next-line: no-useless-cast
         const roleKey = req.params.roleKey as string
         const searchBody = {
             childCount : true,

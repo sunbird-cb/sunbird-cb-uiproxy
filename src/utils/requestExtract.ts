@@ -45,9 +45,9 @@ export const extractUserToken = (req: IAuthorizedRequest) => {
 }
 
 export const extractAuthorizationFromRequest = (req: IAuthorizedRequest): string => {
-  const authorization = req.header('Authorization')
-
-  return authorization as string
+  const token = req.kauth && req.kauth.grant.access_token.token
+  // Bearer is added as other areas are using split function to get the token
+  return 'Bearer ' + token
 }
 export const extractUserTokenFromRequest = (req: IAuthorizedRequest): string => {
   const xAuthorization = req.header('X-Authenticated-User-Token')

@@ -32,6 +32,29 @@ proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
 
 // tslint:disable-next-line: no-any
 proxy.on('proxyRes', (proxyRes: any, req: any, _res: any, ) => {
+
+  // write user session with roles
+  if (req.originalUrl.includes('/user/v2/read')) {
+    // tslint:disable-next-line: no-any
+    proxyRes.on('data', (data: any) => {
+      if ((proxyRes.statusCode === 200 || proxyRes.statusCode === 201)) {
+        data = JSON.parse(data.toString('utf-8'))
+        const roles = data.result.response.roles
+        req.session.userId = data.result.response.id ? data.result.response.id : data.result.response.userId
+        req.session.userName = data.result.response.userName
+        req.session.userRoles = roles
+        // console.log(req);
+        // tslint:disable-next-line: only-arrow-functions
+        req.session.save(function(error: string) {
+          if (error) {
+            // tslint:disable-next-line: no-console
+            console.log(error)
+          }
+        })
+      }
+    })
+  }
+
   if (req.originalUrl.includes('/discussion/user/v1/create')) {
     const nodebb_auth_token = proxyRes.headers.nodebb_auth_token
     if (req.session) {

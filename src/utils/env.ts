@@ -78,6 +78,7 @@ export const CONSTANTS = {
   DISCUSSION_HUB_WRITE_API_UID: env.DISCUSSION_HUB_WRITE_API_UID || 1,
   OPEN_SABER_USER_REGISTRY_BASE: env.OPEN_SABER_USER_REGISTRY_BASE || 'http://localhost:8005',
   PID_API_BASE: env.PID_API_BASE || 'http://localhost:9200',
+  PORTAL_API_WHITELIST_CHECK: env.PORTAL_API_WHITELIST_CHECK || 'true',
   PLAYLISTV1_API_BASE: env.PLAYLISTV1_API_BASE || env.SBEXT_API_BASE_2,
   PLAYLIST_API_BASE: env.PLAYLIST_API_BASE || env.SBEXT_API_BASE,
   // tslint:disable-next-line:ban
@@ -130,7 +131,7 @@ export const CONSTANTS = {
   DISCUSSION_CATEGORY_LIST: env.DISCUSSION_CATEGORY_LIST || 'cid[]=5&cid[]=6&cid[]=8&cid[]=9&cid[]=10&cid[]=11&cid[]=12&cid[]=13',
   WORKFLOW_HANDLER_SERVICE_API_BASE: env.WORKFLOW_HANDLER_SERVICE_API_BASE || 'http://localhost:5099',
   SUNBIRD_PROXY_URL: env.SUNBIRD_PROXY_URL || 'https://igot-sunbird.idc.tarento.com/apis/proxies/v8/action',
-  SUNBIRD_PROXY_API_BASE: env.SUNBIRD_PROXY_API_BASE || 'https://igot-sunbird.idc.tarento.com/api',
+  SUNBIRD_PROXY_API_BASE: env.SUNBIRD_PROXY_API_BASE || 'https://igot-dev.in/api',
   SCORING_SERVICE_API_BASE: env.SCORING_SERVICE_API_BASE || 'http://localhost:7014',
   // tslint:disable-next-line:max-line-length
   SB_API_KEY: env.SB_API_KEY || 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJRekw4VVA1dUtqUFdaZVpMd1ZtTFJvNHdqWTg2a2FrcSJ9.TPjV0xLacSbp3FbJ7XeqHoKFN35Rl4YHx3DZNN9pm0o',

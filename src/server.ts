@@ -21,6 +21,8 @@ import { logInfo, logSuccess } from './utils/logger'
 const cookieParser = require('cookie-parser')
 const healthcheck = require('express-healthcheck')
 
+import { apiWhiteListLogger } from './utils/apiWhiteList'
+
 function haltOnTimedOut(req: Express.Request, _: Express.Response, next: NextFunction) {
   if (!req.timedout) {
     next()
@@ -37,8 +39,12 @@ export class Server {
   protected app = express()
   private keycloak?: CustomKeycloak
   private constructor() {
+    const sessionConfig = getSessionConfig()
+    this.app.use(expressSession(sessionConfig))
+
+    this.app.all('*', apiWhiteListLogger())
     this.setCookie()
-    this.setKeyCloak()
+    this.setKeyCloak(sessionConfig)
     this.authoringProxies()
     this.configureMiddleware()
     this.servePublicApi()
@@ -116,10 +122,9 @@ export class Server {
     )
     this.app.use(haltOnTimedOut)
   }
-  private setKeyCloak() {
-    const sessionConfig = getSessionConfig()
+  // tslint:disable-next-line: no-any
+  private setKeyCloak(sessionConfig: any) {
     this.keycloak = new CustomKeycloak(sessionConfig)
-    this.app.use(expressSession(sessionConfig))
     this.app.use(this.keycloak.middleware)
   }
 

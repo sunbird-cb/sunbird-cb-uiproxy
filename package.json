@@ -30,6 +30,7 @@
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "date-fns": "^2.0.1",
+    "dateformat": "^4.5.1",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.4",
     "express-healthcheck": "^0.1.0",
@@ -42,6 +43,8 @@
     "lodash": "^4.17.21",
     "morgan": "^1.9.1",
     "node-xlsx": "^0.15.0",
+    "path-to-regexp": "^6.2.0",
+    "pino": "^6.11.3",
     "request": "^2.88.0",
     "uuid": "^3.3.2"
   },

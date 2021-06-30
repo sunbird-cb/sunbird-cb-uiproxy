@@ -47,14 +47,16 @@ node('build-slave') {
                     archiveArtifacts "build_tag.txt" 
                     currentBuild.description = "${build_tag}"
                 }
-            
+              stage('Email'){
+  
+              email_notify()
+ 
+                }
         }
     }
     catch (err) {
         currentBuild.result = "FAILURE"
         throw err
     }
-    finally {
-        email_notify()
-    }
+
 }

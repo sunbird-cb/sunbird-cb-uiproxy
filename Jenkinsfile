@@ -13,7 +13,7 @@ node() {
                 checkout scm
                 }
         }
-            stage('docker-pre-build') {
+            stage('docker-pre-Build') {
               sh '''
               cd $docker_file_path
               pwd

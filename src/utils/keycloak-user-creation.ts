@@ -9,12 +9,16 @@ const CASSANDRA_KEYSPACE = CONSTANTS.CASSANDRA_KEYSPACE
 const defaultNewUserPassword = CONSTANTS.KC_NEW_USER_DEFAULT_PWD
 
 const cassandraClientOptions: cassandraDriver.ClientOptions = {
-    contactPoints: [CONSTANTS.CASSANDRA_IP],
+    contactPoints: getIPList(),
     keyspace: CASSANDRA_KEYSPACE,
     localDataCenter: 'datacenter1',
     queryOptions: {
         prepare: true,
     },
+}
+
+function getIPList() {
+    return CONSTANTS.CASSANDRA_IP.split(',')
 }
 
 const keycloakConfig = {

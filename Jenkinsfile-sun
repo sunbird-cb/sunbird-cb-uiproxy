@@ -47,11 +47,12 @@ node('build-slave') {
                     archiveArtifacts "build_tag.txt" 
                     currentBuild.description = "${build_tag}"
                 }
-            
+
         }
     }
     catch (err) {
         currentBuild.result = "FAILURE"
         throw err
     }
+
 }

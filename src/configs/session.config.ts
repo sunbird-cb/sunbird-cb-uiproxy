@@ -6,12 +6,17 @@ import { CONSTANTS } from '../utils/env'
 let sessionConfig: expressSession.SessionOptions
 
 const cassandraClientOptions: cassandraDriver.ClientOptions = {
-  contactPoints: [CONSTANTS.CASSANDRA_IP],
+  contactPoints: getIPList(),
   keyspace: 'portal',
   queryOptions: {
     prepare: true,
   },
 }
+
+function getIPList() {
+  return CONSTANTS.CASSANDRA_IP.split(',')
+}
+
 if (
   CONSTANTS.IS_CASSANDRA_AUTH_ENABLED &&
   CONSTANTS.CASSANDRA_USERNAME &&

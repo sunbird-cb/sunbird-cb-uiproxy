@@ -4,12 +4,12 @@ import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
 import { logError } from '../utils/logger'
 import { ERROR } from '../utils/message'
-import { extractUserIdFromRequest } from '../utils/requestExtract'
+import { extractUserIdFromRequest, extractUserToken } from '../utils/requestExtract'
 
 const API_END_POINTS = {
   addTemplate: `https://igot-dev.in/api/course/batch/cert/v1/template/add`,
-  autoenrollment: (userId: string, courseId: string) => `${CONSTANTS.COHORTS_API_BASE}/v1/autoenrollment/${userId}/${courseId}`,
-  cohorts: `${CONSTANTS.COHORTS_API_BASE}/v2/resources`,
+  autoenrollment: `${CONSTANTS.KONG_API_BASE}/v1/autoenrollment`,
+  cohorts: `${CONSTANTS.KONG_API_BASE}/v2/resources`,
   downloadCert: (certId: string) => `https://igot-dev.in/api/certreg/v2/certs/download/${certId}`,
   groupCohorts: (groupId: number) =>
     `${CONSTANTS.USER_PROFILE_API_BASE}/groups/${groupId}/users `,
@@ -51,14 +51,16 @@ cohortsApi.get('/:cohortType/:contentId', async (req, res) => {
       const userList = await getAuthorsDetails(host, auth, contentId)
       res.status(200).send(userList)
     } else {
-      const url = `${API_END_POINTS.cohorts}/${contentId}/user/${extractUserIdFromRequest(
-        req
-      )}/cohorts/${cohortType}`
+      const url = `${API_END_POINTS.cohorts}/user/cohorts/${cohortType}`
       const response = await axios({
         ...axiosRequestConfig,
         headers: {
-          Authorization: auth,
+          Authorization: CONSTANTS.SB_API_KEY,
+          resourceId: contentId,
           rootOrg: rootOrgValue,
+          userUUID: extractUserIdFromRequest(req),
+          // tslint:disable-next-line: no-duplicate-string
+          'x-authenticated-user-token': extractUserToken(req),
         },
         method: 'GET',
         url,
@@ -144,12 +146,15 @@ cohortsApi.get('/user/autoenrollment/:courseId', async (req, res) => {
     const courseId = req.params.courseId
     const wid = req.headers.wid as string
     const rootOrgValue = req.headers.rootorg
-    const auth = req.header('Authorization') as string
-    const response = await axios.get(API_END_POINTS.autoenrollment(wid, courseId), {
+    const response = await axios.get(API_END_POINTS.autoenrollment, {
       ...axiosRequestConfig,
       headers: {
-        Authorization: auth,
+        Authorization: CONSTANTS.SB_API_KEY,
+        courseId,
         rootOrg: rootOrgValue,
+        userUUID: wid,
+        // tslint:disable-next-line: no-duplicate-string
+        'x-authenticated-user-token': extractUserToken(req),
       },
     })
     res.status(response.status).send(response.data)
@@ -199,7 +204,7 @@ cohortsApi.post('/course/batch/cert/issue', async (req, res) => {
       headers: {
         Authorization: CONSTANTS.CERT_AUTH_TOKEN,
         /* tslint:disable-next-line */
-        'x-authenticated-user-token': token,
+        'x-authenticated-user-token' : token,
       },
     })
 
@@ -225,7 +230,7 @@ cohortsApi.get('/course/batch/cert/download/:certId', async (req, res) => {
       headers: {
         Authorization: CONSTANTS.CERT_AUTH_TOKEN,
         /* tslint:disable-next-line */
-        'x-authenticated-user-token': token,
+        'x-authenticated-user-token' : token,
       },
     })
 

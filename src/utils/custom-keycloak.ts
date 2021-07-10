@@ -3,7 +3,9 @@ import expressSession from 'express-session'
 import keycloakConnect from 'keycloak-connect'
 import { getKeycloakConfig } from '../configs/keycloak.config'
 import { CONSTANTS } from './env'
-import { logInfo } from './logger'
+import { logError, logInfo } from './logger'
+import { PERMISSION_HELPER } from './permissionHelper'
+const async = require('async')
 
 const composable = require('composable-middleware')
 
@@ -28,7 +30,7 @@ export class CustomKeycloak {
     const middleware = composable(
       keycloak.middleware({
         admin: '/callback',
-        logout: '/logout',
+        logout: '/reset',
       })
     )
     middleware(req, res, next)
@@ -50,10 +52,37 @@ export class CustomKeycloak {
       this.multiTenantKeycloak.get('common')) as keycloakConnect
   }
 
-  authenticated = () => {
-    logInfo(`${process.pid}: User authenticated`)
+  // tslint:disable-next-line: no-any
+  authenticated = async (request: any) => {
+    // console.log('Step 3: authenticated function')
+    try {
+      const userId = request.kauth.grant.access_token.content.sub.split(':')
+      request.session.userId = userId[userId.length - 1]
+    } catch (err) {
+      logError('userId conversation error' + request.kauth.grant.access_token.content.sub)
+    }
+    const postLoginRequest = []
+    // tslint:disable-next-line: no-any
+    postLoginRequest.push((callback: any) => {
+      // console.log('in pus')
+      PERMISSION_HELPER.getCurrentUserRoles(request, callback)
+    })
+
+    // tslint:disable-next-line: no-any
+    async.series(postLoginRequest, (err: any) =>  {
+      if (err) {
+        logError('error loggin in user')
+      } else {
+        logInfo(`${process.pid}: User authenticated`)
+      }
+    })
   }
-  deauthenticated = () => {
+
+  // tslint:disable-next-line: no-any
+  deauthenticated = (request: any) => {
+    // console.log('De')
+    delete request.session.userRoles
+    delete request.session.userId
     logInfo(`${process.pid}: User Deauthenticated`)
   }
 

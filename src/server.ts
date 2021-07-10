@@ -41,7 +41,6 @@ export class Server {
   private constructor() {
     const sessionConfig = getSessionConfig()
     this.app.use(expressSession(sessionConfig))
-
     this.app.all('*', apiWhiteListLogger())
     this.setCookie()
     this.setKeyCloak(sessionConfig)

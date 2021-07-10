@@ -5,7 +5,6 @@ const dateFormat        = require('dateformat')
 
 import { NextFunction, Request, Response } from 'express'
 import { CONSTANTS } from './env'
-import { pino } from './fileLogger'
 import { logError, logInfo } from './logger'
 import { API_LIST } from './whitelistApis'
 
@@ -136,6 +135,33 @@ const respond403 = (req: Request, res: Response) => {
     res.end()
 }
 
+const respond419 = (req: Request, res: Response) => {
+    const REQ_URL = req.path
+    const err = ({ msg: 'API WHITELIST :: Unauthorized access for API [ ' + REQ_URL + ' ]', url: REQ_URL })
+    logError(err.msg)
+    res.status(419)
+    res.send(
+    {
+        id: 'api.error',
+        ver: '1.0',
+        // tslint:disable-next-line: object-literal-sort-keys
+        ts: dateFormat(new Date(), 'yyyy-mm-dd HH:MM:ss:lo'),
+        params:
+        {
+            resmsgid: uuidv1(),
+            // tslint:disable-next-line: object-literal-sort-keys
+            msgid: null,
+            status: 'failed',
+            err: 'UNAUTHORIZED_ERROR',
+            errmsg: 'UNAUTHORIZED: Access is denied',
+        },
+        responseCode: 'UNAUTHORIZED',
+        redirectUrl: redirectToLogin(req),
+        result: {},
+    })
+    res.end()
+}
+
 /**
  * @description - Function to check whether
  * 1. Incoming API is whitelisted (or) not
@@ -195,38 +221,32 @@ export const isAllowed = () => {
         }
     }
 }
+const redirectToLogin = (req: Request) => {
+    const redirectUrl = 'apis/protected/v8/user/resource'
+    return `https://${req.get('host')}/${redirectUrl}` // 'http://localhost:3003/protected/v8/user/resource/'
+}
 /**
  * This function is used for checking whether
  */
 export function apiWhiteListLogger() {
-    return (req: Request, _res: Response, next: NextFunction) => {
+    return (req: Request, res: Response, next: NextFunction) => {
         if (req.path === '/' || checkIsStaticRoute(req.path)) {
             next()
+            return
+        }
+        const REQ_URL = req.path
+        if (!_.includes(REQ_URL, '/resource') && (req.session)) {
+            if (!('userRoles' in req.session) || (('userRoles' in req.session) && (req.session.userRoles.length === 0))) {
+                // console.log('Session not there: In If')
+                logError('Portal_API_WHITELIST_LOGGER: User needs to authenticated themselves')
+                respond419(req, res)
+            } else {
+                // Pattern match for URL
+                next()
+                logInfo('In WhilteList Call========' + REQ_URL)
+            }
         } else {
-            let REQ_URL = req.path
-            // Pattern match for URL
-            // tslint:disable-next-line: no-any
-            _.forEach(API_LIST.URL_PATTERN, (url: any) => {
-                const regExp = pathToRegexp(url)
-                if (regExp.test(REQ_URL)) {
-                    REQ_URL = url
-                    return false
-                } else {
-                    return true
-                }
-            })
-
-            pino.info('In WhilteList Call========' + REQ_URL)
             next()
-
-            // Is API whitelisted ?
-            // if (_.get(API_LIST.URL, REQ_URL)) {
-            //     next();
-            // } else {
-            //     // If API is not whitelisted
-            //     logInfo('Portal_API_WHITELIST_LOGGER: URL not whitelisted');
-            //     respond403(req, res);
-            // }
         }
     }
 }

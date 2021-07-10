@@ -1,5 +1,5 @@
 const env = process.env
-const HTTPS_HOST = env.HTTPS_HOST || 'http://localhost'
+const HTTPS_HOST = env.HTTPS_HOST || 'https://igot-dev.in'
 export const CONSTANTS = {
   ACCESS_CONTROL_API_BASE: env.ACCESS_CONTROL_API_BASE || env.SBEXT_API_BASE,
   ANALYTICS_TIMEOUT: env.ANALYTICS_TIMEOUT || 10000,
@@ -62,7 +62,7 @@ export const CONSTANTS = {
   LIKE_API_BASE: env.LIKE_API_BASE || env.SB_EXT_API_BASE_2,
   MULTI_TENANT_KEYCLOAK:
     env.MULTI_TENANT_KEYCLOAK ||
-    'igot;https://igot-sunbird.idc.tarento.com/auth;sunbird',
+    'igot,https://igot-dev.in/auth,sunbird',
   NAVIGATOR_JSON_HOST:
     env.NAVIGATOR_JSON_HOST || 'http://localhost:3007/web-hosted/navigator/json',
   NODE_API_BASE: env.NODE_API_BASE || 'http://localhost:5001',
@@ -79,6 +79,7 @@ export const CONSTANTS = {
   OPEN_SABER_USER_REGISTRY_BASE: env.OPEN_SABER_USER_REGISTRY_BASE || 'http://localhost:8005',
   PID_API_BASE: env.PID_API_BASE || 'http://localhost:9200',
   PORTAL_API_WHITELIST_CHECK: env.PORTAL_API_WHITELIST_CHECK || 'true',
+  PORTAL_REALM: env.PORTAL_REALM || 'sunbird',
   PLAYLISTV1_API_BASE: env.PLAYLISTV1_API_BASE || env.SBEXT_API_BASE_2,
   PLAYLIST_API_BASE: env.PLAYLIST_API_BASE || env.SBEXT_API_BASE,
   // tslint:disable-next-line:ban

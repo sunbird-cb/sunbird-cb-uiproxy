@@ -25,6 +25,13 @@ const ROLE = {
 export const API_LIST = {
     URL:
     {
+        '/protected/v8/user/details': {
+            checksNeeded: [],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/protected/v8/user/profileDetails/test': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -33,7 +40,21 @@ export const API_LIST = {
               ROLE.CONTENT_CREATOR,
             ],
         },
+        '/protected/v8/user/resource/': {
+            checksNeeded: [],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/proxies/v8/api/user/v2/read': {
+            checksNeeded: [],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/reset': {
             checksNeeded: [],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -45,5 +66,8 @@ export const API_LIST = {
     [
         '/proxies/v8/api/user/v2/read',
         '/protected/v8/user/profileDetails/test',
+        '/protected/v8/user/resource/',
+        '/protected/v8/user/details',
+        '/reset',
     ],
 }

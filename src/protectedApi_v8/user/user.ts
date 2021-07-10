@@ -37,6 +37,7 @@ import { progressApi } from './progress'
 import { ratingApi } from './rating'
 import { rdbmsApi } from './rdbms'
 import { realTimeProgressApi } from './realTimeProgress'
+import { userAuthKeyCloakApi } from './resource'
 import { rolesApi } from './roles'
 import { shareApi } from './share'
 import { skillsApi } from './skills'
@@ -56,13 +57,13 @@ user.use('/account-settings', accountSettingsApi)
 user.use('/mini-profile', userMiniProfile)
 user.use('/activity', activity)
 user.use('/change-email', changeEmailApi)
-user.use('/autocomplete', autocompleteApi)
+user.use('/autocomplete', autocompleteApi) // Validate
 user.use('/badge', badgeApi)
 user.use('/class-diagram', classDiagramApi)
 user.use('/code', codeApi)
-user.use('/content', userContentApi)
+user.use('/content', userContentApi) // Validate
 user.use('/dashboard', dashboardApi)
-user.use('/details', detailsApi)
+user.use('/details', detailsApi) // Validate
 user.use('/email', emailApi)
 user.use('/emailToUserId', emailToUserIdApi)
 user.use('/evaluate', evaluateApi)
@@ -70,24 +71,25 @@ user.use('/feedback', feedbackApi)
 user.use('/feedbackV2', feedbackV2Api)
 user.use('/follow', followApi)
 user.use('/goals', goalsApi)
-user.use('/history', historyApi)
+user.use('/history', historyApi) // Validate
 user.use('/iconBadge', iconBadgeApi)
 user.use('/myAnalytics', myAnalyticsApi)
-user.use('/notifications', notificationsApi)
+user.use('/notifications', notificationsApi) // Validate
 user.use('/ocm', ocmApi)
 user.use('/playlist', playlistApi)
-user.use('/preference', protectedPreference)
+user.use('/preference', protectedPreference) // Validate
 user.use('/profile', profileApi)
-user.use('/profileDetails', profileDeatailsApi)
+user.use('/profileDetails', profileDeatailsApi) // Validate
 user.use('/progress', progressApi)
-user.use('/rating', ratingApi)
+user.use('/rating', ratingApi) // Validate
 user.use('/rdbms', rdbmsApi)
 user.use('/roles', rolesApi)
 user.use('/share', shareApi)
 user.use('/skills', skillsApi)
-user.use('/telemetry', telemetryApi)
+user.use('/telemetry', telemetryApi) // Validate
 user.use('/tnc', protectedTnc)
 user.use('/token', userTokenApi)
+user.use('/resource', userAuthKeyCloakApi)
 user.use('/topic', topicApi)
 user.use('/topics', topicsApi)
 user.use('/viewprofile', viewProfileApi)
@@ -95,5 +97,5 @@ user.use('/validate', validateApi)
 user.use('/realTimeProgress', realTimeProgressApi)
 user.use('/exercise', exerciseApi)
 user.use('/users', usersApi)
-user.use('/mandatoryContent', mandatoryContent)
-user.use('/profileRegistry', profileRegistryApi)
+user.use('/mandatoryContent', mandatoryContent) // Validate
+user.use('/profileRegistry', profileRegistryApi) // Validate

@@ -140,6 +140,7 @@ const respond419 = (req: Request, res: Response) => {
     const err = ({ msg: 'API WHITELIST :: Unauthorized access for API [ ' + REQ_URL + ' ]', url: REQ_URL })
     logError(err.msg)
     res.status(419)
+    res.setHeader('location', redirectToLogin(req))
     res.send(
     {
         id: 'api.error',

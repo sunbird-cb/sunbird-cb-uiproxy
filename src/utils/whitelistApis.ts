@@ -40,7 +40,8 @@ export const API_LIST = {
               ROLE.CONTENT_CREATOR,
             ],
         },
-        '/protected/v8/user/resource/': {
+        // tslint:disable-next-line: object-literal-sort-keys
+        '/protected/v8/resource/': {
             checksNeeded: [],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -66,7 +67,7 @@ export const API_LIST = {
     [
         '/proxies/v8/api/user/v2/read',
         '/protected/v8/user/profileDetails/test',
-        '/protected/v8/user/resource/',
+        '/protected/v8/resource/',
         '/protected/v8/user/details',
         '/reset',
     ],

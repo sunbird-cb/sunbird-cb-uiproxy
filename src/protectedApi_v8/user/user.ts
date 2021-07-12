@@ -37,7 +37,6 @@ import { progressApi } from './progress'
 import { ratingApi } from './rating'
 import { rdbmsApi } from './rdbms'
 import { realTimeProgressApi } from './realTimeProgress'
-import { userAuthKeyCloakApi } from './resource'
 import { rolesApi } from './roles'
 import { shareApi } from './share'
 import { skillsApi } from './skills'
@@ -89,7 +88,6 @@ user.use('/skills', skillsApi)
 user.use('/telemetry', telemetryApi) // Validate
 user.use('/tnc', protectedTnc)
 user.use('/token', userTokenApi)
-user.use('/resource', userAuthKeyCloakApi)
 user.use('/topic', topicApi)
 user.use('/topics', topicsApi)
 user.use('/viewprofile', viewProfileApi)

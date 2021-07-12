@@ -23,6 +23,7 @@ import { networkConnectionApi } from './network'
 import { networkHubApi } from './network-hub'
 import { portalApi } from './portal-v3'
 import { recommendationApi } from './recommendation'
+import { userAuthKeyCloakApi } from './resource'
 import { roleActivityApi } from './roleActivity'
 import { scoringApi } from './scoring'
 import { scromApi } from './scrom'
@@ -72,5 +73,6 @@ protectedApiV8.use('/portal', portalApi)
 protectedApiV8.use('/scroing', scoringApi)
 protectedApiV8.use('/workflowhandler', workflowHandlerApi)
 protectedApiV8.use('/roleactivity', roleActivityApi)
+protectedApiV8.use('/resource', userAuthKeyCloakApi)
 protectedApiV8.use('/workallocation', workAllocationApi)
 protectedApiV8.use('/frac', fracApi)

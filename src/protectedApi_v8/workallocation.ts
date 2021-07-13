@@ -5,25 +5,25 @@ import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
 import { logError } from '../utils/logger'
 import { ERROR } from '../utils/message'
-import { extractUserIdFromRequest } from '../utils/requestExtract'
+import { extractUserIdFromRequest, extractUserToken } from '../utils/requestExtract'
 
 const workallocationV1Path = 'v1/workallocation'
 const workallocationV2Path = 'v2/workallocation'
 const API_END_POINTS = {
-    addAllocationEndPoint: (path: string) => `${CONSTANTS.SB_EXT_API_BASE_2}/${path}/add`,
-    addWorkOrderEndPoint: (path: string) => `${CONSTANTS.SB_EXT_API_BASE_2}/${path}/add/workorder`,
-    copyWorkOrderEndPoint: (path: string) => `${CONSTANTS.SB_EXT_API_BASE_2}/${path}/copy/workOrder`,
-    getPdf: (id: string) => `${CONSTANTS.SB_EXT_API_BASE_2}/getWOPdf/${id}`,
-    getUserBasicDetails: (userId: string) => `${CONSTANTS.SB_EXT_API_BASE_2}/${workallocationV2Path}/user/basicInfo/${userId}`,
+    addAllocationEndPoint: (path: string) => `${CONSTANTS.KONG_API_BASE}/${path}/add`,
+    addWorkOrderEndPoint: (path: string) => `${CONSTANTS.KONG_API_BASE}/${path}/add/workorder`,
+    copyWorkOrderEndPoint: (path: string) => `${CONSTANTS.KONG_API_BASE}/${path}/copy/workOrder`,
+    getPdf: (id: string) => `${CONSTANTS.KONG_API_BASE}/getWOPdf/${id}`,
+    getUserBasicDetails: (userId: string) => `${CONSTANTS.KONG_API_BASE}/${workallocationV2Path}/user/basicInfo/${userId}`,
     getUsersEndPoint: `${CONSTANTS.SB_EXT_API_BASE_2}/v1/workallocation/getUsers`,
-    getWorkAllocationById: (path: string, id: string) => `${CONSTANTS.SB_EXT_API_BASE_2}/${path}/getWorkAllocationById/${id}`,
-    getWorkOrderById: (path: string, id: string) => `${CONSTANTS.SB_EXT_API_BASE_2}/${path}/getWorkOrderById/${id}`,
-    getWorkOrders: (path: string) => `${CONSTANTS.SB_EXT_API_BASE_2}/${path}/getWorkOrders`,
+    getWorkAllocationById: (path: string, id: string) => `${CONSTANTS.KONG_API_BASE}/${path}/getWorkAllocationById/${id}`,
+    getWorkOrderById: (path: string, id: string) => `${CONSTANTS.KONG_API_BASE}/${path}/getWorkOrderById/${id}`,
+    getWorkOrders: (path: string) => `${CONSTANTS.KONG_API_BASE}/${path}/getWorkOrders`,
     updateAllocationEndPoint: `${CONSTANTS.SB_EXT_API_BASE_2}/v1/workallocation/update`,
-    updateWorkAllocationEndPoint: (path: string) => `${CONSTANTS.SB_EXT_API_BASE_2}/${path}/update`,
-    updateWorkOrder: (path: string) => `${CONSTANTS.SB_EXT_API_BASE_2}/${path}/update/workorder`,
+    updateWorkAllocationEndPoint: (path: string) => `${CONSTANTS.KONG_API_BASE}/${path}/update`,
+    updateWorkOrder: (path: string) => `${CONSTANTS.KONG_API_BASE}/${path}/update/workorder`,
     userAutoCompleteEndPoint: (searchTerm: string) =>
-    `${CONSTANTS.SB_EXT_API_BASE_2}/v1/workallocation/users/autocomplete?searchTerm=${searchTerm}`,
+    `${CONSTANTS.KONG_API_BASE}/v1/workallocation/users/autocomplete?searchTerm=${searchTerm}`,
 }
 
 export const workAllocationApi = Router()
@@ -119,7 +119,9 @@ workAllocationApi.get('/user/autocomplete/:searchTerm', async (req, res) => {
         const response = await axios.get(API_END_POINTS.userAutoCompleteEndPoint(searchTerm), {
             ...axiosRequestConfig,
             headers: {
-
+                Authorization: CONSTANTS.SB_API_KEY,
+                // tslint:disable-next-line: no-duplicate-string
+                'x-authenticated-user-token': extractUserToken(req),
             },
         })
         res.status(response.status).send(response.data)
@@ -148,8 +150,11 @@ workAllocationApi.post('/v2/add', async (req, res) => {
             {
                 ...axiosRequestConfig,
                 headers: {
-                    Authorization: req.header('Authorization'),
+                    Authorization: CONSTANTS.SB_API_KEY,
                     userId,
+                    // tslint:disable-next-line: no-duplicate-string
+                    'x-authenticated-user-token': extractUserToken(req),
+
                 },
             }
         )
@@ -177,8 +182,10 @@ workAllocationApi.post('/v2/update', async (req, res) => {
             {
                 ...axiosRequestConfig,
                 headers: {
-                    Authorization: req.header('Authorization'),
+                    Authorization: CONSTANTS.SB_API_KEY,
                     userId,
+                    // tslint:disable-next-line: no-duplicate-string
+                    'x-authenticated-user-token': extractUserToken(req),
                 },
             }
         )
@@ -205,7 +212,10 @@ workAllocationApi.post('/add/workorder', async (req, res) => {
             {
                 ...axiosRequestConfig,
                 headers: {
+                    Authorization: CONSTANTS.SB_API_KEY,
                     userId,
+                    // tslint:disable-next-line: no-duplicate-string
+                    'x-authenticated-user-token': extractUserToken(req),
                 },
             }
         )
@@ -226,15 +236,16 @@ workAllocationApi.post('/update/workorder', async (req, res) => {
             res.status(400).send(userIdFailedMessage)
             return
         }
-        const auth = req.header('Authorization') as string
         const response = await axios.post(
             API_END_POINTS.updateWorkOrder(workallocationV2Path),
             req.body,
             {
                 ...axiosRequestConfig,
                 headers: {
-                    Authorization: auth,
+                    Authorization: CONSTANTS.SB_API_KEY,
                     userId,
+                    // tslint:disable-next-line: no-duplicate-string
+                    'x-authenticated-user-token': extractUserToken(req),
                 },
             }
         )
@@ -256,7 +267,11 @@ workAllocationApi.post('/getWorkOrders', async (req, res) => {
             req.body,
             {
                 ...axiosRequestConfig,
-                headers: req.headers,
+                headers: {
+                    Authorization: CONSTANTS.SB_API_KEY,
+                    // tslint:disable-next-line: no-duplicate-string
+                    'x-authenticated-user-token': extractUserToken(req),
+                },
             }
         )
         res.status(response.status).send(response.data)
@@ -281,7 +296,11 @@ workAllocationApi.get('/getWorkOrderById/:workOrderId', async (req, res) => {
             API_END_POINTS.getWorkOrderById(workallocationV2Path, workOrderId),
             {
                 ...axiosRequestConfig,
-                headers: req.headers,
+                headers: {
+                    Authorization: CONSTANTS.SB_API_KEY,
+                    // tslint:disable-next-line: no-duplicate-string
+                    'x-authenticated-user-token': extractUserToken(req),
+                },
             }
         )
         res.status(response.status).send(response.data)
@@ -306,7 +325,11 @@ workAllocationApi.get('/getWorkAllocationById/:workAllocationId', async (req, re
             API_END_POINTS.getWorkAllocationById(workallocationV2Path, workAllocationId),
             {
                 ...axiosRequestConfig,
-                headers: req.headers,
+                headers: {
+                    Authorization: CONSTANTS.SB_API_KEY,
+                    // tslint:disable-next-line: no-duplicate-string
+                    'x-authenticated-user-token': extractUserToken(req),
+                },
             }
         )
         res.status(response.status).send(response.data)
@@ -333,7 +356,10 @@ workAllocationApi.post('/copy/workOrder', async (req, res) => {
             {
                 ...axiosRequestConfig,
                 headers: {
+                    Authorization: CONSTANTS.SB_API_KEY,
                     userId,
+                    // tslint:disable-next-line: no-duplicate-string
+                    'x-authenticated-user-token': extractUserToken(req),
                 },
             }
         )
@@ -359,7 +385,11 @@ workAllocationApi.get('/getUserBasicInfo/:userId', async (req, res) => {
             API_END_POINTS.getUserBasicDetails(userId),
             {
                 ...axiosRequestConfig,
-                headers: req.headers,
+                headers: {
+                    Authorization: CONSTANTS.SB_API_KEY,
+                    // tslint:disable-next-line: no-duplicate-string
+                    'x-authenticated-user-token': extractUserToken(req),
+                },
             }
         )
         res.status(response.status).send(response.data)
@@ -386,6 +416,9 @@ workAllocationApi.get('/getWOPdf/:workOrderId', async (req, res) => {
                 ...axiosRequestConfig,
                 headers: {
                     Accept: 'application/pdf',
+                    Authorization: CONSTANTS.SB_API_KEY,
+                    // tslint:disable-next-line: no-duplicate-string
+                   'x-authenticated-user-token': extractUserToken(req),
 
                 },
                 responseType: 'arraybuffer',

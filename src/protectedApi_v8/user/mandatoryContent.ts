@@ -4,13 +4,14 @@ import { axiosRequestConfig } from '../../configs/request.config'
 import { CONSTANTS } from '../../utils/env'
 import { logError } from '../../utils/logger'
 import { ERROR } from '../../utils/message'
+import { extractUserToken } from '../../utils/requestExtract'
 
 import {
     extractAuthorizationFromRequest
 } from '../../utils/requestExtract'
 
 const API_END_POINTS = {
-    mandatoryContentStatus: `${CONSTANTS.SB_EXT_API_BASE_2}/v1/check/mandatoryContentStatus`,
+    mandatoryContentStatus: `${CONSTANTS.KONG_API_BASE}/v1/check/mandatoryContentStatus`,
 }
 
 export const mandatoryContent = Router()
@@ -30,9 +31,11 @@ mandatoryContent.get('/checkStatus', async (req, res) => {
         const response = await axios.get(API_END_POINTS.mandatoryContentStatus, {
             ...axiosRequestConfig,
             headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
                 org: orgValue,
                 rootOrg: rootOrgValue,
                 wid: widValue,
+                'x-authenticated-user-token': extractUserToken(req),
                 xAuthUser: xAuth[1],
             },
         })

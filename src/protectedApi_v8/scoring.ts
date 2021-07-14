@@ -4,11 +4,12 @@ import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
 import { logError } from '../utils/logger'
 import { ERROR } from '../utils/message'
+import { extractUserToken } from '../utils/requestExtract'
 
 const API_END_POINTS = {
-    calculateScoreEndPoint: `${CONSTANTS.SCORING_SERVICE_API_BASE}/action/scoring/add`,
-    fetchScore: `${CONSTANTS.SCORING_SERVICE_API_BASE}/action/scoring/fetch`,
-    fetchTemplate: (templateId: string) => `${CONSTANTS.SCORING_SERVICE_API_BASE}/action/scoring/getTemplate/${templateId}`,
+    calculateScoreEndPoint: `${CONSTANTS.KONG_API_BASE}/action/scoring/add`,
+    fetchScore: `${CONSTANTS.KONG_API_BASE}/action/scoring/fetch`,
+    fetchTemplate: (templateId: string) => `${CONSTANTS.KONG_API_BASE}/action/scoring/getTemplate/${templateId}`,
 }
 
 export const scoringApi = Router()
@@ -30,8 +31,11 @@ scoringApi.post('/calculate', async (req, res) => {
             {
                 ...axiosRequestConfig,
                 headers: {
+                    Authorization: CONSTANTS.SB_API_KEY,
                     org: orgValue,
                     rootOrg: rootOrgValue,
+                    // tslint:disable-next-line: all
+                    'x-authenticated-user-token': extractUserToken(req),
                 },
             }
         )
@@ -60,8 +64,11 @@ scoringApi.post('/fetch', async (req, res) => {
             {
                 ...axiosRequestConfig,
                 headers: {
+                    Authorization: CONSTANTS.SB_API_KEY,
                     org: orgValue,
                     rootOrg: rootOrgValue,
+                    // tslint:disable-next-line: all
+                    'x-authenticated-user-token': extractUserToken(req),
                 },
             }
         )
@@ -88,8 +95,11 @@ scoringApi.get('/getTemplate/:templateId', async (req, res) => {
         const response = await axios.get(API_END_POINTS.fetchTemplate(templateId), {
             ...axiosRequestConfig,
             headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
                 org: orgValue,
                 rootOrg: rootOrgValue,
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req),
             },
         })
         res.status(response.status).send(response.data)

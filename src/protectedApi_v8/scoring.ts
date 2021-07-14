@@ -7,9 +7,9 @@ import { ERROR } from '../utils/message'
 import { extractUserToken } from '../utils/requestExtract'
 
 const API_END_POINTS = {
-    calculateScoreEndPoint: `${CONSTANTS.KONG_API_BASE}/action/scoring/add`,
-    fetchScore: `${CONSTANTS.KONG_API_BASE}/action/scoring/fetch`,
-    fetchTemplate: (templateId: string) => `${CONSTANTS.KONG_API_BASE}/action/scoring/getTemplate/${templateId}`,
+    calculateScoreEndPoint: `${CONSTANTS.KONG_API_BASE}/scoring/v1/add`,
+    fetchScore: `${CONSTANTS.KONG_API_BASE}/scoring/v1/fetch`,
+    fetchTemplate: (templateId: string) => `${CONSTANTS.KONG_API_BASE}/scoring/v1/getTemplate/${templateId}`,
 }
 
 export const scoringApi = Router()

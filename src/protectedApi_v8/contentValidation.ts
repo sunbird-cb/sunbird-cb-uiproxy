@@ -5,16 +5,17 @@ import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
 import { logError } from '../utils/logger'
 import { ERROR } from '../utils/message'
+import { extractUserToken } from '../utils/requestExtract'
 
 const API_END_POINTS = {
     checkPdfProfanity: `${CONSTANTS.CONTENT_VALIDATION_API_BASE}/contentValidation/v1/checkPdfProfanity`,
     checkProfanity: (contentId: string, userId: string) =>
         `${CONSTANTS.CONTENT_VALIDATION_API_BASE}/contentValidation/v1/checkProfanity/${contentId}/${userId}`,
     checkTextProfanity: `${CONSTANTS.PROFANITY_SERVICE_API_BASE}/checkProfanity`,
-    getPdfProfanity: `${CONSTANTS.CONTENT_VALIDATION_API_BASE}/contentValidation/v1/getPdfProfanity`,
+    getPdfProfanity: `${CONSTANTS.KONG_API_BASE}/contentValidation/v1/getPdfProfanity`,
     getPdfProfanityForContent: (contentId: string) =>
-        `${CONSTANTS.CONTENT_VALIDATION_API_BASE}/contentValidation/v1/getPdfProfanityForContent/${contentId}`,
-    startPdfProfanity: `${CONSTANTS.CONTENT_VALIDATION_API_BASE}/contentValidation/v1/startPdfProfanity`,
+        `${CONSTANTS.KONG_API_BASE}/contentValidation/v1/getPdfProfanityForContent/${contentId}`,
+    startPdfProfanity: `${CONSTANTS.KONG_API_BASE}/contentValidation/v1/startPdfProfanity`,
 }
 
 export const contentValidationApi = Router()
@@ -82,7 +83,14 @@ contentValidationApi.post('/validatePdfContent', async (req, res) => {
 
 contentValidationApi.post('/startPdfProfanity', async (req, res) => {
     try {
-        const response = await axios.post(API_END_POINTS.startPdfProfanity, req.body, axiosRequestConfig)
+        const response = await axios.post(API_END_POINTS.startPdfProfanity, req.body,  {
+            ...axiosRequestConfig,
+            headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req),
+            },
+        })
         res.status(response.status).send(response.data)
     } catch (err) {
         logError(failedToProcess + err)
@@ -96,7 +104,14 @@ contentValidationApi.post('/startPdfProfanity', async (req, res) => {
 
 contentValidationApi.post('/getPdfProfanity', async (req, res) => {
     try {
-        const response = await axios.post(API_END_POINTS.getPdfProfanity, req.body, axiosRequestConfig)
+        const response = await axios.post(API_END_POINTS.getPdfProfanity, req.body,  {
+            ...axiosRequestConfig,
+            headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req),
+            },
+        })
         res.status(response.status).send(response.data)
     } catch (err) {
         logError(failedToProcess + err)
@@ -116,9 +131,12 @@ contentValidationApi.get('/getPdfProfanityForContent/:contentId', async (req, re
         const response = await axios.get(API_END_POINTS.getPdfProfanityForContent(contentId), {
             ...axiosRequestConfig,
             headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
                 'Content-Type': 'application/json',
                 rootOrg: rootOrgValue,
                 wid,
+                 // tslint:disable-next-line: all
+                 'x-authenticated-user-token': extractUserToken(req),
             },
         })
         res.status(response.status).send(response.data)

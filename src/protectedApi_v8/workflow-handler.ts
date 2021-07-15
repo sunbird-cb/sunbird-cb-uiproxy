@@ -5,20 +5,21 @@ import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
 import { logError } from '../utils/logger'
 import { ERROR } from '../utils/message'
+import { extractUserToken } from '../utils/requestExtract'
 
 const API_END_POINTS = {
-    applicationTransition: `${CONSTANTS.WORKFLOW_HANDLER_SERVICE_API_BASE}/v1/workflow/transition`,
-    applicationsSearch: `${CONSTANTS.WORKFLOW_HANDLER_SERVICE_API_BASE}/v1/workflow/applications/search`,
+    applicationTransition: `${CONSTANTS.KONG_API_BASE}/workflow/transition`,
+    applicationsSearch: `${CONSTANTS.KONG_API_BASE}/workflow/applications/search`,
     historyBasedOnApplicationId: (applicationId: string) =>
         `${CONSTANTS.WORKFLOW_HANDLER_SERVICE_API_BASE}/v1/workflow/${applicationId}/history`,
     historyBasedOnWfId: (workflowId: string, applicationId: string) =>
         `${CONSTANTS.WORKFLOW_HANDLER_SERVICE_API_BASE}/v1/workflow/${workflowId}/${applicationId}/history`,
     nextActionSearch: (serviceName: string, state: string) =>
-        `${CONSTANTS.WORKFLOW_HANDLER_SERVICE_API_BASE}/v1/workflow/nextAction/${serviceName}/${state}`,
-    userProfileUpdate: `${CONSTANTS.WORKFLOW_HANDLER_SERVICE_API_BASE}/v1/workflow/updateUserProfileWF`,
-    userWfFieldsSearch: `${CONSTANTS.WORKFLOW_HANDLER_SERVICE_API_BASE}/v1/workflow/getUserWFApplicationFields`,
-    userWfSearch: `${CONSTANTS.WORKFLOW_HANDLER_SERVICE_API_BASE}/v1/workflow/getUserWF`,
-    workflowProcess: (wfId: string) => `${CONSTANTS.WORKFLOW_HANDLER_SERVICE_API_BASE}/v1/workflow/workflowProcess/${wfId}`,
+        `${CONSTANTS.KONG_API_BASE}/workflow/nextAction/${serviceName}/${state}`,
+    userProfileUpdate: `${CONSTANTS.KONG_API_BASE}/workflow/updateUserProfileWF`,
+    userWfFieldsSearch: `${CONSTANTS.KONG_API_BASE}/workflow/getUserWFApplicationFields`,
+    userWfSearch: `${CONSTANTS.KONG_API_BASE}/workflow/getUserWF`,
+    workflowProcess: (wfId: string) => `${CONSTANTS.KONG_API_BASE}/workflow/workflowProcess/${wfId}`,
 }
 
 export const workflowHandlerApi = Router()
@@ -39,8 +40,11 @@ workflowHandlerApi.post('/transition', async (req, res) => {
             {
                 ...axiosRequestConfig,
                 headers: {
+                    Authorization: CONSTANTS.SB_API_KEY,
                     org: orgValue,
                     rootOrg: rootOrgValue,
+                     // tslint:disable-next-line: all
+                     'x-authenticated-user-token': extractUserToken(req),
                 },
             }
         )
@@ -69,9 +73,11 @@ workflowHandlerApi.post('/applicationsSearch', async (req, res) => {
             {
                 ...axiosRequestConfig,
                 headers: {
+                    Authorization: CONSTANTS.SB_API_KEY,
                     org: orgValue,
                     rootOrg: rootOrgValue,
-
+                     // tslint:disable-next-line: all
+                     'x-authenticated-user-token': extractUserToken(req),
                 },
             }
         )
@@ -95,9 +101,11 @@ workflowHandlerApi.get('/nextActionSearch/:serviceName/:state', async (req, res)
         const response = await axios.get(API_END_POINTS.nextActionSearch(serviceName, state), {
             ...axiosRequestConfig,
             headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
                 org: orgValue,
                 rootOrg: rootOrgValue,
-
+                 // tslint:disable-next-line: all
+                 'x-authenticated-user-token': extractUserToken(req),
             },
         })
         res.status(response.status).send(response.data)
@@ -120,8 +128,11 @@ workflowHandlerApi.get('/historyByApplicationIdAndWfId/:applicationId/:wfId', as
         const response = await axios.get(API_END_POINTS.historyBasedOnWfId(wfId, applicationId), {
             ...axiosRequestConfig,
             headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
                 org: orgValue,
                 rootOrg: rootOrgValue,
+                 // tslint:disable-next-line: all
+                 'x-authenticated-user-token': extractUserToken(req),
             },
         })
         res.status(response.status).send(response.data)
@@ -142,7 +153,10 @@ workflowHandlerApi.get('/workflowProcess/:wfId', async (req, res) => {
         const response = await axios.get(API_END_POINTS.workflowProcess(wfId), {
             ...axiosRequestConfig,
             headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
                 rootOrg: rootOrgValue,
+                 // tslint:disable-next-line: all
+                 'x-authenticated-user-token': extractUserToken(req),
             },
         })
         res.status(response.status).send(response.data)
@@ -164,8 +178,11 @@ workflowHandlerApi.get('/historyByApplicationId/:applicationId', async (req, res
         const response = await axios.get(API_END_POINTS.historyBasedOnApplicationId(applicationId), {
             ...axiosRequestConfig,
             headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
                 org: orgValue,
                 rootOrg: rootOrgValue,
+                  // tslint:disable-next-line: all
+                  'x-authenticated-user-token': extractUserToken(req),
             },
         })
         res.status(response.status).send(response.data)
@@ -193,8 +210,11 @@ workflowHandlerApi.post('/updateUserProfileWf', async (req, res) => {
             {
                 ...axiosRequestConfig,
                 headers: {
+                    Authorization: CONSTANTS.SB_API_KEY,
                     org: orgValue,
                     rootOrg: rootOrgValue,
+                     // tslint:disable-next-line: all
+                     'x-authenticated-user-token': extractUserToken(req),
                 },
             }
         )
@@ -224,9 +244,12 @@ workflowHandlerApi.post('/userWfSearch', async (req, res) => {
             {
                 ...axiosRequestConfig,
                 headers: {
+                    Authorization: CONSTANTS.SB_API_KEY,
                     org: orgValue,
                     rootOrg: rootOrgValue,
                     wid,
+                    // tslint:disable-next-line: all
+                    'x-authenticated-user-token': extractUserToken(req),
                 },
             }
         )
@@ -256,9 +279,12 @@ workflowHandlerApi.post('/userWFApplicationFieldsSearch', async (req, res) => {
             {
                 ...axiosRequestConfig,
                 headers: {
+                    Authorization: CONSTANTS.SB_API_KEY,
                     org: orgValue,
                     rootOrg: rootOrgValue,
                     wid,
+                     // tslint:disable-next-line: all
+                     'x-authenticated-user-token': extractUserToken(req),
                 },
             }
         )

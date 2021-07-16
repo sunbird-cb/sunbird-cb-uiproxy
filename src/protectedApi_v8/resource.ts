@@ -1,12 +1,15 @@
 import { Router } from 'express'
+const _                 = require('lodash')
 export const userAuthKeyCloakApi = Router()
 userAuthKeyCloakApi.get('/', async (req, res) => {
     let host = req.get('host')
-    const queryParam = req.query.q
-    if (queryParam.includes('localhost')) {
-        host = queryParam
+    let queryParam = ''
+    if (!_.isEmpty(req.query)) {
+        queryParam = req.query.q
+        if (queryParam.includes('localhost')) {
+            host = queryParam
+        }
     }
-
     let redirectUrl = ''
     switch (host) {
         case 'igot-dev.in':

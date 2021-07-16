@@ -1,7 +1,12 @@
 import { Router } from 'express'
 export const userAuthKeyCloakApi = Router()
 userAuthKeyCloakApi.get('/', async (req, res) => {
-    const host = req.get('host')
+    let host = req.get('host')
+    const queryParam = req.query.q
+    if (queryParam.includes('localhost')) {
+        host = queryParam
+    }
+
     let redirectUrl = ''
     switch (host) {
         case 'igot-dev.in':
@@ -20,7 +25,7 @@ userAuthKeyCloakApi.get('/', async (req, res) => {
             redirectUrl = 'https://' + host + '/author/cbp/me'
             break
         default:
-            redirectUrl = 'http://localhost:3000/app/home/directory'  // Test setup
+            redirectUrl = queryParam  // local setup
             break
     }
     res.redirect(redirectUrl)

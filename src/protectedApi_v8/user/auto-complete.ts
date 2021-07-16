@@ -3,10 +3,11 @@ import { Router } from 'express'
 import { axiosRequestConfig } from '../../configs/request.config'
 import { CONSTANTS } from '../../utils/env'
 import { ERROR } from '../../utils/message'
+import { extractUserToken } from '../../utils/requestExtract'
 
 const API_END_POINTS = {
   users: (queryParams: string) =>
-    `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/autocomplete?${queryParams}`,
+    `${CONSTANTS.KONG_API_BASE}/v1/user/autocomplete?${queryParams}`,
   usersByDepartment: (rootOrg: string, searchItem: string) =>
     `${CONSTANTS.USER_PROFILE_API_BASE}/user/autocomplete/${rootOrg}/department/${searchItem}`,
 }
@@ -47,7 +48,12 @@ autocompleteApi.get('/:query', async (req, res) => {
     const url = API_END_POINTS.users('searchString=' + queryParams)
     const response = await axios({
       ...axiosRequestConfig,
-      headers: { rootOrg },
+      headers: {
+        Authorization: CONSTANTS.SB_API_KEY,
+        rootOrg,
+        // tslint:disable-next-line: all
+        'x-authenticated-user-token': extractUserToken(req),
+      },
       method: 'GET',
       url,
     })

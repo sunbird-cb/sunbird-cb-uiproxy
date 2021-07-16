@@ -5,18 +5,19 @@ import { CONSTANTS } from '../utils/env'
 import { logError, logInfo } from '../utils/logger'
 import { ERROR } from '../utils/message'
 import { extractUserIdFromRequest } from '../utils/requestExtract'
+import { extractUserToken } from '../utils/requestExtract'
 
 const unknown = 'Connections Apis:- Failed due to unknown reason'
 const apiEndpoints = {
   detail: `${CONSTANTS.USER_PROFILE_API_BASE}/user/multi-fetch/wid`,
-  getConnectionEstablishedData: `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/connections/profile/fetch/established`,
-  getConnectionRequestsData: `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/connections/profile/fetch/requested`,
-  getConnectionRequestsReceivedData: `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/connections/profile/fetch/requests/received`,
-  getConnectionSuggestsData: `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/connections/profile/find/suggests`,
+  getConnectionEstablishedData: `${CONSTANTS.KONG_API_BASE}/connections/profile/fetch/established`,
+  getConnectionRequestsData: `${CONSTANTS.KONG_API_BASE}/connections/profile/fetch/requested`,
+  getConnectionRequestsReceivedData: `${CONSTANTS.KONG_API_BASE}/connections/profile/fetch/requests/received`,
+  getConnectionSuggestsData: `${CONSTANTS.KONG_API_BASE}/connections/profile/find/suggests`,
   getUserRegistryById: (userId: string) => `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/search/profile?userId=${userId}`,
-  postConnectionAddData: `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/connections/add`,
-  postConnectionRecommendationData: `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/connections/profile/find/recommended`,
-  postConnectionUpdateData: `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/connections/update`,
+  postConnectionAddData: `${CONSTANTS.KONG_API_BASE}/connections/add`,
+  postConnectionRecommendationData: `${CONSTANTS.KONG_API_BASE}/connections/profile/find/recommended`,
+  postConnectionUpdateData: `${CONSTANTS.KONG_API_BASE}/connections/update`,
 }
 
 export const connectionsApi = Router()
@@ -37,8 +38,11 @@ connectionsApi.get('/connections/requested', async (req, res) => {
     const response = await axios.get(apiEndpoints.getConnectionRequestsData, {
       ...axiosRequestConfig,
       headers: {
+        Authorization: CONSTANTS.SB_API_KEY,
         rootOrg,
         userId,
+         // tslint:disable-next-line: all
+         'x-authenticated-user-token': extractUserToken(req),
       },
     })
     res.send((response.data))
@@ -69,8 +73,11 @@ connectionsApi.get('/connections/requests/received', async (req, res) => {
     const response = await axios.get(apiEndpoints.getConnectionRequestsReceivedData, {
       ...axiosRequestConfig,
       headers: {
+        Authorization: CONSTANTS.SB_API_KEY,
         rootOrg,
         userId,
+         // tslint:disable-next-line: all
+         'x-authenticated-user-token': extractUserToken(req),
       },
     })
     res.send((response.data))
@@ -101,8 +108,11 @@ connectionsApi.get('/connections/established', async (req, res) => {
     const response = await axios.get(apiEndpoints.getConnectionEstablishedData, {
       ...axiosRequestConfig,
       headers: {
+        Authorization: CONSTANTS.SB_API_KEY,
         rootOrg,
         userId,
+        // tslint:disable-next-line: all
+        'x-authenticated-user-token': extractUserToken(req),
       },
     })
     res.send((response.data))
@@ -133,8 +143,11 @@ connectionsApi.get('/connections/established/:id', async (req, res) => {
     const response = await axios.get(apiEndpoints.getConnectionEstablishedData, {
       ...axiosRequestConfig,
       headers: {
+        Authorization: CONSTANTS.SB_API_KEY,
         rootOrg,
         userId,
+        // tslint:disable-next-line: all
+        'x-authenticated-user-token': extractUserToken(req),
       },
     })
     res.send((response.data))
@@ -165,8 +178,11 @@ connectionsApi.get('/connections/suggests', async (req, res) => {
     const response = await axios.get(apiEndpoints.getConnectionSuggestsData, {
       ...axiosRequestConfig,
       headers: {
+        Authorization: CONSTANTS.SB_API_KEY,
         rootOrg,
         userId,
+         // tslint:disable-next-line: all
+         'x-authenticated-user-token': extractUserToken(req),
       },
     })
     res.send((response.data))
@@ -216,7 +232,10 @@ connectionsApi.post('/add/connection', async (req, res) => {
       {
         ...axiosRequestConfig,
         headers: {
+          Authorization: CONSTANTS.SB_API_KEY,
           rootOrg,
+          // tslint:disable-next-line: all
+          'x-authenticated-user-token': extractUserToken(req),
         },
       }
     )
@@ -270,7 +289,10 @@ connectionsApi.post('/update/connection', async (req, res) => {
       {
         ...axiosRequestConfig,
         headers: {
+          Authorization: CONSTANTS.SB_API_KEY,
           rootOrg,
+          // tslint:disable-next-line: all
+          'x-authenticated-user-token': extractUserToken(req),
         },
       }
     )
@@ -307,8 +329,11 @@ connectionsApi.post('/connections/recommended', async (req, res) => {
       {
         ...axiosRequestConfig,
         headers: {
+          Authorization: CONSTANTS.SB_API_KEY,
           rootOrg,
           userId,
+           // tslint:disable-next-line: all
+           'x-authenticated-user-token': extractUserToken(req),
         },
       }
     )
@@ -371,8 +396,11 @@ connectionsApi.post('/connections/recommended/userDepartment', async (req, res) 
       {
         ...axiosRequestConfig,
         headers: {
+          Authorization: CONSTANTS.SB_API_KEY,
           rootOrg,
           userId,
+           // tslint:disable-next-line: all
+           'x-authenticated-user-token': extractUserToken(req),
         },
       }
     )

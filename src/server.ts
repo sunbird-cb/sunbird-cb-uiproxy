@@ -78,7 +78,7 @@ export class Server {
     this.app.use(express.json({ limit: '50mb' }))
     this.app.use(fileUpload())
     // this.app.use(cors())
-    app.use(cors({origin: 'http://local.igot-dev.in:3000', credentials: true}))
+    this.app.use(cors({origin: 'http://local.igot-dev.in:3000', credentials: true}))
     this.app.use('/healthcheck', healthcheck({
       healthy() {
         return { everything: 'is ok' }

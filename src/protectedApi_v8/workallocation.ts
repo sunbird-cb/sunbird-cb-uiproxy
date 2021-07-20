@@ -5,7 +5,7 @@ import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
 import { logError } from '../utils/logger'
 import { ERROR } from '../utils/message'
-import { extractUserIdFromRequest } from '../utils/requestExtract'
+import { extractUserIdFromRequest, extractUserToken } from '../utils/requestExtract'
 
 const workallocationV1Path = 'v1/workallocation'
 const workallocationV2Path = 'v2/workallocation'
@@ -19,6 +19,7 @@ const API_END_POINTS = {
     getWorkAllocationById: (path: string, id: string) => `${CONSTANTS.SB_EXT_API_BASE_2}/${path}/getWorkAllocationById/${id}`,
     getWorkOrderById: (path: string, id: string) => `${CONSTANTS.SB_EXT_API_BASE_2}/${path}/getWorkOrderById/${id}`,
     getWorkOrders: (path: string) => `${CONSTANTS.SB_EXT_API_BASE_2}/${path}/getWorkOrders`,
+    headersCheck: `${CONSTANTS.KONG_API_BASE}/v2/workallocation/check/headers`,
     updateAllocationEndPoint: `${CONSTANTS.SB_EXT_API_BASE_2}/v1/workallocation/update`,
     updateWorkAllocationEndPoint: (path: string) => `${CONSTANTS.SB_EXT_API_BASE_2}/${path}/update`,
     updateWorkOrder: (path: string) => `${CONSTANTS.SB_EXT_API_BASE_2}/${path}/update/workorder`,
@@ -400,5 +401,27 @@ workAllocationApi.get('/getWOPdf/:workOrderId', async (req, res) => {
                 error: ERROR.GENERAL_ERR_MSG,
             }
         )
+    }
+})
+
+workAllocationApi.get('/checkheaders', async (req, res) => {
+    try {
+        const response = await axios.get(API_END_POINTS.headersCheck, {
+            ...axiosRequestConfig,
+            headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                nodebb_authorization_token: 'nodebb_authorization_token_value',
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req),
+              },
+            })
+        res.status(response.status).send(response.data)
+    } catch (err) {
+                    logError(failedToProcess + err)
+                    res.status((err && err.response && err.response.status) || 500).send(
+                        (err && err.response && err.response.data) || {
+                            error: ERROR.GENERAL_ERR_MSG,
+                        }
+                    )
     }
 })

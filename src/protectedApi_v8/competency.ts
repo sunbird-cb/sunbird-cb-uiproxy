@@ -4,6 +4,8 @@ import { Router } from 'express'
 import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
 import { ERROR } from '../utils/message'
+import { extractAuthorizationFromRequest } from '../utils/requestExtract'
+
 
 const API_END_POINTS = {
     addCompetency: `${CONSTANTS.FRAC_API_BASE}/api/frac/addDataNode`,
@@ -17,7 +19,7 @@ const unknownError = 'Failed due to unknown reason'
 competencyApi.get('/getCompetency', async (req, res) => {
     try {
         const rootOrg = req.header('rootOrg')
-        const authToken = req.header('Authorization')
+        const authToken = extractAuthorizationFromRequest(req)
         if (!rootOrg) {
             res.status(400).send(ERROR.ERROR_NO_ORG_DATA)
             return
@@ -40,7 +42,7 @@ competencyApi.get('/getCompetency', async (req, res) => {
 
 competencyApi.post('/addCompetency', async (req, res) => {
     try {
-        const authToken = req.header('Authorization')
+        const authToken = extractAuthorizationFromRequest(req)
         const response = await axios.post(API_END_POINTS.addCompetency, req.body, {
             ...axiosRequestConfig,
             headers: {
@@ -59,7 +61,7 @@ competencyApi.post('/addCompetency', async (req, res) => {
 
 competencyApi.post('/searchCompetency', async (req, res) => {
     try {
-        const authToken = req.header('Authorization')
+        const authToken = extractAuthorizationFromRequest(req)
         const response = await axios.post(API_END_POINTS.searchCompetency, req.body, {
             ...axiosRequestConfig,
             headers: {

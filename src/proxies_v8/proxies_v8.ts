@@ -194,7 +194,9 @@ proxiesV8.use([
 ],
   proxyCreatorQML(express.Router(), `${CONSTANTS.KONG_API_BASE}`, '/action/')
 )
-
+proxiesV8.use('/action/content/v3/updateReviewStatus',
+  proxyCreatorKnowledge(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)
 proxiesV8.use('/action/*',
   proxyCreatorKnowledge(express.Router(), `${CONSTANTS.KNOWLEDGE_MW_API_BASE}`)
 )

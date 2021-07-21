@@ -225,6 +225,10 @@ proxiesV8.use('/api/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 
+proxiesV8.use('/data/*',
+  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)
+
 proxiesV8.use('/assets/*',
   // tslint:disable-next-line: max-line-length
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)

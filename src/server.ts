@@ -39,7 +39,7 @@ export class Server {
   protected app = express()
   private keycloak?: CustomKeycloak
   private constructor() {
-    this.app.use(cors({origin: 'http://local.igot-dev.in:3000', credentials: true}))
+    this.app.use(cors({origin: 'https://local.igot-dev.in:3000', credentials: true}))
     const sessionConfig = getSessionConfig()
     this.app.use(expressSession(sessionConfig))
     this.app.all('*', apiWhiteListLogger())

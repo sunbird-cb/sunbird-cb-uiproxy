@@ -7,22 +7,22 @@ import { IFilterUnitContent } from '../models/catalog.model'
 import { getFilters, getFilterUnitByType } from '../service/catalog'
 import { logError } from '../utils/logger'
 import { ERROR } from '../utils/message'
-import { extractAuthorizationFromRequest, extractUserIdFromRequest } from '../utils/requestExtract'
+import {extractUserIdFromRequest, extractUserToken} from '../utils/requestExtract'
 
 export const catalogApi = Router()
 
 const API_END_POINTS = {
-  getCatalogEndPoint: `${CONSTANTS.SB_EXT_API_BASE_2}/v1/catalog/`,
+  getCatalogEndPoint: `${CONSTANTS.KONG_API_BASE}/v1/catalog/`,
 }
 const failedToProcess = 'Failed to process the request. '
 
 catalogApi.get('/', async (req, res) => {
   try {
-    const xAuth = extractAuthorizationFromRequest(req).split(' ')
     const response = await axios.get(API_END_POINTS.getCatalogEndPoint, {
         ...axiosRequestConfig,
         headers: {
-          xAuthUser: xAuth[1],
+          Authorization: CONSTANTS.SB_API_KEY,
+          'x-authenticated-user-token': extractUserToken(req),
         },
     })
     res.status(response.status).send(response.data)

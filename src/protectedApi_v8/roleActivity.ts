@@ -6,6 +6,8 @@ import { ERROR } from '../utils/message'
 import axios from 'axios'
 import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
+import { extractAuthorizationFromRequest } from '../utils/requestExtract'
+
 
 export const roleActivityApi = Router()
 
@@ -33,7 +35,7 @@ roleActivityApi.get('/', async (req, res) => {
 roleActivityApi.get('/:roleKey', async (req, res) => {
     try {
         const rootOrg = req.header('rootOrg')
-        const authToken = req.header('Authorization')
+        const authToken = extractAuthorizationFromRequest(req)
         if (!rootOrg || !authToken) {
             res.status(400).send(ERROR.ERROR_NO_ORG_DATA)
             return
@@ -60,7 +62,7 @@ roleActivityApi.get('/:roleKey', async (req, res) => {
         const response = await axios.post(API_END_POINTS.searchNodes, searchBody, {
             ...axiosRequestConfig,
             headers: {
-                Authorization: req.header('Authorization'),
+                Authorization: extractAuthorizationFromRequest(req),
             },
         })
         const returnRoleList: IRole[] = []

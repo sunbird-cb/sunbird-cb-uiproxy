@@ -31,8 +31,9 @@ proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
 })
 
 // tslint:disable-next-line: no-any
-proxy.on('proxyRes', (proxyRes: any, req: any, res: any, ) => {
-  res.removeHeader('access-control-allow-origin')
+proxy.on('proxyRes', (proxyRes: any, req: any, _res: any, ) => {
+  // res.removeHeader('access-control-allow-origin')
+  delete proxyRes.headers['access-control-allow-origin']
   // write user session with roles
   if (req.originalUrl.includes('/user/v2/read')) {
     // tslint:disable-next-line: no-any

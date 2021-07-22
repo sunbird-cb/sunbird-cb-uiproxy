@@ -6,7 +6,6 @@ import { CONSTANTS } from '../utils/env'
 import { ERROR } from '../utils/message'
 import { extractAuthorizationFromRequest } from '../utils/requestExtract'
 
-
 const API_END_POINTS = {
     addCompetency: `${CONSTANTS.FRAC_API_BASE}/api/frac/addDataNode`,
     getCompetency: `${CONSTANTS.FRAC_API_BASE}/api/frac/getAllNodes?type=COMPETENCY&status=VERIFIED`,

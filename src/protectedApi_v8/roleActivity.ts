@@ -8,7 +8,6 @@ import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
 import { extractAuthorizationFromRequest } from '../utils/requestExtract'
 
-
 export const roleActivityApi = Router()
 
 const API_END_POINTS = {

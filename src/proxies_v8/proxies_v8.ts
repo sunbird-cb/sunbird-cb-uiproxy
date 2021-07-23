@@ -215,6 +215,10 @@ proxiesV8.use('/org/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 
+proxiesV8.use('/user/*',
+  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)
+
 // proxiesV8.use('/api/framework/*',
 //   // tslint:disable-next-line: max-line-length
 //   proxyCreatorQML(express.Router(), `${CONSTANTS.KONG_API_BASE}`, '/api/')

@@ -18,6 +18,12 @@ const API_END_POINTS = {
     getProfilePageMeta: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/getProfilePageMeta`,
     getUserRegistry: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/getUserRegistry`,
     getUserRegistryById: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/getUserRegistryById`,
+    kongCreateUser: `${CONSTANTS.KONG_API_BASE}/user/v3/create`,
+    kongSearchUser: `${CONSTANTS.KONG_API_BASE}/user/v1/search`,
+    kongSendWelcomeEmail: `${CONSTANTS.KONG_API_BASE}/private/user/v1/notification/email`,
+    kongUpdateUser: `${CONSTANTS.KONG_API_BASE}/user/private/v1/update`,
+    kongUserRead: (userId: string) => `${CONSTANTS.KONG_API_BASE}/user/v2/read/${userId}`,
+    kongUserResetPassword: `${CONSTANTS.KONG_API_BASE}/private/user/v1/password/reset`,
     // tslint:disable-next-line: object-literal-sort-keys
     migrateRegistry: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/migrateRegistry`,
     resetPassword: `${CONSTANTS.LEARNER_SERVICE_API_BASE}/private/user/v1/password/reset`,
@@ -202,6 +208,8 @@ const failedToCreateUser = 'Not able to create User in SunBird'
 const failedToReadUser = 'Failed to read newly created user details.'
 const failedToCreateUserInOpenSaber = 'Not able to create User Registry in Opensaber'
 const createUserFailed = 'ERROR CREATING USER >'
+const failedToUpdateUser = 'Failed to update user profile data.'
+const unknownError = 'Failed due to unknown reason'
 
 profileDeatailsApi.post('/createUser', async (req, res) => {
     try {
@@ -218,8 +226,13 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
         const searchresponse = await axios({
             ...axiosRequestConfig,
             data: { request: { query: '', filters: { email: sbemail_.toLowerCase() } } },
+	    headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req),
+            },
             method: 'POST',
-            url: API_END_POINTS.searchSb,
+            url: API_END_POINTS.kongSearchUser,
         })
         if (searchresponse.data.result.response.count > 0) {
             res.status(400).send(emailAdressExist)
@@ -238,7 +251,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                     'x-authenticated-user-token': extractUserToken(req),
                 },
                 method: 'POST',
-                url: API_END_POINTS.createSb,
+                url: API_END_POINTS.kongCreateUser,
             })
             if (response.data.responseCode === 'CLIENT_ERROR') {
                 res.status(400).send(failedToCreateUser)
@@ -253,10 +266,38 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                         'x-authenticated-user-token': extractUserToken(req),
                     },
                     method: 'GET',
-                    url: API_END_POINTS.userRead(sbUserId),
+                    url: API_END_POINTS.kongUserRead(sbUserId),
                 })
                 if (sbUserReadResponse.data.params.status !== 'success') {
                     res.status(500).send(failedToReadUser)
+                    return
+                }
+
+                const sbProfileUpdateReq = {
+                    profileDetails: {
+                        employmentDetails: {
+                            departmentName: sbChannel,
+                        },
+                        personalDetails: {
+                            firstname: sbfirstName_,
+                            primaryEmail: sbemail_,
+                            surname: sblastName_,
+                        },
+                    },
+                    userId: sbUserId,
+                }
+
+                const sbUserProfileUpdateResp = await axios({
+                    ...axiosRequestConfig,
+                    data: { request: sbProfileUpdateReq },
+                    headers: {
+                        Authorization: CONSTANTS.SB_API_KEY,
+                    },
+                    method: 'PATCH',
+                    url: API_END_POINTS.kongUpdateUser,
+                })
+                if (sbUserProfileUpdateResp.data.responseCode === 'CLIENT_ERROR') {
+                    res.status(400).send(failedToUpdateUser)
                     return
                 }
 
@@ -270,8 +311,11 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                 const passwordResetResponse = await axios({
                     ...axiosRequestConfig,
                     data: { request: passwordResetRequest },
+                    headers: {
+                        Authorization: CONSTANTS.SB_API_KEY,
+                    },
                     method: 'POST',
-                    url: API_END_POINTS.resetPassword,
+                    url: API_END_POINTS.kongUserResetPassword,
                 })
                 logInfo('Received response from password reset -> ' + passwordResetResponse)
 
@@ -293,8 +337,11 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                     const welcomeMailResponse = await axios({
                         ...axiosRequestConfig,
                         data: { request: welcomeMailRequest },
+                        headers: {
+                            Authorization: CONSTANTS.SB_API_KEY,
+                        },
                         method: 'POST',
-                        url: API_END_POINTS.sendWelcomeEmail,
+                        url: API_END_POINTS.kongSendWelcomeEmail,
                     })
 
                     if (welcomeMailResponse.data.params.status !== 'success') {
@@ -306,36 +353,35 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                     return
                 }
 
-                const personalDetailsRegistry: IPersonalDetails = {
-                    firstname: sbfirstName_,
-                    primaryEmail: sbemail_,
-                    surname: sblastName_,
-                    userName: sbUserReadResponse.data.result.response.userName,
+                const sbUserProfileResponse: Partial<ISunbirdbUserResponse> = {
+                    email: sbemail_, firstName: sbfirstName_, lastName: sblastName_,
+                    userId: sbUserId,
                 }
-                const userRegistry = getUserRegistry(personalDetailsRegistry, sbChannel)
-                const userRegistryResponse = await axios({
-                    ...axiosRequestConfig,
-                    data: userRegistry,
-                    headers: {
-                        wid: sbUserId,
-                    },
-                    method: 'POST',
-                    url: API_END_POINTS.createOSUserRegistry(sbUserId),
-                })
-                if (userRegistryResponse.data === null) {
-                    res.status(500).send(failedToCreateUserInOpenSaber)
-                } else {
-                    const sbUserProfileResponse: Partial<ISunbirdbUserResponse> = {
-                        email: sbemail_, firstName: sbfirstName_, lastName: sblastName_,
-                        userId: sbUserId,
-                    }
-                    res.send(sbUserProfileResponse)
-                }
+                res.send(sbUserProfileResponse)
             }
         }
     } catch (err) {
         logError(createUserFailed, err)
         res.status((err && err.response && err.response.status) || 500).send(err)
+    }
+})
+
+profileDeatailsApi.patch('/updateUser', async (req, res) => {
+    try {
+        const response = await axios.patch(API_END_POINTS.kongUpdateUser, req.body, {
+            ...axiosRequestConfig,
+            headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+            },
+        })
+        res.status(response.status).send(response.data)
+    } catch (err) {
+        logError(failedToUpdateUser + err)
+        res.status((err && err.response && err.response.status) || 500).send(
+            (err && err.response && err.response.data) || {
+                error: unknownError,
+            }
+        )
     }
 })
 

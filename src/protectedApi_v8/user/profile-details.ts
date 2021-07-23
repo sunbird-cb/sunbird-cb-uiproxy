@@ -226,7 +226,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
         const searchresponse = await axios({
             ...axiosRequestConfig,
             data: { request: { query: '', filters: { email: sbemail_.toLowerCase() } } },
-	    headers: {
+            headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
                 // tslint:disable-next-line: all
                 'x-authenticated-user-token': extractUserToken(req),

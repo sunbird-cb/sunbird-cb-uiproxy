@@ -1,5 +1,4 @@
 import cluster from 'cluster'
-import * as os from 'os'
 import { Server } from './server'
 
 // Code to inject axios retry logic
@@ -13,9 +12,10 @@ if (cluster.isMaster) {
   if (CONSTANTS.IS_DEVELOPMENT) {
     cluster.fork()
   } else {
-    os.cpus().forEach(() => {
+    const threadCount = CONSTANTS.CLUSTER_THREAD
+    for (let index = 0; index < threadCount; index++) {
       cluster.fork()
-    })
+    }
   }
 
   cluster.on('exit', () => {

@@ -137,29 +137,34 @@ const respond403 = (req: Request, res: Response) => {
 
 const respond419 = (req: Request, res: Response) => {
     const REQ_URL = req.path
-    const err = ({ msg: 'API WHITELIST :: Unauthorized access for API [ ' + REQ_URL + ' ]', url: REQ_URL })
-    logError(err.msg)
-    res.status(419)
-    res.setHeader('location', redirectToLogin(req))
-    res.send(
-    {
-        id: 'api.error',
-        ver: '1.0',
-        // tslint:disable-next-line: object-literal-sort-keys
-        ts: dateFormat(new Date(), 'yyyy-mm-dd HH:MM:ss:lo'),
-        params:
+    if (_.includes(REQ_URL, '/reset')) {
+        res.send('You are logged out!')
+    } else {
+        const err = ({ msg: 'API WHITELIST :: Unauthorized access for API [ ' + REQ_URL + ' ]', url: REQ_URL })
+        logError(err.msg)
+        res.status(419)
+        res.setHeader('location', redirectToLogin(req))
+        res.send(
         {
-            resmsgid: uuidv1(),
+            id: 'api.error',
+            ver: '1.0',
             // tslint:disable-next-line: object-literal-sort-keys
-            msgid: null,
-            status: 'failed',
-            err: 'UNAUTHORIZED_ERROR',
-            errmsg: 'UNAUTHORIZED: Access is denied',
-        },
-        responseCode: 'UNAUTHORIZED',
-        redirectUrl: redirectToLogin(req),
-        result: {},
-    })
+            ts: dateFormat(new Date(), 'yyyy-mm-dd HH:MM:ss:lo'),
+            params:
+            {
+                resmsgid: uuidv1(),
+                // tslint:disable-next-line: object-literal-sort-keys
+                msgid: null,
+                status: 'failed',
+                err: 'UNAUTHORIZED_ERROR',
+                errmsg: 'UNAUTHORIZED: Access is denied',
+            },
+            responseCode: 'UNAUTHORIZED',
+            redirectUrl: redirectToLogin(req),
+            result: {},
+        })
+    }
+
     res.end()
 }
 
@@ -174,7 +179,7 @@ const respond419 = (req: Request, res: Response) => {
 export const isAllowed = () => {
     // tslint:disable-next-line: only-arrow-functions
     return function(req: Request, res: Response, next: NextFunction) {
-        if (CONSTANTS.PORTAL_API_WHITELIST_CHECK) {
+        if (CONSTANTS.PORTAL_API_WHITELIST_CHECK === 'true') {
             if (shouldAllow(req)) {
                 next()
             } else {

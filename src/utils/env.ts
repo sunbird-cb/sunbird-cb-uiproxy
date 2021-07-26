@@ -19,7 +19,7 @@ export const CONSTANTS = {
   CONTENT_HIERARCHY: env.CONTENT_HIERARCHY || 'http://localhost:5903/hierarchy',
   CONTENT_META_FETCH_API_BASE: env.CONTENT_META_FETCH_API_BASE || 'http://localhost:5906',
   CONTENT_STORE_DEVELOPMENT_BASE: '',
-  CORS_ENVIRONMENT: env.CORS_ENVIRONMENT || 'dev',
+  CORS_ENVIRONMENT: env.CORS_ENVIRONMENT || 'prod',
   COUNTER: 'http://localhost:5903',
   DEFAULT_ORG: env.DEFAULT_ORG || 'dopt',
   DEFAULT_ROOT_ORG: env.DEFAULT_ROOT_ORG || 'igot',

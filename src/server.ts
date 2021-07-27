@@ -21,7 +21,7 @@ import { logInfo, logSuccess } from './utils/logger'
 const cookieParser = require('cookie-parser')
 const healthcheck = require('express-healthcheck')
 
-import { apiWhiteListLogger } from './utils/apiWhiteList'
+import { apiWhiteListLogger, isAllowed } from './utils/apiWhiteList'
 
 function haltOnTimedOut(req: Express.Request, _: Express.Response, next: NextFunction) {
   if (!req.timedout) {
@@ -47,6 +47,9 @@ export class Server {
     const sessionConfig = getSessionConfig()
     this.app.use(expressSession(sessionConfig))
     this.app.all('*', apiWhiteListLogger())
+    if (CONSTANTS.PORTAL_API_WHITELIST_CHECK === 'true') {
+      this.app.all('*', isAllowed())
+    }
     this.setCookie()
     this.setKeyCloak(sessionConfig)
     this.authoringProxies()

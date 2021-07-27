@@ -179,11 +179,12 @@ const respond419 = (req: Request, res: Response) => {
 export const isAllowed = () => {
     // tslint:disable-next-line: only-arrow-functions
     return function(req: Request, res: Response, next: NextFunction) {
+        let REQ_URL = req.path
         if (CONSTANTS.PORTAL_API_WHITELIST_CHECK === 'true') {
-            if (shouldAllow(req)) {
+            if (shouldAllow(req) || _.includes(REQ_URL, '/resource')) {
                 next()
             } else {
-                let REQ_URL = req.path
+
                 // Pattern match for URL
                 // tslint:disable-next-line: no-any
                 _.forEach(API_LIST.URL_PATTERN, (url: any) => {
@@ -231,6 +232,26 @@ const redirectToLogin = (req: Request) => {
     const redirectUrl = 'protected/v8/resource/'
     return `https://${req.get('host')}/${redirectUrl}` // 'http://localhost:3003/protected/v8/user/resource/'
 }
+
+const validateAPI = (req: Request, res: Response, next: NextFunction) => {
+    let REQ_URL_ORIGINAL = req.path
+    // tslint:disable-next-line: no-any
+    _.forEach(API_LIST.URL_PATTERN, (url: any) => {
+        const regExp = pathToRegexp(url)
+        if (regExp.test(REQ_URL_ORIGINAL)) {
+            REQ_URL_ORIGINAL = url
+            return false
+        }
+        return true
+    })
+    if (_.get(API_LIST.URL, REQ_URL_ORIGINAL)) {
+        next()
+    } else {
+        // If API is not whitelisted
+        logInfo('Portal_API_WHITELIST_LOGGER: URL not whitelisted')
+        respond403(req, res)
+    }
+}
 /**
  * This function is used for checking whether
  */
@@ -248,8 +269,8 @@ export function apiWhiteListLogger() {
                 respond419(req, res)
             } else {
                 // Pattern match for URL
-                next()
                 logInfo('In WhilteList Call========' + REQ_URL)
+                validateAPI(req, res, next)
             }
         } else {
             next()

@@ -1,3 +1,4 @@
+const _                 = require('lodash')
 import request from 'request'
 import { CONSTANTS } from './env'
 
@@ -10,6 +11,9 @@ export const PERMISSION_HELPER = {
             reqObj.session.userId = userData.result.response.id ? userData.result.response.id : userData.result.response.userId
             reqObj.session.userName = userData.result.response.userName
             reqObj.session.userRoles = userData.result.response.roles
+            if (!_.includes(reqObj.session.userRoles, 'PUBLIC')) {
+                reqObj.session.userRoles.push('PUBLIC')
+            }
             // tslint:disable-next-line: no-any
             reqObj.session.save((error: any) => {
                 if (error) {

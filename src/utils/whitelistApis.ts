@@ -236,6 +236,48 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/data/v1/system/settings/get/orgTypeList': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/org/v1/search': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/user/private/v1/assign/role': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/user/v1/search': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/org/v1/read': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/org/v1/update': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/protected/v8/connections/connections/recommended/userDepartment': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -677,6 +719,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/protected/v8/user/profileDetails/updateUser': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/reset': {
             checksNeeded: [],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -692,6 +741,9 @@ export const API_LIST = {
         '/proxies/v8/user/v1/read/:id',
         '/proxies/v8/sunbirdigot/read',
         '/proxies/v8/discussion/user/v1/create',
+        '/proxies/v8/data/v1/system/settings/get/orgTypeList',
+        '/proxies/v8/org/v1/search',
+        '/proxies/v8/org/v1/update',
         '/proxies/v8/discussion/topic/:id/:slug',
         '/proxies/v8/learner/course/v1/user/enrollment/list/:id',
         '/proxies/v8/read/content-progres/:do_id',
@@ -713,6 +765,9 @@ export const API_LIST = {
         '/proxies/v8/action/content/v3/review/:do_id',
         '/proxies/v8/discussion/recent',
         '/proxies/v8/action/content/v3/publish/',
+        '/proxies/v8/user/private/v1/assign/role',
+        '/proxies/v8/user/v1/search',
+        '/proxies/v8/org/v1/read',
         '/protected/v8/user/profileDetails/test',
         '/protected/v8/resource/',
         '/protected/v8/user/details',
@@ -779,6 +834,7 @@ export const API_LIST = {
         '/protected/v8/catalog',
         '/protected/v8/scroing/fetch',
         '/protected/v8/portal/mdo/deptAction/userrole',
+        '/protected/v8/user/profileDetails/updateUser',
         '/reset',
     ],
 }

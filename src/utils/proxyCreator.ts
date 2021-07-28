@@ -181,15 +181,20 @@ export function proxyCreatorSunbirdSearch(route: Router, targetUrl: string, _tim
 
 export function proxyCreatorToAppentUserId(route: Router, targetUrl: string, _timeout = 10000): Router {
   route.all('/*', (req, res) => {
-    const userId = extractUserIdFromRequest(req).split(':')
-
+    const originalUrl = req.originalUrl
+    const lastIndex = originalUrl.lastIndexOf('/')
+    const subStr = originalUrl.substr(lastIndex).substr(1).split('-').length
+    let userId = extractUserIdFromRequest(req).split(':')[2]
+    if (subStr === 5 && (originalUrl.substr(lastIndex).substr(1))) {
+      userId = originalUrl.substr(lastIndex).substr(1)
+    }
     // tslint:disable-next-line: no-console
     console.log('REQ_URL_ORIGINAL proxyCreatorToAppentUserId', req.originalUrl)
 
     proxy.web(req, res, {
       changeOrigin: true,
       ignorePath: true,
-      target: targetUrl + userId[userId.length - 1],
+      target: targetUrl + userId, // [userId.length - 1],
     })
   })
   return route

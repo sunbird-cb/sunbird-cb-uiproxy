@@ -31,6 +31,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/authApi/content/v3/read/:do_id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/protected/v8/user/details': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -293,6 +300,13 @@ export const API_LIST = {
             ],
         },
         '/proxies/v8/data/v1/system/settings/get/orgTypeConfig': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/discussion/tags': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -747,6 +761,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/protected/v8/frac/addDataNodeBulk': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/reset': {
             checksNeeded: [],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -758,6 +779,7 @@ export const API_LIST = {
     URL_PATTERN:
     [
         '/authApi/content/v3/create',
+        '/authApi/content/v3/read/:do_id',
         '/proxies/v8/api/user/v2/read',
         '/proxies/v8/user/v1/read/:id',
         '/proxies/v8/sunbirdigot/read',
@@ -860,6 +882,7 @@ export const API_LIST = {
         '/protected/v8/scroing/fetch',
         '/protected/v8/portal/mdo/deptAction/userrole',
         '/protected/v8/user/profileDetails/updateUser',
+        '/protected/v8/frac/addDataNodeBulk',
         '/reset',
     ],
 }

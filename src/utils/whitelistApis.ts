@@ -810,6 +810,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/protected/v8/connections/update/connection': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/reset': {
             checksNeeded: [],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -931,6 +938,7 @@ export const API_LIST = {
         '/protected/v8/user/profileDetails/updateUser',
         '/protected/v8/frac/addDataNodeBulk',
         '/protected/v8/roleactivity',
+        '/protected/v8/connections/update/connection',
         '/reset',
     ],
 }

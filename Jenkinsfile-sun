@@ -41,20 +41,21 @@ node('build-slave') {
                 sh("bash -x build.sh ${build_tag} ${env.NODE_NAME} ${docker_server}")
             }
 
+	      
                stage('ArchiveArtifacts') {
+	       	   sh ("echo ${build_tag} > build_tag.txt")
                    archiveArtifacts "metadata.json"		     
-		   sh ("echo ${build_tag} > build_tag.txt")
                     archiveArtifacts "build_tag.txt" 
                     currentBuild.description = "${build_tag}"
                 }
-
+            
         }
     }
     catch (err) {
         currentBuild.result = "FAILURE"
         throw err
-            }
+    }
     finally {
         email_notify()
-            }
+    }
 }

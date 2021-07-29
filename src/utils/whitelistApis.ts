@@ -537,6 +537,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/protected/v8/user/profileRegistry/createUserRegistry': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/protected/v8/portal/deptAction': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -901,6 +908,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/protected/v8/user/notifications/settings': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/reset': {
             checksNeeded: [],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -983,6 +997,7 @@ export const API_LIST = {
         '/protected/v8/user/profileDetails/createUser',
         '/protected/v8/user/profileRegistry/getUserRegistryByUser/:id',
         '/protected/v8/user/profileRegistry/createUserRegistryV2',
+        '/protected/v8/user/profileRegistry/createUserRegistry',
         '/protected/v8/portal/deptAction',
         '/protected/v8/workflowhandler/historyByApplicationId/:applicationId',
         '/protected/v8/user/autocomplete/:query',
@@ -1035,6 +1050,7 @@ export const API_LIST = {
         '/protected/v8/user/profileRegistry/getMasterNationalities',
         '/protected/v8/user/profileRegistry/getMasterLanguages',
         '/protected/v8/user/profileRegistry/getProfilePageMeta',
+        '/protected/v8/user/notifications/settings',
         '/reset',
     ],
 }

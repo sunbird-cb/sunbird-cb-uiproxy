@@ -54,5 +54,8 @@ node('build-slave') {
         currentBuild.result = "FAILURE"
         throw err
     }
-
+    
+    finally {
+        email_notify()
+    }
 }

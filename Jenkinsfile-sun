@@ -53,8 +53,8 @@ node('build-slave') {
     catch (err) {
         currentBuild.result = "FAILURE"
         throw err
-    }
+            }
     finally {
         email_notify()
-    }
+            }
 }

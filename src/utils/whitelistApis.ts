@@ -348,6 +348,55 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/discussion/v2/topics': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/discussion/tags/': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/discussion/user/:userKey/bookmarks': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/discussion/user/:userKey/upvoted': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/discussion/user/:userKey/downvoted': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/discussion/categories': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/user/v1/autocomplete/:key': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/protected/v8/connections/connections/recommended/userDepartment': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -869,6 +918,13 @@ export const API_LIST = {
         '/proxies/v8/data/v1/system/settings/get/orgTypeConfig',
         '/proxies/v8/learnervm/private/content/v3/publish/:do_id',
         '/proxies/v8/learnervm/private/content/v3/review/:do_id',
+        '/proxies/v8/discussion/v2/topics',
+        '/proxies/v8/discussion/tags/',
+        '/proxies/v8/discussion/user/:userKey/bookmarks',
+        '/proxies/v8/discussion/user/:userKey/upvoted',
+        '/proxies/v8/discussion/user/:userKey/downvoted',
+        '/proxies/v8/discussion/categories',
+        '/proxies/v8/user/v1/autocomplete/:key',
         '/protected/v8/user/profileDetails/test',
         '/protected/v8/resource/',
         '/protected/v8/user/details',

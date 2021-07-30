@@ -922,6 +922,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/protected/v8/user/profileRegistry/searchUserRegistry': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/reset': {
             checksNeeded: [],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -1059,6 +1066,7 @@ export const API_LIST = {
         '/protected/v8/user/profileRegistry/getMasterLanguages',
         '/protected/v8/user/profileRegistry/getProfilePageMeta',
         '/protected/v8/user/notifications/settings',
+        '/protected/v8/user/profileRegistry/searchUserRegistry',
         '/reset',
     ],
 }

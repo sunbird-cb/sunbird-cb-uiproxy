@@ -38,6 +38,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/authApi/content/v3/update/:do_id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/protected/v8/user/details': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -941,6 +948,7 @@ export const API_LIST = {
     [
         '/authApi/content/v3/create',
         '/authApi/content/v3/read/:do_id',
+        '/authApi/content/v3/update/:do_id',
         '/proxies/v8/api/user/v2/read',
         '/proxies/v8/api/user/v2/read/:id',
         '/proxies/v8/user/v1/read/:id',

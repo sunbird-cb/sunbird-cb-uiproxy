@@ -1034,6 +1034,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/protected/v8/roleactivity/lead': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/reset': {
             checksNeeded: [],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -1187,6 +1194,7 @@ export const API_LIST = {
         '/protected/v8/workflowhandler/userWfSearch',
         '/protected/v8/user/profileRegistry/getUserRegistryById',
         '/protected/v8/user/profileRegistry/getUserRegistryById/:id',
+        '/protected/v8/roleactivity/lead',
         '/reset',
     ],
 }

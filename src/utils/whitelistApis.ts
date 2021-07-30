@@ -38,6 +38,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/authApi/content/v3/update/:do_id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/protected/v8/user/details': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -929,6 +936,48 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/protected/v8/workflowhandler/transition': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/protected/v8/workflowhandler/nextActionSearch/:serviceName/:state': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/protected/v8/workflowhandler/historyByApplicationIdAndWfId/:applicationId/:wfId': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/protected/v8/workflowhandler/workflowProcess/:wfId': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/protected/v8/workflowhandler/updateUserProfileWf': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/protected/v8/workflowhandler/userWfSearch': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/reset': {
             checksNeeded: [],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -941,6 +990,7 @@ export const API_LIST = {
     [
         '/authApi/content/v3/create',
         '/authApi/content/v3/read/:do_id',
+        '/authApi/content/v3/update/:do_id',
         '/proxies/v8/api/user/v2/read',
         '/proxies/v8/api/user/v2/read/:id',
         '/proxies/v8/user/v1/read/:id',
@@ -1067,6 +1117,12 @@ export const API_LIST = {
         '/protected/v8/user/profileRegistry/getProfilePageMeta',
         '/protected/v8/user/notifications/settings',
         '/protected/v8/user/profileRegistry/searchUserRegistry',
+        '/protected/v8/workflowhandler/transition',
+        '/protected/v8/workflowhandler/nextActionSearch/:serviceName/:state',
+        '/protected/v8/workflowhandler/historyByApplicationIdAndWfId/:applicationId/:wfId',
+        '/protected/v8/workflowhandler/workflowProcess/:wfId',
+        '/protected/v8/workflowhandler/updateUserProfileWf',
+        '/protected/v8/workflowhandler/userWfSearch',
         '/reset',
     ],
 }

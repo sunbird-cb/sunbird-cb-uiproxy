@@ -61,6 +61,35 @@ const urlChecks = {
             return reject('User doesn\'t have appropriate roles')
         }
     },
+    // tslint:disable-next-line: no-any
+    SCOPE_CHECK : (resolve: any, reject: any, req: Request, rolesForURL: any, REQ_URL: any) => {
+        logInfo('Portal_API_WHITELIST_SCOPE_CHECK : Middleware for URL [ ' + REQ_URL + ' ]')
+        const orgData = (_.get(req, 'session.orgs')) ? _.get(req, 'session.orgs') : []
+        const orgId = (_.get(req, 'query.orgId')) ? _.get(req, 'query.orgId') : ''
+        if (_.isEmpty(orgId) || _.isEmpty(orgData)) {
+            return reject('User doesn\'t have appropriate organisation for scope check 1')
+        }
+        // tslint:disable-next-line: no-any
+        let scopeRoles: any = []
+        // tslint:disable-next-line: no-any
+        orgData.forEach((element: any) => {
+            if (orgId === element.organisationId) {
+                scopeRoles = element.roles
+            }
+        })
+
+        if (_.isEmpty(scopeRoles)) {
+            return reject('User doesn\'t have appropriate organisation for scope check')
+        }
+
+        if (_.includes(rolesForURL, 'ALL') && scopeRoles.length > 0) {
+            resolve()
+        } else if (_.intersection(rolesForURL, scopeRoles).length > 0) {
+            resolve()
+        } else {
+            return reject('User doesn\'t have appropriate roles')
+        }
+    },
 }
 
 /**

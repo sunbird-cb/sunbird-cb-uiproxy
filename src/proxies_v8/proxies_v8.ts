@@ -184,7 +184,7 @@ proxiesV8.use('/read/content-progres/*',
 )
 
 proxiesV8.use('/api/user/v2/read',
-  proxyCreatorToAppentUserId(express.Router(), `${CONSTANTS.SUNBIRD_PROXY_API_BASE}/user/v2/read/`)
+  proxyCreatorToAppentUserId(express.Router(), `${CONSTANTS.KONG_API_BASE}/user/v2/read/`)
 )
 
 proxiesV8.use([

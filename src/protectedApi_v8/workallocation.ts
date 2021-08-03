@@ -5,7 +5,7 @@ import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
 import { logError } from '../utils/logger'
 import { ERROR } from '../utils/message'
-import { extractAuthorizationFromRequest, extractUserIdFromRequest, extractUserToken } from '../utils/requestExtract'
+import { extractAuthorizationFromRequest, extractUserId, extractUserToken } from '../utils/requestExtract'
 
 const workallocationV1Path = 'v1/workallocation'
 const workallocationV2Path = 'v2/workallocation'
@@ -35,7 +35,7 @@ const workOrderIdFailedMessage = 'NO_WORKORDER_ID'
 
 workAllocationApi.post('/add', async (req, res) => {
     try {
-        const userId = extractUserIdFromRequest(req)
+        const userId = extractUserId(req)
         if (!userId) {
             res.status(400).send(userIdFailedMessage)
             return
@@ -64,7 +64,7 @@ workAllocationApi.post('/add', async (req, res) => {
 
 workAllocationApi.post('/update', async (req, res) => {
     try {
-        const userId = extractUserIdFromRequest(req)
+        const userId = extractUserId(req)
         if (!userId) {
             res.status(400).send(userIdFailedMessage)
             return
@@ -139,7 +139,7 @@ workAllocationApi.get('/user/autocomplete/:searchTerm', async (req, res) => {
 
 workAllocationApi.post('/v2/add', async (req, res) => {
     try {
-        const userId = extractUserIdFromRequest(req)
+        const userId = extractUserId(req)
         if (!userId) {
             res.status(400).send(userIdFailedMessage)
             return
@@ -171,7 +171,7 @@ workAllocationApi.post('/v2/add', async (req, res) => {
 
 workAllocationApi.post('/v2/update', async (req, res) => {
     try {
-        const userId = extractUserIdFromRequest(req)
+        const userId = extractUserId(req)
         if (!userId) {
             res.status(400).send(userIdFailedMessage)
             return
@@ -201,7 +201,7 @@ workAllocationApi.post('/v2/update', async (req, res) => {
 })
 workAllocationApi.post('/add/workorder', async (req, res) => {
     try {
-        const userId = extractUserIdFromRequest(req)
+        const userId = extractUserId(req)
         if (!userId) {
             res.status(400).send(userIdFailedMessage)
             return
@@ -231,7 +231,7 @@ workAllocationApi.post('/add/workorder', async (req, res) => {
 })
 workAllocationApi.post('/update/workorder', async (req, res) => {
     try {
-        const userId = extractUserIdFromRequest(req)
+        const userId = extractUserId(req)
         if (!userId) {
             res.status(400).send(userIdFailedMessage)
             return
@@ -345,7 +345,7 @@ workAllocationApi.get('/getWorkAllocationById/:workAllocationId', async (req, re
 
 workAllocationApi.post('/copy/workOrder', async (req, res) => {
     try {
-        const userId = extractUserIdFromRequest(req)
+        const userId = extractUserId(req)
         if (!userId) {
             res.status(400).send(userIdFailedMessage)
             return

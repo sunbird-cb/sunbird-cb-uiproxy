@@ -1,23 +1,27 @@
 'use strict'
 const CHECK = {
     ROLE: 'ROLE_CHECK',
+    SCOPE: 'SCOPE_CHECK',
 }
 
 // Valid Roles
 const ROLE = {
-    COMPENTENCY_REVIEWER: 'competencyReviewer',
+    CBC_ADMIN: 'CBC_ADMIN',
+    CBC_MEMBER: 'CBC_MEMBER',
     CONTENT_CREATOR: 'CONTENT_CREATOR',
+    CONTENT_PUBLISHER: 'CONTENT_PUBLISHER',
+    CONTENT_REVIEWER: 'CONTENT_REVIEWER',
     EDITOR: 'EDITOR',
-    FRAC_ACCESS_COMPENTENCY: 'fracAccessCompetency',
-    FRAC_ADMIN: 'fracAdmin',
-    FRAC_REVIEWER_ONE: 'fracReviewerOne',
-    FRAC_REVIEWER_TWO: 'fracReviewerTwo',
-    IFU_MEMBER: 'IFUMember',
-    MDO_ADMIN: 'MDO ADMIN',
-    MEMBER: 'Member',
+    FRAC_ACCESS_COMPENTENCY: 'FRAC_COMPETENCY_MEMBER',
+    FRAC_ADMIN: 'FRAC_ADMIN',
+    FRAC_COMPETENCY_REVIEWER: 'FRAC_COMPETENCY_REVIEWER',
+    FRAC_REVIEWER_ONE: 'FRAC_REVIEWER_L1',
+    FRAC_REVIEWER_TWO: 'FRAC_REVIEWER_L2',
+    IFU_MEMBER: 'IFU_MEMBER',
+    MDO_ADMIN: 'MDO_ADMIN',
     PUBLIC: 'PUBLIC',
-    PUBLISHER: 'PUBLISHER',
-    REVIEWER: 'REVIEWER',
+    SPV_ADMIN: 'SPV_ADMIN',
+    WAT_MEMBER: 'WAT_MEMBER',
 }
 
 // All api list validations
@@ -661,6 +665,9 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.PUBLIC,
+            ],
+            SCOPE_CHECK: [
+                ROLE.MDO_ADMIN,
             ],
         },
         '/protected/v8/workallocation/user/autocomplete/:searchTerm': {

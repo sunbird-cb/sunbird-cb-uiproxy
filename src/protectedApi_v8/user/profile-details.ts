@@ -8,6 +8,9 @@ import { logError, logInfo } from '../../utils/logger'
 import { ERROR } from '../../utils/message'
 import { extractUserIdFromRequest, extractUserToken } from '../../utils/requestExtract'
 
+const uuidv1            = require('uuid/v1')
+const dateFormat        = require('dateformat')
+
 const API_END_POINTS = {
     createOSUserRegistry: (userId: string) => `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/create/profile?userId=${userId}`,
     createSb: `${CONSTANTS.KONG_API_BASE}/user/v3/create`,
@@ -235,7 +238,24 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
             url: API_END_POINTS.kongSearchUser,
         })
         if (searchresponse.data.result.response.count > 0) {
-            res.status(400).send(emailAdressExist)
+            res.status(400).send(
+            {
+                id: 'api.error.createUser',
+                ver: '1.0',
+                // tslint:disable-next-line: object-literal-sort-keys
+                ts: dateFormat(new Date(), 'yyyy-mm-dd HH:MM:ss:lo'),
+                params:
+                {
+                    resmsgid: uuidv1(),
+                    // tslint:disable-next-line: object-literal-sort-keys
+                    msgid: null,
+                    status: 'failed',
+                    err: 'USR_EMAIL_EXISTS',
+                    errmsg: emailAdressExist,
+                },
+                responseCode: 'USR_EMAIL_EXISTS',
+                result: {},
+            })
             return
         } else {
             const sbUserProfile: Partial<ISBUser> = {

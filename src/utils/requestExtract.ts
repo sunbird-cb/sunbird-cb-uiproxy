@@ -32,8 +32,7 @@ export const extractUserId = (req: IAuthorizedRequest): string => {
     return wid
   }
   const userId = (req.kauth && req.kauth.grant.access_token.content.sub) as string
-  const returnUserId = userId.split(':')[2]
-  return returnUserId
+  return userId.split(':')[2]
 }
 
 export const extractUserNameFromRequest = (req: IAuthorizedRequest) =>

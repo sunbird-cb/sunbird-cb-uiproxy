@@ -49,14 +49,13 @@ progressApi.get('/', async (req, res) => {
       res.status(400).send(ERROR.ERROR_NO_ORG_DATA)
       return
     }
-    const userId = extractUserId(req)
     const response = await axios({
       ...axiosRequestConfig,
       headers: {
         rootOrg,
       },
       method: 'GET',
-      url: API_END_POINTS.hash(userId),
+      url: API_END_POINTS.hash(extractUserId(req)),
     })
     // tslint:disable-next-line: no-console
     console.log('get progress api response : ', response)
@@ -81,9 +80,8 @@ progressApi.post('/', async (req, res) => {
       res.status(400).send(ERROR.ERROR_NO_ORG_DATA)
       return
     }
-    const userId = extractUserId(req)
     const response = await axios.post(
-      API_END_POINTS.hash(userId),
+      API_END_POINTS.hash(extractUserId(req)),
       req.body,
       {
         ...axiosRequestConfig,

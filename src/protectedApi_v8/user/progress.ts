@@ -4,7 +4,7 @@ import { axiosRequestConfig } from '../../configs/request.config'
 import { CONSTANTS } from '../../utils/env'
 import { logError, logErrorHeading, logInfo } from '../../utils/logger'
 import { ERROR } from '../../utils/message'
-import { extractUserIdFromRequest } from '../../utils/requestExtract'
+import { extractUserId, extractUserIdFromRequest } from '../../utils/requestExtract'
 
 const API_END_POINTS = {
   // tslint:disable-next-line: max-line-length
@@ -49,13 +49,14 @@ progressApi.get('/', async (req, res) => {
       res.status(400).send(ERROR.ERROR_NO_ORG_DATA)
       return
     }
+    const userId = extractUserId(req)
     const response = await axios({
       ...axiosRequestConfig,
       headers: {
         rootOrg,
       },
       method: 'GET',
-      url: API_END_POINTS.hash(extractUserIdFromRequest(req)),
+      url: API_END_POINTS.hash(userId),
     })
     // tslint:disable-next-line: no-console
     console.log('get progress api response : ', response)
@@ -80,8 +81,9 @@ progressApi.post('/', async (req, res) => {
       res.status(400).send(ERROR.ERROR_NO_ORG_DATA)
       return
     }
+    const userId = extractUserId(req)
     const response = await axios.post(
-      API_END_POINTS.hash(extractUserIdFromRequest(req)),
+      API_END_POINTS.hash(userId),
       req.body,
       {
         ...axiosRequestConfig,

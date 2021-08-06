@@ -936,7 +936,7 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        '/protected/v8/roleactivity': {
+        '/protected/v8/roleactivity/:txt': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -1055,21 +1055,7 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        '/protected/v8/roleactivity/lead': {
-            checksNeeded: [CHECK.ROLE],
-            // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [
-                ROLE.PUBLIC,
-            ],
-        },
         '/protected/v8/workallocation/copy/workOrder': {
-            checksNeeded: [CHECK.ROLE],
-            // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [
-                ROLE.PUBLIC,
-            ],
-        },
-        '/protected/v8/roleactivity/information': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -1214,7 +1200,7 @@ export const API_LIST = {
         '/protected/v8/portal/mdo/deptAction/userrole',
         '/protected/v8/user/profileDetails/updateUser',
         '/protected/v8/frac/addDataNodeBulk',
-        '/protected/v8/roleactivity',
+        '/protected/v8/roleactivity/:txt',
         '/protected/v8/connections/update/connection',
         '/protected/v8/workflowhandler/userWFApplicationFieldsSearch',
         '/protected/v8/user/details/detailV1',
@@ -1231,9 +1217,7 @@ export const API_LIST = {
         '/protected/v8/workflowhandler/userWfSearch',
         '/protected/v8/user/profileRegistry/getUserRegistryById',
         '/protected/v8/user/profileRegistry/getUserRegistryById/:id',
-        '/protected/v8/roleactivity/lead',
         '/protected/v8/workallocation/copy/workOrder',
-        '/protected/v8/roleactivity/information',
         '/reset',
     ],
 }

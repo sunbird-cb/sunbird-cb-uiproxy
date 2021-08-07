@@ -1076,6 +1076,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/protected/v8/user/evaluate/assessment/submit/v2': {
+            checksNeeded: [],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
     [
@@ -1227,5 +1234,6 @@ export const API_LIST = {
         '/protected/v8/workallocation/copy/workOrder',
         '/protected/v8/user/evaluate/assessment/submit/v2',
         '/reset',
+        '/protected/v8/user/evaluate/assessment/submit/v2',
     ],
 }

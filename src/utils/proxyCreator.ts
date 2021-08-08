@@ -59,14 +59,11 @@ proxy.on('proxyRes', (proxyRes: any, req: any, _res: any, ) => {
 
   if (req.originalUrl.includes('/discussion/user/v1/create')) {
     // tslint:disable-next-line: no-console
-    console.log('proxyRes==>', proxyRes)
-    // tslint:disable-next-line: no-console
     console.log('_res==>', _res)
-    const uid = proxyRes.result.userId.uid
     const nodebbToken = '722686c6-2a2e-4b22-addf-c427261fbdc6'
     if (req.session) {
       req.session.nodebb_authorization_token = nodebbToken
-      req.session._uid = uid
+      req.session._uid = 1
     }
   }
 })

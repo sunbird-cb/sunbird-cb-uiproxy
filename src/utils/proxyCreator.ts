@@ -21,18 +21,18 @@ proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
   // condition has been added to set the session in nodebb req header
   if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/v1/create')) {
     proxyReq.setHeader('nodebb_authorization_token', 'Bearer ' + req.session.nodebb_authorization_token)
-
+    proxyReq.originalUrl = `${proxyReq.originalUrl}?_uid=${req.session.uid}`
+    // tslint:disable-next-line: no-console
+    console.log('url==>', proxyReq.originalUrl)
+    if (req.body) {
+      req.body._uid = req.session.uid
+    }
   }
 
   if (req.body) {
-    req.body._uid = req.session.uid
     const bodyData = JSON.stringify(req.body)
     proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData))
     proxyReq.write(bodyData)
-  } else {
-    req.originalUrl = `${req.originalUrl}?_uid=${req.session.uid}`
-    // tslint:disable-next-line: no-console
-    console.log('url==>', req.originalUrl)
   }
 })
 

@@ -21,12 +21,16 @@ proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
   // condition has been added to set the session in nodebb req header
   if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/v1/create')) {
     proxyReq.setHeader('nodebb_authorization_token', 'Bearer ' + req.session.nodebb_authorization_token)
+
   }
 
   if (req.body) {
+    req.body.uid = req.session.uid
     const bodyData = JSON.stringify(req.body)
     proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData))
     proxyReq.write(bodyData)
+  } else {
+    req.originalUrl = `${req.originalUrl}?_uid=${req.session.uid}`
   }
 })
 
@@ -59,13 +63,17 @@ proxy.on('proxyRes', (proxyRes: any, req: any, _res: any, ) => {
   // tslint:disable-next-line: no-any
   proxyRes.on('data', (data: any) => {
     if (req.originalUrl.includes('/discussion/user/v1/create')) {
-      // tslint:disable-next-line: no-console
-      console.log('_res==>', data)
+
+      if ((proxyRes.statusCode === 200 || proxyRes.statusCode === 201)) {
+        data = JSON.parse(data.toString('utf-8'))
+        // tslint:disable-next-line: no-console
+        console.log('_res==>', data)
+        req.session.uid = data.result.userId.uid
+      }
       const nodebbToken = '722686c6-2a2e-4b22-addf-c427261fbdc6'
       if (req.session) {
         req.session.nodebb_authorization_token = nodebbToken
       }
-      req.session._uid = 1
     }
   })
 

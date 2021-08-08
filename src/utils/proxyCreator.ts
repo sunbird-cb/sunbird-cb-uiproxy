@@ -25,12 +25,14 @@ proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
   }
 
   if (req.body) {
-    req.body.uid = req.session.uid
+    req.body._uid = req.session.uid
     const bodyData = JSON.stringify(req.body)
     proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData))
     proxyReq.write(bodyData)
   } else {
     req.originalUrl = `${req.originalUrl}?_uid=${req.session.uid}`
+    // tslint:disable-next-line: no-console
+    console.log('url==>', req.originalUrl)
   }
 })
 

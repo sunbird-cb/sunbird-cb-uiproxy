@@ -21,6 +21,7 @@ proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
   // condition has been added to set the session in nodebb req header
   if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/v1/create')) {
     proxyReq.setHeader('nodebb_authorization_token', 'Bearer ' + req.session.nodebb_authorization_token)
+    proxyReq.query._uid = req.session._uid
   }
 
   if (req.body) {
@@ -57,9 +58,15 @@ proxy.on('proxyRes', (proxyRes: any, req: any, _res: any, ) => {
   // }
 
   if (req.originalUrl.includes('/discussion/user/v1/create')) {
-    const nodebb_auth_token = proxyRes.headers.nodebb_auth_token
+    // tslint:disable-next-line: no-console
+    console.log('proxyRes==>', proxyRes)
+    // tslint:disable-next-line: no-console
+    console.log('_res==>', _res)
+    const uid = proxyRes.result.userId.uid
+    const nodebbToken = '722686c6-2a2e-4b22-addf-c427261fbdc6'
     if (req.session) {
-      req.session.nodebb_authorization_token = nodebb_auth_token
+      req.session.nodebb_authorization_token = nodebbToken
+      req.session._uid = uid
     }
   }
 })

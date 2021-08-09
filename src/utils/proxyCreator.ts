@@ -20,70 +20,24 @@ proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
 
   // condition has been added to set the session in nodebb req header
   if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/v1/create')) {
-    proxyReq.setHeader('nodebb_authorization_token', req.session.nodebb_authorization_token)
-    // tslint:disable-next-line: no-console
-    console.log('url==>', proxyReq.path)
-    if (req.body) {
-      req.body._uid = req.session.uid
-    } else {
-      proxyReq.path += `?_uid=${req.session.uid}`
-    }
-    // tslint:disable-next-line: no-console
-    console.log('req.body=====>', req.body)
+    proxyReq.setHeader('Authorization', 'Bearer ' + req.session.nodebb_authorization_token)
   }
 
   if (req.body) {
     const bodyData = JSON.stringify(req.body)
     proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData))
     proxyReq.write(bodyData)
-    // tslint:disable-next-line: no-console
-    console.log('body data=====>', bodyData)
   }
 })
 
 // tslint:disable-next-line: no-any
 proxy.on('proxyRes', (proxyRes: any, req: any, _res: any, ) => {
-  // res.removeHeader('access-control-allow-origin')
-  delete proxyRes.headers['access-control-allow-origin']
-  // write user session with roles
-  // if (req.originalUrl.includes('/user/v2/read')) {
-  //   // tslint:disable-next-line: no-any
-  //   proxyRes.on('data', (data: any) => {
-  //     if ((proxyRes.statusCode === 200 || proxyRes.statusCode === 201)) {
-  //       data = JSON.parse(data.toString('utf-8'))
-  //       const roles = data.result.response.roles
-  //       req.session.userId = data.result.response.id ? data.result.response.id : data.result.response.userId
-  //       req.session.userName = data.result.response.userName
-  //       req.session.userRoles = roles
-  //       // console.log(req);
-  //       // tslint:disable-next-line: only-arrow-functions
-  //       req.session.save(function(error: string) {
-  //         if (error) {
-  //           // tslint:disable-next-line: no-console
-  //           console.log(error)
-  //         }
-  //       })
-  //     }
-  //   })
-  // }
-
-  // tslint:disable-next-line: no-any
-  proxyRes.on('data', (data: any) => {
-    if (req.originalUrl.includes('/discussion/user/v1/create')) {
-
-      if ((proxyRes.statusCode === 200 || proxyRes.statusCode === 201)) {
-        data = JSON.parse(data.toString('utf-8'))
-        // tslint:disable-next-line: no-console
-        console.log('_res==>', data)
-        req.session.uid = data.result.userId.uid
-      }
-      const nodebbToken = '722686c6-2a2e-4b22-addf-c427261fbdc6'
-      if (req.session) {
-        req.session.nodebb_authorization_token = nodebbToken
-      }
+  if (req.originalUrl.includes('/discussion/user/v1/create')) {
+    const nodebb_auth_token = proxyRes.headers.nodebb_auth_token
+    if (req.session) {
+      req.session.nodebb_authorization_token = nodebb_auth_token
     }
-  })
-
+  }
 })
 
 export function proxyCreatorRoute(route: Router, targetUrl: string, timeout = 10000): Router {
@@ -203,20 +157,15 @@ export function proxyCreatorSunbirdSearch(route: Router, targetUrl: string, _tim
 
 export function proxyCreatorToAppentUserId(route: Router, targetUrl: string, _timeout = 10000): Router {
   route.all('/*', (req, res) => {
-    const originalUrl = req.originalUrl
-    const lastIndex = originalUrl.lastIndexOf('/')
-    const subStr = originalUrl.substr(lastIndex).substr(1).split('-').length
-    let userId = extractUserIdFromRequest(req).split(':')[2]
-    if (subStr === 5 && (originalUrl.substr(lastIndex).substr(1))) {
-      userId = originalUrl.substr(lastIndex).substr(1)
-    }
+    const userId = extractUserIdFromRequest(req).split(':')
+
     // tslint:disable-next-line: no-console
     console.log('REQ_URL_ORIGINAL proxyCreatorToAppentUserId', req.originalUrl)
 
     proxy.web(req, res, {
       changeOrigin: true,
       ignorePath: true,
-      target: targetUrl + userId, // [userId.length - 1],
+      target: targetUrl + userId[userId.length - 1],
     })
   })
   return route

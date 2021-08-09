@@ -16,7 +16,7 @@ const apiEndpoints = {
   getConnectionRequestsData: `${CONSTANTS.KONG_API_BASE}/connections/profile/fetch/requested`,
   getConnectionRequestsReceivedData: `${CONSTANTS.KONG_API_BASE}/connections/profile/fetch/requests/received`,
   getConnectionSuggestsData: `${CONSTANTS.KONG_API_BASE}/connections/profile/find/suggests`,
-  getUserOrgName: (userId: string) => `${CONSTANTS.KONG_API_BASE}/user/v1/search?userId=${userId}`,
+  getUserOrgName: `${CONSTANTS.KONG_API_BASE}/user/v1/search`,
   getUserRegistryById: (userId: string) => `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/search/profile?userId=${userId}`,
   postConnectionAddData: `${CONSTANTS.KONG_API_BASE}/connections/add`,
   postConnectionRecommendationData: `${CONSTANTS.KONG_API_BASE}/connections/profile/find/recommended`,
@@ -383,7 +383,7 @@ connectionsV2Api.post('/v2/connections/recommended/userDepartment', async (req, 
             query: '',
         },
     }
-    const url = `${apiEndpoints.getUserOrgName(userId)}`
+    const url = `${apiEndpoints.getUserOrgName}`
     const responseDetails = await axios.post(
         url,
         body,

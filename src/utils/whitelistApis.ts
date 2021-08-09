@@ -471,6 +471,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/private/content/v3/update/:do_id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/protected/v8/connections/connections/recommended/userDepartment': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -1201,6 +1208,7 @@ export const API_LIST = {
         '/proxies/v8/user/private/v1/migrate',
         '/proxies/v8/user/private/v1/assign/role/userrole',
         '/proxies/v8/learnervm/private/content/v3/retire/',
+        '/proxies/v8/private/content/v3/update/:do_id',
         '/protected/v8/user/profileDetails/test',
         '/protected/v8/resource/',
         '/protected/v8/user/details',

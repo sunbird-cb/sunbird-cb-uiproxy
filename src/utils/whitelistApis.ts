@@ -436,6 +436,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/user/private/v1/migrate': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/proxies/v8/user/private/v1/assign/role/userrole': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -451,6 +458,13 @@ export const API_LIST = {
             ],
         },
         '/proxies/v8/discussion/v2/posts/:id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/learnervm/private/content/v3/retire/': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -922,7 +936,7 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        '/protected/v8/roleactivity': {
+        '/protected/v8/roleactivity/:txt': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -1041,13 +1055,6 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        '/protected/v8/roleactivity/lead': {
-            checksNeeded: [CHECK.ROLE],
-            // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [
-                ROLE.PUBLIC,
-            ],
-        },
         '/protected/v8/workallocation/copy/workOrder': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -1056,6 +1063,13 @@ export const API_LIST = {
             ],
         },
         '/reset': {
+            checksNeeded: [],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/protected/v8/user/evaluate/assessment/submit/v2': {
             checksNeeded: [],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -1121,7 +1135,9 @@ export const API_LIST = {
         '/proxies/v8/discussion/categories',
         '/proxies/v8/user/v1/autocomplete/:key',
         '/proxies/v8/user/v1/migrate',
+        '/proxies/v8/user/private/v1/migrate',
         '/proxies/v8/user/private/v1/assign/role/userrole',
+        '/proxies/v8/learnervm/private/content/v3/retire/',
         '/protected/v8/user/profileDetails/test',
         '/protected/v8/resource/',
         '/protected/v8/user/details',
@@ -1191,7 +1207,7 @@ export const API_LIST = {
         '/protected/v8/portal/mdo/deptAction/userrole',
         '/protected/v8/user/profileDetails/updateUser',
         '/protected/v8/frac/addDataNodeBulk',
-        '/protected/v8/roleactivity',
+        '/protected/v8/roleactivity/:txt',
         '/protected/v8/connections/update/connection',
         '/protected/v8/workflowhandler/userWFApplicationFieldsSearch',
         '/protected/v8/user/details/detailV1',
@@ -1208,8 +1224,8 @@ export const API_LIST = {
         '/protected/v8/workflowhandler/userWfSearch',
         '/protected/v8/user/profileRegistry/getUserRegistryById',
         '/protected/v8/user/profileRegistry/getUserRegistryById/:id',
-        '/protected/v8/roleactivity/lead',
         '/protected/v8/workallocation/copy/workOrder',
         '/reset',
+        '/protected/v8/user/evaluate/assessment/submit/v2',
     ],
 }

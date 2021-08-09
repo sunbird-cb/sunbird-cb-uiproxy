@@ -53,7 +53,7 @@ export const CONSTANTS = {
   KHUB_GRAPH_DATA: env.KHUB_GRAPH_DATA || 'http://localhost:3016',
   KHUB_SEARCH_BASE: env.KHUB_SEARCH_BASE || 'http://localhost:3014',
   KNOWLEDGE_MW_API_BASE: env.KNOWLEDGE_MW_API_BASE || 'http://knowledge-mw-service:5000',
-  KONG_API_BASE: env.KONG_API_BASE || 'http://kong:8000',
+  KONG_API_BASE: env.KONG_API_BASE || 'https://igot-dev.in/api',
   POST_ASSESSMENT_BASE: env.POST_ASSESSMENT_BASE || 'http://localhost.com',
   POST_ASSESSMENT_CLIENT_ID: env.POST_ASSESSMENT_CLIENT_ID || '',
   POST_ASSESSMENT_CLIENT_SECRET: env.POST_ASSESSMENT_CLIENT_SECRET ||

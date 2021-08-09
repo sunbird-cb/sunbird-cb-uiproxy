@@ -97,6 +97,7 @@ profileRegistryApi.get('/getUserRegistry/:osid', async (req, res) => {
   }
 })
 
+// @Deprecated - Use Read API
 // tslint:disable-next-line: no-identical-functions
 profileRegistryApi.get('/getUserRegistryById', async (req, res) => {
   try {

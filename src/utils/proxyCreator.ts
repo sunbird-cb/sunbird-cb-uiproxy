@@ -21,12 +21,10 @@ proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
   proxyReq.setHeader('x-authenticated-userid', extractUserIdFromRequest(req))
 
   // condition has been added to set the session in nodebb req header
-  if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/') && req.session) {
+  if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/') && req.body) {
 
-    if (req.session && req.body) {
-      req.body._uid = req.session.uid
-    }
-  
+     req.body._uid = req.session.uid
+
   }
   if (req.body) {
     const bodyData = JSON.stringify(req.body)

@@ -25,12 +25,8 @@ proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
 
     if (req.session && req.body) {
       req.body._uid = req.session.uid
-    } else {
-      req.originalUrl += `?_uid=${req.session.uid}`
     }
-    // tslint:disable-next-line: no-console
-    console.log('REQ_URL_ORIGINAL discussion', req.originalUrl)
-
+  
   }
   if (req.body) {
     const bodyData = JSON.stringify(req.body)

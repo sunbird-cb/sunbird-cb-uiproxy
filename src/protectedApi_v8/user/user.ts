@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { autocompleteApi } from './auto-complete'
 import { userContentApi } from './content'
 import { detailsApi } from './details'
+import { evaluateApi } from './evaluate'
 import { historyApi } from './history'
 import { mandatoryContent } from './mandatoryContent'
 import { notificationsApi } from './notifications'
@@ -14,16 +15,17 @@ import { rolesApi } from './roles'
 import { telemetryApi } from './telemetry'
 
 export const user = Router()
-user.use('/autocomplete', autocompleteApi) // Validate
-user.use('/content', userContentApi) // Validate
-user.use('/details', detailsApi) // Validate
-user.use('/history', historyApi) // Validate
-user.use('/notifications', notificationsApi) // Validate
-user.use('/preference', protectedPreference) // Validate
-user.use('/profileDetails', profileDeatailsApi) // Validate
+user.use('/autocomplete', autocompleteApi) // Valid
+user.use('/evaluate', evaluateApi) // Valid
+user.use('/content', userContentApi) // Valid
+user.use('/details', detailsApi) // Valid
+user.use('/history', historyApi) // Valid
+user.use('/notifications', notificationsApi) // Valid
+user.use('/preference', protectedPreference) // Valid
+user.use('/profileDetails', profileDeatailsApi) // Valid
 user.use('/progress', progressApi)
-user.use('/rating', ratingApi) // Validate
-user.use('/roles', rolesApi) // Validate
-user.use('/telemetry', telemetryApi) // Validate
-user.use('/mandatoryContent', mandatoryContent) // Validate
-user.use('/profileRegistry', profileRegistryApi) // Validate
+user.use('/rating', ratingApi) // Valid
+user.use('/roles', rolesApi) // Valid
+user.use('/telemetry', telemetryApi) // Valid
+user.use('/mandatoryContent', mandatoryContent) // Valid
+user.use('/profileRegistry', profileRegistryApi) // Valid

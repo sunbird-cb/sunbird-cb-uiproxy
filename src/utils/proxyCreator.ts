@@ -20,13 +20,15 @@ proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
 
   // condition has been added to set the session in nodebb req header
   if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/v1/create')) {
-    proxyReq.setHeader('nodebb_authorization_token', 'Bearer ' + req.session.nodebb_authorization_token)
+    proxyReq.setHeader('nodebb_auth_token', req.session.nodebb_auth_token)
   }
 
   if (req.body) {
     const bodyData = JSON.stringify(req.body)
     proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData))
     proxyReq.write(bodyData)
+    // tslint:disable-next-line: no-console
+    console.log('body data=====>', bodyData)
   }
 })
 
@@ -56,12 +58,14 @@ proxy.on('proxyRes', (proxyRes: any, req: any, _res: any, ) => {
   //   })
   // }
 
+  // tslint:disable-next-line: no-any
   if (req.originalUrl.includes('/discussion/user/v1/create')) {
-    const nodebb_auth_token = proxyRes.headers.nodebb_auth_token
+    const nodebbAuthtoken = '722686c6-2a2e-4b22-addf-c427261fbdc6'
     if (req.session) {
-      req.session.nodebb_authorization_token = nodebb_auth_token
+      req.session.nodebb_auth_token = nodebbAuthtoken
     }
   }
+
 })
 
 export function proxyCreatorRoute(route: Router, targetUrl: string, timeout = 10000): Router {

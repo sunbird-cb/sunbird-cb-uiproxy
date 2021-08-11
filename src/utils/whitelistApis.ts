@@ -471,6 +471,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/private/content/v3/update/:do_id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/protected/v8/connections/connections/recommended/userDepartment': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -936,7 +943,7 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        '/protected/v8/roleactivity': {
+        '/protected/v8/roleactivity/:txt': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -1055,13 +1062,6 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        '/protected/v8/roleactivity/lead': {
-            checksNeeded: [CHECK.ROLE],
-            // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [
-                ROLE.PUBLIC,
-            ],
-        },
         '/protected/v8/workallocation/copy/workOrder': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -1071,6 +1071,76 @@ export const API_LIST = {
         },
         '/reset': {
             checksNeeded: [],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/protected/v8/user/evaluate/assessment/submit/v2': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/protected/v8/connections/v2/connections/recommended/userDepartment' : {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/protected/v8/connections/v2/connections/recommended': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/protected/v8/connections/v2/connections/requests/received': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/protected/v8/connections/v2/connections/established': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/protected/v8/connections/v2/connections/established/:id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/protected/v8/connections/v2/connections/requested': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/protected/v8/connections/v2/add/connection': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/protected/v8/connections/v2/connections/suggests': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/protected/v8/connections/v2/update/connection': {
+            checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.PUBLIC,
@@ -1138,6 +1208,7 @@ export const API_LIST = {
         '/proxies/v8/user/private/v1/migrate',
         '/proxies/v8/user/private/v1/assign/role/userrole',
         '/proxies/v8/learnervm/private/content/v3/retire/',
+        '/proxies/v8/private/content/v3/update/:do_id',
         '/protected/v8/user/profileDetails/test',
         '/protected/v8/resource/',
         '/protected/v8/user/details',
@@ -1207,7 +1278,7 @@ export const API_LIST = {
         '/protected/v8/portal/mdo/deptAction/userrole',
         '/protected/v8/user/profileDetails/updateUser',
         '/protected/v8/frac/addDataNodeBulk',
-        '/protected/v8/roleactivity',
+        '/protected/v8/roleactivity/:txt',
         '/protected/v8/connections/update/connection',
         '/protected/v8/workflowhandler/userWFApplicationFieldsSearch',
         '/protected/v8/user/details/detailV1',
@@ -1224,8 +1295,17 @@ export const API_LIST = {
         '/protected/v8/workflowhandler/userWfSearch',
         '/protected/v8/user/profileRegistry/getUserRegistryById',
         '/protected/v8/user/profileRegistry/getUserRegistryById/:id',
-        '/protected/v8/roleactivity/lead',
         '/protected/v8/workallocation/copy/workOrder',
         '/reset',
+        '/protected/v8/user/evaluate/assessment/submit/v2',
+        '/protected/v8/connections/v2/connections/recommended/userDepartment',
+        '/protected/v8/connections/v2/connections/recommended',
+        '/protected/v8/connections/v2/connections/requests/received',
+        '/protected/v8/connections/v2/connections/established',
+        '/protected/v8/connections/v2/connections/established/:id',
+        '/protected/v8/connections/v2/connections/requested',
+        '/protected/v8/connections/v2/add/connection',
+        '/protected/v8/connections/v2/connections/suggests',
+        '/protected/v8/connections/v2/update/connection',
     ],
 }

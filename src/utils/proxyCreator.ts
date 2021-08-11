@@ -21,9 +21,16 @@ proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
   proxyReq.setHeader('x-authenticated-userid', extractUserIdFromRequest(req))
 
   // condition has been added to set the session in nodebb req header
-  if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/')) {
+  if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/v1/create') && req.session) {
+
+    if (req.body) {
+      req.body._uid = req.session.uid
+    } else {
+      req.originalUrl += `?_uid=${req.session.uid}`
+    }
     // tslint:disable-next-line: no-console
-    console.log('test log ========================>  test log')
+    console.log('REQ_URL_ORIGINAL discussion', req.originalUrl)
+
   }
   if (req.body) {
     const bodyData = JSON.stringify(req.body)
@@ -67,8 +74,7 @@ proxy.on('proxyRes', (proxyRes: any, req: any, _res: any, ) => {
         data = JSON.parse(data.toString('utf-8'))
         // tslint:disable-next-line: no-console
         console.log('_res==>', data)
-        /* tslint:disable-next-line */
-        // req.session.uid = data.result.userId.uid
+        req.session.uid = data.result.userId.uid
       }
       const nodebbToken = '722686c6-2a2e-4b22-addf-c427261fbdc6'
       if (req.session) {

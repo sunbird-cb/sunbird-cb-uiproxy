@@ -133,7 +133,6 @@ export function proxyCreatorSunbird(route: Router, targetUrl: string, _timeout =
     // tslint:disable-next-line: no-console
     console.log('REQ_URL_ORIGINAL proxyCreatorSunbird', req.originalUrl)
     if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/v1/create') && req.session) {
-      req.originalUrl += `?_uid=${req.session.uid}`
       // tslint:disable-next-line: no-console
       console.log('REQ_URL_ORIGINAL discussion', req.originalUrl)
       if (req.session && req.body) {

@@ -21,6 +21,7 @@ proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
   // condition has been added to set the session in nodebb req header
   if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/v1/create')) {
     proxyReq.setHeader('nodebb_auth_token', req.session.nodebb_auth_token)
+    proxyReq.path += `?_uid=${req.session.uid}`
     if (req.body) {
       req.body._uid = req.session.uid
     } else {

@@ -3,7 +3,7 @@ import { CONSTANTS } from '../utils/env'
 
 import { catalogApi } from './catalog'
 import { cohortsApi } from './cohorts'
-import { connectionsApi } from './connections'
+import { connectionsV2Api } from './connections_v2'
 import { contentValidationApi } from './contentValidation'
 import { discussionHubApi } from './discussionHub/discussionHub'
 import {  fracApi } from './frac'
@@ -33,7 +33,7 @@ protectedApiV8.use('/discussionHub', discussionHubApi) // Valid
 protectedApiV8.use('/scrom', scromApi) // Valid
 protectedApiV8.use('/social', socialApi) // Valid
 protectedApiV8.use('/user', user) // Valid
-protectedApiV8.use('/connections', connectionsApi) // Valid
+protectedApiV8.use('/connections', connectionsV2Api) // Valid
 protectedApiV8.use('/portal', portalApi) // Valid
 protectedApiV8.use('/scroing', scoringApi) // Valid
 protectedApiV8.use('/workflowhandler', workflowHandlerApi) // Valid

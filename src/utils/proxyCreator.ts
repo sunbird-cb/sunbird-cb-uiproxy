@@ -4,6 +4,8 @@ import { extractUserIdFromRequest, extractUserToken } from '../utils/requestExtr
 import { CONSTANTS } from './env'
 import { logInfo } from './logger'
 
+const _ = require('lodash')
+
 const proxyCreator = (timeout = 10000) => createProxyServer({
   timeout,
 })
@@ -12,7 +14,7 @@ const PROXY_SLUG = '/proxies/v8'
 
 // tslint:disable-next-line: no-any
 proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
-  proxyReq.setHeader('X-Channel-Id', CONSTANTS.X_Channel_Id)
+  proxyReq.setHeader('X-Channel-Id', (_.get(req, 'session.rootOrgId')) ? _.get(req, 'session.rootOrgId') : CONSTANTS.X_Channel_Id)
   // tslint:disable-next-line: max-line-length
   proxyReq.setHeader('Authorization', CONSTANTS.SB_API_KEY)
   proxyReq.setHeader('x-authenticated-user-token', extractUserToken(req))

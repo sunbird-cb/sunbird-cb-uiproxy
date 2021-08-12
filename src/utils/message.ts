@@ -1,4 +1,5 @@
 export const ERROR = {
+  ERROR_NO_DEPT_DATA: 'Department details not available',
   ERROR_NO_ORG_DATA: 'ERROR_NO_ORG_DATA',
   GENERAL_ERR_MSG: 'Failed due to unknown reason',
   fetchErrorElasticSearch: 'ERROR_ELASTIC_SEARCH_CONNECTION',

@@ -4,6 +4,8 @@ import { extractUserIdFromRequest, extractUserToken } from '../utils/requestExtr
 import { CONSTANTS } from './env'
 import { logInfo } from './logger'
 
+const _ = require('lodash')
+
 const proxyCreator = (timeout = 10000) => createProxyServer({
   timeout,
 })
@@ -12,26 +14,23 @@ const PROXY_SLUG = '/proxies/v8'
 
 // tslint:disable-next-line: no-any
 proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
-  proxyReq.setHeader('X-Channel-Id', CONSTANTS.X_Channel_Id)
+  proxyReq.setHeader('X-Channel-Id', (_.get(req, 'session.rootOrgId')) ? _.get(req, 'session.rootOrgId') : CONSTANTS.X_Channel_Id)
   // tslint:disable-next-line: max-line-length
   proxyReq.setHeader('Authorization', CONSTANTS.SB_API_KEY)
   proxyReq.setHeader('x-authenticated-user-token', extractUserToken(req))
   proxyReq.setHeader('x-authenticated-userid', extractUserIdFromRequest(req))
 
   // condition has been added to set the session in nodebb req header
-  if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/v1/create')) {
-    proxyReq.setHeader('nodebb_authorization_token', req.session.nodebb_authorization_token)
-    // tslint:disable-next-line: no-console
-    console.log('url==>', proxyReq.path)
+  /* tslint:disable-next-line */
+  if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/v1/create') && req.session) {
+
     if (req.body) {
       req.body._uid = req.session.uid
-    } else {
-      proxyReq.path += `?_uid=${req.session.uid}`
     }
     // tslint:disable-next-line: no-console
-    console.log('req.body=====>', req.body)
-  }
+    console.log('REQ_URL_ORIGINAL discussion', proxyReq.path)
 
+  }
   if (req.body) {
     const bodyData = JSON.stringify(req.body)
     proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData))
@@ -66,7 +65,6 @@ proxy.on('proxyRes', (proxyRes: any, req: any, _res: any, ) => {
   //     }
   //   })
   // }
-
   // tslint:disable-next-line: no-any
   proxyRes.on('data', (data: any) => {
     if (req.originalUrl.includes('/discussion/user/v1/create')) {
@@ -140,10 +138,19 @@ export function proxyCreatorLearner(route: Router, targetUrl: string, _timeout =
 
 export function proxyCreatorSunbird(route: Router, targetUrl: string, _timeout = 10000): Router {
   route.all('/*', (req, res) => {
-
     // tslint:disable-next-line: no-console
     console.log('REQ_URL_ORIGINAL proxyCreatorSunbird', req.originalUrl)
-    const url = removePrefix(`${PROXY_SLUG}`, req.originalUrl)
+    let url = removePrefix(`${PROXY_SLUG}`, req.originalUrl)
+    if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/v1/create') && req.session) {
+      if (req.originalUrl.includes('?')) {
+        url = `${url}&_uid=${req.session.uid}`
+      } else {
+        url = `${url}?_uid=${req.session.uid}`
+      }
+      // tslint:disable-next-line: no-console
+      console.log('REQ_URL_ORIGINAL proxyCreatorSunbird  ======= discussion', url)
+    }
+
     proxy.web(req, res, {
       changeOrigin: true,
       ignorePath: true,

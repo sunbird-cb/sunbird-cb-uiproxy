@@ -5,16 +5,16 @@ import { axiosRequestConfig } from '../../configs/request.config'
 import { getUserUID, getWriteApiToken } from '../../utils/discussionHub-helper'
 import { CONSTANTS } from '../../utils/env'
 import { logError, logInfo } from '../../utils/logger'
-import { extractUserIdFromRequest } from '../../utils/requestExtract'
+import { extractUserIdFromRequest, extractUserToken } from '../../utils/requestExtract'
 
 const API_ENDPOINTS = {
-    getPopularTopics: `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/popular`,
-    getRecentTopics: `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/recent`,
-    getTopTopics: `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/top`,
-    getUnreadTopics: `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/unread`,
-    getUnreadTopicsTotal: `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/unread/total`,
+    getPopularTopics: `${CONSTANTS.KONG_API_BASE}/nodebb/api/popular`,
+    getRecentTopics: `${CONSTANTS.KONG_API_BASE}/nodebb/api/recent`,
+    getTopTopics: `${CONSTANTS.KONG_API_BASE}/nodebb/api/top`,
+    getUnreadTopics: `${CONSTANTS.KONG_API_BASE}/nodebb/auth/api/unread`,
+    getUnreadTopicsTotal: `${CONSTANTS.KONG_API_BASE}/nodebb/auth/api/unread/total`,
     // tslint:disable-next-line: object-literal-sort-keys
-    getTopicDetails: (tid: number) => `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/topic/${tid}`,
+    getTopicDetails: (tid: number) => `${CONSTANTS.KONG_API_BASE}/nodebb/auth/api/topic/${tid}`,
 }
 
 export const topicsApi = Router()
@@ -31,7 +31,12 @@ topicsApi.get('/recent', async (req, res) => {
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}, Url: ${url}`)
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { rootOrg } }
+            { ...axiosRequestConfig, headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                rootOrg,
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+             } }
         )
         res.send(response.data)
     } catch (err) {
@@ -49,7 +54,12 @@ topicsApi.get('/top', async (req, res) => {
         const url = API_ENDPOINTS.getTopTopics
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { rootOrg } }
+            { ...axiosRequestConfig, headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                rootOrg,
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+             } }
         )
         res.send(response.data)
     } catch (err) {
@@ -68,7 +78,12 @@ topicsApi.get('/popular', async (req, res) => {
         const url = API_ENDPOINTS.getPopularTopics
         const response = await axios.get(
             `${url}?page=${pageNo}`,
-            { ...axiosRequestConfig, headers: { rootOrg } }
+            { ...axiosRequestConfig, headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                rootOrg,
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+             } }
         )
         res.send(response.data)
     } catch (err) {
@@ -87,7 +102,14 @@ topicsApi.get('/unread', async (req, res) => {
         const url = API_ENDPOINTS.getUnreadTopics + `?_uid=${userUid}`
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { authorization: getWriteApiToken() } }
+            { ...axiosRequestConfig, headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                nodebb_authorization_token: getWriteApiToken(),
+                rootOrg,
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+             },
+             }
         )
         res.send(response.data)
     } catch (err) {
@@ -106,7 +128,13 @@ topicsApi.get('/unread/total', async (req, res) => {
         const url = API_ENDPOINTS.getUnreadTopicsTotal + `?_uid=${userUid}`
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { authorization: getWriteApiToken() } }
+            { ...axiosRequestConfig, headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                nodebb_authorization_token: getWriteApiToken(),
+                rootOrg,
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+             } }
         )
         res.send(response.data)
     } catch (err) {
@@ -128,7 +156,13 @@ topicsApi.get('/:tid', async (req, res) => {
         const url = API_ENDPOINTS.getTopicDetails(tid) + `?page=${pageNo}&_uid=${userUid}&sort=${sort}`
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { authorization: getWriteApiToken() } }
+            { ...axiosRequestConfig, headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                nodebb_authorization_token: getWriteApiToken(),
+                rootOrg,
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+             } }
         )
         res.send(response.data)
     } catch (err) {

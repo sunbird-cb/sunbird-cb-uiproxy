@@ -5,25 +5,25 @@ import { axiosRequestConfig } from '../../configs/request.config'
 import { getUserUID, getWriteApiAdminUID, getWriteApiToken } from '../../utils/discussionHub-helper'
 import { CONSTANTS } from '../../utils/env'
 import { logError, logInfo } from '../../utils/logger'
-import { extractUserIdFromRequest } from '../../utils/requestExtract'
+import { extractUserIdFromRequest, extractUserToken } from '../../utils/requestExtract'
 
 const API_ENDPOINTS = {
-    createTopic: `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/v2/topics`,
-    createUser: `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/v2/users`,
+    createTopic: `${CONSTANTS.KONG_API_BASE}/nodebb/auth/api/v2/topics`,
+    createUser: `${CONSTANTS.KONG_API_BASE}/nodebb/auth/api/v2/users`,
     // tslint:disable-next-line: object-literal-sort-keys
     createOrUpdateTags: (topicId: string | number) =>
-        `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/v2/topics/${topicId}/tags`,
-    followTopic: (topicId: string | number) => `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/v2/topics/${topicId}/follow`,
-    replyToTopic: (topicId: string | number) => `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/v2/topics/${topicId}`,
-    votePost: (postId: string | number) => `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/v2/posts/${postId}/vote`,
+        `${CONSTANTS.KONG_API_BASE}/nodebb/auth/api/v2/topics/${topicId}/tags`,
+    followTopic: (topicId: string | number) => `${CONSTANTS.KONG_API_BASE}/nodebb/auth/api/v2/topics/${topicId}/follow`,
+    replyToTopic: (topicId: string | number) => `${CONSTANTS.KONG_API_BASE}/nodebb/auth/api/v2/topics/${topicId}`,
+    votePost: (postId: string | number) => `${CONSTANTS.KONG_API_BASE}/nodebb/auth/api/v2/posts/${postId}/vote`,
     // tslint:disable-next-line: object-literal-sort-keys
-    bookmarkPost: (postId: string | number) => `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/v2/posts/${postId}/bookmark`,
+    bookmarkPost: (postId: string | number) => `${CONSTANTS.KONG_API_BASE}/nodebb/auth/api/v2/posts/${postId}/bookmark`,
 }
 
 export const writeApi = Router()
 
 // tslint:disable-next-line: no-any
-export async function createDiscussionHubUser(user: any): Promise<any> {
+export async function createDiscussionHubUser(req: any , user: any): Promise<any> {
     logInfo('Starting to create new user into NodeBB DiscussionHub...')
     // tslint:disable-next-line: no-try-promise
     try {
@@ -36,7 +36,12 @@ export async function createDiscussionHubUser(user: any): Promise<any> {
             const response = await axios.post(
                 url,
                 request1,
-                { ...axiosRequestConfig, headers: { authorization: getWriteApiToken() } }
+                { ...axiosRequestConfig, headers: {
+                    Authorization: CONSTANTS.SB_API_KEY,
+                    nodebb_authorization_token: getWriteApiToken(),
+                    // tslint:disable-next-line: all
+                    'x-authenticated-user-token': extractUserToken(req)
+                 } }
             ).catch((err) => {
                 logError('ERROR ON method createDiscussionHubUser api call to nodebb DiscussionHub>', err)
                 reject(err)
@@ -63,7 +68,12 @@ writeApi.post('/topics', async (req, res) => {
                 ...req.body,
                 _uid: userUid,
             },
-            { ...axiosRequestConfig, headers: { authorization: getWriteApiToken() } }
+            { ...axiosRequestConfig, headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                nodebb_authorization_token: getWriteApiToken(),
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+             } }
         )
         if (response && response.data) {
             res.send(response.data)
@@ -89,7 +99,12 @@ writeApi.post('/topics/:topicId', async (req, res) => {
                 ...req.body,
                 _uid: userUid,
             },
-            { ...axiosRequestConfig, headers: { authorization: getWriteApiToken() } }
+            { ...axiosRequestConfig, headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                nodebb_authorization_token: getWriteApiToken(),
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+             } }
         )
         if (response && response.data) {
             res.send(response.data)
@@ -106,7 +121,7 @@ writeApi.post('/users', async (req, res) => {
         const rootOrg = getRootOrg(req)
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
-        const response = await createDiscussionHubUser(req.body)
+        const response = await createDiscussionHubUser(req, req.body)
         res.send(response.data)
     } catch (err) {
         logError('ERROR ON writeAPI POST /users >', err)
@@ -128,7 +143,12 @@ writeApi.post('/posts/:postId/bookmark', async (req, res) => {
             {
                 _uid: userUid,
             },
-            { ...axiosRequestConfig, headers: { authorization: getWriteApiToken() } }
+            { ...axiosRequestConfig, headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                nodebb_authorization_token: getWriteApiToken(),
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+            } }
         )
         if (response && response.data) {
             res.send(response.data)
@@ -150,7 +170,12 @@ writeApi.delete('/posts/:postId/bookmark', async (req, res) => {
         const url = API_ENDPOINTS.bookmarkPost(postId) + `?_uid=${userUid}`
         const response = await axios.delete(
             url,
-            { ...axiosRequestConfig, headers: { authorization: getWriteApiToken() } }
+            { ...axiosRequestConfig, headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                nodebb_authorization_token: getWriteApiToken(),
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+             } }
         )
         if (response && response.data) {
             res.send(response.data)
@@ -176,7 +201,12 @@ writeApi.post('/posts/:postId/vote', async (req, res) => {
                 ...req.body,
                 _uid: userUid,
             },
-            { ...axiosRequestConfig, headers: { authorization: getWriteApiToken() } }
+            { ...axiosRequestConfig, headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                nodebb_authorization_token: getWriteApiToken(),
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+            } }
         )
         if (response && response.data) {
             res.send(response.data)
@@ -198,7 +228,12 @@ writeApi.delete('/posts/:postId/vote', async (req, res) => {
         const url = API_ENDPOINTS.votePost(postId) + `?_uid=${userUid}`
         const response = await axios.delete(
             url,
-            { ...axiosRequestConfig, headers: { authorization: getWriteApiToken() } }
+            { ...axiosRequestConfig, headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                nodebb_authorization_token: getWriteApiToken(),
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+             } }
         )
         if (response && response.data) {
             res.send(response.data)
@@ -224,7 +259,12 @@ writeApi.put('/topics/:topicId/follow', async (req, res) => {
                 // TODO :
                 _uid: userUid,
             },
-            { ...axiosRequestConfig, headers: { authorization: getWriteApiToken() } }
+            { ...axiosRequestConfig, headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                nodebb_authorization_token: getWriteApiToken(),
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+             } }
         )
         if (response && response.data) {
             res.send(response.data)
@@ -248,7 +288,12 @@ writeApi.put('/topics/:topicId/tags', async (req, res) => {
             {
                 ...req.body,
             },
-            { ...axiosRequestConfig, headers: { authorization: getWriteApiToken() } }
+            { ...axiosRequestConfig, headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                nodebb_authorization_token: getWriteApiToken(),
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+            } }
         )
         if (response && response.data) {
             res.send(response.data)

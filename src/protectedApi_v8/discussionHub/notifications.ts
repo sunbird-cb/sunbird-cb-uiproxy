@@ -5,10 +5,10 @@ import { axiosRequestConfig } from '../../configs/request.config'
 import { getUserUID, getWriteApiToken } from '../../utils/discussionHub-helper'
 import { CONSTANTS } from '../../utils/env'
 import { logError, logInfo } from '../../utils/logger'
-import { extractUserIdFromRequest } from '../../utils/requestExtract'
+import { extractUserIdFromRequest , extractUserToken} from '../../utils/requestExtract'
 
 const API_ENDPOINTS = {
-    getNotifications: `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/notifications`,
+    getNotifications: `${CONSTANTS.KONG_API_BASE}/nodebb/auth/api/notifications`,
 }
 
 export const notificationsApi = Router()
@@ -22,7 +22,12 @@ notificationsApi.get('/', async (req, res) => {
         const url = API_ENDPOINTS.getNotifications + `?_uid=${userUid}`
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { authorization: getWriteApiToken() } }
+            { ...axiosRequestConfig, headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                nodebb_authorization_token: getWriteApiToken(),
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+            } }
         )
         res.send(response.data)
     } catch (err) {

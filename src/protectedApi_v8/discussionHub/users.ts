@@ -5,20 +5,20 @@ import { axiosRequestConfig } from '../../configs/request.config'
 import { getUserSlug, getUserUID, getWriteApiToken } from '../../utils/discussionHub-helper'
 import { CONSTANTS } from '../../utils/env'
 import { logError, logInfo } from '../../utils/logger'
-import { extractUserIdFromRequest } from '../../utils/requestExtract'
+import { extractUserIdFromRequest, extractUserToken} from '../../utils/requestExtract'
 
 const API_ENDPOINTS = {
-    getUserBookmarks: (slug: string) => `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/user/${slug}/bookmarks`,
-    getUserDownvotedPosts: (slug: string) => `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/user/${slug}/downvoted`,
-    getUserGroups: (slug: string) => `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/user/${slug}/groups`,
-    getUserInfo: (slug: string) => `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/user/${slug}/info`,
-    getUserPosts: (slug: string) => `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/user/${slug}/posts`,
-    getUserProfile: (slug: string) => `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/user/${slug}`,
-    getUserUpvotedPosts: (slug: string) => `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/user/${slug}/upvoted`,
-    getUsersWatchedTopics: (slug: string) => `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/user/${slug}/watched`,
+    getUserBookmarks: (slug: string) => `${CONSTANTS.KONG_API_BASE}/nodebb/auth/api/user/${slug}/bookmarks`,
+    getUserDownvotedPosts: (slug: string) => `${CONSTANTS.KONG_API_BASE}/nodebb/auth/api/user/${slug}/downvoted`,
+    getUserGroups: (slug: string) => `${CONSTANTS.KONG_API_BASE}/nodebb/auth/api/user/${slug}/groups`,
+    getUserInfo: (slug: string) => `${CONSTANTS.KONG_API_BASE}/nodebb/auth/api/user/${slug}/info`,
+    getUserPosts: (slug: string) => `${CONSTANTS.KONG_API_BASE}/nodebb/auth/api/user/${slug}/posts`,
+    getUserProfile: (slug: string) => `${CONSTANTS.KONG_API_BASE}/nodebb/auth/api/user/${slug}`,
+    getUserUpvotedPosts: (slug: string) => `${CONSTANTS.KONG_API_BASE}/nodebb/auth/api/user/${slug}/upvoted`,
+    getUsersWatchedTopics: (slug: string) => `${CONSTANTS.KONG_API_BASE}/nodebb/auth/api/user/${slug}/watched`,
     // tslint:disable-next-line: object-literal-sort-keys
-    getUserByEmail: (email: string) => `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/user/email/${email}`,
-    getUserByUsername: (username: string) => `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/user/username/${username}`,
+    getUserByEmail: (email: string) => `${CONSTANTS.KONG_API_BASE}/nodebb/api/user/email/${email}`,
+    getUserByUsername: (username: string) => `${CONSTANTS.KONG_API_BASE}/api/user/username/${username}`,
 }
 
 export const usersApi = Router()
@@ -33,7 +33,13 @@ usersApi.get('/:slug/bookmarks', async (req, res) => {
         const url = API_ENDPOINTS.getUserBookmarks(slug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { authorization: getWriteApiToken() } }
+            { ...axiosRequestConfig, headers: { 
+                Authorization: CONSTANTS.SB_API_KEY,
+                nodebb_authorization_token: getWriteApiToken(),
+                rootOrg,
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+             } }
         )
         res.send(response.data)
     } catch (err) {
@@ -53,7 +59,13 @@ usersApi.get('/:slug/downvoted', async (req, res) => {
         const url = API_ENDPOINTS.getUserDownvotedPosts(slug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { authorization: getWriteApiToken() } }
+            { ...axiosRequestConfig, headers: { 
+                Authorization: CONSTANTS.SB_API_KEY,
+                nodebb_authorization_token: getWriteApiToken(),
+                rootOrg,
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+             } }
         )
         res.send(response.data)
     } catch (err) {
@@ -73,7 +85,13 @@ usersApi.get('/:slug/groups', async (req, res) => {
         const url = API_ENDPOINTS.getUserGroups(slug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { authorization: getWriteApiToken() } }
+            { ...axiosRequestConfig, headers: { 
+                Authorization: CONSTANTS.SB_API_KEY,
+                nodebb_authorization_token: getWriteApiToken(),
+                rootOrg,
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+             } }
         )
         res.send(response.data)
     } catch (err) {
@@ -93,7 +111,13 @@ usersApi.get('/:slug/info', async (req, res) => {
         const url = API_ENDPOINTS.getUserInfo(slug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { authorization: getWriteApiToken() } }
+            { ...axiosRequestConfig, headers: { 
+                Authorization: CONSTANTS.SB_API_KEY,
+                nodebb_authorization_token: getWriteApiToken(),
+                rootOrg,
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+             } }
         )
         res.send(response.data)
     } catch (err) {
@@ -113,7 +137,13 @@ usersApi.get('/me', async (req, res) => {
         const url = API_ENDPOINTS.getUserProfile(userSlug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { authorization: getWriteApiToken() } }
+            { ...axiosRequestConfig, headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                nodebb_authorization_token: getWriteApiToken(),
+                rootOrg,
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+             } }
         )
         res.send(response.data)
     } catch (err) {
@@ -133,7 +163,13 @@ usersApi.get('/:slug/posts', async (req, res) => {
         const url = API_ENDPOINTS.getUserPosts(slug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { authorization: getWriteApiToken() } }
+            { ...axiosRequestConfig, headers: { 
+                Authorization: CONSTANTS.SB_API_KEY,
+                nodebb_authorization_token: getWriteApiToken(),
+                rootOrg,
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+             } }
         )
         res.send(response.data)
     } catch (err) {
@@ -153,7 +189,13 @@ usersApi.get('/:slug/upvoted', async (req, res) => {
         const url = API_ENDPOINTS.getUserUpvotedPosts(slug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { authorization: getWriteApiToken() } }
+            { ...axiosRequestConfig, headers: { 
+                Authorization: CONSTANTS.SB_API_KEY,
+                nodebb_authorization_token: getWriteApiToken(),
+                rootOrg,
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+             } }
         )
         res.send(response.data)
     } catch (err) {
@@ -173,7 +215,13 @@ usersApi.get('/:slug/watched', async (req, res) => {
         const url = API_ENDPOINTS.getUsersWatchedTopics(slug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { authorization: getWriteApiToken() } }
+            { ...axiosRequestConfig, headers: { 
+                Authorization: CONSTANTS.SB_API_KEY,
+                nodebb_authorization_token: getWriteApiToken(),
+                rootOrg,
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+             } }
         )
         res.send(response.data)
     } catch (err) {
@@ -189,7 +237,7 @@ usersApi.get('/email/:email', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const email = req.params.email
-        const response = await getUserByEmail(email)
+        const response = await getUserByEmail(req, email)
         res.send(response.data)
     } catch (err) {
         logError('ERROR ON GET topicsApi /email/:email >', err)
@@ -210,7 +258,12 @@ usersApi.get('/:slug/about', async (req, res) => {
         logInfo('called /:slug/about url=> ', url)
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { authorization: getWriteApiToken() } }
+            { ...axiosRequestConfig, headers: { 
+                Authorization: CONSTANTS.SB_API_KEY,
+                nodebb_authorization_token: getWriteApiToken(),
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+             } }
         )
         res.send(response.data)
     } catch (err) {
@@ -221,7 +274,7 @@ usersApi.get('/:slug/about', async (req, res) => {
 })
 
 // tslint:disable-next-line: no-any
-export async function getUserByEmail(email: any): Promise<any> {
+export async function getUserByEmail(req:any , email: any): Promise<any> {
     logInfo('Finding user in NodeBB DiscussionHub...')
     // tslint:disable-next-line: no-try-promise
     try {
@@ -229,7 +282,11 @@ export async function getUserByEmail(email: any): Promise<any> {
         return new Promise(async (resolve, reject) => {
             const response = await axios.get(
                 url,
-                { ...axiosRequestConfig }
+                { ...axiosRequestConfig, headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+                }}
             ).catch((err) => {
                 logError('ERROR ON method getUserByEmail api call to nodebb DiscussionHub >', err)
                 reject(err)
@@ -244,7 +301,7 @@ export async function getUserByEmail(email: any): Promise<any> {
 }
 
 // tslint:disable-next-line: no-any
-export async function getUserByUsername(username: any): Promise<any> {
+export async function getUserByUsername(req : any , username: any): Promise<any> {
     logInfo('Finding user in NodeBB DiscussionHub...')
     // tslint:disable-next-line: no-try-promise
     try {
@@ -252,7 +309,11 @@ export async function getUserByUsername(username: any): Promise<any> {
         return new Promise(async (resolve, reject) => {
             const response = await axios.get(
                 url,
-                { ...axiosRequestConfig }
+                { ...axiosRequestConfig , headers: {
+                    Authorization: CONSTANTS.SB_API_KEY,
+                    // tslint:disable-next-line: all
+                    'x-authenticated-user-token': extractUserToken(req)
+                    }}
             ).catch((err) => {
                 logError('ERROR ON method getUserByUsername api call to nodebb DiscussionHub >', err)
                 reject(err)

@@ -61,7 +61,7 @@ writeApi.post('/topics', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const url = API_ENDPOINTS.createTopic
-        const userUid = await getUserUID(userId)
+        const userUid = await getUserUID(req, userId)
         const response = await axios.post(
             url,
             {
@@ -92,7 +92,7 @@ writeApi.post('/topics/:topicId', async (req, res) => {
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const topicId = req.params.topicId
         const url = API_ENDPOINTS.replyToTopic(topicId)
-        const userUid = await getUserUID(userId)
+        const userUid = await getUserUID(req, userId)
         const response = await axios.post(
             url,
             {
@@ -137,7 +137,7 @@ writeApi.post('/posts/:postId/bookmark', async (req, res) => {
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const postId = req.params.postId
         const url = API_ENDPOINTS.bookmarkPost(postId)
-        const userUid = await getUserUID(userId)
+        const userUid = await getUserUID(req, userId)
         const response = await axios.post(
             url,
             {
@@ -166,7 +166,7 @@ writeApi.delete('/posts/:postId/bookmark', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const postId = req.params.postId
-        const userUid = await getUserUID(userId)
+        const userUid = await getUserUID(req, userId)
         const url = API_ENDPOINTS.bookmarkPost(postId) + `?_uid=${userUid}`
         const response = await axios.delete(
             url,
@@ -194,7 +194,7 @@ writeApi.post('/posts/:postId/vote', async (req, res) => {
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const postId = req.params.postId
         const url = API_ENDPOINTS.votePost(postId)
-        const userUid = await getUserUID(userId)
+        const userUid = await getUserUID(req, userId)
         const response = await axios.post(
             url,
             {
@@ -224,7 +224,7 @@ writeApi.delete('/posts/:postId/vote', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const postId = req.params.postId
-        const userUid = await getUserUID(userId)
+        const userUid = await getUserUID(req, userId)
         const url = API_ENDPOINTS.votePost(postId) + `?_uid=${userUid}`
         const response = await axios.delete(
             url,
@@ -252,7 +252,7 @@ writeApi.put('/topics/:topicId/follow', async (req, res) => {
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const topicId = req.params.topicId
         const url = API_ENDPOINTS.followTopic(topicId)
-        const userUid = await getUserUID(userId)
+        const userUid = await getUserUID(req, userId)
         const response = await axios.put(
             url,
             {

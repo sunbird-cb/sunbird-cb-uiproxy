@@ -18,7 +18,7 @@ notificationsApi.get('/', async (req, res) => {
         const rootOrg = getRootOrg(req)
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
-        const userUid = await getUserUID(userId)
+        const userUid = await getUserUID(req, userId)
         const url = API_ENDPOINTS.getNotifications + `?_uid=${userUid}`
         const response = await axios.get(
             url,

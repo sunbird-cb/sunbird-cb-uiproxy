@@ -29,11 +29,11 @@ usersApi.get('/:slug/bookmarks', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const slug = req.params.slug
-        const userUid = await getUserUID(userId)
+        const userUid = await getUserUID(req, userId)
         const url = API_ENDPOINTS.getUserBookmarks(slug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { 
+            { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
                 nodebb_authorization_token: getWriteApiToken(),
                 rootOrg,
@@ -55,11 +55,11 @@ usersApi.get('/:slug/downvoted', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const slug = req.params.slug
-        const userUid = await getUserUID(userId)
+        const userUid = await getUserUID(req, userId)
         const url = API_ENDPOINTS.getUserDownvotedPosts(slug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { 
+            { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
                 nodebb_authorization_token: getWriteApiToken(),
                 rootOrg,
@@ -81,11 +81,11 @@ usersApi.get('/:slug/groups', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const slug = req.params.slug
-        const userUid = await getUserUID(userId)
+        const userUid = await getUserUID(req, userId)
         const url = API_ENDPOINTS.getUserGroups(slug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { 
+            { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
                 nodebb_authorization_token: getWriteApiToken(),
                 rootOrg,
@@ -107,11 +107,11 @@ usersApi.get('/:slug/info', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const slug = req.params.slug
-        const userUid = await getUserUID(userId)
+        const userUid = await getUserUID(req, userId)
         const url = API_ENDPOINTS.getUserInfo(slug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { 
+            { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
                 nodebb_authorization_token: getWriteApiToken(),
                 rootOrg,
@@ -132,8 +132,8 @@ usersApi.get('/me', async (req, res) => {
         const rootOrg = getRootOrg(req)
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
-        const userSlug = await getUserSlug(userId)
-        const userUid = await getUserUID(userId)
+        const userSlug = await getUserSlug(req, userId)
+        const userUid = await getUserUID(req, userId)
         const url = API_ENDPOINTS.getUserProfile(userSlug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
@@ -159,11 +159,11 @@ usersApi.get('/:slug/posts', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const slug = req.params.slug
-        const userUid = await getUserUID(userId)
+        const userUid = await getUserUID(req, userId)
         const url = API_ENDPOINTS.getUserPosts(slug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { 
+            { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
                 nodebb_authorization_token: getWriteApiToken(),
                 rootOrg,
@@ -185,11 +185,11 @@ usersApi.get('/:slug/upvoted', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const slug = req.params.slug
-        const userUid = await getUserUID(userId)
+        const userUid = await getUserUID(req, userId)
         const url = API_ENDPOINTS.getUserUpvotedPosts(slug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { 
+            { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
                 nodebb_authorization_token: getWriteApiToken(),
                 rootOrg,
@@ -211,11 +211,11 @@ usersApi.get('/:slug/watched', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const slug = req.params.slug
-        const userUid = await getUserUID(userId)
+        const userUid = await getUserUID(req, userId)
         const url = API_ENDPOINTS.getUsersWatchedTopics(slug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { 
+            { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
                 nodebb_authorization_token: getWriteApiToken(),
                 rootOrg,
@@ -252,13 +252,13 @@ usersApi.get('/:slug/about', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const slug = req.params.slug
-        const userUid = await getUserUID(userId)
+        const userUid = await getUserUID(req, userId)
         logInfo('called /:slug/about slug=> ', slug)
         const url = API_ENDPOINTS.getUserProfile(slug) + `?_uid=${userUid}`
         logInfo('called /:slug/about url=> ', url)
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { 
+            { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
                 nodebb_authorization_token: getWriteApiToken(),
                 // tslint:disable-next-line: all
@@ -274,7 +274,7 @@ usersApi.get('/:slug/about', async (req, res) => {
 })
 
 // tslint:disable-next-line: no-any
-export async function getUserByEmail(req:any , email: any): Promise<any> {
+export async function getUserByEmail(req: any , email: any): Promise<any> {
     logInfo('Finding user in NodeBB DiscussionHub...')
     // tslint:disable-next-line: no-try-promise
     try {
@@ -301,7 +301,7 @@ export async function getUserByEmail(req:any , email: any): Promise<any> {
 }
 
 // tslint:disable-next-line: no-any
-export async function getUserByUsername(req : any , username: any): Promise<any> {
+export async function getUserByUsername(req: any , username: any): Promise<any> {
     logInfo('Finding user in NodeBB DiscussionHub...')
     // tslint:disable-next-line: no-try-promise
     try {

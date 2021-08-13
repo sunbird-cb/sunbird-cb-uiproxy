@@ -2,6 +2,11 @@ import { Router } from 'express'
 import { createProxyServer } from 'http-proxy'
 import { extractUserIdFromRequest, extractUserToken } from '../utils/requestExtract'
 import { CONSTANTS } from './env'
+const http = require('http')
+const https = require('https')
+const httpAgent = new http.Agent({ keepAlive: true, })
+const httpsAgent = new https.Agent({ keepAlive: true, })
+
 import { logInfo } from './logger'
 
 const _ = require('lodash')
@@ -20,6 +25,11 @@ proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
   proxyReq.setHeader('x-authenticated-user-token', extractUserToken(req))
   proxyReq.setHeader('x-authenticated-userid', extractUserIdFromRequest(req))
 
+  const url = req.originalUrl
+  proxyReq.agent = url.startsWith('https') ? httpsAgent : httpAgent
+  proxyReq.setHeader('connection', 'keep-alive')
+
+  // console.log(proxyReq)
   // condition has been added to set the session in nodebb req header
   if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/') && req.body) {
 

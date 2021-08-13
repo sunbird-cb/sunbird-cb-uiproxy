@@ -31,9 +31,14 @@ proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
 
   // console.log(proxyReq)
   // condition has been added to set the session in nodebb req header
-  if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/') && req.body) {
+  /* tslint:disable-next-line */
+  if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/v1/create') && req.session) {
 
-     req.body._uid = req.session.uid
+    if (req.body) {
+      req.body._uid = req.session.uid
+    }
+    // tslint:disable-next-line: no-console
+    console.log('REQ_URL_ORIGINAL discussion', proxyReq.path)
 
   }
   if (req.body) {
@@ -143,10 +148,19 @@ export function proxyCreatorLearner(route: Router, targetUrl: string, _timeout =
 
 export function proxyCreatorSunbird(route: Router, targetUrl: string, _timeout = 10000): Router {
   route.all('/*', (req, res) => {
-
     // tslint:disable-next-line: no-console
     console.log('REQ_URL_ORIGINAL proxyCreatorSunbird', req.originalUrl)
-    const url = removePrefix(`${PROXY_SLUG}`, req.originalUrl)
+    let url = removePrefix(`${PROXY_SLUG}`, req.originalUrl)
+    if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/v1/create') && req.session) {
+      if (req.originalUrl.includes('?')) {
+        url = `${url}&_uid=${req.session.uid}`
+      } else {
+        url = `${url}?_uid=${req.session.uid}`
+      }
+      // tslint:disable-next-line: no-console
+      console.log('REQ_URL_ORIGINAL proxyCreatorSunbird  ======= discussion', url)
+    }
+
     proxy.web(req, res, {
       changeOrigin: true,
       ignorePath: true,

@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { createProxyServer } from 'http-proxy'
-import { extractUserIdFromRequest, extractUserToken } from '../utils/requestExtract'
 import { CONSTANTS } from './env'
+import { extractUserIdFromRequest, extractUserToken } from './requestExtract'
 const http = require('http')
 const https = require('https')
 const httpAgent = new http.Agent({ keepAlive: true, })
@@ -10,6 +10,8 @@ const httpsAgent = new https.Agent({ keepAlive: true, })
 import { logInfo } from './logger'
 
 const _ = require('lodash')
+const proxyNew = require('express-http-proxy')
+import { PROXY_UTILS } from './proxyUtils'
 
 const proxyCreator = (timeout = 10000) => createProxyServer({
   timeout,
@@ -219,22 +221,29 @@ export function proxyCreatorSunbirdSearch(route: Router, targetUrl: string, _tim
 }
 
 export function proxyCreatorToAppentUserId(route: Router, targetUrl: string, _timeout = 10000): Router {
-  route.all('/*', (req, res) => {
-    const originalUrl = req.originalUrl
-    const lastIndex = originalUrl.lastIndexOf('/')
-    const subStr = originalUrl.substr(lastIndex).substr(1).split('-').length
-    let userId = extractUserIdFromRequest(req).split(':')[2]
-    if (subStr === 5 && (originalUrl.substr(lastIndex).substr(1))) {
-      userId = originalUrl.substr(lastIndex).substr(1)
-    }
-    // tslint:disable-next-line: no-console
-    console.log('REQ_URL_ORIGINAL proxyCreatorToAppentUserId', req.originalUrl)
-
-    proxy.web(req, res, {
-      changeOrigin: true,
-      ignorePath: true,
-      target: targetUrl + userId, // [userId.length - 1],
+  route.all('/*', (req, _res) => {
+    proxyNew(targetUrl, {
+      proxyReqOptDecorator: PROXY_UTILS.decorateRequestHeaders(targetUrl),
+      // tslint:disable-next-line: no-any
+      proxyReqPathResolver(_req: any) {
+        const originalUrl = req.originalUrl
+        const lastIndex = originalUrl.lastIndexOf('/')
+        const subStr = originalUrl.substr(lastIndex).substr(1).split('-').length
+        let userId = extractUserIdFromRequest(req).split(':')[2]
+        if (subStr === 5 && (originalUrl.substr(lastIndex).substr(1))) {
+          userId = originalUrl.substr(lastIndex).substr(1)
+        }
+        // tslint:disable-next-line: no-console
+        console.log('REQ_URL_ORIGINAL proxyCreatorToAppentUserId', req.originalUrl)
+        return `${targetUrl}${userId}`
+      },
+      userResDecorator: PROXY_UTILS.decorateResponse(),
     })
+    // proxy.web(req, res, {
+    //   changeOrigin: true,
+    //   ignorePath: true,
+    //   target: targetUrl + userId, // [userId.length - 1],
+    // })
   })
   return route
 }

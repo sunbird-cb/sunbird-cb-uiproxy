@@ -35,6 +35,7 @@
     "express": "^4.17.1",
     "express-fileupload": "^1.1.4",
     "express-healthcheck": "^0.1.0",
+    "express-http-proxy": "^1.6.2",
     "express-session": "^1.16.1",
     "form-data": "^3.0.0",
     "helmet": "^3.21.2",
@@ -48,6 +49,7 @@
     "node-xlsx": "^0.15.0",
     "path-to-regexp": "^6.2.0",
     "pino": "^6.11.3",
+    "query-string": "^7.0.1",
     "request": "^2.88.0",
     "uuid": "^3.3.2"
   },

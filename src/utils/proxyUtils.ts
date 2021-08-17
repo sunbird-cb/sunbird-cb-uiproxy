@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import { CONSTANTS } from './env'
-const queryString = require('query-string')
 import { extractUserIdFromRequest, extractUserToken } from './requestExtract'
 
 const http = require('http')
@@ -25,7 +24,6 @@ export const PROXY_UTILS = {
                 const bodyData = JSON.stringify(srcReq.body)
                 proxyReqOpts.headers['Content-Length'] = Buffer.byteLength(bodyData)
             }
-            console.log("Decorate Request", proxyReqOpts)
             return proxyReqOpts
         }
     },
@@ -36,28 +34,25 @@ export const PROXY_UTILS = {
             if (originalUrl.includes('/discussion') && !originalUrl.includes('/discussion/user/v1/create') && srcReq.session) {
                 bodyContent._uid = srcReq.session.uid
             }
-            return (queryString.stringify(bodyContent))
+            return bodyContent
         }
     },
     decorateResponse() {
         // tslint:disable-next-line: no-any
         return (proxyRes: any, proxyResData: any, userReq: any, _userRes: any) => {
             delete proxyRes.headers['access-control-allow-origin']
-            // tslint:disable-next-line: no-any
-            proxyRes.on('data', (data: any) => {
-                if (userReq.originalUrl.includes('/discussion/user/v1/create')) {
-                  if ((proxyRes.statusCode === 200 || proxyRes.statusCode === 201)) {
-                    data = JSON.parse(data.toString('utf-8'))
+            if (userReq.originalUrl.includes('/discussion/user/v1/create')) {
+                if ((proxyRes.statusCode === 200 || proxyRes.statusCode === 201)) {
+                    const data = JSON.parse(proxyResData.toString('utf-8'))
                     // tslint:disable-next-line: no-console
                     console.log('_res==>', data)
                     userReq.session.uid = data.result.userId.uid
-                  }
-                  const nodebbToken = '722686c6-2a2e-4b22-addf-c427261fbdc6'
-                  if (userReq.session) {
-                    userReq.session.nodebb_authorization_token = nodebbToken
-                  }
                 }
-            })
+                const nodebbToken = '722686c6-2a2e-4b22-addf-c427261fbdc6'
+                if (userReq.session) {
+                    userReq.session.nodebb_authorization_token = nodebbToken
+                }
+            }
             return proxyResData
         }
     },

@@ -86,14 +86,14 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        '/proxies/v8/api/event/v4/read': {
+        '/proxies/v8/api/event/v4/read/:do_id': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
         },
-        '/proxies/v8/api/event/v4/publish': {
+        '/proxies/v8/api/event/v4/publish/:do_id': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -1189,8 +1189,8 @@ export const API_LIST = {
         '/authApi/content/v3/update/:do_id',
         '/proxies/v8/api/user/v2/read',
         '/proxies/v8/api/user/v2/read/:id',
-        '/proxies/v8/api/event/v4/read',
-        '/proxies/v8/api/event/v4/publish',
+        '/proxies/v8/api/event/v4/read/:do_id',
+        '/proxies/v8/api/event/v4/publish/:do_id',
         '/proxies/v8/api/event/v4/create',
         '/proxies/v8/user/v1/read/:id',
         '/proxies/v8/sunbirdigot/read',

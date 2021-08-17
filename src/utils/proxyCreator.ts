@@ -1,10 +1,9 @@
 import { Router } from 'express'
 import { createProxyServer } from 'http-proxy'
 import { extractUserIdFromRequest, extractUserToken } from '../utils/requestExtract'
+import {returnData } from './dataAlterer'
 import { CONSTANTS } from './env'
 import { logInfo } from './logger'
-
-const _ = require('lodash')
 
 const proxyCreator = (timeout = 10000) => createProxyServer({
   timeout,
@@ -14,74 +13,53 @@ const PROXY_SLUG = '/proxies/v8'
 
 // tslint:disable-next-line: no-any
 proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
-  proxyReq.setHeader('X-Channel-Id', (_.get(req, 'session.rootOrgId')) ? _.get(req, 'session.rootOrgId') : CONSTANTS.X_Channel_Id)
+  proxyReq.setHeader('X-Channel-Id', '0132317968766894088')
   // tslint:disable-next-line: max-line-length
   proxyReq.setHeader('Authorization', CONSTANTS.SB_API_KEY)
   proxyReq.setHeader('x-authenticated-user-token', extractUserToken(req))
   proxyReq.setHeader('x-authenticated-userid', extractUserIdFromRequest(req))
 
   // condition has been added to set the session in nodebb req header
-  /* tslint:disable-next-line */
-  if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/v1/create') && req.session) {
-
-    if (req.body) {
-      req.body._uid = req.session.uid
-    }
-    // tslint:disable-next-line: no-console
-    console.log('REQ_URL_ORIGINAL discussion', proxyReq.path)
-
+  if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/v1/create')) {
+    proxyReq.setHeader('Authorization', 'Bearer ' + req.session.nodebb_authorization_token)
   }
+
   if (req.body) {
     const bodyData = JSON.stringify(req.body)
     proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData))
     proxyReq.write(bodyData)
-    // tslint:disable-next-line: no-console
-    console.log('body data=====>', bodyData)
   }
 })
 
 // tslint:disable-next-line: no-any
 proxy.on('proxyRes', (proxyRes: any, req: any, _res: any, ) => {
-  // res.removeHeader('access-control-allow-origin')
-  delete proxyRes.headers['access-control-allow-origin']
-  // write user session with roles
-  // if (req.originalUrl.includes('/user/v2/read')) {
-  //   // tslint:disable-next-line: no-any
-  //   proxyRes.on('data', (data: any) => {
-  //     if ((proxyRes.statusCode === 200 || proxyRes.statusCode === 201)) {
-  //       data = JSON.parse(data.toString('utf-8'))
-  //       const roles = data.result.response.roles
-  //       req.session.userId = data.result.response.id ? data.result.response.id : data.result.response.userId
-  //       req.session.userName = data.result.response.userName
-  //       req.session.userRoles = roles
-  //       // console.log(req);
-  //       // tslint:disable-next-line: only-arrow-functions
-  //       req.session.save(function(error: string) {
-  //         if (error) {
-  //           // tslint:disable-next-line: no-console
-  //           console.log(error)
-  //         }
-  //       })
-  //     }
-  //   })
-  // }
-  // tslint:disable-next-line: no-any
-  proxyRes.on('data', (data: any) => {
-    if (req.originalUrl.includes('/discussion/user/v1/create')) {
-
-      if ((proxyRes.statusCode === 200 || proxyRes.statusCode === 201)) {
-        data = JSON.parse(data.toString('utf-8'))
-        // tslint:disable-next-line: no-console
-        console.log('_res==>', data)
-        req.session.uid = data.result.userId.uid
-      }
-      const nodebbToken = '722686c6-2a2e-4b22-addf-c427261fbdc6'
-      if (req.session) {
-        req.session.nodebb_authorization_token = nodebbToken
-      }
+  if (req.originalUrl.includes('/discussion/user/v1/create')) {
+    const nodebb_auth_token = proxyRes.headers.nodebb_auth_token
+    if (req.session) {
+      req.session.nodebb_authorization_token = nodebb_auth_token
     }
-  })
+  }
+})
 
+// tslint:disable-next-line: no-any
+proxy.on('proxyRes', (proxyRes: any, req: any, _res: any, ) => {
+  // tslint:disable-next-line: no-any
+  const tempBody: any = []
+  if (req.originalUrl.includes('/hierarchy') && req.originalUrl.includes('?mode=edit')) {
+    // tslint:disable-next-line: no-console
+       console.log('Enter into the response of hierarchy')
+        // tslint:disable-next-line: no-any
+       proxyRes.on('data', (chunk: any) => {
+      tempBody.push(chunk)
+        })
+       proxyRes.on('end', () => {
+          const tempdata = tempBody.toString()
+          const updateRes = returnData(JSON.parse(tempdata), null, 'hierarchy')
+          _res.end(JSON.stringify(updateRes))
+      })
+  } else {
+    return _res
+  }
 })
 
 export function proxyCreatorRoute(route: Router, targetUrl: string, timeout = 10000): Router {
@@ -138,19 +116,10 @@ export function proxyCreatorLearner(route: Router, targetUrl: string, _timeout =
 
 export function proxyCreatorSunbird(route: Router, targetUrl: string, _timeout = 10000): Router {
   route.all('/*', (req, res) => {
+
     // tslint:disable-next-line: no-console
     console.log('REQ_URL_ORIGINAL proxyCreatorSunbird', req.originalUrl)
-    let url = removePrefix(`${PROXY_SLUG}`, req.originalUrl)
-    if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/v1/create') && req.session) {
-      if (req.originalUrl.includes('?')) {
-        url = `${url}&_uid=${req.session.uid}`
-      } else {
-        url = `${url}?_uid=${req.session.uid}`
-      }
-      // tslint:disable-next-line: no-console
-      console.log('REQ_URL_ORIGINAL proxyCreatorSunbird  ======= discussion', url)
-    }
-
+    const url = removePrefix(`${PROXY_SLUG}`, req.originalUrl)
     proxy.web(req, res, {
       changeOrigin: true,
       ignorePath: true,
@@ -171,6 +140,33 @@ export function proxyCreatorKnowledge(route: Router, targetUrl: string, _timeout
       ignorePath: true,
       target: targetUrl + url,
     })
+  })
+  return route
+}
+
+export function proxyHierarchyKnowledge(route: Router, targetUrl: string, _timeout = 10000): Router {
+  route.all('/*', (req, res) => {
+    const url = removePrefix(`${PROXY_SLUG}`, req.originalUrl)
+    if (url.includes('hierarchy/update')) {
+      const data = returnData(req.body, null, 'hierarchy')
+      req.body = data
+    }
+     // tslint:disable-next-line: no-console
+    console.log('REQ_URL_ORIGINAL proxyCreatorKnowledge', targetUrl + url)
+    if (req.originalUrl.includes('/hierarchy') && req.originalUrl.includes('?mode=edit')) {
+      proxy.web(req, res,  {
+        changeOrigin: true,
+        ignorePath: true,
+        selfHandleResponse : true,
+        target: targetUrl + url,
+      })
+    } else {
+      proxy.web(req, res,  {
+        changeOrigin: true,
+        ignorePath: true,
+        target: targetUrl + url,
+      })
+    }
   })
   return route
 }
@@ -210,20 +206,15 @@ export function proxyCreatorSunbirdSearch(route: Router, targetUrl: string, _tim
 
 export function proxyCreatorToAppentUserId(route: Router, targetUrl: string, _timeout = 10000): Router {
   route.all('/*', (req, res) => {
-    const originalUrl = req.originalUrl
-    const lastIndex = originalUrl.lastIndexOf('/')
-    const subStr = originalUrl.substr(lastIndex).substr(1).split('-').length
-    let userId = extractUserIdFromRequest(req).split(':')[2]
-    if (subStr === 5 && (originalUrl.substr(lastIndex).substr(1))) {
-      userId = originalUrl.substr(lastIndex).substr(1)
-    }
+    const userId = extractUserIdFromRequest(req).split(':')
+
     // tslint:disable-next-line: no-console
     console.log('REQ_URL_ORIGINAL proxyCreatorToAppentUserId', req.originalUrl)
 
     proxy.web(req, res, {
       changeOrigin: true,
       ignorePath: true,
-      target: targetUrl + userId, // [userId.length - 1],
+      target: targetUrl + userId[userId.length - 1],
     })
   })
   return route

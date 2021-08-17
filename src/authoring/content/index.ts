@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Request, Response, Router } from 'express'
 import { AxiosRequestConfig } from '../../models/axios-request-config.model'
+import { returnData } from '../../utils/dataAlterer'
 import { logError } from '../../utils/logger'
 import { ERROR } from '../constants/error'
 import { IUploadS3Request, IUploadS3Response } from '../models/response/custom-s3-upload'
@@ -168,6 +169,7 @@ authApi.post('/download/s3', async (req: Request, res: Response) => {
 })
 
 authApi.post('/content/v3/create', async (request: Request, res: Response) => {
+  returnData(request.body, 'request')
   axios({
     data: request.body,
     headers: request.headers,
@@ -189,6 +191,9 @@ authApi.get('/content/v3/read/:id', async (req: Request, res: Response) => {
     url: CONSTANTS.SUNBIRD_PROXY_URL + req.url,
   } as AxiosRequestConfig)
     .then((response) => {
+      if (response.data.params.status === 'successful') {
+        response.data = returnData(response.data, 'result')
+      }
       res.status(response.status).send(response.data)
     })
     .catch((error) => {

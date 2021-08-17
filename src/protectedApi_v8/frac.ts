@@ -5,7 +5,6 @@ import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
 import { logError, logInfo } from '../utils/logger'
 import { ERROR } from '../utils/message'
-import { extractAuthorizationFromRequest } from '../utils/requestExtract'
 
 const API_END_POINTS = {
     addDataNode: `${CONSTANTS.FRAC_API_BASE}/fracapis/frac/addDataNode`,
@@ -46,7 +45,7 @@ fracApi.get('/getAllNodes/:type', async (req, res) => {
         const response = await axios.get(apiEndPoint, {
             ...axiosRequestConfig,
             headers: {
-                Authorization: extractAuthorizationFromRequest(req),
+                Authorization: req.header('Authorization'),
             },
         })
         res.status(response.status).send(response.data)
@@ -64,7 +63,7 @@ fracApi.post('/addDataNode', async (req, res) => {
         const response = await axios.post(API_END_POINTS.addDataNode, req.body, {
             ...axiosRequestConfig,
             headers: {
-                Authorization: extractAuthorizationFromRequest(req),
+                Authorization: req.header('Authorization'),
             },
         })
         res.status(response.status).send(response.data)
@@ -82,7 +81,7 @@ fracApi.post('/addDataNodeBulk', async (req, res) => {
         const response = await axios.post(API_END_POINTS.addDataNodeBulk, req.body, {
             ...axiosRequestConfig,
             headers: {
-                Authorization: extractAuthorizationFromRequest(req),
+                Authorization: req.header('Authorization'),
             },
         })
         res.status(response.status).send(response.data)
@@ -100,7 +99,7 @@ fracApi.post('/searchNodes', async (req, res) => {
         const response = await axios.post(API_END_POINTS.searchNodes, req.body, {
             ...axiosRequestConfig,
             headers: {
-                Authorization: extractAuthorizationFromRequest(req),
+                Authorization: req.header('Authorization'),
             },
         })
         res.status(response.status).send(response.data)
@@ -120,7 +119,7 @@ fracApi.get('/getNodeById/:id/:type', async (req, res) => {
         const response = await axios.get(API_END_POINTS.getNodeById(id, type), {
             ...axiosRequestConfig,
             headers: {
-                Authorization: extractAuthorizationFromRequest(req),
+                Authorization: req.header('Authorization'),
             },
         })
         res.status(response.status).send(response.data)
@@ -136,14 +135,12 @@ fracApi.get('/getNodeById/:id/:type', async (req, res) => {
 fracApi.get('/:type/:key', async (req, res) => {
     try {
         const rootOrg = req.header('rootOrg')
-        const authToken = extractAuthorizationFromRequest(req)
+        const authToken = req.header('Authorization')
         if (!rootOrg || !authToken) {
             res.status(400).send(ERROR.ERROR_NO_ORG_DATA)
             return
         }
-        // tslint:disable-next-line: no-useless-cast
         const key = req.params.key as string
-        // tslint:disable-next-line: no-useless-cast
         const type = req.params.type as string
         const searchBody = {
             childCount : true,
@@ -165,7 +162,7 @@ fracApi.get('/:type/:key', async (req, res) => {
         const response = await axios.post(API_END_POINTS.searchNodes, searchBody, {
             ...axiosRequestConfig,
             headers: {
-                Authorization: extractAuthorizationFromRequest(req),
+                Authorization: req.header('Authorization'),
             },
         })
         res.status(200).send(response.data)

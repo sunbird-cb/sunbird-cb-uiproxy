@@ -2,23 +2,24 @@ import axios from 'axios'
 import { Router } from 'express'
 import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
-import { logError, logInfo } from '../utils/logger'
+import { logError } from '../utils/logger'
 import { ERROR } from '../utils/message'
 const API_END_POINTS = {
-    getWAPdf: (waId: string) => `${CONSTANTS.SB_EXT_API_BASE_2}/getWOPublishedPdf/${waId}`,
+    getWAPdf: (userId: string, waId: string) => `${CONSTANTS.SB_EXT_API_BASE_2}/v1/workallocation/getWAPdf/${userId}/${waId}`,
 }
 
 export const workallocationPublic = Router()
 
-workallocationPublic.get('/getWaPdf/:waId', async (req, res) => {
+workallocationPublic.get('/getWaPdf/:userId/:waId', async (req, res) => {
     try {
+        const userId = req.params.userId
         const waId = req.params.waId
-        const response = await axios.get(API_END_POINTS.getWAPdf(waId), {
+        const response = await axios.get(API_END_POINTS.getWAPdf(userId, waId), {
             ...axiosRequestConfig,
-            headers: {},
+            headers: {
+            },
         })
-        logInfo('Response ========>', JSON.stringify(response.data))
-        res.redirect(response.data)
+        res.status(response.status).send(response.data)
     } catch (err) {
         logError(err)
         res.status((err && err.response && err.response.status) || 500).send(

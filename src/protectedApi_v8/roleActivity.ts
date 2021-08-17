@@ -6,7 +6,6 @@ import { ERROR } from '../utils/message'
 import axios from 'axios'
 import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
-import { extractAuthorizationFromRequest } from '../utils/requestExtract'
 
 export const roleActivityApi = Router()
 
@@ -34,12 +33,11 @@ roleActivityApi.get('/', async (req, res) => {
 roleActivityApi.get('/:roleKey', async (req, res) => {
     try {
         const rootOrg = req.header('rootOrg')
-        const authToken = extractAuthorizationFromRequest(req)
+        const authToken = req.header('Authorization')
         if (!rootOrg || !authToken) {
             res.status(400).send(ERROR.ERROR_NO_ORG_DATA)
             return
         }
-        // tslint:disable-next-line: no-useless-cast
         const roleKey = req.params.roleKey as string
         const searchBody = {
             childCount : true,
@@ -61,7 +59,7 @@ roleActivityApi.get('/:roleKey', async (req, res) => {
         const response = await axios.post(API_END_POINTS.searchNodes, searchBody, {
             ...axiosRequestConfig,
             headers: {
-                Authorization: extractAuthorizationFromRequest(req),
+                Authorization: req.header('Authorization'),
             },
         })
         const returnRoleList: IRole[] = []

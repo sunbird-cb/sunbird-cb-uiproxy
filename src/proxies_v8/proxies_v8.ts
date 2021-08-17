@@ -17,6 +17,7 @@ import {
   proxyCreatorSunbird,
   proxyCreatorSunbirdSearch,
   proxyCreatorToAppentUserId,
+  proxyHierarchyKnowledge,
   scormProxyCreatorRoute
 } from '../utils/proxyCreator'
 import { extractUserIdFromRequest, extractUserToken } from '../utils/requestExtract'
@@ -184,7 +185,7 @@ proxiesV8.use('/read/content-progres/*',
 )
 
 proxiesV8.use('/api/user/v2/read',
-  proxyCreatorToAppentUserId(express.Router(), `${CONSTANTS.KONG_API_BASE}/user/v2/read/`)
+  proxyCreatorToAppentUserId(express.Router(), `${CONSTANTS.SUNBIRD_PROXY_API_BASE}/user/v2/read/`)
 )
 
 proxiesV8.use([
@@ -194,12 +195,11 @@ proxiesV8.use([
 ],
   proxyCreatorQML(express.Router(), `${CONSTANTS.KONG_API_BASE}`, '/action/')
 )
-proxiesV8.use('/action/content/v3/updateReviewStatus',
-  proxyCreatorKnowledge(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+
+proxiesV8.use('/action/content/v3/hierarchy/*',
+  proxyHierarchyKnowledge(express.Router(), `${CONSTANTS.KNOWLEDGE_MW_API_BASE}`)
 )
-proxiesV8.use('/action/content/v3/hierarchyUpdate',
-  proxyCreatorKnowledge(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
-)
+
 proxiesV8.use('/action/*',
   proxyCreatorKnowledge(express.Router(), `${CONSTANTS.KNOWLEDGE_MW_API_BASE}`)
 )
@@ -214,14 +214,6 @@ proxiesV8.use('/notification/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 
-proxiesV8.use('/org/*',
-  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
-)
-
-proxiesV8.use('/user/*',
-  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
-)
-
 // proxiesV8.use('/api/framework/*',
 //   // tslint:disable-next-line: max-line-length
 //   proxyCreatorQML(express.Router(), `${CONSTANTS.KONG_API_BASE}`, '/api/')
@@ -229,10 +221,6 @@ proxiesV8.use('/user/*',
 
 proxiesV8.use('/api/*',
   // tslint:disable-next-line: max-line-length
-  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
-)
-
-proxiesV8.use('/data/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 
@@ -247,7 +235,7 @@ proxiesV8.use('/assets/*',
 // )
 proxiesV8.use('/discussion/*',
   // tslint:disable-next-line: max-line-length
-  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+  proxyCreatorSunbird(express.Router(), `${CONSTANTS.DISCUSSION_HUB_MIDDLEWARE}`)
 )
 
 function removePrefix(prefix: string, s: string) {

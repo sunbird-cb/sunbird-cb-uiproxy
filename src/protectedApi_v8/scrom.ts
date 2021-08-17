@@ -31,6 +31,7 @@ scromApi.get('/get/:id', async (req, res) => {
       res.status(400).send(ERROR.GENERAL_ERR_MSG)
       return
     }
+
     const response = await axios.get(apiEndpoints.getScromData, {
       ...axiosRequestConfig,
       headers: {
@@ -42,8 +43,9 @@ scromApi.get('/get/:id', async (req, res) => {
         userId,
       },
     })
-    res.send((response.data))
 
+    res.send((response.data))
+ // tslint:disable-next-line: no-any
   } catch (err) {
     logError(err)
     res.status((err && err.response && err.response.status) || 500).send(
@@ -62,6 +64,7 @@ scromApi.post('/add/:id', async (req, res) => {
     const contentId = req.params.id
 
     // logInfo('org, rootOrg, contentId', org, rootOrg, contentId)
+
     if (!org || !rootOrg) {
       res.status(400).send(ERROR.ERROR_NO_ORG_DATA)
       return
@@ -76,20 +79,41 @@ scromApi.post('/add/:id', async (req, res) => {
     body.userId = userId
 
     // logInfo('body========>', JSON.stringify(body))
+    // if already passed donot update
+    const config = {
+      data : {root_org:rootOrg, content_id: contentId, user_id: userId},
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'post',
+      url: 'http://10.0.2.18:3131/v1/api/scrom-content',
 
-    const response = await axios.post(
-      apiEndpoints.postScromData,
-      body,
-      {
-        ...axiosRequestConfig,
-        headers: {
-          org,
-          rootOrg,
-        },
-      }
-    )
-    res.send(response.data)
+    }
+    const resp = await axios({
+      ...axiosRequestConfig,
+      data : config.data,
+      headers : {rootOrg, },
+      method: 'POST',
+      url: config.url,
+    })
+    if (resp.data.data.length > 0 && resp.data.data[0].cmi_core_lesson_status === 'passed') {
+      res.status(400).send('Bad Request, already passed the module')
+    } else {
+      const response = await axios.post(
+        apiEndpoints.postScromData,
+        body,
+        {
+          ...axiosRequestConfig,
+          headers: {
+            org,
+            rootOrg,
+          },
+        }
+      )
+      res.send(response.data)
+    }
 
+ // tslint:disable-next-line: no-any
   } catch (err) {
     logError(err)
     res.status((err && err.response && err.response.status) || 500).send(
@@ -128,7 +152,7 @@ scromApi.delete('/remove/:id', async (req, res) => {
       timeout: Number(CONSTANTS.KB_TIMEOUT),
     })
     res.send((response.data))
-
+ // tslint:disable-next-line: no-any
   } catch (err) {
     logError(err)
     res.status((err && err.response && err.response.status) || 500).send(

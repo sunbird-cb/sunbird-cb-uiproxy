@@ -513,6 +513,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/notifyContentState': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/protected/v8/connections/connections/recommended/userDepartment': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -1199,6 +1206,7 @@ export const API_LIST = {
         '/proxies/v8/data/v1/system/settings/get/orgTypeList',
         '/proxies/v8/org/v1/search',
         '/proxies/v8/org/v1/update',
+        '/proxies/v8/notifyContentState',
         '/proxies/v8/discussion/topic/:id/:slug',
         '/proxies/v8/discussion/v2/posts/:id/vote',
         '/proxies/v8/discussion/v2/posts/:id',

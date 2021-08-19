@@ -1,12 +1,14 @@
 const _                 = require('lodash')
 import request from 'request'
 import { CONSTANTS } from './env'
+import { logInfo } from './logger'
 
 export const PERMISSION_HELPER = {
     // tslint:disable-next-line: no-any
     setRolesData(reqObj: any, callback: any, body: any) {
         // tslint:disable-next-line: no-any
         const userData: any = JSON.parse(body)
+        logInfo(JSON.stringify(userData))
         if (reqObj.session) {
             reqObj.session.userId = userData.result.response.id ? userData.result.response.id : userData.result.response.userId
             reqObj.session.userName = userData.result.response.userName

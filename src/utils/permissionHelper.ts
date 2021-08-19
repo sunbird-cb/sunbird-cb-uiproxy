@@ -33,7 +33,7 @@ export const PERMISSION_HELPER = {
         // console.log('Step 3: Get user roles function')
         const userId = reqObj.session.userId
         // console.log(userId)
-        const readUrl = `${CONSTANTS.SUNBIRD_PROXY_API_BASE}/user/v2/read/` + userId
+        const readUrl = `${CONSTANTS.KONG_API_BASE}/user/v2/read/` + userId
         const options = {
             headers: {
                 Authorization: CONSTANTS.SB_API_KEY,

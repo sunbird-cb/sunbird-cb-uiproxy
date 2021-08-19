@@ -148,7 +148,7 @@ export const CONSTANTS = {
   NOTIFY_PUBLIST_FAILED: 'The content #contentLink which sent for publish requires few more changes. Please contact the publishers.',
   NOTIFY_PUBLISH_COMPLETED_BODY: 'The content #contentLink is successfully published.' +
     ' The content will be available for the users in few hours.',
-  NOTIFY_EMAIL_TEMPLATE_ID: 'emailtemplate',
+  NOTIFY_EMAIL_TEMPLATE_ID: 'contentEmailTemplate',
   CONTENT_SERVICE_API_BASE: env.CONTENT_SERVICE_API_BASE || 'http://content-service:9000',
   VM_LEARNING_SERVICE_URL: env.VM_LEARNING_SERVICE_URL,
   // tslint:disable-next-line: max-line-length

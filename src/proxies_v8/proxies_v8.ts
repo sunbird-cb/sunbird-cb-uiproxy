@@ -313,6 +313,8 @@ proxiesV8.post('/notifyContentState', async (req, res) => {
       id: `${CONSTANTS.NOTIFY_EMAIL_TEMPLATE_ID}`,
       params: {
         body: contentBody,
+        orgImageUrl: `${CONSTANTS.FRAC_API_BASE}` + '/img/logos/iGOT_logo.png',
+        orgName: 'iGOT Support Team',
       },
     },
   }

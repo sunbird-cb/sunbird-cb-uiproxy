@@ -29,15 +29,10 @@ export const extractUserIdFromRequest = (req: IAuthorizedRequest): string => {
 export const extractUserId = (req: IAuthorizedRequest): string => {
   const wid = req.header('wid')
   if (wid) {
-   // tslint:disable-next-line: no-console
-   console.log('------------------- user id -------', wid)
    return wid
   }
   const userId = (req.kauth && req.kauth.grant.access_token.content.sub) as string
-  const returnUserId = userId.split(':')[2]
-   // tslint:disable-next-line: no-console
-  console.log('------------------- returnUserId -------', returnUserId)
-  return returnUserId
+  return userId.split(':')[2]
 }
 
 export const extractUserNameFromRequest = (req: IAuthorizedRequest) =>

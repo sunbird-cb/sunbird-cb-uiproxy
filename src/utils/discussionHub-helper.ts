@@ -21,9 +21,9 @@ export function getWriteApiAdminUID(): number {
 }
 
 // tslint:disable-next-line: no-any
-export async function getUserUID(wid: any) {
+export async function getUserUID(req: any, wid: any) {
     // tslint:disable-next-line: no-any
-    const userPresent = await getUserByUsername(wid).catch(async (_err: any) => {
+    const userPresent = await getUserByUsername(req, wid).catch(async (_err: any) => {
         // If user is not already present in nodeBB NodeBB DiscussionHub
         logError(usrNotFound)
         return Promise.reject(new Error(usrNotFound))
@@ -35,9 +35,9 @@ export async function getUserUID(wid: any) {
 }
 
 // tslint:disable-next-line: no-any
-export async function getUserSlug(wid: any) {
+export async function getUserSlug(req: any, wid: any) {
     // tslint:disable-next-line: no-any
-    const userPresent = await getUserByUsername(wid).catch(async (_err: any) => {
+    const userPresent = await getUserByUsername(req, wid).catch(async (_err: any) => {
         // If user is not already present in nodeBB NodeBB DiscussionHub
         logError(usrNotFound)
         return Promise.reject(new Error('User not found'))

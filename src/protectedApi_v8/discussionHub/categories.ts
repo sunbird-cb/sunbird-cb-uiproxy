@@ -4,13 +4,13 @@ import { getRootOrg } from '../../authoring/utils/header'
 import { axiosRequestConfig } from '../../configs/request.config'
 import { CONSTANTS } from '../../utils/env'
 import { logError, logInfo } from '../../utils/logger'
-import { extractUserIdFromRequest } from '../../utils/requestExtract'
+import { extractUserIdFromRequest, extractUserToken } from '../../utils/requestExtract'
 
 const API_ENDPOINTS = {
-    getAllCategories: `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/categories`,
+    getAllCategories: `${CONSTANTS.KONG_API_BASE}/nodebb/api/categories`,
     // tslint:disable-next-line: no-any
     getCategoryDetails: (cid: any, slug?: any, tid?: any) => {
-        let url = `${CONSTANTS.DISCUSSION_HUB_API_BASE}/api/category/${cid}`
+        let url = `${CONSTANTS.KONG_API_BASE}/nodebb/api/category/${cid}`
         if (slug) {
             url = `${url}/${slug}`
         }
@@ -31,7 +31,12 @@ categoriesApi.get('/', async (req, res) => {
         const url = API_ENDPOINTS.getAllCategories
         const response = await axios.get(
             url,
-            { ...axiosRequestConfig, headers: { rootOrg } }
+            { ...axiosRequestConfig, headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                rootOrg,
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+             } }
         )
         res.send(response.data)
     } catch (err) {
@@ -54,7 +59,12 @@ categoriesApi.get('/:cid/:slug?/:tid?', async (req, res) => {
         const url = API_ENDPOINTS.getCategoryDetails(cid, slug, tid)
         const response = await axios.get(
             `${url}?page=${pageNo}&sort=${sort}`,
-            { ...axiosRequestConfig, headers: { rootOrg } }
+            { ...axiosRequestConfig, headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                rootOrg,
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req)
+            } }
         )
         res.send(response.data)
     } catch (err) {

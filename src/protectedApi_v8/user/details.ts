@@ -149,7 +149,7 @@ export function wTokenApiMock(req: any, token: any): Promise<any> {
           const user = body.user
           // Check if user is present in NodeBB DiscussionHub
           // tslint:disable-next-line: no-identical-functions
-          const userPresent = await getUserByEmail(user.email).catch(async (err) => {
+          const userPresent = await getUserByEmail(req, user.email).catch(async (err) => {
             if (err.response && (err.response.status === 404)) {
               // If user is not already present in nodeBB DiscussionHub
               // then create the user
@@ -160,7 +160,7 @@ export function wTokenApiMock(req: any, token: any): Promise<any> {
                 username: user.wid,
               }
               // tslint:disable-next-line: no-any
-              await createDiscussionHubUser(reqToDiscussionHub).catch((createDiscussionHubUserErr: any) => {
+              await createDiscussionHubUser(req, reqToDiscussionHub).catch((createDiscussionHubUserErr: any) => {
                 logError(`Creatin of User failed..!:`, createDiscussionHubUserErr)
                 resolve(body)
               })

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Router } from 'express'
 import { getRootOrg } from '../../authoring/utils/header'
 import { axiosRequestConfig } from '../../configs/request.config'
-import { getUserUID, getWriteApiToken } from '../../utils/discussionHub-helper'
+import { getUserUIDBySession, getWriteApiToken } from '../../utils/discussionHub-helper'
 import { CONSTANTS } from '../../utils/env'
 import { logError, logInfo } from '../../utils/logger'
 import { extractUserIdFromRequest, extractUserToken } from '../../utils/requestExtract'
@@ -98,13 +98,12 @@ topicsApi.get('/unread', async (req, res) => {
         const rootOrg = getRootOrg(req)
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
-        const userUid = await getUserUID(req,userId)
+        const userUid = await getUserUIDBySession(req)
         const url = API_ENDPOINTS.getUnreadTopics + `?_uid=${userUid}`
         const response = await axios.get(
             url,
             { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
-                nodebb_authorization_token: getWriteApiToken(),
                 rootOrg,
                 // tslint:disable-next-line: all
                 'x-authenticated-user-token': extractUserToken(req)
@@ -124,13 +123,12 @@ topicsApi.get('/unread/total', async (req, res) => {
         const rootOrg = getRootOrg(req)
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
-        const userUid = await getUserUID(req,userId)
+        const userUid = await getUserUIDBySession(req)
         const url = API_ENDPOINTS.getUnreadTopicsTotal + `?_uid=${userUid}`
         const response = await axios.get(
             url,
             { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
-                nodebb_authorization_token: getWriteApiToken(),
                 rootOrg,
                 // tslint:disable-next-line: all
                 'x-authenticated-user-token': extractUserToken(req)
@@ -152,13 +150,12 @@ topicsApi.get('/:tid', async (req, res) => {
         const sort = req.query.sort || ''
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const tid = req.params.tid
-        const userUid = await getUserUID(req, userId)
+        const userUid = await getUserUIDBySession(req)
         const url = API_ENDPOINTS.getTopicDetails(tid) + `?page=${pageNo}&_uid=${userUid}&sort=${sort}`
         const response = await axios.get(
             url,
             { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
-                nodebb_authorization_token: getWriteApiToken(),
                 rootOrg,
                 // tslint:disable-next-line: all
                 'x-authenticated-user-token': extractUserToken(req)

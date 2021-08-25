@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Router } from 'express'
 import { getRootOrg } from '../../authoring/utils/header'
 import { axiosRequestConfig } from '../../configs/request.config'
-import { getUserSlug, getUserUID, getWriteApiToken } from '../../utils/discussionHub-helper'
+import { getUserSlug, getUserUIDBySession, getWriteApiToken } from '../../utils/discussionHub-helper'
 import { CONSTANTS } from '../../utils/env'
 import { logError, logInfo } from '../../utils/logger'
 import { extractUserIdFromRequest, extractUserToken} from '../../utils/requestExtract'
@@ -29,13 +29,12 @@ usersApi.get('/:slug/bookmarks', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const slug = req.params.slug
-        const userUid = await getUserUID(req, userId)
+        const userUid = await getUserUIDBySession(req)
         const url = API_ENDPOINTS.getUserBookmarks(slug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
             { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
-                nodebb_authorization_token: getWriteApiToken(),
                 rootOrg,
                 // tslint:disable-next-line: all
                 'x-authenticated-user-token': extractUserToken(req)
@@ -55,13 +54,12 @@ usersApi.get('/:slug/downvoted', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const slug = req.params.slug
-        const userUid = await getUserUID(req, userId)
+        const userUid = await getUserUIDBySession(req)
         const url = API_ENDPOINTS.getUserDownvotedPosts(slug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
             { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
-                nodebb_authorization_token: getWriteApiToken(),
                 rootOrg,
                 // tslint:disable-next-line: all
                 'x-authenticated-user-token': extractUserToken(req)
@@ -81,13 +79,12 @@ usersApi.get('/:slug/groups', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const slug = req.params.slug
-        const userUid = await getUserUID(req, userId)
+        const userUid = await getUserUIDBySession(req)
         const url = API_ENDPOINTS.getUserGroups(slug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
             { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
-                nodebb_authorization_token: getWriteApiToken(),
                 rootOrg,
                 // tslint:disable-next-line: all
                 'x-authenticated-user-token': extractUserToken(req)
@@ -107,13 +104,12 @@ usersApi.get('/:slug/info', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const slug = req.params.slug
-        const userUid = await getUserUID(req, userId)
+        const userUid = await getUserUIDBySession(req)
         const url = API_ENDPOINTS.getUserInfo(slug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
             { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
-                nodebb_authorization_token: getWriteApiToken(),
                 rootOrg,
                 // tslint:disable-next-line: all
                 'x-authenticated-user-token': extractUserToken(req)
@@ -133,13 +129,12 @@ usersApi.get('/me', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const userSlug = await getUserSlug(req, userId)
-        const userUid = await getUserUID(req, userId)
+        const userUid = await getUserUIDBySession(req)
         const url = API_ENDPOINTS.getUserProfile(userSlug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
             { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
-                nodebb_authorization_token: getWriteApiToken(),
                 rootOrg,
                 // tslint:disable-next-line: all
                 'x-authenticated-user-token': extractUserToken(req)
@@ -159,13 +154,12 @@ usersApi.get('/:slug/posts', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const slug = req.params.slug
-        const userUid = await getUserUID(req, userId)
+        const userUid = await getUserUIDBySession(req)
         const url = API_ENDPOINTS.getUserPosts(slug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
             { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
-                nodebb_authorization_token: getWriteApiToken(),
                 rootOrg,
                 // tslint:disable-next-line: all
                 'x-authenticated-user-token': extractUserToken(req)
@@ -185,13 +179,12 @@ usersApi.get('/:slug/upvoted', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const slug = req.params.slug
-        const userUid = await getUserUID(req, userId)
+        const userUid = await getUserUIDBySession(req)
         const url = API_ENDPOINTS.getUserUpvotedPosts(slug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
             { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
-                nodebb_authorization_token: getWriteApiToken(),
                 rootOrg,
                 // tslint:disable-next-line: all
                 'x-authenticated-user-token': extractUserToken(req)
@@ -211,13 +204,12 @@ usersApi.get('/:slug/watched', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const slug = req.params.slug
-        const userUid = await getUserUID(req, userId)
+        const userUid = await getUserUIDBySession(req)
         const url = API_ENDPOINTS.getUsersWatchedTopics(slug) + `?_uid=${userUid}`
         const response = await axios.get(
             url,
             { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
-                nodebb_authorization_token: getWriteApiToken(),
                 rootOrg,
                 // tslint:disable-next-line: all
                 'x-authenticated-user-token': extractUserToken(req)
@@ -252,7 +244,7 @@ usersApi.get('/:slug/about', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const slug = req.params.slug
-        const userUid = await getUserUID(req, userId)
+        const userUid = await getUserUIDBySession(req)
         logInfo('called /:slug/about slug=> ', slug)
         const url = API_ENDPOINTS.getUserProfile(slug) + `?_uid=${userUid}`
         logInfo('called /:slug/about url=> ', url)
@@ -260,7 +252,6 @@ usersApi.get('/:slug/about', async (req, res) => {
             url,
             { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
-                nodebb_authorization_token: getWriteApiToken(),
                 // tslint:disable-next-line: all
                 'x-authenticated-user-token': extractUserToken(req)
              } }

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Router } from 'express'
 import { getRootOrg } from '../../authoring/utils/header'
 import { axiosRequestConfig } from '../../configs/request.config'
-import { getUserUID, getWriteApiAdminUID, getWriteApiToken } from '../../utils/discussionHub-helper'
+import { getUserUIDBySession, getWriteApiAdminUID, getWriteApiToken } from '../../utils/discussionHub-helper'
 import { CONSTANTS } from '../../utils/env'
 import { logError, logInfo } from '../../utils/logger'
 import { extractUserIdFromRequest, extractUserToken } from '../../utils/requestExtract'
@@ -38,7 +38,6 @@ export async function createDiscussionHubUser(req: any , user: any): Promise<any
                 request1,
                 { ...axiosRequestConfig, headers: {
                     Authorization: CONSTANTS.SB_API_KEY,
-                    nodebb_authorization_token: getWriteApiToken(),
                     // tslint:disable-next-line: all
                     'x-authenticated-user-token': extractUserToken(req)
                  } }
@@ -61,7 +60,7 @@ writeApi.post('/topics', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const url = API_ENDPOINTS.createTopic
-        const userUid = await getUserUID(req, userId)
+        const userUid = await getUserUIDBySession(req)
         const response = await axios.post(
             url,
             {
@@ -70,7 +69,6 @@ writeApi.post('/topics', async (req, res) => {
             },
             { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
-                nodebb_authorization_token: getWriteApiToken(),
                 // tslint:disable-next-line: all
                 'x-authenticated-user-token': extractUserToken(req)
              } }
@@ -92,7 +90,7 @@ writeApi.post('/topics/:topicId', async (req, res) => {
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const topicId = req.params.topicId
         const url = API_ENDPOINTS.replyToTopic(topicId)
-        const userUid = await getUserUID(req, userId)
+        const userUid = await getUserUIDBySession(req)
         const response = await axios.post(
             url,
             {
@@ -101,7 +99,6 @@ writeApi.post('/topics/:topicId', async (req, res) => {
             },
             { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
-                nodebb_authorization_token: getWriteApiToken(),
                 // tslint:disable-next-line: all
                 'x-authenticated-user-token': extractUserToken(req)
              } }
@@ -137,7 +134,7 @@ writeApi.post('/posts/:postId/bookmark', async (req, res) => {
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const postId = req.params.postId
         const url = API_ENDPOINTS.bookmarkPost(postId)
-        const userUid = await getUserUID(req, userId)
+        const userUid = await getUserUIDBySession(req)
         const response = await axios.post(
             url,
             {
@@ -145,7 +142,6 @@ writeApi.post('/posts/:postId/bookmark', async (req, res) => {
             },
             { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
-                nodebb_authorization_token: getWriteApiToken(),
                 // tslint:disable-next-line: all
                 'x-authenticated-user-token': extractUserToken(req)
             } }
@@ -166,13 +162,12 @@ writeApi.delete('/posts/:postId/bookmark', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const postId = req.params.postId
-        const userUid = await getUserUID(req, userId)
+        const userUid = await getUserUIDBySession(req)
         const url = API_ENDPOINTS.bookmarkPost(postId) + `?_uid=${userUid}`
         const response = await axios.delete(
             url,
             { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
-                nodebb_authorization_token: getWriteApiToken(),
                 // tslint:disable-next-line: all
                 'x-authenticated-user-token': extractUserToken(req)
              } }
@@ -194,7 +189,7 @@ writeApi.post('/posts/:postId/vote', async (req, res) => {
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const postId = req.params.postId
         const url = API_ENDPOINTS.votePost(postId)
-        const userUid = await getUserUID(req, userId)
+        const userUid = await getUserUIDBySession(req)
         const response = await axios.post(
             url,
             {
@@ -203,7 +198,6 @@ writeApi.post('/posts/:postId/vote', async (req, res) => {
             },
             { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
-                nodebb_authorization_token: getWriteApiToken(),
                 // tslint:disable-next-line: all
                 'x-authenticated-user-token': extractUserToken(req)
             } }
@@ -224,13 +218,12 @@ writeApi.delete('/posts/:postId/vote', async (req, res) => {
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const postId = req.params.postId
-        const userUid = await getUserUID(req, userId)
+        const userUid = await getUserUIDBySession(req)
         const url = API_ENDPOINTS.votePost(postId) + `?_uid=${userUid}`
         const response = await axios.delete(
             url,
             { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
-                nodebb_authorization_token: getWriteApiToken(),
                 // tslint:disable-next-line: all
                 'x-authenticated-user-token': extractUserToken(req)
              } }
@@ -252,7 +245,7 @@ writeApi.put('/topics/:topicId/follow', async (req, res) => {
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
         const topicId = req.params.topicId
         const url = API_ENDPOINTS.followTopic(topicId)
-        const userUid = await getUserUID(req, userId)
+        const userUid = await getUserUIDBySession(req)
         const response = await axios.put(
             url,
             {
@@ -261,7 +254,6 @@ writeApi.put('/topics/:topicId/follow', async (req, res) => {
             },
             { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
-                nodebb_authorization_token: getWriteApiToken(),
                 // tslint:disable-next-line: all
                 'x-authenticated-user-token': extractUserToken(req)
              } }
@@ -290,7 +282,6 @@ writeApi.put('/topics/:topicId/tags', async (req, res) => {
             },
             { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
-                nodebb_authorization_token: getWriteApiToken(),
                 // tslint:disable-next-line: all
                 'x-authenticated-user-token': extractUserToken(req)
             } }

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Router } from 'express'
 import { getRootOrg } from '../../authoring/utils/header'
 import { axiosRequestConfig } from '../../configs/request.config'
-import { getUserUID, getWriteApiToken } from '../../utils/discussionHub-helper'
+import { getUserUIDBySession, getWriteApiToken } from '../../utils/discussionHub-helper'
 import { CONSTANTS } from '../../utils/env'
 import { logError, logInfo } from '../../utils/logger'
 import { extractUserIdFromRequest , extractUserToken} from '../../utils/requestExtract'
@@ -18,13 +18,12 @@ notificationsApi.get('/', async (req, res) => {
         const rootOrg = getRootOrg(req)
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
-        const userUid = await getUserUID(req, userId)
+        const userUid = await getUserUIDBySession(req)
         const url = API_ENDPOINTS.getNotifications + `?_uid=${userUid}`
         const response = await axios.get(
             url,
             { ...axiosRequestConfig, headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
-                nodebb_authorization_token: getWriteApiToken(),
                 // tslint:disable-next-line: all
                 'x-authenticated-user-token': extractUserToken(req)
             } }

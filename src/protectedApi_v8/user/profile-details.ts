@@ -578,11 +578,32 @@ profileDeatailsApi.post('/createUserWithoutInvitationEmail', async (req, res) =>
         const searchresponse = await axios({
             ...axiosRequestConfig,
             data: { request: { query: '', filters: { email: sbemail_.toLowerCase() } } },
+            headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+                // tslint:disable-next-line: all
+                'x-authenticated-user-token': extractUserToken(req),
+            },
             method: 'POST',
-            url: API_END_POINTS.searchSb,
+            url: API_END_POINTS.kongSearchUser,
         })
         if (searchresponse.data.result.response.count > 0) {
-            res.status(400).send(emailAdressExist)
+            res.status(400).send({
+                id: 'api.error.createUser',
+                ver: '1.0',
+                // tslint:disable-next-line: object-literal-sort-keys
+                ts: dateFormat(new Date(), 'yyyy-mm-dd HH:MM:ss:lo'),
+                params:
+                {
+                    resmsgid: uuidv1(),
+                    // tslint:disable-next-line: object-literal-sort-keys
+                    msgid: null,
+                    status: 'failed',
+                    err: 'USR_EMAIL_EXISTS',
+                    errmsg: emailAdressExist,
+                },
+                responseCode: 'USR_EMAIL_EXISTS',
+                result: {},
+            })
             return
         } else {
             const sbUserProfile: Partial<ISBUser> = {
@@ -598,7 +619,7 @@ profileDeatailsApi.post('/createUserWithoutInvitationEmail', async (req, res) =>
                     'x-authenticated-user-token': extractUserToken(req),
                 },
                 method: 'POST',
-                url: API_END_POINTS.createSb,
+                url: API_END_POINTS.kongCreateUser,
             })
             if (response.data.responseCode === 'CLIENT_ERROR') {
                 res.status(400).send(failedToCreateUser)
@@ -613,31 +634,39 @@ profileDeatailsApi.post('/createUserWithoutInvitationEmail', async (req, res) =>
                         'x-authenticated-user-token': extractUserToken(req),
                     },
                     method: 'GET',
-                    url: API_END_POINTS.userRead(sbUserId),
+                    url: API_END_POINTS.kongUserRead(sbUserId),
                 })
                 if (sbUserReadResponse.data.params.status !== 'success') {
                     res.status(500).send(failedToReadUser)
                     return
                 }
 
-                const personalDetailsRegistry: IPersonalDetails = {
-                    firstname: sbfirstName_,
-                    primaryEmail: sbemail_,
-                    surname: sblastName_,
-                    userName: sbUserReadResponse.data.result.response.userName,
-                }
-                const userRegistry = getUserRegistry(personalDetailsRegistry, sbChannel)
-                const userRegistryResponse = await axios({
-                    ...axiosRequestConfig,
-                    data: userRegistry,
-                    headers: {
-                        wid: sbUserId,
+                const sbProfileUpdateReq = {
+                    profileDetails: {
+                        employmentDetails: {
+                            departmentName: sbChannel,
+                        },
+                        personalDetails: {
+                            firstname: sbfirstName_,
+                            primaryEmail: sbemail_,
+                            surname: sblastName_,
+                        },
                     },
-                    method: 'POST',
-                    url: API_END_POINTS.createOSUserRegistry(sbUserId),
+                    userId: sbUserId,
+                }
+
+                const sbUserProfileUpdateResp = await axios({
+                    ...axiosRequestConfig,
+                    data: { request: sbProfileUpdateReq },
+                    headers: {
+                        Authorization: CONSTANTS.SB_API_KEY,
+                    },
+                    method: 'PATCH',
+                    url: API_END_POINTS.kongUpdateUser,
                 })
-                if (userRegistryResponse.data === null) {
-                    res.status(500).send(failedToCreateUserInOpenSaber)
+                if (sbUserProfileUpdateResp.data.responseCode === 'CLIENT_ERROR') {
+                    res.status(400).send(failedToUpdateUser)
+                    return
                 } else {
                     const sbUserProfileResponse: Partial<ISunbirdbUserResponse> = {
                         email: sbemail_, firstName: sbfirstName_, lastName: sblastName_,

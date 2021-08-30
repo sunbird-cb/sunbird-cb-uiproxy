@@ -98,7 +98,7 @@ topicsApi.get('/unread', async (req, res) => {
         const rootOrg = getRootOrg(req)
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
-        const userUid = await getUserUID(req,userId)
+        const userUid = await getUserUID(req, userId)
         const url = API_ENDPOINTS.getUnreadTopics + `?_uid=${userUid}`
         const response = await axios.get(
             url,
@@ -124,7 +124,7 @@ topicsApi.get('/unread/total', async (req, res) => {
         const rootOrg = getRootOrg(req)
         const userId = extractUserIdFromRequest(req)
         logInfo(`UserId: ${userId}, rootOrg: ${rootOrg}`)
-        const userUid = await getUserUID(req,userId)
+        const userUid = await getUserUID(req, userId)
         const url = API_ENDPOINTS.getUnreadTopicsTotal + `?_uid=${userUid}`
         const response = await axios.get(
             url,

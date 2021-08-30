@@ -1188,6 +1188,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/protected/v8/user/profileDetails/createUserWithoutInvitationEmail': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
     [
@@ -1355,5 +1362,6 @@ export const API_LIST = {
         '/protected/v8/connections/v2/add/connection',
         '/protected/v8/connections/v2/connections/suggests',
         '/protected/v8/connections/v2/update/connection',
+        '/protected/v8/user/profileDetails/createUserWithoutInvitationEmail',
     ],
 }

@@ -21,17 +21,9 @@ export function getWriteApiAdminUID(): number {
 }
 
 // tslint:disable-next-line: no-any
-export async function getUserUID(req: any, wid: any) {
+export async function getUserUIDBySession(req: any) {
     // tslint:disable-next-line: no-any
-    const userPresent = await getUserByUsername(req, wid).catch(async (_err: any) => {
-        // If user is not already present in nodeBB NodeBB DiscussionHub
-        logError(usrNotFound)
-        return Promise.reject(new Error(usrNotFound))
-    })
-    if (userPresent && userPresent.uid) {
-        logInfo('user found - uid: ', userPresent.uid)
-        return Promise.resolve(userPresent.uid)
-    }
+        return req.session.uid
 }
 
 // tslint:disable-next-line: no-any

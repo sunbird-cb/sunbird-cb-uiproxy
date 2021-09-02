@@ -10,6 +10,7 @@ import { extractAuthorizationFromRequest } from '../utils/requestExtract'
 const API_END_POINTS = {
     addDataNode: `${CONSTANTS.FRAC_API_BASE}/fracapis/frac/addDataNode`,
     addDataNodeBulk: `${CONSTANTS.FRAC_API_BASE}/fracapis/frac/addDataNodeBulk`,
+    filterByMappings: `${CONSTANTS.FRAC_API_BASE}/fracapis/frac/filterByMappings`,
     getActivity: `${CONSTANTS.FRAC_API_BASE}/fracapis/frac/getAllNodes?type=ACTIVITY&status=VERIFIED`,
     getCompetencyArea: `${CONSTANTS.FRAC_API_BASE}/fracapis/frac/getAllNodes?type=COMPETENCYAREA`,
     getDictionary: `${CONSTANTS.FRAC_API_BASE}/fracapis/frac/getAllNodes?type=COMPETENCY&status=VERIFIED`,
@@ -98,6 +99,24 @@ fracApi.post('/addDataNodeBulk', async (req, res) => {
 fracApi.post('/searchNodes', async (req, res) => {
     try {
         const response = await axios.post(API_END_POINTS.searchNodes, req.body, {
+            ...axiosRequestConfig,
+            headers: {
+                Authorization: extractAuthorizationFromRequest(req),
+            },
+        })
+        res.status(response.status).send(response.data)
+    } catch (err) {
+        res.status((err && err.response && err.response.status) || 500).send(
+            (err && err.response && err.response.data) || {
+                error: unknownError,
+            }
+        )
+    }
+})
+
+fracApi.post('/filterByMappings', async (req, res) => {
+    try {
+        const response = await axios.post(API_END_POINTS.filterByMappings, req.body, {
             ...axiosRequestConfig,
             headers: {
                 Authorization: extractAuthorizationFromRequest(req),

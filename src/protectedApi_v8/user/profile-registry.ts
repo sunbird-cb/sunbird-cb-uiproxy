@@ -3,11 +3,14 @@ import { Router } from 'express'
 import { axiosRequestConfig, axiosRequestConfigLong } from '../../configs/request.config'
 import { CONSTANTS } from '../../utils/env'
 import { logError, logInfo } from '../../utils/logger'
-import { extractUserIdFromRequest } from '../../utils/requestExtract'
+import { extractAuthorizationFromRequest,
+  extractUserIdFromRequest,
+  IAuthorizedRequest } from '../../utils/requestExtract'
 const fs = require('fs')
 
 const API_END_POINTS = {
   createUserRegistry: (userId: string) => `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/create/profile?userId=${userId}`,
+  getAllPosition: `${CONSTANTS.FRAC_API_BASE}/fracapis/frac/getAllNodes?type=POSITION&status=VERIFIED`,
   getUserRegistry: `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/get/profile`,
   getUserRegistryById: (userId: string) => `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/search/profile?userId=${userId}`,
   searchUserRegistry: `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/search/profile`,
@@ -192,9 +195,14 @@ profileRegistryApi.get('/getProfilePageMeta', async (_req, res) => {
       .catch((err) => {
         logError(`error fetching degreesMeta`, err)
       })
-    const designations = await designationMeta()
+    let designations = Object.create({})
+    designations = await designationMeta()
       .catch((err) => {
         logError(`error fetching designationMeta`, err)
+      })
+    designations.designations = await designationMetaFrac(_req)
+      .catch((err) => {
+        logError('error fetching desingations from FRAC', err)
       })
     res.json({
       degrees,
@@ -369,4 +377,39 @@ export async function getProfileStatus(userId: string) {
     logError('ERROR WHILE FETCHING THE USER DETAILS FROM REGISTERY --> ', error)
     return false
   }
+}
+
+export interface IPosition {
+  type: string
+  id: string
+  name: string
+  description: string
+  status: string
+  secondaryStatus: string
+  source: string
+  active: string
+}
+
+export async function designationMetaFrac(req: IAuthorizedRequest) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axios.get(API_END_POINTS.getAllPosition, {
+        ...axiosRequestConfig,
+        headers: {
+            Authorization: extractAuthorizationFromRequest(req),
+        },
+      })
+      if (response.data.responseData) {
+        const result = response.data.responseData.map((item: IPosition) => {
+            return { name : item.name }
+        })
+        resolve(result)
+      } else {
+        reject('Failed to receive response from FRAC API for designations')
+      }
+    } catch (err) {
+      logError('ERROR while calling FRAC API to get Designation')
+      throw err
+    }
+  })
 }

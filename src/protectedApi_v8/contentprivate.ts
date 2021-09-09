@@ -3,7 +3,7 @@ import { Router } from 'express'
 
 import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
-import { logError } from '../utils/logger'
+import { logInfo, logError } from '../utils/logger'
 import { ERROR } from '../utils/message'
 import { extractUserId, extractUserOrgData, extractUserToken } from '../utils/requestExtract'
 
@@ -45,11 +45,11 @@ contentPrivateApi.patch('/update/:id', async (req, res) => {
          // tslint:disable-next-line: no-console
         console.log('calling for user channel')
         const userChannel = extractUserOrgData(req)
-        // tslint:disable-next-line: no-console
-        console.log('user channel '+userChannel)
+        logInfo("============== user channel")
+        logInfo(userChannel)
         const hierarchySource = getHierarchyDetails(userToken, id)
        // tslint:disable-next-line: no-console
-       console.log('hierarchy source '+hierarchySource)
+        console.log('hierarchy source ' + hierarchySource)
         if (userChannel !== hierarchySource) {
             res.status(400).send({
                 msg: res.status(400).send({
@@ -91,7 +91,12 @@ export async function getHierarchyDetails(token: string, id: string) {
             },
         })
         const hierarchyResult = response.data.result.content
+        const bodyData = JSON.stringify(hierarchyResult)
+         // tslint:disable-next-line: no-console
+        console.log('body data=====>', bodyData)
         if (typeof hierarchyResult !== 'undefined' && hierarchyResult != null) {
+            logInfo("============== hierarchy source")
+            logInfo(hierarchyResult.source)
             return hierarchyResult.source
         }
     } catch (error) {

@@ -15,6 +15,9 @@ export const PERMISSION_HELPER = {
             reqObj.session.userRoles = userData.result.response.roles
             reqObj.session.orgs = userData.result.response.organisations
             reqObj.session.rootOrgId = userData.result.response.rootOrgId
+            reqObj.session.channel = userData.result.response.rootOrg.channel
+            reqObj.session.orgName = userData.result.response.rootOrg.orgName
+
             if (!_.includes(reqObj.session.userRoles, 'PUBLIC')) {
                 reqObj.session.userRoles.push('PUBLIC')
             }

@@ -1,4 +1,5 @@
 import { Request } from 'express'
+import _ from 'lodash'
 import uuid from 'uuid'
 export interface IAuthorizedRequest extends Request {
   kauth?: {
@@ -71,6 +72,10 @@ export const extractRootOrgFromRequest = (req: IAuthorizedRequest): string => {
 
   return rootOrg as string
 
+}
+
+export const extractUserOrgData = (req: Request) => {
+  return (_.get(req, 'session.orgs')) ? _.get(req, 'session.orgs') : []
 }
 
 export const getUUID = () => uuid.v1()

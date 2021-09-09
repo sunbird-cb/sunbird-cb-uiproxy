@@ -1,8 +1,10 @@
 import axios from 'axios'
 import { Request, Response, Router } from 'express'
+import { axiosRequestConfig } from '../../configs/request.config'
 import { AxiosRequestConfig } from '../../models/axios-request-config.model'
 import { logError } from '../../utils/logger'
-import { ERROR } from '../constants/error'
+import { ERROR } from '../../utils/message'
+import { extractUserToken } from '../../utils/requestExtract'
 import { IUploadS3Request, IUploadS3Response } from '../models/response/custom-s3-upload'
 import { decoder } from '../utils/decode'
 import { getOrg, getRootOrg } from '../utils/header'
@@ -17,6 +19,19 @@ import { getHierarchyV2WithContent, getMultipleHierarchyV2WithContent } from './
 import { searchForOtherLanguage } from './language-search'
 
 export const authApi = Router()
+const failedToProcess = 'Failed to process the request. '
+
+const API_END_POINTS = {
+  addCertToCourseBatch: `${CONSTANTS.KONG_API_BASE}/course/batch/cert/v1/template/add`,
+  batchAddUser: (batchId: string) => `${CONSTANTS.KONG_API_BASE}/course/v1/batch/user/add/${batchId}`,
+  batchRemoveUser: `${CONSTANTS.KONG_API_BASE}/course/v1/unenrol`,
+  createBatch: `${CONSTANTS.KONG_API_BASE}/course/v1/batch/create`,
+  downloadCert: `${CONSTANTS.KONG_API_BASE}/certreg/v1/certs/download`,
+  issueCertToCourseBatch: `${CONSTANTS.KONG_API_BASE}/course/batch/cert/v1/issue?reIssue=true`,
+  readCert: (certId: string) => `${CONSTANTS.KONG_API_BASE}/certreg/v2/certs/download/${certId}`,
+  removeCertFromCourseBatch: `${CONSTANTS.KONG_API_BASE}/course/batch/cert/v1/template/remove`,
+  updateBatch: `${CONSTANTS.KONG_API_BASE}/course/v1/batch/update`,
+}
 
 authApi.all('*', (req, _res, next) => {
   if (req.body && req.body.data && typeof req.body.data === 'string') {
@@ -34,7 +49,7 @@ authApi.get('/hierarchy/:id', async (req: Request, res: Response) => {
   } catch (ex) {
     logError(ex)
     res.status(400).send({
-      msg: ERROR.GENERAL,
+      msg: ERROR.GENERAL_ERR_MSG,
     })
   }
 })
@@ -48,7 +63,7 @@ authApi.get('/hierarchy/content/:id', async (req: Request, res: Response) => {
   } catch (ex) {
     logError(ex)
     res.status(400).send({
-      msg: ERROR.GENERAL,
+      msg: ERROR.GENERAL_ERR_MSG,
     })
   }
 })
@@ -62,7 +77,7 @@ authApi.get('/hierarchy/multiple/:ids', async (req: Request, res: Response) => {
   } catch (ex) {
     logError(ex)
     res.status(400).send({
-      msg: ERROR.GENERAL,
+      msg: ERROR.GENERAL_ERR_MSG,
     })
   }
 })
@@ -77,7 +92,7 @@ authApi.get('/hierarchy/multiple/content/:ids', async (req: Request, res: Respon
   } catch (ex) {
     logError(ex)
     res.status(400).send({
-      msg: ERROR.GENERAL,
+      msg: ERROR.GENERAL_ERR_MSG,
     })
   }
 })
@@ -97,7 +112,7 @@ authApi.get('/hierarchy/content/translation/:id', async (req, res) => {
   } catch (ex) {
     logError(ex)
     res.status(400).send({
-      msg: ERROR.GENERAL,
+      msg: ERROR.GENERAL_ERR_MSG,
     })
   }
 })
@@ -209,6 +224,129 @@ authApi.patch('/content/v3/update/:id', async (req: Request, res: Response) => {
     .catch((error) => {
       res.status(error.response.status).send(error.response.data)
     })
+})
+
+authApi.post('/batch/:key', async (req: Request, res: Response) => {
+  try {
+    const key = req.params.key as string
+    let targetUrl = ''
+    switch (key) {
+      case 'create':
+        targetUrl = API_END_POINTS.createBatch
+        break
+      case 'removeUser':
+        targetUrl = API_END_POINTS.batchRemoveUser
+        break
+      case 'issueBatchCert':
+        targetUrl = API_END_POINTS.issueCertToCourseBatch
+        break
+      case 'downloadCert':
+        targetUrl = API_END_POINTS.downloadCert
+        break
+      default:
+        logError('Unsupported operation received for batch API - ' + key)
+        res.status(400).send('Unsupported operation name - ' + key)
+        break
+    }
+    const response = await axios.post(targetUrl, req.body, {
+        ...axiosRequestConfig,
+        headers: {
+          Authorization: CONSTANTS.SB_API_KEY,
+          // tslint:disable-next-line: no-duplicate-string
+          'x-authenticated-user-token': extractUserToken(req),
+        },
+    })
+    res.status(response.status).send(response.data)
+  } catch (err) {
+      logError(failedToProcess + err)
+      res.status((err && err.response && err.response.status) || 500).send(
+          (err && err.response && err.response.data) || {
+              error: ERROR.GENERAL_ERR_MSG,
+          }
+      )
+  }
+})
+
+authApi.patch('/batch/:key', async (req: Request, res: Response) => {
+  try {
+    const key = req.params.key as string
+    let targetUrl = ''
+    switch (key) {
+      case 'update':
+        targetUrl = API_END_POINTS.updateBatch
+        break
+      case 'addCert':
+        targetUrl = API_END_POINTS.addCertToCourseBatch
+        break
+      case 'removeCert':
+        targetUrl = API_END_POINTS.removeCertFromCourseBatch
+        break
+      default:
+        logError('Unsupported operation received for batch API - ' + key)
+        res.status(400).send('Unsupported operation name - ' + key)
+        break
+    }
+    const response = await axios.patch(targetUrl, req.body, {
+        ...axiosRequestConfig,
+        headers: {
+          Authorization: CONSTANTS.SB_API_KEY,
+          // tslint:disable-next-line: no-duplicate-string
+          'x-authenticated-user-token': extractUserToken(req),
+        },
+    })
+    res.status(response.status).send(response.data)
+  } catch (err) {
+      logError(failedToProcess + err)
+      res.status((err && err.response && err.response.status) || 500).send(
+          (err && err.response && err.response.data) || {
+              error: ERROR.GENERAL_ERR_MSG,
+          }
+      )
+  }
+})
+
+authApi.post('/addUserToBatch/:batchId', async (req: Request, res: Response) => {
+  try {
+    const batchId = req.params.batchId as string
+    const response = await axios.post(API_END_POINTS.batchAddUser(batchId), req.body, {
+        ...axiosRequestConfig,
+        headers: {
+          Authorization: CONSTANTS.SB_API_KEY,
+          // tslint:disable-next-line: no-duplicate-string
+          'x-authenticated-user-token': extractUserToken(req),
+        },
+    })
+    res.status(response.status).send(response.data)
+  } catch (err) {
+      logError(failedToProcess + err)
+      res.status((err && err.response && err.response.status) || 500).send(
+          (err && err.response && err.response.data) || {
+              error: ERROR.GENERAL_ERR_MSG,
+          }
+      )
+  }
+})
+
+authApi.get('/readCert/:certId', async (req, res) => {
+  try {
+      const certId = req.params.certId
+      const response = await axios.get(API_END_POINTS.readCert(certId), {
+          ...axiosRequestConfig,
+          headers: {
+              Authorization: CONSTANTS.SB_API_KEY,
+              // tslint:disable-next-line: no-duplicate-string
+              'x-authenticated-user-token': extractUserToken(req),
+          },
+      })
+      res.status(response.status).send(response.data)
+  } catch (err) {
+      logError(failedToProcess + err)
+      res.status((err && err.response && err.response.status) || 500).send(
+          (err && err.response && err.response.data) || {
+              error: ERROR.GENERAL_ERR_MSG,
+          }
+      )
+  }
 })
 
 authApi.all('*', (req: Request, res: Response) => {

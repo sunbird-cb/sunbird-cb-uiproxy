@@ -5,7 +5,7 @@ import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
 import { logError } from '../utils/logger'
 import { ERROR } from '../utils/message'
-import { extractUserId, extractUserToken, extractUserOrgData } from '../utils/requestExtract'
+import { extractUserId, extractUserOrgData, extractUserToken } from '../utils/requestExtract'
 
 export const contentPrivateApi = Router()
 
@@ -23,7 +23,7 @@ const CHANNEL_VALIDATION_ERROR = 'SOURCE_MISMATCH_ERROR'
 contentPrivateApi.patch('/update/:id', async (req, res) => {
     try {
         const id = req.params.id
-        const content = req.body.content
+        const content = req.body.request.content
         const fields = Object.keys(content)
         const userId = extractUserId(req)
         const userToken = extractUserToken(req) as string
@@ -42,8 +42,14 @@ contentPrivateApi.patch('/update/:id', async (req, res) => {
                 }
             }
         }
+         // tslint:disable-next-line: no-console
+        console.log('calling for user channel')
         const userChannel = extractUserOrgData(req)
+        // tslint:disable-next-line: no-console
+        console.log('user channel '+userChannel)
         const hierarchySource = getHierarchyDetails(userToken, id)
+       // tslint:disable-next-line: no-console
+       console.log('hierarchy source '+hierarchySource)
         if (userChannel !== hierarchySource) {
             res.status(400).send({
                 msg: res.status(400).send({

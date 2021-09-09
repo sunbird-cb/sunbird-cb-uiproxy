@@ -5,7 +5,7 @@ import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
 import { logError } from '../utils/logger'
 import { ERROR } from '../utils/message'
-import { extractUserId, extractUserToken } from '../utils/requestExtract'
+import { extractUserId, extractUserToken, extractUserOrgData } from '../utils/requestExtract'
 
 export const contentPrivateApi = Router()
 
@@ -42,7 +42,7 @@ contentPrivateApi.patch('/update/:id', async (req, res) => {
                 }
             }
         }
-        const userChannel = getUserChannel(userToken, userId)
+        const userChannel = extractUserOrgData(req)
         const hierarchySource = getHierarchyDetails(userToken, id)
         if (userChannel !== hierarchySource) {
             res.status(400).send({

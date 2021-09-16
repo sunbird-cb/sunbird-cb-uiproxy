@@ -1209,12 +1209,36 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/authApi/batch/:key': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/authApi/addUserToBatch/:batchId': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/authApi/readCert/:certId': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
     [
         '/authApi/content/v3/create',
         '/authApi/content/v3/read/:do_id',
         '/authApi/content/v3/update/:do_id',
+        '/authApi/batch/:key',
+        '/authApi/addUserToBatch/:batchId',
+        '/authApi/readCert/:certId',
         '/proxies/v8/api/user/v2/read',
         '/proxies/v8/api/user/v2/read/:id',
         '/proxies/v8/event/v4/read/:do_id',

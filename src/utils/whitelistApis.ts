@@ -747,6 +747,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/protected/v8/workallocation/getUserCompetencies/:userId': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/protected/v8/frac/searchNodes': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -1328,6 +1335,7 @@ export const API_LIST = {
         '/protected/v8/workallocation/add/workorder',
         '/protected/v8/workallocation/getWorkOrderById/:workOrderId',
         '/protected/v8/workallocation/user/autocomplete/:searchTerm',
+        '/protected/v8/workallocation/getUserCompetencies/:userId',
         '/protected/v8/frac/searchNodes',
         '/protected/v8/frac/filterByMappings',
         '/protected/v8/frac/:type/:key',

@@ -15,6 +15,7 @@ const API_END_POINTS = {
     copyWorkOrderEndPoint: (path: string) => `${CONSTANTS.KONG_API_BASE}/${path}/copy/workOrder`,
     getPdf: (id: string) => `${CONSTANTS.KONG_API_BASE}/getWOPdf/${id}`,
     getUserBasicDetails: (userId: string) => `${CONSTANTS.KONG_API_BASE}/${workallocationV2Path}/user/basicInfo/${userId}`,
+    getUserCompetenciesDetails: (userId: string) => `${CONSTANTS.KONG_API_BASE}/${workallocationV2Path}/user/competencies/${userId}`,
     getUsersEndPoint: `${CONSTANTS.SB_EXT_API_BASE_2}/v1/workallocation/getUsers`,
     getWorkAllocationById: (path: string, id: string) => `${CONSTANTS.KONG_API_BASE}/${path}/getWorkAllocationById/${id}`,
     getWorkOrderById: (path: string, id: string) => `${CONSTANTS.KONG_API_BASE}/${path}/getWorkOrderById/${id}`,
@@ -423,6 +424,35 @@ workAllocationApi.get('/getWOPdf/:workOrderId', async (req, res) => {
                 },
                 responseType: 'arraybuffer',
 
+            }
+        )
+        res.status(response.status).send(response.data)
+    } catch (err) {
+        logError(Error + err)
+        res.status((err && err.response && err.response.status) || 500).send(
+            (err && err.response && err.response.data) || {
+                error: ERROR.GENERAL_ERR_MSG,
+            }
+        )
+    }
+})
+
+workAllocationApi.get('/getUserCompetencies/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId
+        if (!userId) {
+            res.status(400).send(userIdFailedMessage)
+            return
+        }
+        const response = await axios.get(
+            API_END_POINTS.getUserCompetenciesDetails(userId),
+            {
+                ...axiosRequestConfig,
+                headers: {
+                    Authorization: CONSTANTS.SB_API_KEY,
+                    // tslint:disable-next-line: no-duplicate-string
+                    'x-authenticated-user-token': extractUserToken(req),
+                },
             }
         )
         res.status(response.status).send(response.data)

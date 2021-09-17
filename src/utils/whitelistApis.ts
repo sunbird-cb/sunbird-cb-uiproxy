@@ -1215,15 +1215,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
-        },
-        '/authApi/addUserToBatch/:batchId': {
-            checksNeeded: [CHECK.ROLE],
-            // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [
-                ROLE.PUBLIC,
-            ],
-        },
-        '/authApi/readCert/:certId': {
+        },'/authApi/readCert/:certId': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -1237,7 +1229,6 @@ export const API_LIST = {
         '/authApi/content/v3/read/:do_id',
         '/authApi/content/v3/update/:do_id',
         '/authApi/batch/:key',
-        '/authApi/addUserToBatch/:batchId',
         '/authApi/readCert/:certId',
         '/proxies/v8/api/user/v2/read',
         '/proxies/v8/api/user/v2/read/:id',

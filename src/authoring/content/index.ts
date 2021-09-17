@@ -23,7 +23,7 @@ const failedToProcess = 'Failed to process the request. '
 
 const API_END_POINTS = {
   addCertToCourseBatch: `${CONSTANTS.KONG_API_BASE}/course/batch/cert/v1/template/add`,
-  batchAddUser: (batchId: string) => `${CONSTANTS.KONG_API_BASE}/course/v1/batch/user/add/${batchId}`,
+  batchAddUser: `${CONSTANTS.KONG_API_BASE}/course/v1/enrol`,
   batchRemoveUser: `${CONSTANTS.KONG_API_BASE}/course/v1/unenrol`,
   createBatch: `${CONSTANTS.KONG_API_BASE}/course/v1/batch/create`,
   downloadCert: `${CONSTANTS.KONG_API_BASE}/certreg/v1/certs/download`,
@@ -234,6 +234,9 @@ authApi.post('/batch/:key', async (req: Request, res: Response) => {
       case 'create':
         targetUrl = API_END_POINTS.createBatch
         break
+      case 'addUser':
+          targetUrl = API_END_POINTS.batchAddUser
+          break
       case 'removeUser':
         targetUrl = API_END_POINTS.batchRemoveUser
         break
@@ -287,28 +290,6 @@ authApi.patch('/batch/:key', async (req: Request, res: Response) => {
         break
     }
     const response = await axios.patch(targetUrl, req.body, {
-        ...axiosRequestConfig,
-        headers: {
-          Authorization: CONSTANTS.SB_API_KEY,
-          // tslint:disable-next-line: no-duplicate-string
-          'x-authenticated-user-token': extractUserToken(req),
-        },
-    })
-    res.status(response.status).send(response.data)
-  } catch (err) {
-      logError(failedToProcess + err)
-      res.status((err && err.response && err.response.status) || 500).send(
-          (err && err.response && err.response.data) || {
-              error: ERROR.GENERAL_ERR_MSG,
-          }
-      )
-  }
-})
-
-authApi.post('/addUserToBatch/:batchId', async (req: Request, res: Response) => {
-  try {
-    const batchId = req.params.batchId as string
-    const response = await axios.post(API_END_POINTS.batchAddUser(batchId), req.body, {
         ...axiosRequestConfig,
         headers: {
           Authorization: CONSTANTS.SB_API_KEY,

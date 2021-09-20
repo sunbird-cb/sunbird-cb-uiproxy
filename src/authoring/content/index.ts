@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Request, Response, Router } from 'express'
 import { axiosRequestConfig } from '../../configs/request.config'
 import { AxiosRequestConfig } from '../../models/axios-request-config.model'
-import { logError } from '../../utils/logger'
+import { logError, logInfo } from '../../utils/logger'
 import { ERROR } from '../../utils/message'
 import { extractUserToken } from '../../utils/requestExtract'
 import { IUploadS3Request, IUploadS3Response } from '../models/response/custom-s3-upload'
@@ -183,6 +183,7 @@ authApi.post('/download/s3', async (req: Request, res: Response) => {
 })
 
 authApi.post('/content/v3/create', async (request: Request, res: Response) => {
+  logInfo('Request URL ' + request.url)
   axios({
     data: request.body,
     headers: {
@@ -191,7 +192,7 @@ authApi.post('/content/v3/create', async (request: Request, res: Response) => {
       'x-authenticated-user-token': extractUserToken(request),
   },
     method: request.method,
-    url: CONSTANTS.KONG_API_BASE + request.url,
+    url: CONSTANTS.KNOWLEDGE_MW_API_BASE + request.url,
   } as AxiosRequestConfig)
     .then((response) => {
       res.status(response.status).send(response.data)
@@ -209,7 +210,7 @@ authApi.get('/content/v3/read/:id', async (req: Request, res: Response) => {
       'x-authenticated-user-token': extractUserToken(req),
   },
     method: req.method,
-    url: CONSTANTS.KONG_API_BASE + req.url,
+    url: CONSTANTS.KNOWLEDGE_MW_API_BASE + req.url,
   } as AxiosRequestConfig)
     .then((response) => {
       res.status(response.status).send(response.data)
@@ -228,7 +229,7 @@ authApi.patch('/content/v3/update/:id', async (req: Request, res: Response) => {
       'x-authenticated-user-token': extractUserToken(req),
   },
     method: req.method,
-    url: CONSTANTS.KONG_API_BASE + req.url,
+    url: CONSTANTS.KNOWLEDGE_MW_API_BASE + req.url,
   } as AxiosRequestConfig)
     .then((response) => {
       res.status(response.status).send(response.data)

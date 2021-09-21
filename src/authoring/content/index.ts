@@ -23,9 +23,6 @@ const _ = require('lodash')
 export const authApi = Router()
 const failedToProcess = 'Failed to process the request. '
 const actionConst = '/action'
-const xAuthUserToken = 'x-authenticated-user-token'
-const xAuthUserId = 'x-authenticated-userid'
-const xChannelId = 'X-Channel-Id'
 
 const API_END_POINTS = {
   addCertToCourseBatch: `${CONSTANTS.KONG_API_BASE}/course/batch/cert/v1/template/add`,
@@ -193,9 +190,12 @@ authApi.post('/content/v3/create', async (request: Request, res: Response) => {
     data: request.body,
     headers: {
       Authorization: CONSTANTS.SB_API_KEY,
-      xAuthUserToken : extractUserToken(request),
-      xAuthUserId : extractUserIdFromRequest(request),
-      xChannelId : (_.get(request, 'session.rootOrgId')) ? _.get(request, 'session.rootOrgId') : CONSTANTS.X_Channel_Id,
+       // tslint:disable-next-line: no-duplicate-string
+     'X-Channel-Id' : (_.get(request, 'session.rootOrgId')) ? _.get(request, 'session.rootOrgId') : CONSTANTS.X_Channel_Id,
+      // tslint:disable-next-line: no-duplicate-string
+     'x-authenticated-user-token': extractUserToken(request),
+     // tslint:disable-next-line: no-duplicate-string
+     'x-authenticated-userid' : extractUserIdFromRequest(request),
   },
   method: request.method,
     url: CONSTANTS.KNOWLEDGE_MW_API_BASE + actionConst + request.url,
@@ -212,9 +212,13 @@ authApi.get('/content/v3/read/:id', async (req: Request, res: Response) => {
   axios({
     headers: {
       Authorization: CONSTANTS.SB_API_KEY,
-      xAuthUserToken : extractUserToken(request),
-      xAuthUserId : extractUserIdFromRequest(request),
-      xChannelId : (_.get(request, 'session.rootOrgId')) ? _.get(request, 'session.rootOrgId') : CONSTANTS.X_Channel_Id,
+       // tslint:disable-next-line: no-duplicate-string
+     'X-Channel-Id' : (_.get(req, 'session.rootOrgId')) ? _.get(req, 'session.rootOrgId') : CONSTANTS.X_Channel_Id,
+      // tslint:disable-next-line: no-duplicate-string
+     'x-authenticated-user-token': extractUserToken(req),
+     // tslint:disable-next-line: no-duplicate-string
+     'x-authenticated-userid' : extractUserIdFromRequest(req),
+
   },
     method: req.method,
     url: CONSTANTS.KNOWLEDGE_MW_API_BASE + actionConst + req.url,
@@ -232,9 +236,12 @@ authApi.patch('/content/v3/update/:id', async (req: Request, res: Response) => {
     data: req.body,
     headers: {
       Authorization: CONSTANTS.SB_API_KEY,
-      xAuthUserToken : extractUserToken(req),
-      xAuthUserId : extractUserIdFromRequest(req),
-      xChannelId : (_.get(req, 'session.rootOrgId')) ? _.get(req, 'session.rootOrgId') : CONSTANTS.X_Channel_Id,
+      // tslint:disable-next-line: no-duplicate-string
+     'X-Channel-Id' : (_.get(req, 'session.rootOrgId')) ? _.get(req, 'session.rootOrgId') : CONSTANTS.X_Channel_Id,
+      // tslint:disable-next-line: no-duplicate-string
+     'x-authenticated-user-token': extractUserToken(req),
+     // tslint:disable-next-line: no-duplicate-string
+     'x-authenticated-userid' : extractUserIdFromRequest(req),
   },
     method: req.method,
     url: CONSTANTS.KNOWLEDGE_MW_API_BASE + actionConst + req.url,

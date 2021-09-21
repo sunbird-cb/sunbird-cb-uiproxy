@@ -35,9 +35,10 @@ const API_END_POINTS = {
 }
 
 authApi.all('*', (req, _res, next) => {
-  logInfo("Enter's in the all .........");
+  logInfo("Enter's in the all .........")
   if (req.body && req.body.data && typeof req.body.data === 'string') {
     req.body = decoder(req.body.data)
+    // tslint:disable-next-line: no-console
     console.log('body data=====>', req.body)
   }
   next()

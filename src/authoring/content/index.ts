@@ -2,9 +2,9 @@ import axios from 'axios'
 import { Request, Response, Router } from 'express'
 import { axiosRequestConfig } from '../../configs/request.config'
 import { AxiosRequestConfig } from '../../models/axios-request-config.model'
-import { logError } from '../../utils/logger'
+import { logError} from '../../utils/logger'
 import { ERROR } from '../../utils/message'
-import { extractUserToken } from '../../utils/requestExtract'
+import { extractUserIdFromRequest , extractUserToken} from '../../utils/requestExtract'
 import { IUploadS3Request, IUploadS3Response } from '../models/response/custom-s3-upload'
 import { decoder } from '../utils/decode'
 import { getOrg, getRootOrg } from '../utils/header'
@@ -18,8 +18,11 @@ import { getHierarchy, getMultipleHierarchyV2 } from './hierarchy'
 import { getHierarchyV2WithContent, getMultipleHierarchyV2WithContent } from './hierarchy-and-content'
 import { searchForOtherLanguage } from './language-search'
 
+const _ = require('lodash')
+
 export const authApi = Router()
 const failedToProcess = 'Failed to process the request. '
+const actionConst = '/action'
 
 const API_END_POINTS = {
   addCertToCourseBatch: `${CONSTANTS.KONG_API_BASE}/course/batch/cert/v1/template/add`,
@@ -185,9 +188,17 @@ authApi.post('/download/s3', async (req: Request, res: Response) => {
 authApi.post('/content/v3/create', async (request: Request, res: Response) => {
   axios({
     data: request.body,
-    headers: request.headers,
-    method: request.method,
-    url: CONSTANTS.SUNBIRD_PROXY_URL + request.url,
+    headers: {
+      Authorization: CONSTANTS.SB_API_KEY,
+       // tslint:disable-next-line: no-duplicate-string
+     'X-Channel-Id' : (_.get(request, 'session.rootOrgId')) ? _.get(request, 'session.rootOrgId') : CONSTANTS.X_Channel_Id,
+      // tslint:disable-next-line: no-duplicate-string
+     'x-authenticated-user-token': extractUserToken(request),
+     // tslint:disable-next-line: no-duplicate-string
+     'x-authenticated-userid' : extractUserIdFromRequest(request),
+  },
+  method: request.method,
+    url: CONSTANTS.KNOWLEDGE_MW_API_BASE + actionConst + request.url,
   } as AxiosRequestConfig)
     .then((response) => {
       res.status(response.status).send(response.data)
@@ -199,9 +210,18 @@ authApi.post('/content/v3/create', async (request: Request, res: Response) => {
 
 authApi.get('/content/v3/read/:id', async (req: Request, res: Response) => {
   axios({
-    headers: req.headers,
+    headers: {
+      Authorization: CONSTANTS.SB_API_KEY,
+       // tslint:disable-next-line: no-duplicate-string
+     'X-Channel-Id' : (_.get(req, 'session.rootOrgId')) ? _.get(req, 'session.rootOrgId') : CONSTANTS.X_Channel_Id,
+      // tslint:disable-next-line: no-duplicate-string
+     'x-authenticated-user-token': extractUserToken(req),
+     // tslint:disable-next-line: no-duplicate-string
+     'x-authenticated-userid' : extractUserIdFromRequest(req),
+
+  },
     method: req.method,
-    url: CONSTANTS.SUNBIRD_PROXY_URL + req.url,
+    url: CONSTANTS.KNOWLEDGE_MW_API_BASE + actionConst + req.url,
   } as AxiosRequestConfig)
     .then((response) => {
       res.status(response.status).send(response.data)
@@ -214,9 +234,17 @@ authApi.get('/content/v3/read/:id', async (req: Request, res: Response) => {
 authApi.patch('/content/v3/update/:id', async (req: Request, res: Response) => {
   axios({
     data: req.body,
-    headers: req.headers,
+    headers: {
+      Authorization: CONSTANTS.SB_API_KEY,
+      // tslint:disable-next-line: no-duplicate-string
+     'X-Channel-Id' : (_.get(req, 'session.rootOrgId')) ? _.get(req, 'session.rootOrgId') : CONSTANTS.X_Channel_Id,
+      // tslint:disable-next-line: no-duplicate-string
+     'x-authenticated-user-token': extractUserToken(req),
+     // tslint:disable-next-line: no-duplicate-string
+     'x-authenticated-userid' : extractUserIdFromRequest(req),
+  },
     method: req.method,
-    url: CONSTANTS.SUNBIRD_PROXY_URL + req.url,
+    url: CONSTANTS.KNOWLEDGE_MW_API_BASE + actionConst + req.url,
   } as AxiosRequestConfig)
     .then((response) => {
       res.status(response.status).send(response.data)

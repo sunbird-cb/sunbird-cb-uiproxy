@@ -164,7 +164,7 @@ proxiesV8.use('/contentsearch/*',
 
 proxiesV8.use('/sunbirdigot/*',
   // tslint:disable-next-line: max-line-length
-  proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.SUNBIRD_PROXY_API_BASE}/composite/v1/search`)
+  proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/composite/v1/search`)
 )
 
 proxiesV8.use('/v1/content/retire',
@@ -181,11 +181,11 @@ proxiesV8.use('/learnervm/private/content/*',
 
 proxiesV8.use('/content-progres/*',
   // tslint:disable-next-line: max-line-length
-  proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.SUNBIRD_PROXY_API_BASE}/course/v1/content/state/update`)
+  proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/course/v1/content/state/update`)
 )
 proxiesV8.use('/read/content-progres/*',
   // tslint:disable-next-line: max-line-length
-  proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.SUNBIRD_PROXY_API_BASE}/course/v1/content/state/read`)
+  proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/course/v1/content/state/read`)
 )
 
 proxiesV8.use('/api/user/v2/read',

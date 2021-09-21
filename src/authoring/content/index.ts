@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Request, Response, Router } from 'express'
 import { axiosRequestConfig } from '../../configs/request.config'
 import { AxiosRequestConfig } from '../../models/axios-request-config.model'
-import { logError} from '../../utils/logger'
+import { logError, logInfo} from '../../utils/logger'
 import { ERROR } from '../../utils/message'
 import { extractUserToken } from '../../utils/requestExtract'
 import { IUploadS3Request, IUploadS3Response } from '../models/response/custom-s3-upload'
@@ -35,8 +35,10 @@ const API_END_POINTS = {
 }
 
 authApi.all('*', (req, _res, next) => {
+  logInfo("Enter's in the all .........");
   if (req.body && req.body.data && typeof req.body.data === 'string') {
     req.body = decoder(req.body.data)
+    console.log('body data=====>', req.body)
   }
   next()
 })
@@ -184,6 +186,7 @@ authApi.post('/download/s3', async (req: Request, res: Response) => {
 })
 
 authApi.post('/content/v3/create', async (request: Request, res: Response) => {
+  logInfo('Requested url ============ ' + CONSTANTS.KNOWLEDGE_MW_API_BASE + actionConst + request.url)
   axios({
     data: request.body,
     headers: {

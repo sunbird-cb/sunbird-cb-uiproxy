@@ -4,7 +4,7 @@ import { axiosRequestConfig } from '../../configs/request.config'
 import { AxiosRequestConfig } from '../../models/axios-request-config.model'
 import { logError, logInfo} from '../../utils/logger'
 import { ERROR } from '../../utils/message'
-import { extractUserToken } from '../../utils/requestExtract'
+import { extractUserToken , extractUserIdFromRequest} from '../../utils/requestExtract'
 import { IUploadS3Request, IUploadS3Response } from '../models/response/custom-s3-upload'
 import { decoder } from '../utils/decode'
 import { getOrg, getRootOrg } from '../utils/header'
@@ -17,6 +17,9 @@ import { IWebModuleRequest } from './../models/response/custom-s3-upload'
 import { getHierarchy, getMultipleHierarchyV2 } from './hierarchy'
 import { getHierarchyV2WithContent, getMultipleHierarchyV2WithContent } from './hierarchy-and-content'
 import { searchForOtherLanguage } from './language-search'
+
+const _ = require('lodash')
+
 
 export const authApi = Router()
 const failedToProcess = 'Failed to process the request. '
@@ -35,11 +38,8 @@ const API_END_POINTS = {
 }
 
 authApi.all('*', (req, _res, next) => {
-  logInfo("Enter's in the all .........")
   if (req.body && req.body.data && typeof req.body.data === 'string') {
     req.body = decoder(req.body.data)
-    // tslint:disable-next-line: no-console
-    console.log('body data=====>', req.body)
   }
   next()
 })
@@ -187,15 +187,16 @@ authApi.post('/download/s3', async (req: Request, res: Response) => {
 })
 
 authApi.post('/content/v3/create', async (request: Request, res: Response) => {
-  logInfo('Requested url ============ ' + CONSTANTS.KNOWLEDGE_MW_API_BASE + actionConst + request.url)
   axios({
     data: request.body,
     headers: {
       Authorization: CONSTANTS.SB_API_KEY,
       // tslint:disable-next-line: no-duplicate-string
-      'x-authenticated-user-token': extractUserToken(request),
+     'x-authenticated-user-token': extractUserToken(request),
+     'x-authenticated-userid' : extractUserIdFromRequest(request),
+     'X-Channel-Id' : (_.get(request, 'session.rootOrgId')) ? _.get(request, 'session.rootOrgId') : CONSTANTS.X_Channel_Id
   },
-    method: request.method,
+  method: request.method,
     url: CONSTANTS.KNOWLEDGE_MW_API_BASE + actionConst + request.url,
   } as AxiosRequestConfig)
     .then((response) => {
@@ -211,7 +212,9 @@ authApi.get('/content/v3/read/:id', async (req: Request, res: Response) => {
     headers: {
       Authorization: CONSTANTS.SB_API_KEY,
       // tslint:disable-next-line: no-duplicate-string
-      'x-authenticated-user-token': extractUserToken(req),
+     'x-authenticated-user-token': extractUserToken(req),
+     'x-authenticated-userid' : extractUserIdFromRequest(req),
+     'X-Channel-Id' : (_.get(req, 'session.rootOrgId')) ? _.get(req, 'session.rootOrgId') : CONSTANTS.X_Channel_Id
   },
     method: req.method,
     url: CONSTANTS.KNOWLEDGE_MW_API_BASE + actionConst + req.url,
@@ -230,7 +233,9 @@ authApi.patch('/content/v3/update/:id', async (req: Request, res: Response) => {
     headers: {
       Authorization: CONSTANTS.SB_API_KEY,
       // tslint:disable-next-line: no-duplicate-string
-      'x-authenticated-user-token': extractUserToken(req),
+     'x-authenticated-user-token': extractUserToken(req),
+     'x-authenticated-userid' : extractUserIdFromRequest(req),
+     'X-Channel-Id' : (_.get(req, 'session.rootOrgId')) ? _.get(req, 'session.rootOrgId') : CONSTANTS.X_Channel_Id
   },
     method: req.method,
     url: CONSTANTS.KNOWLEDGE_MW_API_BASE + actionConst + req.url,

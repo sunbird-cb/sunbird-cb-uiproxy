@@ -1228,7 +1228,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
-        },'/searchBy/:key': {
+        },'/proxies/v8/searchBy/:key': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -1408,6 +1408,6 @@ export const API_LIST = {
         '/protected/v8/connections/v2/connections/suggests',
         '/protected/v8/connections/v2/update/connection',
         '/protected/v8/user/profileDetails/createUserWithoutInvitationEmail',
-        '/searchBy/:key',
+        '/proxies/v8/searchBy/:key',
     ],
 }

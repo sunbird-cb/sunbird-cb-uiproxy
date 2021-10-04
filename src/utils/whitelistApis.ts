@@ -261,6 +261,34 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/dashboard/analytics/getDashboardConfig/Karmayogi/:comp': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/dashboard/analytics/getDashboardsForProfile/Karmayogi': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/dashboard/analytics/getChartV2/Karmayogi': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/wat/dashboard/getDashboardConfig/Karmayogi/overview': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/proxies/v8/upload/action/content/v3/upload/:do_id': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -1222,7 +1250,8 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
-        },'/authApi/readCert/:certId': {
+        },
+        '/authApi/readCert/:certId': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -1307,6 +1336,10 @@ export const API_LIST = {
         '/proxies/v8/user/private/v1/assign/role/userrole',
         '/proxies/v8/learnervm/private/content/v3/retire/',
         '/proxies/v8/private/content/v3/update/:do_id',
+        '/proxies/v8/dashboard/analytics/getDashboardConfig/Karmayogi/:comp',
+        '/proxies/v8/dashboard/analytics/getDashboardsForProfile/Karmayogi',
+        '/proxies/v8/dashboard/analytics/getChartV2/Karmayogi',
+        '/proxies/v8/wat/dashboard/getDashboardConfig/Karmayogi/overview',
         '/protected/v8/user/profileDetails/test',
         '/protected/v8/resource/',
         '/protected/v8/user/details',

@@ -11,6 +11,7 @@ const proxyCreator = (timeout = 10000) => createProxyServer({
 })
 const proxy = createProxyServer({})
 const PROXY_SLUG = '/proxies/v8'
+const PROXY_SLUG_WAT = '/proxies/v8/wat'
 
 // tslint:disable-next-line: no-any
 proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
@@ -140,7 +141,13 @@ export function proxyCreatorSunbird(route: Router, targetUrl: string, _timeout =
   route.all('/*', (req, res) => {
     // tslint:disable-next-line: no-console
     console.log('REQ_URL_ORIGINAL proxyCreatorSunbird', req.originalUrl)
-    let url = removePrefix(`${PROXY_SLUG}`, req.originalUrl)
+    let url = ''
+    if (req.originalUrl.includes('/proxies/v8/wat')) {
+      url = removePrefix(`${PROXY_SLUG_WAT}`, req.originalUrl)
+    } else {
+      url = removePrefix(`${PROXY_SLUG}`, req.originalUrl)
+    }
+
     if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/v1/create') && req.session) {
       if (req.originalUrl.includes('?')) {
         url = `${url}&_uid=${req.session.uid}`

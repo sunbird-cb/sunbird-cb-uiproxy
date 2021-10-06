@@ -1263,6 +1263,36 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
+        },'/proxies/v8/staff/position': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },'/proxies/v8/staff/position/:orgId': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },'/proxies/v8/budget/scheme': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },'/proxies/v8/budget/scheme/:orgId': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },'/proxies/v8/orghistory/:orgId/:key': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
         },
     },
     URL_PATTERN:
@@ -1442,5 +1472,10 @@ export const API_LIST = {
         '/protected/v8/connections/v2/update/connection',
         '/protected/v8/user/profileDetails/createUserWithoutInvitationEmail',
         '/proxies/v8/searchBy/:key',
+        '/proxies/v8/staff/position',
+        '/proxies/v8/staff/position/:orgId',
+        '/proxies/v8/budget/scheme',
+        '/proxies/v8/budget/scheme/:orgId',
+        '/proxies/v8/orghistory/:orgId/:key'
     ],
 }

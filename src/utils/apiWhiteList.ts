@@ -52,7 +52,7 @@ const shouldAllow = (req: Request) => {
  */
 const urlChecks = {
     // tslint:disable-next-line: no-any
-    OWNER_CHECK: async (resolve: any, reject: any, req: Request, checksParams: any, REQ_URL: any) => {
+    PARAM_EQUALITY_CHECK: async (resolve: any, reject: any, req: Request, checksParams: any, REQ_URL: any) => {
         if (_.get(checksParams, 'checks')) {
             // tslint:disable-next-line: no-any
             const ownerChecks: any[] = []
@@ -122,7 +122,7 @@ const urlChecks = {
             return reject('User doesn\'t have appropriate roles')
         }
     },
-    // Callback to `OWNER_CHECK` promise object
+    // Callback to `PARAM_EQUALITY_CHECK` promise object
     // tslint:disable-next-line: no-any
     __adminCheck__userId: (resolve: any, reject: any, req: any, ownerCheckObj: any, _REQ_URL: any) => {
         try {
@@ -143,17 +143,16 @@ const urlChecks = {
             return reject('User id validation failed.')
         }
     },
-    // Callback to `OWNER_CHECK` promise object
+    // Callback to `PARAM_EQUALITY_CHECK` promise object
     // tslint:disable-next-line: no-any
-    __session__userId: (resolve: any, reject: any, req: any, ownerCheckObj: any, _REQ_URL: any) => {
+    __param__equality: (resolve: any, reject: any, req: any, ownerCheckObj: any, _REQ_URL: any) => {
         try {
-            const _sessionUserId = _.get(req, 'session.userId')
-            const _reqUserId = _.get(ownerCheckObj, 'params') ? _.get(req, ownerCheckObj.params) : _.get(req, 'body.request.userId')
-            if (_sessionUserId === _reqUserId) {
+            const comparedWith = _.get(ownerCheckObj, 'session') ? _.get(req, ownerCheckObj.session) : null
+            const comparedFrom = _.get(ownerCheckObj, 'requestbody') ? _.get(req, ownerCheckObj.requestbody) : null
+            if (comparedWith === comparedFrom) {
                 resolve()
             } else {
-                return reject('Mismatch in user id verification. Session UserId [ ' + _sessionUserId +
-                ' ] does not match with request body UserId [ ' + _reqUserId + ' ]')
+                return reject('Mismatch in param validation')
             }
         } catch (error) {
             return reject('User id validation failed.')

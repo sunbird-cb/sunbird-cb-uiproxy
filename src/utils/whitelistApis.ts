@@ -2,7 +2,7 @@
 import { ROLE } from './roles'
 
 const CHECK = {
-    OWNER_CHECK: 'OWNER_CHECK',
+    PARAM_EQUALITY_CHECK: 'PARAM_EQUALITY_CHECK',
     ROLE: 'ROLE_CHECK',
     SCOPE: 'SCOPE_CHECK',
 }
@@ -1200,14 +1200,14 @@ export const API_LIST = {
             ],
         },
         '/protected/v8/connections/v2/add/connection': {
-            checksNeeded: [CHECK.ROLE, CHECK.OWNER_CHECK],
+            checksNeeded: [CHECK.ROLE, CHECK.PARAM_EQUALITY_CHECK],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
-            OWNER_CHECK: {
+            PARAM_EQUALITY_CHECK: {
                 checks: [
-                    { entity: '__session__userId', params: 'body.userIdFrom' },
+                    { entity: '__param__equality', session: 'session.userId', requestbody: 'body.userIdFrom' },
                 ],
             },
         },

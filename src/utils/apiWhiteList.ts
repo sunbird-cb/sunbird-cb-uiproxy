@@ -6,6 +6,7 @@ const dateFormat        = require('dateformat')
 import { NextFunction, Request, Response } from 'express'
 import { CONSTANTS } from './env'
 import { logError, logInfo } from './logger'
+import { ROLE } from './roles'
 import { API_LIST } from './whitelistApis'
 
 /**
@@ -51,8 +52,38 @@ const shouldAllow = (req: Request) => {
  */
 const urlChecks = {
     // tslint:disable-next-line: no-any
+    OWNER_CHECK: async (resolve: any, reject: any, req: Request, checksParams: any, REQ_URL: any) => {
+        if (_.get(checksParams, 'checks')) {
+            // tslint:disable-next-line: no-any
+            const ownerChecks: any[] = []
+            // tslint:disable-next-line: no-any
+            checksParams.checks.forEach((ownerCheckObj: any) => {
+                ownerChecks.push(new Promise((res, rej) => {
+                const _checkFor = _.get(ownerCheckObj, 'entity')
+                if (_checkFor && typeof urlChecks[_checkFor] === 'function') {
+                    urlChecks[_checkFor](res, rej, req, ownerCheckObj, REQ_URL)
+                }
+                }))
+            })
+            try {
+                await Promise.all(ownerChecks)
+                .then((_pSuccess) => {
+                    resolve()
+                })
+                .catch((pError) => {
+                    return reject(pError)
+                })
+            } catch (error) {
+                return reject()
+            }
+        } else {
+          return reject('Owner check validation failed.')
+        }
+    },
+    // tslint:disable-next-line: no-any
     ROLE_CHECK: (resolve: any, reject: any, req: Request, rolesForURL: any, REQ_URL: any) => {
-        const data = (_.get(req, 'session.userRoles')) ? _.get(req, 'session.userRoles') : []
+        const roleData = _.get(req, 'session.userRoles')
+        const data = (roleData) ? roleData : []
         logInfo('Portal_API_WHITELIST : Middleware for URL [ ' + REQ_URL + ' ]')
         if (_.includes(rolesForURL, 'ALL') && data.length > 0) {
             resolve()
@@ -89,6 +120,43 @@ const urlChecks = {
             resolve()
         } else {
             return reject('User doesn\'t have appropriate roles')
+        }
+    },
+    // Callback to `OWNER_CHECK` promise object
+    // tslint:disable-next-line: no-any
+    __adminCheck__userId: (resolve: any, reject: any, req: any, ownerCheckObj: any, _REQ_URL: any) => {
+        try {
+            const _sessionUserId = _.get(req, 'session.userId')
+            const _reqUserId = _.get(ownerCheckObj, 'params') ? _.get(req, ownerCheckObj.params) : _.get(req, 'body.userId')
+            const _sessionRole = _.get(req, 'session.userRoles')
+            if (_.includes(_sessionRole, ROLE.MDO_ADMIN)) {
+                resolve()
+            } else {
+                if (_sessionUserId === _reqUserId) {
+                    resolve()
+                } else {
+                    return reject('Mismatch in user id verification. Session UserId [ ' + _sessionUserId +
+                    ' ] is not an admin or does not match with request body UserId [ ' + _reqUserId + ' ]')
+                }
+            }
+        } catch (error) {
+            return reject('User id validation failed.')
+        }
+    },
+    // Callback to `OWNER_CHECK` promise object
+    // tslint:disable-next-line: no-any
+    __session__userId: (resolve: any, reject: any, req: any, ownerCheckObj: any, _REQ_URL: any) => {
+        try {
+            const _sessionUserId = _.get(req, 'session.userId')
+            const _reqUserId = _.get(ownerCheckObj, 'params') ? _.get(req, ownerCheckObj.params) : _.get(req, 'body.request.userId')
+            if (_sessionUserId === _reqUserId) {
+                resolve()
+            } else {
+                return reject('Mismatch in user id verification. Session UserId [ ' + _sessionUserId +
+                ' ] does not match with request body UserId [ ' + _reqUserId + ' ]')
+            }
+        } catch (error) {
+            return reject('User id validation failed.')
         }
     },
 }

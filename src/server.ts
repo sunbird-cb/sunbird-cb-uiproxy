@@ -46,6 +46,8 @@ export class Server {
     }
     const sessionConfig = getSessionConfig()
     this.app.use(expressSession(sessionConfig))
+    this.app.use(express.urlencoded({ extended: false, limit: '50mb' }))
+    this.app.use(express.json({ limit: '50mb' }))
     this.app.all('*', apiWhiteListLogger())
     if (CONSTANTS.PORTAL_API_WHITELIST_CHECK === 'true') {
       this.app.all('*', isAllowed())
@@ -82,8 +84,6 @@ export class Server {
   private configureMiddleware() {
     this.app.use(connectTimeout('240s'))
     this.app.use(compression())
-    this.app.use(express.urlencoded({ extended: false, limit: '50mb' }))
-    this.app.use(express.json({ limit: '50mb' }))
     this.app.use(fileUpload())
     // this.app.use(cors())
     this.app.use('/healthcheck', healthcheck({

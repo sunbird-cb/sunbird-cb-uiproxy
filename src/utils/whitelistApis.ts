@@ -1,54 +1,37 @@
 'use strict'
+import { ROLE } from './roles'
+
 const CHECK = {
+    OWNER_CHECK: 'OWNER_CHECK',
     ROLE: 'ROLE_CHECK',
     SCOPE: 'SCOPE_CHECK',
-}
-
-// Valid Roles
-const ROLE = {
-    CBC_ADMIN: 'CBC_ADMIN',
-    CBC_MEMBER: 'CBC_MEMBER',
-    CONTENT_CREATOR: 'CONTENT_CREATOR',
-    CONTENT_PUBLISHER: 'CONTENT_PUBLISHER',
-    CONTENT_REVIEWER: 'CONTENT_REVIEWER',
-    EDITOR: 'EDITOR',
-    FRAC_ACCESS_COMPENTENCY: 'FRAC_COMPETENCY_MEMBER',
-    FRAC_ADMIN: 'FRAC_ADMIN',
-    FRAC_COMPETENCY_REVIEWER: 'FRAC_COMPETENCY_REVIEWER',
-    FRAC_REVIEWER_ONE: 'FRAC_REVIEWER_L1',
-    FRAC_REVIEWER_TWO: 'FRAC_REVIEWER_L2',
-    IFU_MEMBER: 'IFU_MEMBER',
-    MDO_ADMIN: 'MDO_ADMIN',
-    PUBLIC: 'PUBLIC',
-    SPV_ADMIN: 'SPV_ADMIN',
-    WAT_MEMBER: 'WAT_MEMBER',
 }
 
 // All api list validations
 export const API_LIST = {
     URL:
     {
-        '/authApi/content/v3/create': {
-            checksNeeded: [CHECK.ROLE],
-            // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [
-                ROLE.PUBLIC,
-            ],
-        },
-        '/authApi/content/v3/read/:do_id': {
-            checksNeeded: [CHECK.ROLE],
-            // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [
-                ROLE.PUBLIC,
-            ],
-        },
-        '/authApi/content/v3/update/:do_id': {
-            checksNeeded: [CHECK.ROLE],
-            // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [
-                ROLE.PUBLIC,
-            ],
-        },
+        // '/authApi/content/v3/create': {
+        //     checksNeeded: [CHECK.ROLE],
+        //     // tslint:disable-next-line: object-literal-sort-keys
+        //     ROLE_CHECK: [
+        //         ROLE.PUBLIC,
+        //     ],
+        // },
+        // '/authApi/content/v3/read/:do_id': {
+        //     checksNeeded: [CHECK.ROLE],
+        //     // tslint:disable-next-line: object-literal-sort-keys
+        //     ROLE_CHECK: [
+        //         ROLE.PUBLIC,
+        //     ],
+        // },
+        // '/authApi/content/v3/update/:do_id': {
+        //     checksNeeded: [CHECK.ROLE],
+        //     // tslint:disable-next-line: object-literal-sort-keys
+        //     ROLE_CHECK: [
+        //         ROLE.PUBLIC,
+        //     ],
+        // },
         '/protected/v8/user/details': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -922,55 +905,55 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        '/protected/v8/connections/connections/recommended': {
-            checksNeeded: [CHECK.ROLE],
-            // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [
-                ROLE.PUBLIC,
-            ],
-        },
-        '/protected/v8/connections/connections/requests/received': {
-            checksNeeded: [CHECK.ROLE],
-            // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [
-                ROLE.PUBLIC,
-            ],
-        },
-        '/protected/v8/connections/connections/established': {
-            checksNeeded: [CHECK.ROLE],
-            // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [
-                ROLE.PUBLIC,
-            ],
-        },
-        '/protected/v8/connections/connections/established/:id': {
-            checksNeeded: [CHECK.ROLE],
-            // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [
-                ROLE.PUBLIC,
-            ],
-        },
-        '/protected/v8/connections/connections/requested': {
-            checksNeeded: [CHECK.ROLE],
-            // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [
-                ROLE.PUBLIC,
-            ],
-        },
-        '/protected/v8/connections/add/connection': {
-            checksNeeded: [CHECK.ROLE],
-            // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [
-                ROLE.PUBLIC,
-            ],
-        },
-        '/protected/v8/connections/connections/suggests': {
-            checksNeeded: [CHECK.ROLE],
-            // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [
-                ROLE.PUBLIC,
-            ],
-        },
+        // '/protected/v8/connections/connections/recommended': {
+        //     checksNeeded: [CHECK.ROLE],
+        //     // tslint:disable-next-line: object-literal-sort-keys
+        //     ROLE_CHECK: [
+        //         ROLE.PUBLIC,
+        //     ],
+        // },
+        // '/protected/v8/connections/connections/requests/received': {
+        //     checksNeeded: [CHECK.ROLE],
+        //     // tslint:disable-next-line: object-literal-sort-keys
+        //     ROLE_CHECK: [
+        //         ROLE.PUBLIC,
+        //     ],
+        // },
+        // '/protected/v8/connections/connections/established': {
+        //     checksNeeded: [CHECK.ROLE],
+        //     // tslint:disable-next-line: object-literal-sort-keys
+        //     ROLE_CHECK: [
+        //         ROLE.PUBLIC,
+        //     ],
+        // },
+        // '/protected/v8/connections/connections/established/:id': {
+        //     checksNeeded: [CHECK.ROLE],
+        //     // tslint:disable-next-line: object-literal-sort-keys
+        //     ROLE_CHECK: [
+        //         ROLE.PUBLIC,
+        //     ],
+        // },
+        // '/protected/v8/connections/connections/requested': {
+        //     checksNeeded: [CHECK.ROLE],
+        //     // tslint:disable-next-line: object-literal-sort-keys
+        //     ROLE_CHECK: [
+        //         ROLE.PUBLIC,
+        //     ],
+        // },
+        // '/protected/v8/connections/add/connection': {
+        //     checksNeeded: [CHECK.ROLE],
+        //     // tslint:disable-next-line: object-literal-sort-keys
+        //     ROLE_CHECK: [
+        //         ROLE.PUBLIC,
+        //     ],
+        // },
+        // '/protected/v8/connections/connections/suggests': {
+        //     checksNeeded: [CHECK.ROLE],
+        //     // tslint:disable-next-line: object-literal-sort-keys
+        //     ROLE_CHECK: [
+        //         ROLE.PUBLIC,
+        //     ],
+        // },
         '/protected/v8/cohorts/user/autoenrollment/:courseId': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -1217,11 +1200,16 @@ export const API_LIST = {
             ],
         },
         '/protected/v8/connections/v2/add/connection': {
-            checksNeeded: [CHECK.ROLE],
+            checksNeeded: [CHECK.ROLE, CHECK.OWNER_CHECK],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
+            OWNER_CHECK: {
+                checks: [
+                    { entity: '__session__userId', params: 'body.userIdFrom' },
+                ],
+            },
         },
         '/protected/v8/connections/v2/connections/suggests': {
             checksNeeded: [CHECK.ROLE],
@@ -1257,37 +1245,37 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
-        },'/proxies/v8/searchBy/:key': {
+        }, '/proxies/v8/searchBy/:key': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
-        },'/proxies/v8/staff/position': {
+        }, '/proxies/v8/staff/position': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
-        },'/proxies/v8/staff/position/:orgId': {
+        }, '/proxies/v8/staff/position/:orgId': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
-        },'/proxies/v8/budget/scheme': {
+        }, '/proxies/v8/budget/scheme': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
-        },'/proxies/v8/budget/scheme/:orgId': {
+        }, '/proxies/v8/budget/scheme/:orgId': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
-        },'/proxies/v8/orghistory/:orgId/:key': {
+        }, '/proxies/v8/orghistory/:orgId/:key': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -1297,9 +1285,9 @@ export const API_LIST = {
     },
     URL_PATTERN:
     [
-        '/authApi/content/v3/create',
-        '/authApi/content/v3/read/:do_id',
-        '/authApi/content/v3/update/:do_id',
+        // '/authApi/content/v3/create',
+        // '/authApi/content/v3/read/:do_id',
+        // '/authApi/content/v3/update/:do_id',
         '/authApi/batch/:key',
         '/authApi/readCert/:certId',
         '/proxies/v8/api/user/v2/read',
@@ -1426,13 +1414,13 @@ export const API_LIST = {
         '/protected/v8/portal/cbc/department/:deptId/',
         '/protected/v8/portal/spv/department/:deptId/',
         '/protected/v8/scroing/calculate',
-        '/protected/v8/connections/connections/recommended',
-        '/protected/v8/connections/connections/requests/received',
-        '/protected/v8/connections/connections/established',
-        '/protected/v8/connections/connections/established/:id',
-        '/protected/v8/connections/connections/requested',
-        '/protected/v8/connections/add/connection',
-        '/protected/v8/connections/connections/suggests',
+        // '/protected/v8/connections/connections/recommended',
+        // '/protected/v8/connections/connections/requests/received',
+        // '/protected/v8/connections/connections/established',
+        // '/protected/v8/connections/connections/established/:id',
+        // '/protected/v8/connections/connections/requested',
+        // '/protected/v8/connections/add/connection',
+        // '/protected/v8/connections/connections/suggests',
         '/protected/v8/cohorts/user/autoenrollment/:courseId',
         '/protected/v8/profanity/startPdfProfanity',
         '/protected/v8/profanity/getPdfProfanityForContent/:contentId',
@@ -1476,6 +1464,6 @@ export const API_LIST = {
         '/proxies/v8/staff/position/:orgId',
         '/proxies/v8/budget/scheme',
         '/proxies/v8/budget/scheme/:orgId',
-        '/proxies/v8/orghistory/:orgId/:key'
+        '/proxies/v8/orghistory/:orgId/:key',
     ],
 }

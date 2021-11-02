@@ -149,7 +149,14 @@ const urlChecks = {
         try {
             const comparedWith = _.get(ownerCheckObj, 'session') ? _.get(req, ownerCheckObj.session) : null
             const comparedFrom = _.get(ownerCheckObj, 'requestbody') ? _.get(req, ownerCheckObj.requestbody) : null
-            if (comparedWith === comparedFrom) {
+
+            if ((_.isArray(comparedWith) && _.isArray(comparedFrom)) && (_.intersection(comparedWith, comparedFrom).length > 0)) {
+                resolve()
+            } else if (_.isArray(comparedWith) && (_.includes(comparedWith, comparedFrom))) {
+                resolve()
+            } else if (_.isArray(comparedFrom) && (_.includes(comparedFrom, comparedWith))) {
+                resolve()
+            } else if (comparedWith === comparedFrom) {
                 resolve()
             } else {
                 return reject('Mismatch in param validation')

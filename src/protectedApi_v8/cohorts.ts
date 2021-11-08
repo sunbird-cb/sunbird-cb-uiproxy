@@ -294,9 +294,9 @@ function getUsers(userprofile: IUserProfile): ICohortsUser {
 
   return {
     city: '',
-    department: userprofile.employmentDetails.departmentName,
+    department: userprofile.employmentDetails === undefined ? '' : userprofile.employmentDetails.departmentName,
     desc: '',
-    designation: userprofile.professionalDetails[0].designation,
+    designation: (userprofile.professionalDetails === undefined || userprofile.professionalDetails.length<1) ? '' : userprofile.professionalDetails[0].designation,
     email: userprofile.personalDetails.primaryEmail,
     first_name: userprofile.personalDetails.firstname,
     last_name: userprofile.personalDetails.middlename,

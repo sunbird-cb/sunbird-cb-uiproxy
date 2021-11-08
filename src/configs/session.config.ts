@@ -38,7 +38,7 @@ export function getSessionConfig(
       },
       resave: false,
       saveUninitialized: false,
-      secret: '927yen45-i8j6-78uj-y8j6g9rf56hu',
+      secret: CONSTANTS.SESSION_CONFIG_SECRET,
       store: isPersistant
         ? new cassandraStore({
           client: null,

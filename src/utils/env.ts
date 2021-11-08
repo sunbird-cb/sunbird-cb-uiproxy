@@ -135,6 +135,7 @@ export const CONSTANTS = {
   PROFANITY_SERVICE_API_BASE: env.PROFANITY_SERVICE_API_BASE || 'http://localhost:4001',
   DISCUSSION_CATEGORY_LIST: env.DISCUSSION_CATEGORY_LIST || 'cid[]=5&cid[]=6&cid[]=8&cid[]=9&cid[]=10&cid[]=11&cid[]=12&cid[]=13',
   WORKFLOW_HANDLER_SERVICE_API_BASE: env.WORKFLOW_HANDLER_SERVICE_API_BASE || 'http://localhost:5099',
+  SESSION_CONFIG_SECRET: env.SESSION_CONFIG_SECRET || '927yen45-i8j6-78uj-y8j6g9rf56hu',
   SUNBIRD_PROXY_URL: env.SUNBIRD_PROXY_URL || 'https://igot-sunbird.idc.tarento.com/apis/proxies/v8/action',
   SUNBIRD_PROXY_API_BASE: env.SUNBIRD_PROXY_API_BASE || 'https://igot-dev.in/api',
   SCORING_SERVICE_API_BASE: env.SCORING_SERVICE_API_BASE || 'http://localhost:7014',

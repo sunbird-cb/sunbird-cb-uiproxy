@@ -9,14 +9,15 @@ import { extractAuthorizationFromRequest, extractUserIdFromRequest, extractUserT
 const API_END_POINTS = {
   addTemplate: `https://igot-dev.in/api/course/batch/cert/v1/template/add`,
   autoenrollment: `${CONSTANTS.KONG_API_BASE}/v1/autoenrollment`,
+  batchParticipantsApi: `${CONSTANTS.KONG_API_BASE}/course/v1/batch/participants/list`,
   cohorts: `${CONSTANTS.KONG_API_BASE}/v2/resources`,
   downloadCert: (certId: string) => `https://igot-dev.in/api/certreg/v2/certs/download/${certId}`,
   groupCohorts: (groupId: number) =>
     `${CONSTANTS.USER_PROFILE_API_BASE}/groups/${groupId}/users `,
   hierarchyApiEndPoint: (contentId: string) =>
     `${CONSTANTS.KNOWLEDGE_MW_API_BASE}/action/content/v3/hierarchy/${contentId}?hierarchyType=detail`,
-    issueCert: 'https://igot-dev.in/api/course/batch/cert/v1/issue?reIssue=true',
-
+  issueCert: 'https://igot-dev.in/api/course/batch/cert/v1/issue?reIssue=true',
+  kongSearchUser: `${CONSTANTS.KONG_API_BASE}/user/v1/search`,
   searchUserRegistry: `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/search/profile`,
 }
 const VALID_COHORT_TYPES = new Set([
@@ -199,7 +200,7 @@ cohortsApi.post('/course/batch/cert/issue', async (req, res) => {
       headers: {
         Authorization: CONSTANTS.CERT_AUTH_TOKEN,
         /* tslint:disable-next-line */
-        'x-authenticated-user-token' : extractUserToken(req),
+        'x-authenticated-user-token': extractUserToken(req),
       },
     })
 
@@ -223,7 +224,7 @@ cohortsApi.get('/course/batch/cert/download/:certId', async (req, res) => {
       headers: {
         Authorization: CONSTANTS.CERT_AUTH_TOKEN,
         /* tslint:disable-next-line */
-        'x-authenticated-user-token' : extractUserToken(req),
+        'x-authenticated-user-token': extractUserToken(req),
       },
     })
 
@@ -239,11 +240,61 @@ cohortsApi.get('/course/batch/cert/download/:certId', async (req, res) => {
   }
 })
 
+cohortsApi.get('/getUsersForBatch/:batchId', async (req, res) => {
+  try {
+    const batchId = req.params.batchId
+    const reqBody = {
+      request: {
+        batch: {
+          active: true,
+          batchId,
+        },
+      },
+    }
+    const userlist: ICohortsUser[] = []
+    const response = await axios.post(API_END_POINTS.batchParticipantsApi, reqBody, {
+      ...axiosRequestConfig,
+      headers: {
+        Authorization: CONSTANTS.SB_API_KEY,
+        /* tslint:disable-next-line */
+        'x-authenticated-user-token': extractUserToken(req),
+      },
+    })
+    if ((typeof response.data.result.batch.participants !== 'undefined' && response.data.result.batch.participants.length > 0)) {
+      const searchresponse = await axios({
+        ...axiosRequestConfig,
+        data: { request: {filters: { userId: response.data.result.batch.participants } } },
+        headers: {
+            Authorization: CONSTANTS.SB_API_KEY,
+            // tslint:disable-next-line: all
+            'x-authenticated-user-token': extractUserToken(req),
+        },
+        method: 'POST',
+        url: API_END_POINTS.kongSearchUser,
+    })
+      if (searchresponse.data.result.response.count > 0) {
+        for (const profileObj of searchresponse.data.result.response.content) {
+          userlist.push(getUsers(profileObj.profileDetails))
+        }
+    }
+    }
+    res.status(response.status).send(userlist)
+  } catch (err) {
+    logError(err)
+
+    res.status((err && err.response && err.response.status) || 500).send(
+      (err && err.response && err.response.data) || {
+        error: unknownError,
+      }
+    )
+  }
+})
+
 function getUsers(userprofile: IUserProfile): ICohortsUser {
 
   return {
     city: '',
-    department: userprofile.professionalDetails[0].name,
+    department: userprofile.employmentDetails.departmentName,
     desc: '',
     designation: userprofile.professionalDetails[0].designation,
     email: userprofile.personalDetails.primaryEmail,
@@ -271,6 +322,7 @@ export interface ICohortsUser {
 export interface IUserProfile {
   personalDetails: IPersonalDetails
   professionalDetails: IProfessionalDetailsEntity[]
+  employmentDetails: IEmploymentDetails
   id: string
 }
 export interface IPersonalDetails {
@@ -291,6 +343,9 @@ export interface IPersonalDetails {
   personalEmail: string
 }
 
+export interface IEmploymentDetails {
+  departmentName: string
+}
 export interface IProfessionalDetailsEntity {
   description: string
   industry: string

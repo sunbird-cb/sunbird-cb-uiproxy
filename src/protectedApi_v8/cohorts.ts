@@ -240,7 +240,7 @@ cohortsApi.get('/course/batch/cert/download/:certId', async (req, res) => {
   }
 })
 
-cohortsApi.get('/getUsersForBatch/:batchId', async (req, res) => {
+cohortsApi.get('/course/getUsersForBatch/:batchId', async (req, res) => {
   try {
     const batchId = req.params.batchId
     const reqBody = {

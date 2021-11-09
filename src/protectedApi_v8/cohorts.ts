@@ -298,7 +298,8 @@ function getUsers(userprofile: IUserProfile): ICohortsUser {
     if (userprofile.professionalDetails[0].designation !== undefined) {
       designationValue = userprofile.professionalDetails[0].designation
     } else {
-      designationValue = userprofile.professionalDetails[0].designationOther
+      designationValue = userprofile.professionalDetails[0].designationOther === undefined ? '' : 
+      userprofile.professionalDetails[0].designationOther
     }
   }
   return {

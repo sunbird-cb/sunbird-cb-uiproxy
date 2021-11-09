@@ -295,10 +295,10 @@ cohortsApi.get('/course/getUsersForBatch/:batchId', async (req, res) => {
 function getUsers(userprofile: IUserProfile): ICohortsUser {
   let designationValue = ''
   if (userprofile.professionalDetails !== undefined && userprofile.professionalDetails.length > 0) {
-    if (userprofile.professionalDetails[0].designationOther !== undefined) {
-      designationValue = userprofile.professionalDetails[0].designationOther
-    } else {
+    if (userprofile.professionalDetails[0].designation !== undefined) {
       designationValue = userprofile.professionalDetails[0].designation
+    } else {
+      designationValue = userprofile.professionalDetails[0].designationOther
     }
   }
   return {

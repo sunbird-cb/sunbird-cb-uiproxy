@@ -1302,6 +1302,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/discussion/user/:username/posts': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
     [
@@ -1488,5 +1495,6 @@ export const API_LIST = {
         '/proxies/v8/budget/scheme/:orgId/:budgetYear',
         '/proxies/v8/orghistory/:orgId/:key',
         '/proxies/v8/discussion/user/uid/:uid',
+        '/proxies/v8/discussion/user/:username/posts'
     ],
 }

@@ -1275,7 +1275,20 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
+        }, '/proxies/v8/budget/scheme/:orgId/:budgetYear': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
         }, '/proxies/v8/orghistory/:orgId/:key': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/discussion/user/uid/:uid': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -1464,6 +1477,8 @@ export const API_LIST = {
         '/proxies/v8/staff/position/:orgId',
         '/proxies/v8/budget/scheme',
         '/proxies/v8/budget/scheme/:orgId',
+        '/proxies/v8/budget/scheme/:orgId/:budgetYear',
         '/proxies/v8/orghistory/:orgId/:key',
+        '/proxies/v8/discussion/user/uid/:uid',
     ],
 }

@@ -954,6 +954,13 @@ export const API_LIST = {
         //         ROLE.PUBLIC,
         //     ],
         // },
+        '/protected/v8/cohorts/course/getUsersForBatch/:courseId': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/protected/v8/cohorts/user/autoenrollment/:courseId': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -1434,6 +1441,7 @@ export const API_LIST = {
         // '/protected/v8/connections/connections/requested',
         // '/protected/v8/connections/add/connection',
         // '/protected/v8/connections/connections/suggests',
+        '/protected/v8/cohorts/course/getUsersForBatch/:courseId',
         '/protected/v8/cohorts/user/autoenrollment/:courseId',
         '/protected/v8/profanity/startPdfProfanity',
         '/protected/v8/profanity/getPdfProfanityForContent/:contentId',

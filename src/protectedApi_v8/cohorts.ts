@@ -263,20 +263,22 @@ cohortsApi.get('/course/getUsersForBatch/:batchId', async (req, res) => {
     if ((typeof response.data.result.batch.participants !== 'undefined' && response.data.result.batch.participants.length > 0)) {
       const searchresponse = await axios({
         ...axiosRequestConfig,
-        data: { request: {filters: { userId: response.data.result.batch.participants } } },
+        data: { request: { filters: { userId: response.data.result.batch.participants } } },
         headers: {
-            Authorization: CONSTANTS.SB_API_KEY,
-            // tslint:disable-next-line: all
-            'x-authenticated-user-token': extractUserToken(req),
+          Authorization: CONSTANTS.SB_API_KEY,
+          // tslint:disable-next-line: all
+          'x-authenticated-user-token': extractUserToken(req),
         },
         method: 'POST',
         url: API_END_POINTS.kongSearchUser,
-    })
+      })
       if (searchresponse.data.result.response.count > 0) {
         for (const profileObj of searchresponse.data.result.response.content) {
-          userlist.push(getUsers(profileObj.profileDetails))
+          const user: ICohortsUser = getUsers(profileObj.profileDetails)
+          user.department = profileObj.channel
+          userlist.push(user)
         }
-    }
+      }
     }
     res.status(response.status).send(userlist)
   } catch (err) {
@@ -291,13 +293,19 @@ cohortsApi.get('/course/getUsersForBatch/:batchId', async (req, res) => {
 })
 
 function getUsers(userprofile: IUserProfile): ICohortsUser {
-
+  let designationValue = ''
+  if (userprofile.professionalDetails !== undefined && userprofile.professionalDetails.length > 0) {
+    if (userprofile.professionalDetails[0].designationOther !== undefined) {
+      designationValue = userprofile.professionalDetails[0].designationOther
+    } else {
+      designationValue = userprofile.professionalDetails[0].designation
+    }
+  }
   return {
     city: '',
     department: userprofile.employmentDetails === undefined ? '' : userprofile.employmentDetails.departmentName,
     desc: '',
-    designation: (userprofile.professionalDetails === undefined || userprofile.professionalDetails.length < 1)
-     ? '' : userprofile.professionalDetails[0].designation,
+    designation: designationValue,
     email: userprofile.personalDetails.primaryEmail,
     first_name: userprofile.personalDetails.firstname,
     last_name: userprofile.personalDetails.middlename,

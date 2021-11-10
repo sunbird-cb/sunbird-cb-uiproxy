@@ -285,7 +285,7 @@ export const isAllowed = () => {
     return function(req: Request, res: Response, next: NextFunction) {
         let REQ_URL = req.path
         if (CONSTANTS.PORTAL_API_WHITELIST_CHECK === 'true') {
-            if (shouldAllow(req) || _.includes(REQ_URL, '/resource')) {
+            if (shouldAllow(req) || _.includes(REQ_URL, CONSTANTS.AUTH_REDIRECT_URL)) {
                 next()
             } else {
 
@@ -333,7 +333,7 @@ export const isAllowed = () => {
     }
 }
 const redirectToLogin = (req: Request) => {
-    const redirectUrl = 'protected/v8/resource/'
+    const redirectUrl = CONSTANTS.AUTH_REDIRECT_URL // 'protected/v8/resource/'
     return `https://${req.get('host')}/${redirectUrl}` // 'http://localhost:3003/protected/v8/user/resource/'
 }
 
@@ -366,7 +366,7 @@ export function apiWhiteListLogger() {
             return
         }
         const REQ_URL = req.path
-        if (!_.includes(REQ_URL, '/resource') && (req.session)) {
+        if (!_.includes(REQ_URL, CONSTANTS.AUTH_REDIRECT_URL) && (req.session)) {
             if (!('userRoles' in req.session) || (('userRoles' in req.session) && (req.session.userRoles.length === 0))) {
                 // console.log('Session not there: In If')
                 logError('Portal_API_WHITELIST_LOGGER: User needs to authenticated themselves')

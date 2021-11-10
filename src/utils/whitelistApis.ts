@@ -1358,7 +1358,14 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        'proxies/v8/action/framework/v3/term/create': {
+        '/proxies/v8/action/framework/v3/term/create': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/action/content/v3/upload/:do_id': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -1559,6 +1566,7 @@ export const API_LIST = {
         '/proxies/v8/action/framework/v3/category/create',
         '/proxies/v8/action/framework/v3/category/read/:id',
         '/proxies/v8/action/framework/v3/category/retire/:id',
-        '/proxies/v8/action/framework/v3/term/create'
+        '/proxies/v8/action/framework/v3/term/create',
+        '/proxies/v8/action/content/v3/upload/:do_id',
     ],
 }

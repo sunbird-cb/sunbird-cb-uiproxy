@@ -1309,6 +1309,55 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/action/framework/v3/read/:id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/action/framework/v3/category/master/create': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/action/framework/v3/category/master/search': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/action/framework/v3/category/master/read/:id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        'proxies/v8/action/framework/v3/category/create': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/action/framework/v3/category/read/:id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        'proxies/v8/action/framework/v3/term/create': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
     [
@@ -1495,6 +1544,13 @@ export const API_LIST = {
         '/proxies/v8/budget/scheme/:orgId/:budgetYear',
         '/proxies/v8/orghistory/:orgId/:key',
         '/proxies/v8/discussion/user/uid/:uid',
-        '/proxies/v8/discussion/user/:username/posts'
+        '/proxies/v8/discussion/user/:username/posts',
+        '/proxies/v8/action/framework/v3/read/:id',
+        '/proxies/v8/action/framework/v3/category/master/create',
+        '/proxies/v8/action/framework/v3/category/master/search',
+        '/proxies/v8/action/framework/v3/category/master/read/:id',
+        '/proxies/v8/action/framework/v3/category/create',
+        '/proxies/v8/action/framework/v3/category/read/:id',
+        '/proxies/v8/action/framework/v3/term/create'
     ],
 }

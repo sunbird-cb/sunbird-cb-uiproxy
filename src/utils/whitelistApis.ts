@@ -1059,6 +1059,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
+                ROLE.CONTENT_REVIEWER,
                 ROLE.EDITOR,
             ],
         },

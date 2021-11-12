@@ -1235,6 +1235,62 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/action/framework/v3/read/:id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/action/framework/v3/category/master/create': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/action/framework/v3/category/master/search': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/action/framework/v3/category/master/read/:id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/action/framework/v3/category/create': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/action/framework/v3/category/read/:id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/action/framework/v3/category/retire/:id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/action/framework/v3/term/create': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
     [
@@ -1409,5 +1465,13 @@ export const API_LIST = {
         '/protected/v8/connections/v2/update/connection',
         '/protected/v8/user/profileDetails/createUserWithoutInvitationEmail',
         '/proxies/v8/searchBy/:key',
+        '/proxies/v8/action/framework/v3/read/:id',
+        '/proxies/v8/action/framework/v3/category/master/create',
+        '/proxies/v8/action/framework/v3/category/master/search',
+        '/proxies/v8/action/framework/v3/category/master/read/:id',
+        '/proxies/v8/action/framework/v3/category/create',
+        '/proxies/v8/action/framework/v3/category/read/:id',
+        '/proxies/v8/action/framework/v3/category/retire/:id',
+        '/proxies/v8/action/framework/v3/term/create',
     ],
 }

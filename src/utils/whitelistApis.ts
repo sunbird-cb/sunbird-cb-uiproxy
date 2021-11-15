@@ -179,6 +179,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.CONTENT_REVIEWER,
+                ROLE.CONTENT_PUBLISHER,
             ],
         },
         '/proxies/v8/discussion/forum/v2/read': {
@@ -236,6 +237,8 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
                 ROLE.EDITOR,
+                ROLE.CONTENT_PUBLISHER,
+                ROLE.CONTENT_REVIEWER,
             ],
         },
         '/proxies/v8/action/content/v3/create': {
@@ -302,6 +305,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.CONTENT_REVIEWER,
+                ROLE.CONTENT_PUBLISHER,
             ],
         },
         '/proxies/v8/action/content/v3/review/:do_id': {
@@ -310,6 +314,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
                 ROLE.CONTENT_REVIEWER,
+                ROLE.CONTENT_PUBLISHER,
             ],
         },
         '/proxies/v8/action/content/v3/publish/:do_id': {
@@ -325,6 +330,8 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
                 ROLE.EDITOR,
+                ROLE.CONTENT_REVIEWER,
+                ROLE.CONTENT_PUBLISHER,
             ],
         },
         '/proxies/v8/data/v1/system/settings/get/orgTypeList': {
@@ -965,6 +972,8 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
                 ROLE.EDITOR,
+                ROLE.CONTENT_PUBLISHER,
+                ROLE.CONTENT_REVIEWER,
             ],
         },
         // '/protected/v8/connections/connections/recommended': {
@@ -1036,6 +1045,8 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
                 ROLE.EDITOR,
+                ROLE.CONTENT_PUBLISHER,
+                ROLE.CONTENT_REVIEWER,
             ],
         },
         '/protected/v8/profanity/getPdfProfanityForContent/:contentId': {
@@ -1063,6 +1074,7 @@ export const API_LIST = {
                 ROLE.CONTENT_CREATOR,
                 ROLE.CONTENT_REVIEWER,
                 ROLE.EDITOR,
+                ROLE.CONTENT_PUBLISHER,
             ],
         },
         '/protected/v8/portal/mdo/deptAction/userrole': {

@@ -224,13 +224,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        // '/proxies/v8/action/content/v3/hierarchyUpdate': {
-        //     checksNeeded: [CHECK.ROLE],
-        //     // tslint:disable-next-line: object-literal-sort-keys
-        //     ROLE_CHECK: [
-        //         ROLE.PUBLIC,
-        //     ],
-        // },
+        '/proxies/v8/action/content/v3/hierarchyUpdate': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.CONTENT_REVIEWER,
+            ],
+        },
         '/proxies/v8/action/content/v3/hierarchy/update': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -1509,7 +1509,7 @@ export const API_LIST = {
         '/proxies/v8/read/content-progres/:do_id',
         '/proxies/v8/content-progres/:do_id',
         '/proxies/v8/action/content/v3/hierarchy/:do_id',
-        // '/proxies/v8/action/content/v3/hierarchyUpdate',
+        '/proxies/v8/action/content/v3/hierarchyUpdate',
         '/proxies/v8/action/content/v3/hierarchy/update',
         '/proxies/v8/action/content/v3/read/:do_id',
         '/proxies/v8/discussion/forum/v2/read',

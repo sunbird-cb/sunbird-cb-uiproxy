@@ -215,10 +215,6 @@ const createUserFailed = 'ERROR CREATING USER >'
 const failedToUpdateUser = 'Failed to update user profile data.'
 const unknownError = 'Failed due to unknown reason'
 
-const createNodeBBDiscussionUser = async () => {
-
-}
-
 profileDeatailsApi.post('/createUser', async (req, res) => {
     try {
         const sbChannel = req.body.personalDetails.channel
@@ -293,10 +289,35 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                     method: 'GET',
                     url: API_END_POINTS.kongUserRead(sbUserId),
                 })
+
                 if (sbUserReadResponse.data.params.status !== 'success') {
                     res.status(500).send(failedToReadUser)
                     return
                 }
+
+                // tslint:disable-next-line: no-commented-code
+                const nodebbPayload =  {
+                   username: sbUserReadResponse.data.result.response.userName,
+                   // tslint:disable-next-line: object-literal-sort-keys
+                   identifier: sbUserReadResponse.data.result.response.identifier,
+                   fullname: sbUserReadResponse.data.result.response.firstName + ' ' + sbUserReadResponse.data.result.response.lastName,
+                }
+
+                await axios({
+                    ...axiosRequestConfig,
+                    data: { request: nodebbPayload },
+                     headers: {
+                        Authorization: CONSTANTS.SB_API_KEY,
+                        // tslint:disable-next-line: all
+                        'x-authenticated-user-token': extractUserToken(req),
+                    },
+                    method: 'POST',
+                    url: API_END_POINTS.createNodeBBUser,
+                })
+
+                // tslint:disable-next-line: no-commented-code
+                // console.log("UserId", sbUserId)
+                // console.log("NodeBB", nodeBBResponse.data.result.userId)
 
                 const sbProfileUpdateReq = {
                     profileDetails: {

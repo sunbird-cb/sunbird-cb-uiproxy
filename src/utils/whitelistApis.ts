@@ -1066,6 +1066,13 @@ export const API_LIST = {
                 ROLE.EDITOR,
             ],
         },
+        '/protected/v8/cohorts/activeusers/:do_id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/protected/v8/catalog': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -1684,5 +1691,6 @@ export const API_LIST = {
         '/proxies/v8/action/framework/v3/term/create',
         '/proxies/v8/action/content/v3/upload/:do_id',
         '/protected/v8/cohorts/authors/:do_id',
+        '/protected/v8/cohorts/activeusers/:do_id',
     ],
 }

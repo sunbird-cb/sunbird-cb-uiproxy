@@ -15,6 +15,7 @@ const API_END_POINTS = {
     createOSUserRegistry: (userId: string) => `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/create/profile?userId=${userId}`,
     createSb: `${CONSTANTS.KONG_API_BASE}/user/v3/create`,
     createUserRegistry: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/createUserRegistry`,
+    // tslint:disable-next-line: object-literal-sort-keys
     createNodeBBUser: `${CONSTANTS.KONG_API_BASE}/discussion/user/v1/create`,
     getMasterLanguages: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/getMasterLanguages`,
     getMasterNationalities: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/getMasterNationalities`,

@@ -702,6 +702,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.SPV_ADMIN,
             ],
         },
         '/protected/v8/user/profileRegistry/getUserRegistryByUser/:id': {

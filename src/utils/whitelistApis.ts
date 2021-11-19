@@ -1309,6 +1309,30 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        // '/protected/v8/cohorts/course/batch/cert/download/',
+        // '/protected/v8/cohorts/course/batch/cert/issue',
+        // '/protected/v8/cohorts/course/batch/cert/template/add',
+        '/protected/v8/cohorts/course/batch/cert/download/:certId': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/protected/v8/cohorts/course/batch/cert/issue': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/protected/v8/cohorts/course/batch/cert/template/add': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
     [
@@ -1487,6 +1511,9 @@ export const API_LIST = {
         '/protected/v8/connections/v2/connections/suggests',
         '/protected/v8/connections/v2/update/connection',
         '/protected/v8/user/profileDetails/createUserWithoutInvitationEmail',
+        '/protected/v8/cohorts/course/batch/cert/download/:certId',
+        '/protected/v8/cohorts/course/batch/cert/issue',
+        '/protected/v8/cohorts/course/batch/cert/template/add',
         '/proxies/v8/searchBy/:key',
         '/proxies/v8/staff/position',
         '/proxies/v8/staff/position/:orgId',

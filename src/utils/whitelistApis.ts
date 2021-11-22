@@ -1344,9 +1344,6 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        // '/protected/v8/cohorts/course/batch/cert/download/',
-        // '/protected/v8/cohorts/course/batch/cert/issue',
-        // '/protected/v8/cohorts/course/batch/cert/template/add',
         '/protected/v8/cohorts/course/batch/cert/download/:certId': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys

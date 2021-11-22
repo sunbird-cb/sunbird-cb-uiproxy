@@ -1584,7 +1584,5 @@ export const API_LIST = {
         '/proxies/v8/action/framework/v3/category/read/:id',
         '/proxies/v8/action/framework/v3/category/retire/:id',
         '/proxies/v8/action/framework/v3/term/create',
-        '/proxies/v8/action/content/v3/upload/:do_id',
-        '/proxies/v8/learner/course/v1/batch/list',
     ],
 }

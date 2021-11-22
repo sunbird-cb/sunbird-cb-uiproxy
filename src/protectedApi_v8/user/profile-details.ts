@@ -225,6 +225,8 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
         const sbemailVerified_ = true
         const sbfirstName_ = req.body.personalDetails.firstName
         const sblastName_ = req.body.personalDetails.lastName
+        // For controlling the sent email function
+        const isEmailRequired = (req.body.personalDetails.isEmailRequired) ? req.body.personalDetails.isEmailRequired : true
 
         const searchresponse = await axios({
             ...axiosRequestConfig,
@@ -293,6 +295,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                     return
                 }
 
+                const sbUserOrgId = sbUserReadResponse.data.result.response.rootOrgId
                 const sbProfileUpdateReq = {
                     profileDetails: {
                         employmentDetails: {
@@ -320,62 +323,64 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                     res.status(400).send(failedToUpdateUser)
                     return
                 }
-
-                const passwordResetRequest = {
-                    key: 'email',
-                    type: 'email',
-                    userId: sbUserId,
-                }
-
-                logInfo('Sending Password reset request -> ' + passwordResetRequest)
-                const passwordResetResponse = await axios({
-                    ...axiosRequestConfig,
-                    data: { request: passwordResetRequest },
-                    headers: {
-                        Authorization: CONSTANTS.SB_API_KEY,
-                    },
-                    method: 'POST',
-                    url: API_END_POINTS.kongUserResetPassword,
-                })
-                logInfo('Received response from password reset -> ' + passwordResetResponse)
-
-                if (passwordResetResponse.data.params.status === 'success') {
-                    const welcomeMailRequest = {
-                        allowedLoging: 'You can use your email to Login',
-                        body: 'Hello',
-                        emailTemplateType: 'iGotWelcome',
-                        firstName: sbUserProfile.firstName,
-                        link: passwordResetResponse.data.result.link,
-                        mode: 'email',
-                        orgName: sbChannel,
-                        recipientEmails: [ sbemail_ ],
-                        setPasswordLink: true,
-                        subject: 'Welcome Email',
-                        welcomeMessage: 'Hello',
+                if (isEmailRequired) {
+                    const passwordResetRequest = {
+                        key: 'email',
+                        type: 'email',
+                        userId: sbUserId,
                     }
 
-                    const welcomeMailResponse = await axios({
+                    logInfo('Sending Password reset request -> ' + passwordResetRequest)
+                    const passwordResetResponse = await axios({
                         ...axiosRequestConfig,
-                        data: { request: welcomeMailRequest },
+                        data: { request: passwordResetRequest },
                         headers: {
                             Authorization: CONSTANTS.SB_API_KEY,
                         },
                         method: 'POST',
-                        url: API_END_POINTS.kongSendWelcomeEmail,
+                        url: API_END_POINTS.kongUserResetPassword,
                     })
+                    logInfo('Received response from password reset -> ' + passwordResetResponse)
 
-                    if (welcomeMailResponse.data.params.status !== 'success') {
-                        res.status(500).send('Failed to send Welcome Email.')
+                    if (passwordResetResponse.data.params.status === 'success') {
+                        const welcomeMailRequest = {
+                            allowedLoging: 'You can use your email to Login',
+                            body: 'Hello',
+                            emailTemplateType: 'iGotWelcome',
+                            firstName: sbUserProfile.firstName,
+                            link: passwordResetResponse.data.result.link,
+                            mode: 'email',
+                            orgName: sbChannel,
+                            recipientEmails: [ sbemail_ ],
+                            setPasswordLink: true,
+                            subject: 'Welcome Email',
+                            welcomeMessage: 'Hello',
+                        }
+
+                        const welcomeMailResponse = await axios({
+                            ...axiosRequestConfig,
+                            data: { request: welcomeMailRequest },
+                            headers: {
+                                Authorization: CONSTANTS.SB_API_KEY,
+                            },
+                            method: 'POST',
+                            url: API_END_POINTS.kongSendWelcomeEmail,
+                        })
+
+                        if (welcomeMailResponse.data.params.status !== 'success') {
+                            res.status(500).send('Failed to send Welcome Email.')
+                            return
+                        }
+                    } else {
+                        res.status(500).send('Failed to reset the password for user.')
                         return
                     }
-                } else {
-                    res.status(500).send('Failed to reset the password for user.')
-                    return
                 }
 
                 const sbUserProfileResponse: Partial<ISunbirdbUserResponse> = {
                     email: sbemail_, firstName: sbfirstName_, lastName: sblastName_,
                     userId: sbUserId,
+                    userOrgId: sbUserOrgId,
                 }
                 res.send(sbUserProfileResponse)
             }

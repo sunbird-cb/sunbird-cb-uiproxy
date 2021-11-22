@@ -151,5 +151,4 @@ export interface ISunbirdbUserResponse {
   firstName: string
   lastName: string
   userId: string
-  userOrgId: string
 }

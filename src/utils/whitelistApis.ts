@@ -1222,13 +1222,13 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
-        },'/authApi/readCert/:certId': {
+        }, '/authApi/readCert/:certId': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
-        },'/proxies/v8/searchBy/:key': {
+        }, '/proxies/v8/searchBy/:key': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [

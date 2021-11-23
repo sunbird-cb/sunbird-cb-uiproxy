@@ -227,6 +227,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
         const sblastName_ = req.body.personalDetails.lastName
         // For controlling the sent email function
         const isEmailRequired = (req.body.personalDetails.isEmailRequired) ? req.body.personalDetails.isEmailRequired : true
+        const sbDesignation = (req.body.personalDetails.designation) ? req.body.personalDetails.designation :  ''
 
         const searchresponse = await axios({
             ...axiosRequestConfig,
@@ -295,6 +296,11 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                     return
                 }
 
+                const arrDesignation = []
+                const objDesignation = {
+                    designation: (sbDesignation) ? sbDesignation : '',
+                }
+                arrDesignation.push(objDesignation)
                 const sbUserOrgId = sbUserReadResponse.data.result.response.rootOrgId
                 const sbProfileUpdateReq = {
                     profileDetails: {
@@ -306,6 +312,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                             primaryEmail: sbemail_,
                             surname: sblastName_,
                         },
+                        professionalDetails: arrDesignation,
                     },
                     userId: sbUserId,
                 }

@@ -355,6 +355,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.SPV_ADMIN,
             ],
         },
         '/proxies/v8/user/v1/search': {
@@ -702,6 +703,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.SPV_ADMIN,
             ],
         },
         '/protected/v8/user/profileRegistry/getUserRegistryByUser/:id': {
@@ -1488,6 +1490,27 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/protected/v8/cohorts/course/batch/cert/download/:certId': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/protected/v8/cohorts/course/batch/cert/issue': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/protected/v8/cohorts/course/batch/cert/template/add': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
     [
@@ -1685,5 +1708,8 @@ export const API_LIST = {
         '/proxies/v8/action/framework/v3/term/create',
         '/proxies/v8/action/content/v3/upload/:do_id',
         '/proxies/v8/learner/course/v1/batch/list',
+        '/protected/v8/cohorts/course/batch/cert/download/:certId',
+        '/protected/v8/cohorts/course/batch/cert/issue',
+        '/protected/v8/cohorts/course/batch/cert/template/add',
     ],
 }

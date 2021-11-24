@@ -227,10 +227,8 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
         const sbemailVerified_ = true
         const sbfirstName_ = req.body.personalDetails.firstName
         const sblastName_ = req.body.personalDetails.lastName
-        // For controlling the sent email function
         const isEmailRequired = (req.body.personalDetails.isEmailRequired) ? req.body.personalDetails.isEmailRequired : true
         const sbDesignation = (req.body.personalDetails.designation) ? req.body.personalDetails.designation :  ''
-
         const searchresponse = await axios({
             ...axiosRequestConfig,
             data: { request: { query: '', filters: { email: sbemail_.toLowerCase() } } },
@@ -293,12 +291,10 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                     method: 'GET',
                     url: API_END_POINTS.kongUserRead(sbUserId),
                 })
-
                 if (sbUserReadResponse.data.params.status !== 'success') {
                     res.status(500).send(failedToReadUser)
                     return
                 }
-
                 // tslint:disable-next-line: no-commented-code
                 const nodebbPayload =  {
                    username: sbUserReadResponse.data.result.response.userName,
@@ -306,7 +302,6 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                    identifier: sbUserReadResponse.data.result.response.identifier,
                    fullname: sbUserReadResponse.data.result.response.firstName + ' ' + sbUserReadResponse.data.result.response.lastName,
                 }
-
                 await axios({
                     ...axiosRequestConfig,
                     data: { request: nodebbPayload },
@@ -318,10 +313,6 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                     method: 'POST',
                     url: API_END_POINTS.createNodeBBUser,
                 })
-
-                // tslint:disable-next-line: no-commented-code
-                // console.log("UserId", sbUserId)
-                // console.log("NodeBB", nodeBBResponse.data.result.userId)
 
                 const arrDesignation = []
                 const objDesignation = {

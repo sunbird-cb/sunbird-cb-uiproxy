@@ -274,7 +274,7 @@ cohortsApi.get('/course/getUsersForBatch/:batchId', async (req, res) => {
       })
       if (searchresponse.data.result.response.count > 0) {
         for (const profileObj of searchresponse.data.result.response.content) {
-          const user: ICohortsUser = getUsers(profileObj.profileDetails)
+          const user: ICohortsUser = getUsers(profileObj)
           user.department = profileObj.channel
           userlist.push(user)
         }

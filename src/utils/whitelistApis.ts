@@ -252,36 +252,28 @@ export const API_LIST = {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.MDO_ADMIN,
-                ROLE.CBC_ADMIN,
-                ROLE.SPV_ADMIN,
+                ROLE.PUBLIC,
             ],
         },
         '/proxies/v8/dashboard/analytics/getDashboardsForProfile/Karmayogi': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.MDO_ADMIN,
-                ROLE.CBC_ADMIN,
-                ROLE.SPV_ADMIN,
+                ROLE.PUBLIC,
             ],
         },
         '/proxies/v8/dashboard/analytics/getChartV2/Karmayogi': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.MDO_ADMIN,
-                ROLE.CBC_ADMIN,
-                ROLE.SPV_ADMIN,
+                ROLE.PUBLIC,
             ],
         },
         '/proxies/v8/wat/dashboard/getDashboardConfig/Karmayogi/overview': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.MDO_ADMIN,
-                ROLE.CBC_ADMIN,
-                ROLE.SPV_ADMIN,
+                ROLE.PUBLIC,
             ],
         },
         '/proxies/v8/upload/action/content/v3/upload/:do_id': {
@@ -1511,27 +1503,6 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        '/proxies/v8/dashboard/analytics/getDashboardsForProfile/Karmayogi': {
-            checksNeeded: [CHECK.ROLE],
-            // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [
-                ROLE.PUBLIC,
-            ],
-        },
-        '/proxies/v8/dashboard/analytics/getChartV2/Karmayogi': {
-            checksNeeded: [CHECK.ROLE],
-            // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [
-                ROLE.PUBLIC,
-            ],
-        },
-        '/proxies/v8/dashboard/analytics/getDashboardConfig/Karmayogi': {
-            checksNeeded: [CHECK.ROLE],
-            // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [
-                ROLE.PUBLIC,
-            ],
-        },
     },
     URL_PATTERN:
     [
@@ -1732,8 +1703,5 @@ export const API_LIST = {
         '/protected/v8/cohorts/course/batch/cert/download/:certId',
         '/protected/v8/cohorts/course/batch/cert/issue',
         '/protected/v8/cohorts/course/batch/cert/template/add',
-        '/proxies/v8/dashboard/analytics/getDashboardsForProfile/Karmayogi',
-        '/proxies/v8/dashboard/analytics/getChartV2/Karmayogi',
-        '/proxies/v8/dashboard/analytics/getDashboardConfig/Karmayogi',
     ],
 }

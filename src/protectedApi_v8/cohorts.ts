@@ -294,23 +294,31 @@ cohortsApi.get('/course/getUsersForBatch/:batchId', async (req, res) => {
 
 function getUsers(userprofile: IUserProfile): ICohortsUser {
   let designationValue = ''
-  if (userprofile.professionalDetails !== undefined && userprofile.professionalDetails.length > 0) {
-    if (userprofile.professionalDetails[0].designation !== undefined) {
-      designationValue = userprofile.professionalDetails[0].designation
-    } else {
-      designationValue = userprofile.professionalDetails[0].designationOther === undefined ? '' :
-      userprofile.professionalDetails[0].designationOther
+  let primaryEmail = ''
+  let mobileNumber = 0
+  if (userprofile.profileDetails !== undefined) {
+    if (userprofile.profileDetails.professionalDetails !== undefined && userprofile.profileDetails.professionalDetails.length > 0) {
+      if (userprofile.profileDetails.professionalDetails[0].designation !== undefined) {
+        designationValue = userprofile.profileDetails.professionalDetails[0].designation
+      } else {
+        designationValue = userprofile.profileDetails.professionalDetails[0].designationOther === undefined ? '' :
+        userprofile.profileDetails.professionalDetails[0].designationOther
+      }
+    }
+    if (userprofile.profileDetails.personalDetails !== undefined) {
+      primaryEmail = userprofile.profileDetails.personalDetails.primaryEmail
+      mobileNumber = userprofile.profileDetails.personalDetails.mobile
     }
   }
   return {
     city: '',
-    department: userprofile.employmentDetails === undefined ? '' : userprofile.employmentDetails.departmentName,
+    department: userprofile.channel === undefined ? '' : userprofile.channel,
     desc: '',
     designation: designationValue,
-    email: userprofile.personalDetails.primaryEmail,
-    first_name: userprofile.personalDetails.firstname,
-    last_name: userprofile.personalDetails.middlename,
-    phone_No: userprofile.personalDetails.mobile,
+    email: primaryEmail,
+    first_name: userprofile.firstName,
+    last_name: userprofile.lastName,
+    phone_No: mobileNumber,
     userLocation: '',
     user_id: userprofile.id,
   }
@@ -330,11 +338,19 @@ export interface ICohortsUser {
 }
 
 export interface IUserProfile {
+  channel: string
+  firstName: string
+  id: string
+  lastName: string
+  profileDetails: IUserProfileDetails
+}
+
+export interface IUserProfileDetails {
   personalDetails: IPersonalDetails
   professionalDetails: IProfessionalDetailsEntity[]
   employmentDetails: IEmploymentDetails
-  id: string
 }
+
 export interface IPersonalDetails {
   firstname: string
   middlename: string

@@ -1503,6 +1503,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/discussion/v2/categories':{
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        }
     },
     URL_PATTERN:
     [
@@ -1563,6 +1570,7 @@ export const API_LIST = {
         '/proxies/v8/learnervm/private/content/v3/review/:do_id',
         '/proxies/v8/discussion/v2/topics',
         '/proxies/v8/discussion/v2/topics/:id',
+        '/proxies/v8/discussion/v2/categories',
         '/proxies/v8/discussion/tags/:tag',
         '/proxies/v8/discussion/user/:userKey/bookmarks',
         '/proxies/v8/discussion/user/:userKey/bookmark',

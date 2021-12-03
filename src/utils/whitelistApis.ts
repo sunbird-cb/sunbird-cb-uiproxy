@@ -1509,6 +1509,20 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
+        },
+        '/proxies/v8/storage/upload':{
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+            ],
+        },
+        '/proxies/v8/storage/delete':{
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+            ],
         }
     },
     URL_PATTERN:
@@ -1711,5 +1725,7 @@ export const API_LIST = {
         '/protected/v8/cohorts/course/batch/cert/download/:certId',
         '/protected/v8/cohorts/course/batch/cert/issue',
         '/protected/v8/cohorts/course/batch/cert/template/add',
+        '/proxies/v8/storage/upload',
+        '/proxies/v8/storage/delete'
     ],
 }

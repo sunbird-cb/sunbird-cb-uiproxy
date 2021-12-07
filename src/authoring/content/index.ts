@@ -31,6 +31,7 @@ const API_END_POINTS = {
   createBatch: `${CONSTANTS.KONG_API_BASE}/course/v1/batch/create`,
   downloadCert: `${CONSTANTS.KONG_API_BASE}/certreg/v1/certs/download`,
   issueCertToCourseBatch: `${CONSTANTS.KONG_API_BASE}/course/batch/cert/v1/issue?reIssue=true`,
+  readBatch: (batchId: string) => `${CONSTANTS.KONG_API_BASE}/course/v1/batch/read/${batchId}`,
   readCert: (certId: string) => `${CONSTANTS.KONG_API_BASE}/certreg/v2/certs/download/${certId}`,
   removeCertFromCourseBatch: `${CONSTANTS.KONG_API_BASE}/course/batch/cert/v1/template/remove`,
   updateBatch: `${CONSTANTS.KONG_API_BASE}/course/v1/batch/update`,
@@ -252,6 +253,28 @@ authApi.patch('/content/v3/update/:id', async (req: Request, res: Response) => {
     .catch((error) => {
       res.status(error.response.status).send(error.response.data)
     })
+})
+
+authApi.get('/readBatch/:batchId', async (req: Request, res: Response) => {
+  try {
+    const batchId = req.params.batchId
+    const response = await axios.get(API_END_POINTS.readBatch(batchId), {
+        ...axiosRequestConfig,
+        headers: {
+            Authorization: CONSTANTS.SB_API_KEY,
+            // tslint:disable-next-line: no-duplicate-string
+            'x-authenticated-user-token': extractUserToken(req),
+        },
+    })
+    res.status(response.status).send(response.data)
+  } catch (err) {
+    logError(failedToProcess + err)
+    res.status((err && err.response && err.response.status) || 500).send(
+        (err && err.response && err.response.data) || {
+            error: ERROR.GENERAL_ERR_MSG,
+        }
+    )
+  }
 })
 
 authApi.post('/batch/:key', async (req: Request, res: Response) => {

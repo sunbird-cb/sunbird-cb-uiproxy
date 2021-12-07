@@ -1347,6 +1347,14 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/authApi/readBatch/:batchId': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.CONTENT_CREATOR,
+                ROLE.MDO_ADMIN,
+            ],
+        },
         '/authApi/readCert/:certId': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -1503,33 +1511,34 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        '/proxies/v8/discussion/v2/categories':{
+        '/proxies/v8/discussion/v2/categories': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
         },
-        '/proxies/v8/storage/upload':{
+        '/proxies/v8/storage/upload': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
             ],
         },
-        '/proxies/v8/storage/delete':{
+        '/proxies/v8/storage/delete': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
             ],
-        }
+        },
     },
     URL_PATTERN:
     [
         // '/authApi/content/v3/create',
         // '/authApi/content/v3/read/:do_id',
         // '/authApi/content/v3/update/:do_id',
+        '/authApi/readBatch/:batchId',
         '/authApi/batch/:key',
         '/authApi/readCert/:certId',
         '/proxies/v8/api/user/v2/read',
@@ -1726,6 +1735,6 @@ export const API_LIST = {
         '/protected/v8/cohorts/course/batch/cert/issue',
         '/protected/v8/cohorts/course/batch/cert/template/add',
         '/proxies/v8/storage/upload',
-        '/proxies/v8/storage/delete'
+        '/proxies/v8/storage/delete',
     ],
 }

@@ -216,6 +216,7 @@ const createUserFailed = 'ERROR CREATING USER >'
 const failedToUpdateUser = 'Failed to update user profile data.'
 const unknownError = 'Failed due to unknown reason'
 
+// tslint:disable-next-line: max-lines-per-function
 profileDeatailsApi.post('/createUser', async (req, res) => {
     try {
         const sbChannel = req.body.personalDetails.channel
@@ -228,7 +229,6 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
         const sbfirstName_ = req.body.personalDetails.firstName
         const sblastName_ = req.body.personalDetails.lastName
         const isEmailRequired = (req.body.personalDetails.isEmailRequired) ? req.body.personalDetails.isEmailRequired : true
-        const sbDesignation = (req.body.personalDetails.designation) ? req.body.personalDetails.designation :  ''
         const searchresponse = await axios({
             ...axiosRequestConfig,
             data: { request: { query: '', filters: { email: sbemail_.toLowerCase() } } },
@@ -313,12 +313,6 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                     method: 'POST',
                     url: API_END_POINTS.createNodeBBUser,
                 })
-
-                const arrDesignation = []
-                const objDesignation = {
-                    designation: (sbDesignation) ? sbDesignation : '',
-                }
-                arrDesignation.push(objDesignation)
                 const sbUserOrgId = sbUserReadResponse.data.result.response.rootOrgId
                 const sbProfileUpdateReq = {
                     profileDetails: {
@@ -330,9 +324,17 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                             primaryEmail: sbemail_,
                             surname: sblastName_,
                         },
-                        professionalDetails: arrDesignation,
                     },
                     userId: sbUserId,
+                }
+                if (req.body.personalDetails.designation) {
+                    const arrDesignation = []
+                    const objDesignation = {
+                        designation: (req.body.personalDetails.designation) ? req.body.personalDetails.designation :  '',
+                    }
+                    arrDesignation.push(objDesignation)
+                    const profDetailsPropertyName = 'professionalDetails'
+                    sbProfileUpdateReq[profDetailsPropertyName] = arrDesignation
                 }
 
                 const sbUserProfileUpdateResp = await axios({

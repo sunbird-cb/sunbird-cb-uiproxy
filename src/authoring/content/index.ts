@@ -30,12 +30,12 @@ const API_END_POINTS = {
   batchRemoveUser: `${CONSTANTS.KONG_API_BASE}/course/v1/unenrol`,
   createBatch: `${CONSTANTS.KONG_API_BASE}/course/v1/batch/create`,
   downloadCert: `${CONSTANTS.KONG_API_BASE}/certreg/v1/certs/download`,
+  getUserProgress: `${CONSTANTS.KONG_API_BASE}/v1/batch/getUserProgress`,
   issueCertToCourseBatch: `${CONSTANTS.KONG_API_BASE}/course/batch/cert/v1/issue?reIssue=true`,
   readBatch: (batchId: string) => `${CONSTANTS.KONG_API_BASE}/course/v1/batch/read/${batchId}`,
   readCert: (certId: string) => `${CONSTANTS.KONG_API_BASE}/certreg/v2/certs/download/${certId}`,
   removeCertFromCourseBatch: `${CONSTANTS.KONG_API_BASE}/course/batch/cert/v1/template/remove`,
   updateBatch: `${CONSTANTS.KONG_API_BASE}/course/v1/batch/update`,
-  getUserProgress: `${CONSTANTS.KONG_API_BASE}/v1/batch/getUserProgress`,
 }
 
 authApi.all('*', (req, _res, next) => {
@@ -300,7 +300,7 @@ authApi.post('/batch/:key', async (req: Request, res: Response) => {
         break
       case 'getUserProgress':
         targetUrl = API_END_POINTS.getUserProgress
-        break;
+        break
       default:
         logError('Unsupported operation received for batch API - ' + key)
         res.status(400).send('Unsupported operation name - ' + key)

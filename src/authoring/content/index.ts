@@ -35,6 +35,7 @@ const API_END_POINTS = {
   readCert: (certId: string) => `${CONSTANTS.KONG_API_BASE}/certreg/v2/certs/download/${certId}`,
   removeCertFromCourseBatch: `${CONSTANTS.KONG_API_BASE}/course/batch/cert/v1/template/remove`,
   updateBatch: `${CONSTANTS.KONG_API_BASE}/course/v1/batch/update`,
+  getUserProgress: `${CONSTANTS.KONG_API_BASE}/v1/batch/getUserProgress`,
 }
 
 authApi.all('*', (req, _res, next) => {
@@ -297,6 +298,9 @@ authApi.post('/batch/:key', async (req: Request, res: Response) => {
       case 'downloadCert':
         targetUrl = API_END_POINTS.downloadCert
         break
+      case 'getUserProgress':
+        targetUrl = API_END_POINTS.getUserProgress
+        break;
       default:
         logError('Unsupported operation received for batch API - ' + key)
         res.status(400).send('Unsupported operation name - ' + key)

@@ -49,7 +49,8 @@ export const CONSTANTS = {
   // tslint:disable-next-line: object-literal-sort-keys
   KC_NEW_USER_DEFAULT_PWD: env.KC_NEW_USER_DEFAULT_PWD || 'User@123',
   KEYCLOAK_REALM: env.KEYCLOAK_REALM || 'sunbird',
-  KEYCLOAK_SESSION_TTL:  24 * 60 * 60 * 1000,
+  // tslint:disable-next-line: ban
+  KEYCLOAK_SESSION_TTL:  parseInt(env.KEYCLOAK_SESSION_TTL || '0', 10) || 24 * 60 * 60 * 1000,
   KHUB_CLIENT_SECRET: env.KHUB_CLIENT_SECRET || 'axc123',
   KHUB_GRAPH_DATA: env.KHUB_GRAPH_DATA || 'http://localhost:3016',
   KHUB_SEARCH_BASE: env.KHUB_SEARCH_BASE || 'http://localhost:3014',

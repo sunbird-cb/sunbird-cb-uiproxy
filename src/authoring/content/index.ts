@@ -26,8 +26,8 @@ const actionConst = '/action'
 
 const API_END_POINTS = {
   addCertToCourseBatch: `${CONSTANTS.KONG_API_BASE}/course/batch/cert/v1/template/add`,
-  batchAddUser: `${CONSTANTS.KONG_API_BASE}/course/v1/enrol`,
-  batchRemoveUser: `${CONSTANTS.KONG_API_BASE}/course/v1/unenrol`,
+  batchAddUser: `${CONSTANTS.KONG_API_BASE}/course/v1/admin/enrol`,
+  batchRemoveUser: `${CONSTANTS.KONG_API_BASE}/course/v1/admin/unenrol`,
   createBatch: `${CONSTANTS.KONG_API_BASE}/course/v1/batch/create`,
   downloadCert: `${CONSTANTS.KONG_API_BASE}/certreg/v1/certs/download`,
   getUserProgress: `${CONSTANTS.KONG_API_BASE}/v1/batch/getUserProgress`,

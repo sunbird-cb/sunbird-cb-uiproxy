@@ -380,6 +380,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.SPV_ADMIN,
             ],
         },
         '/proxies/v8/user/v1/unblock': {
@@ -387,6 +388,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.SPV_ADMIN,
             ],
         },
         '/proxies/v8/data/v1/system/settings/get/orgTypeConfig': {

@@ -53,7 +53,7 @@ export class CustomKeycloak {
   }
 
   // tslint:disable-next-line: no-any
-  authenticated = async (request: any) => {
+  authenticated = (request: any) => {
     // console.log('Step 3: authenticated function')
     try {
       const userId = request.kauth.grant.access_token.content.sub.split(':')

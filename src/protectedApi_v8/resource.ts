@@ -1,7 +1,7 @@
 import { Router } from 'express'
 const _                 = require('lodash')
 export const userAuthKeyCloakApi = Router()
-userAuthKeyCloakApi.get('/', async (req, res) => {
+userAuthKeyCloakApi.get('/', (req, res) => {
     // tslint:disable-next-line: no-console
     console.log('userAuthKeyCloakApi.get --- ')
     const host = req.get('host')

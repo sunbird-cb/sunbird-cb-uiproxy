@@ -62,7 +62,7 @@ export const PERMISSION_HELPER = {
         const userId = reqObj.session.userId
         // tslint:disable-next-line: no-console
         console.log(userId)
-        logInfo('Calling user/v2/read')
+        logInfo('Calling user/v2/read ')
         const readUrl = `${CONSTANTS.KONG_API_BASE}/user/v2/read/` + userId
         const options = {
             headers: {
@@ -74,12 +74,17 @@ export const PERMISSION_HELPER = {
             url: readUrl,
         }
         // tslint:disable-next-line: no-any
-        request.get(options, (_err: any, _httpResponse: any, body: any) => {
-            logInfo('Success user/v2/read')
+        request.get(options, (err: any, _httpResponse: any, body: any) => {
+            logInfo('Inside  user/v2/read')
             if (body) {
                 // tslint:disable-next-line: no-console
                 console.log('Success user/v2/read: body', body)
                 this.setRolesData(reqObj, callback, body)
+            }
+            if (err) {
+                // tslint:disable-next-line: no-console
+                console.log('Making axios call to nodeBB ERROR -- ', err)
+                callback(err, null)
             }
         })
     },
@@ -96,20 +101,26 @@ export const PERMISSION_HELPER = {
             fullname: reqObj.session.firstName + ' ' + reqObj.session.lastName,
         }
         logInfo('Making axios call to nodeBB')
-        const nodeBBResp = await axios({
-            ...axiosRequestConfig,
-            data: { request: nodebbPayload },
-             headers: {
-                Authorization: CONSTANTS.SB_API_KEY,
-                // tslint:disable-next-line: all
-                'x-authenticated-user-token': extractUserToken(reqObj),
-            },
-            method: 'POST',
-            url: readUrl,
-        })
-        if (nodeBBResp) {
-            this.setNodeBBUID(reqObj, callback, nodeBBResp)
-        }
-        logInfo('permissionHelper::createNodeBBUser function end')
+        try {
+            const nodeBBResp = await axios({
+                ...axiosRequestConfig,
+                data: { request: nodebbPayload },
+                 headers: {
+                    Authorization: CONSTANTS.SB_API_KEY,
+                    // tslint:disable-next-line: all
+                    'x-authenticated-user-token': extractUserToken(reqObj),
+                },
+                method: 'POST',
+                url: readUrl,
+            })
+            if (nodeBBResp) {
+                this.setNodeBBUID(reqObj, callback, nodeBBResp)
+            }
+            logInfo('permissionHelper::createNodeBBUser function end')
+        } catch (err) {
+            // tslint:disable-next-line: no-console
+            console.log('Making axios call to nodeBB ERROR -- ', err)
+            callback(err, null)
+          }
     },
 }

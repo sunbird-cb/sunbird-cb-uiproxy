@@ -216,6 +216,11 @@ export function proxyCreatorSunbirdSearch(route: Router, targetUrl: string, _tim
 }
 
 export function proxyCreatorToAppentUserId(route: Router, targetUrl: string, _timeout = 10000): Router {
+  logInfo('proxyCreatorToAppentUserId Function ----')
+  // tslint:disable-next-line: no-console
+  console.log('proxyCreatorToAppentUserId Function:: route ----', route)
+  // tslint:disable-next-line: no-console
+  console.log('proxyCreatorToAppentUserId Function:: targetUrl ----', targetUrl)
   route.all('/*', (req, res) => {
     const originalUrl = req.originalUrl
     const lastIndex = originalUrl.lastIndexOf('/')

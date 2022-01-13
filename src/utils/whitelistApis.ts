@@ -1534,6 +1534,13 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
             ],
         },
+        '/proxies/v8/user/v1/extPatch': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
     [
@@ -1738,5 +1745,6 @@ export const API_LIST = {
         '/protected/v8/cohorts/course/batch/cert/template/add',
         '/proxies/v8/storage/upload',
         '/proxies/v8/storage/delete',
+        '/proxies/v8/user/v1/extPatch',
     ],
 }

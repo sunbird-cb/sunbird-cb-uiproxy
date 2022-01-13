@@ -13,6 +13,10 @@ export class CustomKeycloak {
   private multiTenantKeycloak = new Map<string, keycloakConnect>()
 
   constructor(sessionConfig: expressSession.SessionOptions) {
+    // tslint:disable-next-line: no-console
+    console.log('custom-keycloak::constructor start ')
+    // tslint:disable-next-line: no-console
+    console.log('CONSTANTS.MULTI_TENANT_KEYCLOAK -- ', CONSTANTS.MULTI_TENANT_KEYCLOAK)
     if (CONSTANTS.MULTI_TENANT_KEYCLOAK) {
       CONSTANTS.MULTI_TENANT_KEYCLOAK.split(';').forEach((v: string) => {
         const domainUrlMap = v.split(',')
@@ -23,6 +27,8 @@ export class CustomKeycloak {
       })
     }
     this.multiTenantKeycloak.set('common', this.generateKeyCloak(sessionConfig))
+    // tslint:disable-next-line: no-console
+    console.log('custom-keycloak::constructor end ')
   }
 
   middleware = (req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -37,6 +43,12 @@ export class CustomKeycloak {
   }
 
   getKeyCloakObject(req: express.Request): keycloakConnect {
+    // tslint:disable-next-line: no-console
+    console.log('custom-keycloak::getKeyCloakObject')
+    // tslint:disable-next-line: no-console
+    console.log(`req.header('rootOrg') -- `, req.headers &&  req.header('rootOrg'))
+    // tslint:disable-next-line: no-console
+    console.log(`req.cookies.rootorg -- `, req.cookies && req.cookies.rootorg)
     const rootOrg =
       (req.headers ? req.header('rootOrg') : '') || (req.cookies ? req.cookies.rootorg : '')
     let domain = ''
@@ -47,17 +59,27 @@ export class CustomKeycloak {
         }
       })
     }
+    // tslint:disable-next-line: no-console
+    console.log(`custom-keycloak::getKeyCloakObject before retun value -- `, this.multiTenantKeycloak.get(req.hostname) ||
+    this.multiTenantKeycloak.get(domain) ||
+    this.multiTenantKeycloak.get('common'))
+
     return (this.multiTenantKeycloak.get(req.hostname) ||
       this.multiTenantKeycloak.get(domain) ||
       this.multiTenantKeycloak.get('common')) as keycloakConnect
   }
 
   // tslint:disable-next-line: no-any
-  authenticated = async (request: any) => {
-    // console.log('Step 3: authenticated function')
+  authenticated = (request: any) => {
+    // tslint:disable-next-line: no-console
+    console.log('Step 3: authenticated function')
     try {
       const userId = request.kauth.grant.access_token.content.sub.split(':')
       request.session.userId = userId[userId.length - 1]
+      // tslint:disable-next-line: no-console
+      console.log('userId ::', userId)
+      // tslint:disable-next-line: no-console
+      console.log('request.session after adding userId ::', request.session)
     } catch (err) {
       logError('userId conversation error' + request.kauth.grant.access_token.content.sub)
     }
@@ -87,8 +109,12 @@ export class CustomKeycloak {
   }
 
   protect = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    // tslint:disable-next-line: no-console
+    console.log('custom-keycloak::protect start')
     const keycloak = this.getKeyCloakObject(req)
     keycloak.protect()(req, res, next)
+    // tslint:disable-next-line: no-console
+    console.log('custom-keycloak::protect end')
   }
 
   private generateKeyCloak(

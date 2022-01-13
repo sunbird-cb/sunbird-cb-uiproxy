@@ -2,6 +2,8 @@ import { Router } from 'express'
 const _                 = require('lodash')
 export const userAuthKeyCloakApi = Router()
 userAuthKeyCloakApi.get('/', async (req, res) => {
+    // tslint:disable-next-line: no-console
+    console.log('userAuthKeyCloakApi.get --- ')
     const host = req.get('host')
     let queryParam = ''
     let isLocal = 0
@@ -17,5 +19,7 @@ userAuthKeyCloakApi.get('/', async (req, res) => {
     } else {
         redirectUrl = `https://${host}${queryParam}` //   'https://' + host + '/page/home'
     }
+    // tslint:disable-next-line: no-console
+    console.log('userAuthKeyCloakApi.get:: redirect url --- ', `https://${host}${queryParam}`)
     res.redirect(redirectUrl)
 })

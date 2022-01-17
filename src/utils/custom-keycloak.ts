@@ -72,7 +72,7 @@ export class CustomKeycloak {
   // tslint:disable-next-line: no-any
   authenticated = async (request: any) => {
     // tslint:disable-next-line: no-console
-    console.log('Step 3: authenticated function')
+    console.log('Step 3: authenticated function', '------', new Date())
     try {
       const userId = request.kauth.grant.access_token.content.sub.split(':')
       request.session.userId = userId[userId.length - 1]
@@ -86,24 +86,27 @@ export class CustomKeycloak {
     const postLoginRequest = []
     // tslint:disable-next-line: no-any
     postLoginRequest.push((callback: any) => {
-      // console.log('in pus')
+      // tslint:disable-next-line: no-console
+      console.log('pushing task to postLoginRequest', '------', new Date())
       PERMISSION_HELPER.getCurrentUserRoles(request, callback)
     })
 
     // tslint:disable-next-line: no-any
     try {
       // tslint:disable-next-line: no-any
-      const results = await async.series(postLoginRequest, (err: any) =>  {
+      const results = await async.series(postLoginRequest, (err: any, result: any) =>  {
         if (err) {
           logError('error loggin in user')
           // tslint:disable-next-line: no-console
           console.log('ERROR loggin in user ---- ', err)
         } else {
+          // tslint:disable-next-line: no-console
+          console.log('async.series result --- ', result, '------', new Date())
           logInfo(`${process.pid}: User authenticated`)
         }
       })
       // tslint:disable-next-line: no-console
-      console.log('async.series::results ---- ', results)
+      console.log('async.series::results ---- ', results, '------', new Date().toString())
     } catch (err) {
       // tslint:disable-next-line: no-console
       console.log('ERROR in aync series ---- ', err)
@@ -120,11 +123,9 @@ export class CustomKeycloak {
 
   protect = (req: express.Request, res: express.Response, next: express.NextFunction) => {
     // tslint:disable-next-line: no-console
-    console.log('custom-keycloak::protect start')
+    console.log('custom-keycloak::protect start', '------', new Date())
     const keycloak = this.getKeyCloakObject(req)
-    keycloak.protect()(req, res, next)
-    // tslint:disable-next-line: no-console
-    console.log('custom-keycloak::protect end')
+    return keycloak.protect()(req, res, next)
   }
 
   private generateKeyCloak(

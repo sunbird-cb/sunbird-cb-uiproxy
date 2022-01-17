@@ -35,6 +35,8 @@ export const PERMISSION_HELPER = {
                   callback(null, userData)
                 }
             })
+        } else {
+            callback('reqObj.session no session', null)
         }
         logInfo('permission helper:: setRolesData function end')
     },

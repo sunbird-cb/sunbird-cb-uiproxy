@@ -70,7 +70,7 @@ export class CustomKeycloak {
   }
 
   // tslint:disable-next-line: no-any
-  authenticated = async (request: any) => {
+  authenticated = (request: any, next: any) => {
     // tslint:disable-next-line: no-console
     console.log('Step 3: authenticated function', '------', new Date())
     try {
@@ -92,25 +92,15 @@ export class CustomKeycloak {
     })
 
     // tslint:disable-next-line: no-any
-    try {
-      // tslint:disable-next-line: no-any
-      const results = await async.series(postLoginRequest, (err: any, result: any) =>  {
-        if (err) {
-          logError('error loggin in user')
-          // tslint:disable-next-line: no-console
-          console.log('ERROR loggin in user ---- ', err)
-        } else {
-          // tslint:disable-next-line: no-console
-          console.log('async.series result --- ', result, '------', new Date())
-          logInfo(`${process.pid}: User authenticated`)
-        }
-      })
-      // tslint:disable-next-line: no-console
-      console.log('async.series::results ---- ', results, '------', new Date().toString())
-    } catch (err) {
-      // tslint:disable-next-line: no-console
-      console.log('ERROR in aync series ---- ', err)
-    }
+    return async.series(postLoginRequest, (err: any) =>  {
+      if (err) {
+        logError('error loggin in user')
+        next(err, null)
+      } else {
+        logInfo(`${process.pid}: User authenticated`)
+        next(null, 'loggedin')
+      }
+    })
   }
 
   // tslint:disable-next-line: no-any

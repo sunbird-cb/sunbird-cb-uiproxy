@@ -11,6 +11,7 @@ import { conceptGraphApi } from './concept'
 // import { connectionsApi } from './connections'
 import { connectionsV2Api } from './connections_v2'
 import { contentApi } from './content'
+import { contentPrivateApi } from './contentprivate'
 import { contentValidationApi } from './contentValidation'
 import { counterApi } from './counter'
 import { deptApi } from './departments'
@@ -79,3 +80,4 @@ protectedApiV8.use('/roleactivity', roleActivityApi)
 protectedApiV8.use('/resource', userAuthKeyCloakApi)
 protectedApiV8.use('/workallocation', workAllocationApi)
 protectedApiV8.use('/frac', fracApi)
+protectedApiV8.use('/contentprivate', contentPrivateApi)

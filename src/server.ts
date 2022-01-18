@@ -131,8 +131,6 @@ export class Server {
   }
   // tslint:disable-next-line: no-any
   private setKeyCloak(sessionConfig: any) {
-    // tslint:disable-next-line: no-console
-    console.log('setKeyCloak')
     this.keycloak = new CustomKeycloak(sessionConfig)
     this.app.use(this.keycloak.middleware)
   }

@@ -1295,6 +1295,27 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        'protected/v8/contentprivate/update/:do_id':{
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.CONTENT_CREATOR,
+            ],
+        },
+        'protected/v8/contentprivate/migratepublisher/:do_id':{
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.CONTENT_CREATOR,
+            ],
+        },
+        'protected/v8/contentprivate/migratereviewer/:do_id':{
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.CONTENT_CREATOR,
+            ],
+        },
         '/protected/v8/connections/v2/connections/established/:id': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -1664,6 +1685,9 @@ export const API_LIST = {
         '/protected/v8/workallocation/getWOPdf/:workOrderId',
         '/protected/v8/portal/cbp/mydepartment',
         '/protected/v8/user/mandatoryContent/checkStatus',
+        'protected/v8/contentprivate/update/:do_id',
+        'protected/v8/contentprivate/migratepublisher/:do_id',
+        'protected/v8/contentprivate/migratereviewer/:do_id',
         '/protected/v8/user/rating/content/average-ratingInfo/:do_id',
         '/protected/v8/social/post/timeline',
         '/protected/v8/user/history/:id',

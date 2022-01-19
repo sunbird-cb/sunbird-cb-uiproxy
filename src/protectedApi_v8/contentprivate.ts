@@ -49,16 +49,16 @@ contentPrivateApi.patch('/update/:id', async (req, res) => {
             }
         }
         // tslint:disable-next-line: no-commented-code
-        const userChannel = await getUserChannel(userToken, userId)
-        const hierarchySource = await getHierarchyDetails(userToken, id)
-        logInfo('line no: 50 ===> ', userChannel, hierarchySource)
-        if (userChannel !== hierarchySource) {
-            res.status(400).send({
-                msg: res.status(400).send({
-                    msg: CHANNEL_VALIDATION_ERROR,
-                }),
-            })
-        }
+        // const userChannel = await getUserChannel(userToken, userId)
+        // const hierarchySource = await getHierarchyDetails(userToken, id)
+        // logInfo('line no: 50 ===> ', userChannel, hierarchySource)
+        // if (userChannel !== hierarchySource) {
+        //     res.status(400).send({
+        //         msg: res.status(400).send({
+        //             msg: CHANNEL_VALIDATION_ERROR,
+        //         }),
+        //     })
+        // }
         const response = await axios.patch(
             API_END_POINTS.updateContentEndPoint(id),
             req.body,

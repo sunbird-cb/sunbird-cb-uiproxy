@@ -198,9 +198,9 @@ export async function getHierarchyDetails(token: string, id: string) {
                 'x-authenticated-user-token': token,
             },
         })
-        logInfo('line 201 ====>',response.data)
+        logInfo('line 201 ====>', response.data)
         const hierarchyResult = response.data.result.content
-        logInfo('line 202 ====>',hierarchyResult)
+        logInfo('line 202 ====>', hierarchyResult)
         if (typeof hierarchyResult !== 'undefined' && hierarchyResult != null) {
             return hierarchyResult.source
         }
@@ -220,9 +220,9 @@ export async function getUserChannel(token: string, userId: string) {
                 'x-authenticated-user-token': token,
             },
         })
-        logInfo('line 222 ====>',response.data)
+        logInfo('line 222 ====>', response.data)
         const userProfileResult = response.data.result.response
-        logInfo('line 222 ====>',userProfileResult)
+        logInfo('line 222 ====>', userProfileResult)
         if (typeof userProfileResult !== 'undefined' && userProfileResult != null) {
             return userProfileResult.channel
         }

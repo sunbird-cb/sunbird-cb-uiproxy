@@ -59,7 +59,7 @@ contentPrivateApi.patch('/update/:id', async (req, res) => {
             API_END_POINTS.updateContentEndPoint(id),
             req.body,
             {
-                ...]axiosRequestConfig,
+                ...axiosRequestConfig,
                 headers: {
                     Authorization: CONSTANTS.SB_API_KEY,
                     // tslint:disable-next-line: all
@@ -92,7 +92,7 @@ contentPrivateApi.patch('/migratereviewer/:id', async (req, res) => {
         }
         if (fields instanceof Array) {
             for (const entry of fields) {
-                if (editableFieldsReviewer.indexOf(entry) === -1 && fields.length === editableFieldsReviewer.length) {
+                if (editableFieldsReviewer.indexOf(entry) === -1 && fields.length === editableFieldsReviewer.length ) {
                     res.status(400).send({
                         msg: res.status(400).send({
                             msg: FIELD_VALIDATION_ERROR,
@@ -146,7 +146,7 @@ contentPrivateApi.patch('/migratepublisher/:id', async (req, res) => {
         }
         if (fields instanceof Array) {
             for (const entry of fields) {
-                if (editableFieldsPublisher.indexOf(entry) === -1 && fields.length === editableFieldsPublisher.length) {
+                if (editableFieldsPublisher.indexOf(entry) === -1 && fields.length === editableFieldsPublisher.length ) {
                     res.status(400).send({
                         msg: res.status(400).send({
                             msg: FIELD_VALIDATION_ERROR,
@@ -226,7 +226,3 @@ export async function getUserChannel(token: string, userId: string) {
         return 'userChannelDetails'
     }
 }
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes

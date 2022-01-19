@@ -25,37 +25,40 @@ const CHANNEL_VALIDATION_ERROR = 'SOURCE_MISMATCH_ERROR'
 contentPrivateApi.patch('/update/:id', async (req, res) => {
     try {
         const id = req.params.id
-        const content = req.body.content
-        const fields = Object.keys(content)
+        // tslint:disable-next-line: no-commented-code
+        // const content = req.body.content
+        // const fields = Object.keys(content)
         const userId = extractUserId(req)
         const userToken = extractUserToken(req) as string
         if (!userId) {
             res.status(400).send(userIdFailedMessage)
             return
         }
-        logInfo('line no: 36 ===> ', id, JSON.stringify(fields), userId, userToken)
         // tslint:disable-next-line: no-commented-code
-        if (fields instanceof Array) {
-            for (const entry of fields) {
-                if (editableFields.indexOf(entry) === -1) {
-                    res.status(400).send({
-                        msg: res.status(400).send({
-                            msg: FIELD_VALIDATION_ERROR,
-                        }),
-                    })
-                }
-            }
-        }
-        const userChannel = getUserChannel(userToken, userId)
-        const hierarchySource = getHierarchyDetails(userToken, id)
-        logInfo('line no: 50 ===> ')
-        if (userChannel !== hierarchySource) {
-            res.status(400).send({
-                msg: res.status(400).send({
-                    msg: CHANNEL_VALIDATION_ERROR,
-                }),
-            })
-        }
+        // logInfo('line no: 36 ===> ', id, JSON.stringify(fields), userId, userToken)
+        // tslint:disable-next-line: no-commented-code
+        // if (fields instanceof Array) {
+        //     for (const entry of fields) {
+        //         if (editableFields.indexOf(entry) === -1) {
+        //             res.status(400).send({
+        //                 msg: res.status(400).send({
+        //                     msg: FIELD_VALIDATION_ERROR,
+        //                 }),
+        //             })
+        //         }
+        //     }
+        // }
+        // tslint:disable-next-line: no-commented-code
+        // const userChannel = getUserChannel(userToken, userId)
+        // const hierarchySource = getHierarchyDetails(userToken, id)
+        // logInfo('line no: 50 ===> ')
+        // if (userChannel !== hierarchySource) {
+        //     res.status(400).send({
+        //         msg: res.status(400).send({
+        //             msg: CHANNEL_VALIDATION_ERROR,
+        //         }),
+        //     })
+        // }
         const response = await axios.patch(
             API_END_POINTS.updateContentEndPoint(id),
             req.body,
@@ -68,7 +71,8 @@ contentPrivateApi.patch('/update/:id', async (req, res) => {
                 },
             }
         )
-        logInfo('line no: 70 ===> ', JSON.stringify(response.status), response.data)
+        // tslint:disable-next-line: no-commented-code
+        // logInfo('line no: 70 ===> ', JSON.stringify(response.status), response.data)
         res.status(response.status).send(response.data)
     } catch (err) {
         logError(Error + err)
@@ -93,7 +97,7 @@ contentPrivateApi.patch('/migratereviewer/:id', async (req, res) => {
         }
         if (fields instanceof Array) {
             for (const entry of fields) {
-                if (editableFieldsReviewer.indexOf(entry) === -1 && fields.length === editableFieldsReviewer.length ) {
+                if (editableFieldsReviewer.indexOf(entry) === -1 && fields.length === editableFieldsReviewer.length) {
                     res.status(400).send({
                         msg: res.status(400).send({
                             msg: FIELD_VALIDATION_ERROR,
@@ -147,7 +151,7 @@ contentPrivateApi.patch('/migratepublisher/:id', async (req, res) => {
         }
         if (fields instanceof Array) {
             for (const entry of fields) {
-                if (editableFieldsPublisher.indexOf(entry) === -1 && fields.length === editableFieldsPublisher.length ) {
+                if (editableFieldsPublisher.indexOf(entry) === -1 && fields.length === editableFieldsPublisher.length) {
                     res.status(400).send({
                         msg: res.status(400).send({
                             msg: FIELD_VALIDATION_ERROR,

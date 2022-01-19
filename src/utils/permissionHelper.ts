@@ -24,17 +24,20 @@ export const PERMISSION_HELPER = {
             if (!_.includes(reqObj.session.userRoles, 'PUBLIC')) {
                 reqObj.session.userRoles.push('PUBLIC')
             }
+            // tslint:disable-next-line: no-console
+            console.log('request.session after adding userId ::', reqObj.session, '----cookie---', reqObj.cookies)
+            this.createNodeBBUser(reqObj, callback)
             // tslint:disable-next-line: no-any
-            reqObj.session.save((error: any) => {
-                if (error) {
-                    logError('reqObj.session.save error -- ', error)
-                    callback(error, null)
-                } else {
-                  logInfo('Before calling createNodeBBUser', '------', new Date().toString())
-                  this.createNodeBBUser(reqObj, callback)
-                //   callback(null, userData)
-                }
-            })
+            // reqObj.session.save((error: any) => {
+            //     if (error) {
+            //         logError('reqObj.session.save error -- ', error)
+            //         callback(error, null)
+            //     } else {
+            //       logInfo('Before calling createNodeBBUser', '------', new Date().toString())
+            //       this.createNodeBBUser(reqObj, callback)
+            //     //   callback(null, userData)
+            //     }
+            // })
         } else {
             callback('reqObj.session no session', null)
         }
@@ -45,6 +48,8 @@ export const PERMISSION_HELPER = {
         logInfo('permissionHelper:: setNodeBBUID function start', '------', new Date().toString())
         // tslint:disable-next-line: no-any
         const nodeBBData: any = body
+        // tslint:disable-next-line: no-console
+        console.log('request.session after adding userId ::', reqObj.session, '----cookie---', reqObj.cookies)
         if (reqObj.session) {
             reqObj.session.uid = nodeBBData.data.result.userId.uid
             logInfo('After appending uid to session', reqObj.session.uid)

@@ -44,8 +44,6 @@ export class CustomKeycloak {
 
   getKeyCloakObject(req: express.Request): keycloakConnect {
     // tslint:disable-next-line: no-console
-    console.log('custom-keycloak::getKeyCloakObject')
-    // tslint:disable-next-line: no-console
     console.log(`req.header('rootOrg') -- `, req.headers &&  req.header('rootOrg'))
     // tslint:disable-next-line: no-console
     console.log(`req.cookies.rootorg -- `, req.cookies && req.cookies.rootorg)
@@ -59,11 +57,6 @@ export class CustomKeycloak {
         }
       })
     }
-
-    // tslint:disable-next-line: no-console
-    console.log(`custom-keycloak::getKeyCloakObject before retun value -- `, this.multiTenantKeycloak.get(req.hostname) ||
-    this.multiTenantKeycloak.get(domain) ||
-    this.multiTenantKeycloak.get('common'))
 
     return (this.multiTenantKeycloak.get(req.hostname) ||
       this.multiTenantKeycloak.get(domain) ||
@@ -79,7 +72,8 @@ export class CustomKeycloak {
       // tslint:disable-next-line: no-console
       console.log('userId ::', userId)
       // tslint:disable-next-line: no-console
-      console.log('request.session after adding userId ::', request.session)
+      console.log('request.session after adding userId ::', request.session, '----cookie---', request.cookies)
+
     } catch (err) {
       logError('userId conversation error' + request.kauth.grant.access_token.content.sub)
     }
@@ -92,7 +86,7 @@ export class CustomKeycloak {
     })
 
     // tslint:disable-next-line: no-any
-    return async.series(postLoginRequest, (err: any) =>  {
+    async.series(postLoginRequest, (err: any) =>  {
       if (err) {
         logError('error loggin in user')
         next(err, null)

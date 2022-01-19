@@ -365,7 +365,7 @@ const validateAPI = (req: Request, res: Response, next: NextFunction) => {
 export function apiWhiteListLogger() {
     return (req: Request, res: Response, next: NextFunction) => {
         // tslint:disable-next-line: no-console
-        console.log('req.query:: ', req.query)
+        console.log('apiWhiteListLogger:: req.query:: ', req.query, '-----cookies---- ', req.cookies)
         if (req.path === '/' || checkIsStaticRoute(req.path)) {
             next()
             return
@@ -373,7 +373,8 @@ export function apiWhiteListLogger() {
         const REQ_URL = req.path
         if (!_.includes(REQ_URL, '/resource') && (req.session)) {
             if (!('userRoles' in req.session) || (('userRoles' in req.session) && (req.session.userRoles.length === 0))) {
-                // console.log('Session not there: In If')
+                // tslint:disable-next-line: no-console
+                console.log('apiWhiteListLogger :: req.session', req.session, '----cookie---', req.cookies)
                 logError('Portal_API_WHITELIST_LOGGER: User needs to authenticated themselves')
                 respond419(req, res)
             } else {

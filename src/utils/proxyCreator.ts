@@ -15,6 +15,8 @@ const PROXY_SLUG_WAT = '/proxies/v8/wat'
 
 // tslint:disable-next-line: no-any
 proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
+  // tslint:disable-next-line: no-console
+  console.log('proxyReq::req.cookies=====>', req.cookies)
   proxyReq.setHeader('X-Channel-Id', (_.get(req, 'session.rootOrgId')) ? _.get(req, 'session.rootOrgId') : CONSTANTS.X_Channel_Id)
   // tslint:disable-next-line: max-line-length
   proxyReq.setHeader('Authorization', CONSTANTS.SB_API_KEY)
@@ -216,11 +218,6 @@ export function proxyCreatorSunbirdSearch(route: Router, targetUrl: string, _tim
 }
 
 export function proxyCreatorToAppentUserId(route: Router, targetUrl: string, _timeout = 10000): Router {
-  logInfo('proxyCreatorToAppentUserId Function ----')
-  // tslint:disable-next-line: no-console
-  console.log('proxyCreatorToAppentUserId Function:: route ----', route)
-  // tslint:disable-next-line: no-console
-  console.log('proxyCreatorToAppentUserId Function:: targetUrl ----', targetUrl)
   route.all('/*', (req, res) => {
     const originalUrl = req.originalUrl
     const lastIndex = originalUrl.lastIndexOf('/')
@@ -231,6 +228,8 @@ export function proxyCreatorToAppentUserId(route: Router, targetUrl: string, _ti
     }
     // tslint:disable-next-line: no-console
     console.log('REQ_URL_ORIGINAL proxyCreatorToAppentUserId', req.originalUrl)
+    // tslint:disable-next-line: no-console
+    console.log('REQ_URL_ORIGINAL -- cookies-- ', req.cookies)
 
     proxy.web(req, res, {
       changeOrigin: true,

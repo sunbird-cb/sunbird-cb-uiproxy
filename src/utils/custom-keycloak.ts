@@ -13,10 +13,6 @@ export class CustomKeycloak {
   private multiTenantKeycloak = new Map<string, keycloakConnect>()
 
   constructor(sessionConfig: expressSession.SessionOptions) {
-    // tslint:disable-next-line: no-console
-    console.log('custom-keycloak::constructor start ')
-    // tslint:disable-next-line: no-console
-    console.log('CONSTANTS.MULTI_TENANT_KEYCLOAK -- ', CONSTANTS.MULTI_TENANT_KEYCLOAK)
     if (CONSTANTS.MULTI_TENANT_KEYCLOAK) {
       CONSTANTS.MULTI_TENANT_KEYCLOAK.split(';').forEach((v: string) => {
         const domainUrlMap = v.split(',')
@@ -27,8 +23,6 @@ export class CustomKeycloak {
       })
     }
     this.multiTenantKeycloak.set('common', this.generateKeyCloak(sessionConfig))
-    // tslint:disable-next-line: no-console
-    console.log('custom-keycloak::constructor end ')
   }
 
   middleware = (req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -43,10 +37,6 @@ export class CustomKeycloak {
   }
 
   getKeyCloakObject(req: express.Request): keycloakConnect {
-    // tslint:disable-next-line: no-console
-    console.log(`req.header('rootOrg') -- `, req.headers &&  req.header('rootOrg'))
-    // tslint:disable-next-line: no-console
-    console.log(`req.cookies.rootorg -- `, req.cookies && req.cookies.rootorg)
     const rootOrg =
       (req.headers ? req.header('rootOrg') : '') || (req.cookies ? req.cookies.rootorg : '')
     let domain = ''
@@ -70,28 +60,31 @@ export class CustomKeycloak {
       const userId = request.kauth.grant.access_token.content.sub.split(':')
       request.session.userId = userId[userId.length - 1]
       // tslint:disable-next-line: no-console
-      console.log('userId ::', userId)
+      console.log('userId ::', userId, '------', new Date().toString())
       // tslint:disable-next-line: no-console
-      console.log('request.session after adding userId ::', request.session, '----cookie---', request.cookies)
+      console.log('request.session after adding userId ::', request.session, '----cookie---', request.cookies,
+      '------', new Date().toString())
 
     } catch (err) {
-      logError('userId conversation error' + request.kauth.grant.access_token.content.sub)
+      logError('userId conversation error' + request.kauth.grant.access_token.content.sub, '------', new Date().toString())
     }
     const postLoginRequest = []
     // tslint:disable-next-line: no-any
     postLoginRequest.push((callback: any) => {
       // tslint:disable-next-line: no-console
-      console.log('pushing task to postLoginRequest', '------', new Date())
+      console.log('pushing task to postLoginRequest', '------', new Date().toString())
       PERMISSION_HELPER.getCurrentUserRoles(request, callback)
     })
 
     // tslint:disable-next-line: no-any
-    async.series(postLoginRequest, (err: any) =>  {
+    async.series(postLoginRequest, (err: any, results: any) =>  {
       if (err) {
-        logError('error loggin in user')
+        logError('error loggin in user', '------', new Date().toString())
         next(err, null)
       } else {
-        logInfo(`${process.pid}: User authenticated`)
+        // tslint:disable-next-line: no-console
+        console.log('async.series results -- ', results, '------', new Date().toString())
+        logInfo(`${process.pid}: User authenticated`, '------', new Date().toString())
         next(null, 'loggedin')
       }
     })

@@ -2,13 +2,17 @@ import cassandraDriver from 'cassandra-driver'
 import cassandraStore from 'cassandra-store'
 import expressSession from 'express-session'
 import { CONSTANTS } from '../utils/env'
+const expressCassandra = require('express-cassandra')
+const _ = require('lodash')
 
 let sessionConfig: expressSession.SessionOptions
+const consistency = getConsistencyLevel(CONSTANTS.PORTAL_CASSANDRA_CONSISTENCY_LEVEL)
 
 const cassandraClientOptions: cassandraDriver.ClientOptions = {
   contactPoints: getIPList(),
   keyspace: 'portal',
   queryOptions: {
+    consistency,
     prepare: true,
   },
 }
@@ -49,4 +53,10 @@ export function getSessionConfig(
     }
   }
   return sessionConfig
+}
+
+// tslint:disable-next-line: no-any
+function getConsistencyLevel(consistencyParam: any) {
+  // tslint:disable-next-line: max-line-length
+  return (consistencyParam && _.get(expressCassandra, `consistencies.${consistencyParam}`) ? _.get(expressCassandra, `consistencies.${consistencyParam}`) :  expressCassandra.consistencies.one)
 }

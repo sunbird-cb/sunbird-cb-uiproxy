@@ -15,7 +15,7 @@ const API_END_POINTS = {
     updateContentEndPoint: (id: string) => `${CONSTANTS.KONG_API_BASE}/private/content/v3/update/${id}`,
 }
 // tslint:disable-next-line: no-commented-code
-const editableFields = ['versionKey', 'createdBy', 'creatorContacts']
+// const editableFields = ['versionKey', 'createdBy', 'creatorContacts']
 const editableFieldsReviewer = ['versionKey', 'isExternal', 'reviewer', 'reviewerIDs']
 const editableFieldsPublisher = ['versionKey', 'isExternal', 'publisherIDs: ', 'publisherDetails']
 const userIdFailedMessage = 'NO_USER_ID'

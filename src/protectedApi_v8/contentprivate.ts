@@ -15,7 +15,7 @@ const API_END_POINTS = {
     updateContentEndPoint: (id: string) => `${CONSTANTS.KONG_API_BASE}/private/content/v3/update/${id}`,
 }
 // tslint:disable-next-line: no-commented-code
-// const editableFields = ['versionKey', 'createdBy', 'creatorContacts']
+const editableFields = ['versionKey', 'createdBy', 'creatorContacts']
 const editableFieldsReviewer = ['versionKey', 'isExternal', 'reviewer', 'reviewerIDs']
 const editableFieldsPublisher = ['versionKey', 'isExternal', 'publisherIDs: ', 'publisherDetails']
 const userIdFailedMessage = 'NO_USER_ID'
@@ -35,17 +35,17 @@ contentPrivateApi.patch('/update/:id', async (req, res) => {
         }
         logInfo('line no: 36 ===> ', id, JSON.stringify(fields), userId, userToken)
         // tslint:disable-next-line: no-commented-code
-        // if (fields instanceof Array) {
-        //     for (const entry of fields) {
-        //         if (editableFields.indexOf(entry) === -1) {
-        //             res.status(400).send({
-        //                 msg: res.status(400).send({
-        //                     msg: FIELD_VALIDATION_ERROR,
-        //                 }),
-        //             })
-        //         }
-        //     }
-        // }
+        if (fields instanceof Array) {
+            for (const entry of fields) {
+                if (editableFields.indexOf(entry) === -1) {
+                    res.status(400).send({
+                        msg: res.status(400).send({
+                            msg: FIELD_VALIDATION_ERROR,
+                        }),
+                    })
+                }
+            }
+        }
         const userChannel = getUserChannel(userToken, userId)
         const hierarchySource = getHierarchyDetails(userToken, id)
         logInfo('line no: 50 ===> ')
@@ -198,7 +198,9 @@ export async function getHierarchyDetails(token: string, id: string) {
                 'x-authenticated-user-token': token,
             },
         })
+        logInfo('line 201 ====>',response.data)
         const hierarchyResult = response.data.result.content
+        logInfo('line 202 ====>',hierarchyResult)
         if (typeof hierarchyResult !== 'undefined' && hierarchyResult != null) {
             return hierarchyResult.source
         }
@@ -218,7 +220,9 @@ export async function getUserChannel(token: string, userId: string) {
                 'x-authenticated-user-token': token,
             },
         })
+        logInfo('line 222 ====>',response.data)
         const userProfileResult = response.data.result.response
+        logInfo('line 222 ====>',userProfileResult)
         if (typeof userProfileResult !== 'undefined' && userProfileResult != null) {
             return userProfileResult.channel
         }

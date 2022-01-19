@@ -15,7 +15,7 @@ const API_END_POINTS = {
     updateContentEndPoint: (id: string) => `${CONSTANTS.KONG_API_BASE}/private/content/v3/update/${id}`,
 }
 // tslint:disable-next-line: no-commented-code
-// const editableFields = ['versionKey', 'createdBy', 'creatorContacts']
+const editableFields = ['versionKey', 'createdBy', 'creatorContacts']
 const editableFieldsReviewer = ['versionKey', 'isExternal', 'reviewer', 'reviewerIDs']
 const editableFieldsPublisher = ['versionKey', 'isExternal', 'publisherIDs: ', 'publisherDetails']
 const userIdFailedMessage = 'NO_USER_ID'
@@ -26,39 +26,39 @@ contentPrivateApi.patch('/update/:id', async (req, res) => {
     try {
         const id = req.params.id
         // tslint:disable-next-line: no-commented-code
-        // const content = req.body.content
-        // const fields = Object.keys(content)
+        const content = req.body.content
+        const fields = Object.keys(content)
         const userId = extractUserId(req)
         const userToken = extractUserToken(req) as string
         if (!userId) {
             res.status(400).send(userIdFailedMessage)
             return
         }
+        // tslint: disable - next - line: no - commented - code
+        logInfo('line no: 36 ===> ', id, JSON.stringify(fields), userId, userToken)
+        // tslint: disable - next - line: no - commented - code
+        if (fields instanceof Array) {
+            for (const entry of fields) {
+                if (editableFields.indexOf(entry) === -1) {
+                    res.status(400).send({
+                        msg: res.status(400).send({
+                            msg: FIELD_VALIDATION_ERROR,
+                        }),
+                    })
+                }
+            }
+        }
         // tslint:disable-next-line: no-commented-code
-        // logInfo('line no: 36 ===> ', id, JSON.stringify(fields), userId, userToken)
-        // tslint:disable-next-line: no-commented-code
-        // if (fields instanceof Array) {
-        //     for (const entry of fields) {
-        //         if (editableFields.indexOf(entry) === -1) {
-        //             res.status(400).send({
-        //                 msg: res.status(400).send({
-        //                     msg: FIELD_VALIDATION_ERROR,
-        //                 }),
-        //             })
-        //         }
-        //     }
-        // }
-        // tslint:disable-next-line: no-commented-code
-        // const userChannel = getUserChannel(userToken, userId)
-        // const hierarchySource = getHierarchyDetails(userToken, id)
-        // logInfo('line no: 50 ===> ')
-        // if (userChannel !== hierarchySource) {
-        //     res.status(400).send({
-        //         msg: res.status(400).send({
-        //             msg: CHANNEL_VALIDATION_ERROR,
-        //         }),
-        //     })
-        // }
+        const userChannel = await getUserChannel(userToken, userId)
+        const hierarchySource = await getHierarchyDetails(userToken, id)
+        logInfo('line no: 50 ===> ', userChannel, hierarchySource)
+        if (userChannel !== hierarchySource) {
+            res.status(400).send({
+                msg: res.status(400).send({
+                    msg: CHANNEL_VALIDATION_ERROR,
+                }),
+            })
+        }
         const response = await axios.patch(
             API_END_POINTS.updateContentEndPoint(id),
             req.body,
@@ -106,8 +106,8 @@ contentPrivateApi.patch('/migratereviewer/:id', async (req, res) => {
                 }
             }
         }
-        const userChannel = getUserChannel(userToken, userId)
-        const hierarchySource = getHierarchyDetails(userToken, id)
+        const userChannel = await getUserChannel(userToken, userId)
+        const hierarchySource = await getHierarchyDetails(userToken, id)
         if (userChannel !== hierarchySource) {
             res.status(400).send({
                 msg: res.status(400).send({
@@ -160,8 +160,8 @@ contentPrivateApi.patch('/migratepublisher/:id', async (req, res) => {
                 }
             }
         }
-        const userChannel = getUserChannel(userToken, userId)
-        const hierarchySource = getHierarchyDetails(userToken, id)
+        const userChannel = await getUserChannel(userToken, userId)
+        const hierarchySource = await getHierarchyDetails(userToken, id)
         if (userChannel !== hierarchySource) {
             res.status(400).send({
                 msg: res.status(400).send({

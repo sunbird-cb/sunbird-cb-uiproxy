@@ -14,8 +14,8 @@ const API_END_POINTS = {
     readUserEndPoint: (userId: string) => `${CONSTANTS.KONG_API_BASE}/user/v2/read/${userId}`,
     updateContentEndPoint: (id: string) => `${CONSTANTS.KONG_API_BASE}/private/content/v3/update/${id}`,
 }
-
-const editableFields = ['versionKey', 'createdBy', 'creatorContacts']
+// tslint:disable-next-line: no-commented-code
+// const editableFields = ['versionKey', 'createdBy', 'creatorContacts']
 const editableFieldsReviewer = ['versionKey', 'isExternal', 'reviewer', 'reviewerIDs']
 const editableFieldsPublisher = ['versionKey', 'isExternal', 'publisherIDs: ', 'publisherDetails']
 const userIdFailedMessage = 'NO_USER_ID'
@@ -34,17 +34,18 @@ contentPrivateApi.patch('/update/:id', async (req, res) => {
             return
         }
         logInfo('line no: 36 ===> ', id, JSON.stringify(fields), userId, userToken)
-        if (fields instanceof Array) {
-            for (const entry of fields) {
-                if (editableFields.indexOf(entry) === -1) {
-                    res.status(400).send({
-                        msg: res.status(400).send({
-                            msg: FIELD_VALIDATION_ERROR,
-                        }),
-                    })
-                }
-            }
-        }
+        // tslint:disable-next-line: no-commented-code
+        // if (fields instanceof Array) {
+        //     for (const entry of fields) {
+        //         if (editableFields.indexOf(entry) === -1) {
+        //             res.status(400).send({
+        //                 msg: res.status(400).send({
+        //                     msg: FIELD_VALIDATION_ERROR,
+        //                 }),
+        //             })
+        //         }
+        //     }
+        // }
         const userChannel = getUserChannel(userToken, userId)
         const hierarchySource = getHierarchyDetails(userToken, id)
         logInfo('line no: 50 ===> ')

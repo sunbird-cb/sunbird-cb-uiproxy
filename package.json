@@ -33,6 +33,7 @@
     "date-fns": "^2.0.1",
     "dateformat": "^4.5.1",
     "express": "^4.17.1",
+    "express-cassandra": "2.1.0",
     "express-fileupload": "^1.1.4",
     "express-healthcheck": "^0.1.0",
     "express-session": "^1.16.1",

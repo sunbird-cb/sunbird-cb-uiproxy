@@ -52,9 +52,7 @@ contentPrivateApi.patch('/update/:id', async (req, res) => {
         logInfo('line no: 50 ===> ', userChannel, hierarchySource)
         if (userChannel !== hierarchySource) {
             res.status(400).send({
-                msg: res.status(400).send({
-                    msg: CHANNEL_VALIDATION_ERROR,
-                }),
+                msg: CHANNEL_VALIDATION_ERROR,
             })
         }
         const response = await axios.patch(

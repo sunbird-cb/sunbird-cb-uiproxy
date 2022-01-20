@@ -21,7 +21,8 @@ import { logInfo, logSuccess } from './utils/logger'
 const cookieParser = require('cookie-parser')
 const healthcheck = require('express-healthcheck')
 
-import { apiWhiteListLogger, isAllowed } from './utils/apiWhiteList'
+// tslint:disable-next-line: no-commented-code
+// import { apiWhiteListLogger, isAllowed } from './utils/apiWhiteList'
 
 function haltOnTimedOut(req: Express.Request, _: Express.Response, next: NextFunction) {
   if (!req.timedout) {
@@ -49,10 +50,11 @@ export class Server {
     this.app.use(express.urlencoded({ extended: false, limit: '50mb' }))
     this.app.use(express.json({ limit: '50mb' }))
     this.setCookie()
-    this.app.all('*', apiWhiteListLogger())
-    if (CONSTANTS.PORTAL_API_WHITELIST_CHECK === 'true') {
-      this.app.all('*', isAllowed())
-    }
+    // tslint:disable-next-line: no-commented-code
+    // this.app.all('*', apiWhiteListLogger())
+    // if (CONSTANTS.PORTAL_API_WHITELIST_CHECK === 'true') {
+    //   this.app.all('*', isAllowed())
+    // }
     this.setKeyCloak(sessionConfig)
     this.authoringProxies()
     this.configureMiddleware()

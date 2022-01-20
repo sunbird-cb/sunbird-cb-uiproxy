@@ -3,7 +3,7 @@ import { Router } from 'express'
 
 import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
-import { logError } from '../utils/logger'
+import { logError, logInfo } from '../utils/logger'
 import { ERROR } from '../utils/message'
 import { extractUserId, extractUserToken } from '../utils/requestExtract'
 
@@ -33,6 +33,7 @@ contentPrivateApi.patch('/update/:id', async (req, res) => {
             res.status(400).send(userIdFailedMessage)
             return
         }
+        logInfo('line no: 36 ===> ', id, JSON.stringify(fields), userId, userToken)
         if (fields instanceof Array) {
             for (const entry of fields) {
                 if (editableFields.indexOf(entry) === -1) {
@@ -46,6 +47,7 @@ contentPrivateApi.patch('/update/:id', async (req, res) => {
         }
         const userChannel = getUserChannel(userToken, userId)
         const hierarchySource = getHierarchyDetails(userToken, id)
+        logInfo('line no: 50 ===> ')
         if (userChannel !== hierarchySource) {
             res.status(400).send({
                 msg: res.status(400).send({
@@ -65,6 +67,7 @@ contentPrivateApi.patch('/update/:id', async (req, res) => {
                 },
             }
         )
+        logInfo('line no: 70 ===> ', JSON.stringify(response.status), response.data)
         res.status(response.status).send(response.data)
     } catch (err) {
         logError(Error + err)

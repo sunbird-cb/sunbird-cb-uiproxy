@@ -27,18 +27,20 @@ export const PERMISSION_HELPER = {
             // tslint:disable-next-line: no-console
             console.log('request.session after adding userId ::', reqObj.session, '----cookie---', reqObj.cookies,
             '------', new Date().toString())
-            this.createNodeBBUser(reqObj, callback)
+            // this.createNodeBBUser(reqObj, callback)
             // tslint:disable-next-line: no-any
-            // reqObj.session.save((error: any) => {
-            //     if (error) {
-            //         logError('reqObj.session.save error -- ', error)
-            //         callback(error, null)
-            //     } else {
-            //       logInfo('Before calling createNodeBBUser', '------', new Date().toString())
-            //       this.createNodeBBUser(reqObj, callback)
-            //     //   callback(null, userData)
-            //     }
-            // })
+            reqObj.session.save((error: any) => {
+                if (error) {
+                    logError('reqObj.session.save error -- ', error)
+                    callback(error, null)
+                } else {
+                //   logInfo('Before calling createNodeBBUser', '------', new Date().toString())
+                // tslint:disable-next-line: no-commented-code
+                //   this.createNodeBBUser(reqObj, callback)
+                  logInfo('reqObj.session.save:: Sucess --Before calling callback ', '------', new Date().toString())
+                  callback(null, userData)
+                }
+            })
         } else {
             callback('reqObj.session no session', null)
         }

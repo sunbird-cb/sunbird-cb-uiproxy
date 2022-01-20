@@ -63,7 +63,7 @@ export class CustomKeycloak {
       console.log('userId ::', userId, '------', new Date().toString())
       // tslint:disable-next-line: no-console
       console.log('request.session after adding userId ::', request.session, '----cookie---', request.cookies,
-      '------', new Date().toString())
+      'request.header(org): ', request.header('org'), '------', new Date().toString())
 
     } catch (err) {
       logError('userId conversation error' + request.kauth.grant.access_token.content.sub, '------', new Date().toString())
@@ -84,7 +84,7 @@ export class CustomKeycloak {
       } else {
         // tslint:disable-next-line: no-console
         console.log('async.series results -- ', results, '------', new Date().toString())
-        logInfo(`${process.pid}: User authenticated`, '------', new Date().toString())
+        logInfo(`${process.pid}: User authenticated`, '---request.header(org): ', request.header('org'), '------', new Date().toString())
         next(null, 'loggedin')
       }
     })

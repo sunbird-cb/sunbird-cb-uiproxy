@@ -366,7 +366,7 @@ export function apiWhiteListLogger() {
     return (req: Request, res: Response, next: NextFunction) => {
         // tslint:disable-next-line: no-console
         console.log('apiWhiteListLogger::req.path', req.path , '-- req.query:: ', req.query, '-----cookies---- ', req.cookies,
-        '------', new Date().toString())
+        'req.header(org): ', req.header('org'), '------', new Date().toString())
         if (req.path === '/' || checkIsStaticRoute(req.path)) {
             next()
             return
@@ -375,7 +375,8 @@ export function apiWhiteListLogger() {
         if (!_.includes(REQ_URL, '/resource') && (req.session)) {
             if (!('userRoles' in req.session) || (('userRoles' in req.session) && (req.session.userRoles.length === 0))) {
                 // tslint:disable-next-line: no-console
-                console.log('apiWhiteListLogger :: req.session', req.session, '----cookie---', req.cookies, '------', new Date().toString())
+                console.log('apiWhiteListLogger :: req.session', req.session, '----cookie---', req.cookies,
+                'req.header(org): ', req.header('org'), '------', new Date().toString())
                 logError('Portal_API_WHITELIST_LOGGER: User needs to authenticated themselves', '------', new Date().toString())
                 respond419(req, res)
             } else {

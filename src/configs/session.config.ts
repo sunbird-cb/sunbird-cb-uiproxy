@@ -3,6 +3,7 @@ import cassandraStore from 'cassandra-store'
 import expressSession from 'express-session'
 import { CONSTANTS } from '../utils/env'
 const expressCassandra = require('express-cassandra')
+
 const _ = require('lodash')
 
 let sessionConfig: expressSession.SessionOptions

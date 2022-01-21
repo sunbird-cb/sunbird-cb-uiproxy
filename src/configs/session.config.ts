@@ -1,5 +1,8 @@
-import cassandraDriver from 'cassandra-driver'
-import cassandraStore from 'cassandra-store'
+// tslint:disable-next-line: no-commented-code
+// import cassandraDriver from 'cassandra-driver'
+import CassandraStore from 'cassandra-session-store'
+// tslint:disable-next-line: no-commented-code
+// import CassandraStore from 'cassandra-store'
 import expressSession from 'express-session'
 import { CONSTANTS } from '../utils/env'
 const expressCassandra = require('express-cassandra')
@@ -9,29 +12,31 @@ const _ = require('lodash')
 let sessionConfig: expressSession.SessionOptions
 const consistency = getConsistencyLevel(CONSTANTS.PORTAL_CASSANDRA_CONSISTENCY_LEVEL)
 
-const cassandraClientOptions: cassandraDriver.ClientOptions = {
-  contactPoints: getIPList(),
-  keyspace: 'portal',
-  queryOptions: {
-    consistency,
-    prepare: true,
-  },
-}
+// tslint:disable-next-line: no-commented-code
+// const cassandraClientOptions: cassandraDriver.ClientOptions = {
+//   contactPoints: getIPList(),
+//   keyspace: 'portal',
+//   queryOptions: {
+//     consistency,
+//     prepare: true,
+//   },
+// }
 
 function getIPList() {
   return CONSTANTS.CASSANDRA_IP.split(',')
 }
 
-if (
-  CONSTANTS.IS_CASSANDRA_AUTH_ENABLED &&
-  CONSTANTS.CASSANDRA_USERNAME &&
-  CONSTANTS.CASSANDRA_PASSWORD
-) {
-  cassandraClientOptions.authProvider = new cassandraDriver.auth.PlainTextAuthProvider(
-    CONSTANTS.CASSANDRA_USERNAME,
-    CONSTANTS.CASSANDRA_PASSWORD
-  )
-}
+// tslint:disable-next-line: no-commented-code
+// if (
+//   CONSTANTS.IS_CASSANDRA_AUTH_ENABLED &&
+//   CONSTANTS.CASSANDRA_USERNAME &&
+//   CONSTANTS.CASSANDRA_PASSWORD
+// ) {
+//   cassandraClientOptions.authProvider = new cassandraDriver.auth.PlainTextAuthProvider(
+//     CONSTANTS.CASSANDRA_USERNAME,
+//     CONSTANTS.CASSANDRA_PASSWORD
+//   )
+// }
 
 export function getSessionConfig(
   isPersistant = true
@@ -45,9 +50,16 @@ export function getSessionConfig(
       saveUninitialized: false,
       secret: '927yen45-i8j6-78uj-y8j6g9rf56hu',
       store: isPersistant
-        ? new cassandraStore({
+        ? new CassandraStore({
           client: null,
-          clientOptions: cassandraClientOptions,
+          clientOptions: {
+            contactPoints: getIPList(),
+            keyspace: 'portal',
+            queryOptions: {
+              consistency,
+              prepare: true,
+            },
+          },
           table: 'sessions',
         })
         : new expressSession.MemoryStore(),

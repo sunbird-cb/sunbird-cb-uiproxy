@@ -333,11 +333,11 @@ export const isAllowed = () => {
         }
     }
 }
-const redirectToLogin = (req: Request) => {
-    const redirectUrl = 'protected/v8/resource/'
-    return `https://${req.get('host')}/${redirectUrl}` // 'http://localhost:3003/protected/v8/user/resource/'
+const redirectToLogin = (_req: Request) => {
+    // const redirectUrl = 'protected/v8/resource/'
+    // return `https://${req.get('host')}/${redirectUrl}` // 'http://localhost:3003/protected/v8/user/resource/'
     // tslint:disable-next-line: no-commented-code
-    // return 'http://localhost:3003/protected/v8/user/resource/'
+    return 'http://localhost:3003/protected/v8/user/resource/'
 }
 
 const validateAPI = (req: Request, res: Response, next: NextFunction) => {

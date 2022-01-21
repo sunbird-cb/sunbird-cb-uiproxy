@@ -3,6 +3,7 @@ interface CassandraStoreOptions {
   clientOptions: any
   client: any
   table: any
+  ormOptions: any
 }
 
 declare class CassandraStore {

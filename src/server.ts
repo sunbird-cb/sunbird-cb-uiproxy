@@ -95,21 +95,7 @@ export class Server {
         return { everything: 'is ok' }
       },
     }))
-    this.app.use(
-      helmet({
-        contentSecurityPolicy: {
-          directives: {
-            frameAncestors: [`'self'`],
-          },
-        },
-        dnsPrefetchControl: { allow: true },
-        frameguard: { action: 'sameorigin' },
-        hidePoweredBy: true,
-        ieNoOpen: true,
-        noCache: false,
-        noSniff: true,
-      })
-    )
+    this.app.use(helmet())
     // TODO: See what needs to be logged
     this.app.use((req, _, next) => {
       logInfo(`Worker ${process.pid} : ${req.url}`)

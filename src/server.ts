@@ -1,7 +1,8 @@
 import compression from 'compression'
-import connectTimeout from 'connect-timeout'
+// tslint:disable-next-line: no-commented-code
+// import connectTimeout from 'connect-timeout'
 import cors from 'cors'
-import express, { NextFunction } from 'express'
+import express from 'express'
 import fileUpload from 'express-fileupload'
 import expressSession from 'express-session'
 import helmet from 'helmet'
@@ -24,11 +25,12 @@ const healthcheck = require('express-healthcheck')
 // tslint:disable-next-line: no-commented-code
 // import { apiWhiteListLogger, isAllowed } from './utils/apiWhiteList'
 
-function haltOnTimedOut(req: Express.Request, _: Express.Response, next: NextFunction) {
-  if (!req.timedout) {
-    next()
-  }
-}
+// tslint:disable-next-line: no-commented-code
+// function haltOnTimedOut(req: Express.Request, _: Express.Response, next: NextFunction) {
+//   if (!req.timedout) {
+//     next()
+//   }
+// }
 export class Server {
   static bootstrap() {
     const server = new Server()
@@ -63,7 +65,7 @@ export class Server {
     this.serverProxies()
     this.authoringApi()
     this.resetCookies()
-    this.app.use(haltOnTimedOut)
+    // this.app.use(haltOnTimedOut)
   }
 
   private setCookie() {
@@ -84,7 +86,7 @@ export class Server {
   }
 
   private configureMiddleware() {
-    this.app.use(connectTimeout('240s'))
+    // this.app.use(connectTimeout('240s'))
     this.app.use(compression())
     this.app.use(fileUpload())
     // this.app.use(cors())
@@ -129,7 +131,7 @@ export class Server {
         ].join(' ')
       )
     )
-    this.app.use(haltOnTimedOut)
+    // this.app.use(haltOnTimedOut)
   }
   // tslint:disable-next-line: no-any
   private setKeyCloak(sessionConfig: any) {

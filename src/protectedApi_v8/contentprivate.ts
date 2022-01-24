@@ -39,6 +39,8 @@ contentPrivateApi.patch('/update/:id', async (req, res) => {
         // tslint: disable - next - line: no - commented - code
         if (fields instanceof Array) {
             for (const entry of fields) {
+                // tslint: disable - next - line: no - commented - code
+                logInfo('line no: 43 ===> ', entry, JSON.stringify(editableFields))
                 if (editableFields.indexOf(entry) === -1) {
                     res.status(400).send({
                         msg: FIELD_VALIDATION_ERROR,
@@ -53,22 +55,25 @@ contentPrivateApi.patch('/update/:id', async (req, res) => {
             res.status(400).send({
                 msg: CHANNEL_VALIDATION_ERROR,
             })
-        }
-        const response = await axios.patch(
-            API_END_POINTS.updateContentEndPoint(id),
-            req.body,
-            {
-                ...axiosRequestConfig,
-                headers: {
-                    Authorization: CONSTANTS.SB_API_KEY,
-                    // tslint:disable-next-line: all
-                    'x-authenticated-user-token': userToken,
-                },
+        } else {
+            const response = await axios.patch(
+                API_END_POINTS.updateContentEndPoint(id),
+                req.body,
+                {
+                    ...axiosRequestConfig,
+                    headers: {
+                        Authorization: CONSTANTS.SB_API_KEY,
+                        // tslint:disable-next-line: all
+                        'x-authenticated-user-token': userToken,
+                    },
+                }
+            )
+            // tslint:disable-next-line: no-commented-code
+            // logInfo('line no: 70 ===> ', JSON.stringify(response.status), response.data)
+            if (response.status && response.data) {
+                res.status(response.status).send(response.data)
             }
-        )
-        // tslint:disable-next-line: no-commented-code
-        // logInfo('line no: 70 ===> ', JSON.stringify(response.status), response.data)
-        res.status(response.status).send(response.data)
+        }
     } catch (err) {
         logError(Error + err)
         res.status((err && err.response && err.response.status) || 500).send(
@@ -94,7 +99,7 @@ contentPrivateApi.patch('/migratereviewer/:id', async (req, res) => {
             for (const entry of fields) {
                 if (editableFieldsReviewer.indexOf(entry) === -1 && fields.length === editableFieldsReviewer.length) {
                     res.status(400).send({
-                            msg: FIELD_VALIDATION_ERROR,
+                        msg: FIELD_VALIDATION_ERROR,
                     })
                 }
             }
@@ -106,22 +111,25 @@ contentPrivateApi.patch('/migratereviewer/:id', async (req, res) => {
             res.status(400).send({
                 msg: CHANNEL_VALIDATION_ERROR,
             })
-        }
-        const response = await axios.patch(
-            API_END_POINTS.updateContentEndPoint(id),
-            req.body,
-            {
-                ...axiosRequestConfig,
-                headers: {
-                    Authorization: CONSTANTS.SB_API_KEY,
-                    // tslint:disable-next-line: all
-                    'x-authenticated-user-token': userToken,
-                },
+        } else {
+            const response = await axios.patch(
+                API_END_POINTS.updateContentEndPoint(id),
+                req.body,
+                {
+                    ...axiosRequestConfig,
+                    headers: {
+                        Authorization: CONSTANTS.SB_API_KEY,
+                        // tslint:disable-next-line: all
+                        'x-authenticated-user-token': userToken,
+                    },
+                }
+            )
+            // tslint:disable-next-line: no-commented-code
+            // logInfo('line no: 70 ===> ', JSON.stringify(response.status), response.data)
+            if (response.status && response.data) {
+                res.status(response.status).send(response.data)
             }
-        )
-        // tslint:disable-next-line: no-commented-code
-        // logInfo('line no: 70 ===> ', JSON.stringify(response.status), response.data)
-        res.status(response.status).send(response.data)
+        }
     } catch (err) {
         logError(Error + err)
         res.status((err && err.response && err.response.status) || 500).send(
@@ -147,7 +155,7 @@ contentPrivateApi.patch('/migratepublisher/:id', async (req, res) => {
             for (const entry of fields) {
                 if (editableFieldsPublisher.indexOf(entry) === -1 && fields.length === editableFieldsPublisher.length) {
                     res.status(400).send({
-                            msg: FIELD_VALIDATION_ERROR,
+                        msg: FIELD_VALIDATION_ERROR,
                     })
                 }
             }
@@ -159,22 +167,25 @@ contentPrivateApi.patch('/migratepublisher/:id', async (req, res) => {
             res.status(400).send({
                 msg: CHANNEL_VALIDATION_ERROR,
             })
-        }
-        const response = await axios.patch(
-            API_END_POINTS.updateContentEndPoint(id),
-            req.body,
-            {
-                ...axiosRequestConfig,
-                headers: {
-                    Authorization: CONSTANTS.SB_API_KEY,
-                    // tslint:disable-next-line: all
-                    'x-authenticated-user-token': userToken,
-                },
+        } else {
+            const response = await axios.patch(
+                API_END_POINTS.updateContentEndPoint(id),
+                req.body,
+                {
+                    ...axiosRequestConfig,
+                    headers: {
+                        Authorization: CONSTANTS.SB_API_KEY,
+                        // tslint:disable-next-line: all
+                        'x-authenticated-user-token': userToken,
+                    },
+                }
+            )
+            // tslint:disable-next-line: no-commented-code
+            // logInfo('line no: 70 ===> ', JSON.stringify(response.status), response.data)
+            if (response.status && response.data) {
+                res.status(response.status).send(response.data)
             }
-        )
-        // tslint:disable-next-line: no-commented-code
-        // logInfo('line no: 70 ===> ', JSON.stringify(response.status), response.data)
-        res.status(response.status).send(response.data)
+        }
     } catch (err) {
         logError(Error + err)
         res.status((err && err.response && err.response.status) || 500).send(

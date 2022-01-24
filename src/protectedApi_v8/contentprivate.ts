@@ -14,7 +14,7 @@ const API_END_POINTS = {
     readUserEndPoint: (userId: string) => `${CONSTANTS.KONG_API_BASE}/user/v2/read/${userId}`,
     updateContentEndPoint: (id: string) => `${CONSTANTS.KONG_API_BASE}/private/content/v3/update/${id}`,
 }
-
+// tslint:disable-next-line: no-commented-code
 const editableFields = ['versionKey', 'createdBy', 'creatorContacts']
 const editableFieldsReviewer = ['versionKey', 'isExternal', 'reviewer', 'reviewerIDs']
 const editableFieldsPublisher = ['versionKey', 'isExternal', 'publisherIDs: ', 'publisherDetails']
@@ -25,6 +25,7 @@ const CHANNEL_VALIDATION_ERROR = 'SOURCE_MISMATCH_ERROR'
 contentPrivateApi.patch('/update/:id', async (req, res) => {
     try {
         const id = req.params.id
+        // tslint:disable-next-line: no-commented-code
         const content = req.body.content
         const fields = Object.keys(content)
         const userId = extractUserId(req)
@@ -33,26 +34,24 @@ contentPrivateApi.patch('/update/:id', async (req, res) => {
             res.status(400).send(userIdFailedMessage)
             return
         }
+        // tslint: disable - next - line: no - commented - code
         logInfo('line no: 36 ===> ', id, JSON.stringify(fields), userId, userToken)
+        // tslint: disable - next - line: no - commented - code
         if (fields instanceof Array) {
             for (const entry of fields) {
                 if (editableFields.indexOf(entry) === -1) {
                     res.status(400).send({
-                        msg: res.status(400).send({
-                            msg: FIELD_VALIDATION_ERROR,
-                        }),
+                        msg: FIELD_VALIDATION_ERROR,
                     })
                 }
             }
         }
-        const userChannel = getUserChannel(userToken, userId)
-        const hierarchySource = getHierarchyDetails(userToken, id)
-        logInfo('line no: 50 ===> ')
+        // tslint:disable-next-line: no-commented-code
+        const userChannel = await getUserChannel(userToken, userId)
+        const hierarchySource = await getHierarchyDetails(userToken, id)
         if (userChannel !== hierarchySource) {
             res.status(400).send({
-                msg: res.status(400).send({
-                    msg: CHANNEL_VALIDATION_ERROR,
-                }),
+                msg: CHANNEL_VALIDATION_ERROR,
             })
         }
         const response = await axios.patch(
@@ -67,7 +66,8 @@ contentPrivateApi.patch('/update/:id', async (req, res) => {
                 },
             }
         )
-        logInfo('line no: 70 ===> ', JSON.stringify(response.status), response.data)
+        // tslint:disable-next-line: no-commented-code
+        // logInfo('line no: 70 ===> ', JSON.stringify(response.status), response.data)
         res.status(response.status).send(response.data)
     } catch (err) {
         logError(Error + err)
@@ -92,22 +92,19 @@ contentPrivateApi.patch('/migratereviewer/:id', async (req, res) => {
         }
         if (fields instanceof Array) {
             for (const entry of fields) {
-                if (editableFieldsReviewer.indexOf(entry) === -1 && fields.length === editableFieldsReviewer.length ) {
+                if (editableFieldsReviewer.indexOf(entry) === -1 && fields.length === editableFieldsReviewer.length) {
                     res.status(400).send({
-                        msg: res.status(400).send({
                             msg: FIELD_VALIDATION_ERROR,
-                        }),
                     })
                 }
             }
         }
-        const userChannel = getUserChannel(userToken, userId)
-        const hierarchySource = getHierarchyDetails(userToken, id)
+        const userChannel = await getUserChannel(userToken, userId)
+        const hierarchySource = await getHierarchyDetails(userToken, id)
+        logInfo('line no: 50 ===> ', userChannel, hierarchySource)
         if (userChannel !== hierarchySource) {
             res.status(400).send({
-                msg: res.status(400).send({
-                    msg: CHANNEL_VALIDATION_ERROR,
-                }),
+                msg: CHANNEL_VALIDATION_ERROR,
             })
         }
         const response = await axios.patch(
@@ -122,6 +119,8 @@ contentPrivateApi.patch('/migratereviewer/:id', async (req, res) => {
                 },
             }
         )
+        // tslint:disable-next-line: no-commented-code
+        // logInfo('line no: 70 ===> ', JSON.stringify(response.status), response.data)
         res.status(response.status).send(response.data)
     } catch (err) {
         logError(Error + err)
@@ -146,22 +145,19 @@ contentPrivateApi.patch('/migratepublisher/:id', async (req, res) => {
         }
         if (fields instanceof Array) {
             for (const entry of fields) {
-                if (editableFieldsPublisher.indexOf(entry) === -1 && fields.length === editableFieldsPublisher.length ) {
+                if (editableFieldsPublisher.indexOf(entry) === -1 && fields.length === editableFieldsPublisher.length) {
                     res.status(400).send({
-                        msg: res.status(400).send({
                             msg: FIELD_VALIDATION_ERROR,
-                        }),
                     })
                 }
             }
         }
-        const userChannel = getUserChannel(userToken, userId)
-        const hierarchySource = getHierarchyDetails(userToken, id)
+        const userChannel = await getUserChannel(userToken, userId)
+        const hierarchySource = await getHierarchyDetails(userToken, id)
+        logInfo('line no: 50 ===> ', userChannel, hierarchySource)
         if (userChannel !== hierarchySource) {
             res.status(400).send({
-                msg: res.status(400).send({
-                    msg: CHANNEL_VALIDATION_ERROR,
-                }),
+                msg: CHANNEL_VALIDATION_ERROR,
             })
         }
         const response = await axios.patch(
@@ -176,6 +172,8 @@ contentPrivateApi.patch('/migratepublisher/:id', async (req, res) => {
                 },
             }
         )
+        // tslint:disable-next-line: no-commented-code
+        // logInfo('line no: 70 ===> ', JSON.stringify(response.status), response.data)
         res.status(response.status).send(response.data)
     } catch (err) {
         logError(Error + err)
@@ -197,7 +195,9 @@ export async function getHierarchyDetails(token: string, id: string) {
                 'x-authenticated-user-token': token,
             },
         })
+        logInfo('line 201 ====>', response.data)
         const hierarchyResult = response.data.result.content
+        logInfo('line 202 ====>', hierarchyResult)
         if (typeof hierarchyResult !== 'undefined' && hierarchyResult != null) {
             return hierarchyResult.source
         }
@@ -217,7 +217,9 @@ export async function getUserChannel(token: string, userId: string) {
                 'x-authenticated-user-token': token,
             },
         })
+        logInfo('line 222 ====>', response.data)
         const userProfileResult = response.data.result.response
+        logInfo('line 222 ====>', userProfileResult)
         if (typeof userProfileResult !== 'undefined' && userProfileResult != null) {
             return userProfileResult.channel
         }

@@ -15,7 +15,7 @@ const API_END_POINTS = {
     updateContentEndPoint: (id: string) => `${CONSTANTS.KONG_API_BASE}/private/content/v3/update/${id}`,
 }
 // tslint:disable-next-line: no-commented-code
-const editableFields = ['versionKey']
+const editableFields = ['versionKey', 'isExternal', 'difficultyLevel', 'visibility']
 const editableFieldsReviewer = ['versionKey', 'isExternal', 'reviewer', 'reviewerIDs']
 const editableFieldsPublisher = ['versionKey', 'isExternal', 'publisherIDs: ', 'publisherDetails']
 const userIdFailedMessage = 'NO_USER_ID'
@@ -30,6 +30,7 @@ contentPrivateApi.patch('/update/:id', async (req, res) => {
         const fields = Object.keys(content)
         const userId = extractUserId(req)
         const userToken = extractUserToken(req) as string
+        let validationErrorFlag = false
         if (!userId) {
             res.status(400).send(userIdFailedMessage)
             return
@@ -42,15 +43,19 @@ contentPrivateApi.patch('/update/:id', async (req, res) => {
                 // tslint: disable - next - line: no - commented - code
                 logInfo('line no: 43 ===> ', entry, JSON.stringify(editableFields))
                 if (editableFields.indexOf(entry) === -1) {
-                    res.status(400).send({
-                        msg: FIELD_VALIDATION_ERROR,
-                    })
+                    validationErrorFlag = true
                 }
             }
+            if (validationErrorFlag) {
+                res.status(400).send({
+                    msg: FIELD_VALIDATION_ERROR,
+                })
+            }
         }
-        // tslint:disable-next-line: no-commented-code
         const userChannel = await getUserChannel(userToken, userId)
         const hierarchySource = await getHierarchyDetails(userToken, id)
+        // tslint:disable-next-line: no-commented-code
+        logInfo('line no: 58 ===> ',  JSON.stringify(userChannel), JSON.stringify(hierarchySource))
         if (userChannel !== hierarchySource) {
             res.status(400).send({
                 msg: CHANNEL_VALIDATION_ERROR,
@@ -91,17 +96,21 @@ contentPrivateApi.patch('/migratereviewer/:id', async (req, res) => {
         const fields = Object.keys(content)
         const userId = extractUserId(req)
         const userToken = extractUserToken(req) as string
+        let validationErrorFlag = false
         if (!userId) {
             res.status(400).send(userIdFailedMessage)
             return
         }
         if (fields instanceof Array) {
             for (const entry of fields) {
-                if (editableFieldsReviewer.indexOf(entry) === -1 && fields.length === editableFieldsReviewer.length) {
-                    res.status(400).send({
-                        msg: FIELD_VALIDATION_ERROR,
-                    })
+                if (editableFieldsReviewer.indexOf(entry) === -1 && fields.length !== editableFieldsReviewer.length) {
+                    validationErrorFlag = true
                 }
+            }
+            if (validationErrorFlag) {
+                res.status(400).send({
+                    msg: FIELD_VALIDATION_ERROR,
+                })
             }
         }
         const userChannel = await getUserChannel(userToken, userId)
@@ -147,17 +156,22 @@ contentPrivateApi.patch('/migratepublisher/:id', async (req, res) => {
         const fields = Object.keys(content)
         const userId = extractUserId(req)
         const userToken = extractUserToken(req) as string
+        let validationErrorFlag = false
+
         if (!userId) {
             res.status(400).send(userIdFailedMessage)
             return
         }
         if (fields instanceof Array) {
             for (const entry of fields) {
-                if (editableFieldsPublisher.indexOf(entry) === -1 && fields.length === editableFieldsPublisher.length) {
-                    res.status(400).send({
-                        msg: FIELD_VALIDATION_ERROR,
-                    })
+                if (editableFieldsPublisher.indexOf(entry) === -1 && fields.length !== editableFieldsPublisher.length) {
+                    validationErrorFlag = true
                 }
+            }
+            if (validationErrorFlag) {
+                res.status(400).send({
+                    msg: FIELD_VALIDATION_ERROR,
+                })
             }
         }
         const userChannel = await getUserChannel(userToken, userId)
@@ -208,7 +222,7 @@ export async function getHierarchyDetails(token: string, id: string) {
         })
         logInfo('line 201 ====>', response.data)
         const hierarchyResult = response.data.result.content
-        logInfo('line 202 ====>', hierarchyResult)
+        logInfo('line 202 ====>', JSON.stringify(hierarchyResult))
         if (typeof hierarchyResult !== 'undefined' && hierarchyResult != null) {
             return hierarchyResult.source
         }
@@ -230,7 +244,7 @@ export async function getUserChannel(token: string, userId: string) {
         })
         logInfo('line 222 ====>', response.data)
         const userProfileResult = response.data.result.response
-        logInfo('line 222 ====>', userProfileResult)
+        logInfo('line 222 ====>', JSON.stringify(userProfileResult))
         if (typeof userProfileResult !== 'undefined' && userProfileResult != null) {
             return userProfileResult.channel
         }

@@ -154,9 +154,10 @@ export class Server {
   }
   private resetCookies() {
     this.app.use('/reset', (_req, res) => {
-      logInfo('==========================\nCLEARING RES COOKIES')
-      res.clearCookie('connect.sid')
-      res.status(200).send()
+      // tslint:disable-next-line: no-console
+      console.log('CLEARING RES COOKIES')
+      res.cookie('connect.sid', '', { expires: new Date() })
+      res.redirect('/logout')
     })
   }
 }

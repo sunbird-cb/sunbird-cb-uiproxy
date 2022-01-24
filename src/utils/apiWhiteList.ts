@@ -242,7 +242,7 @@ const respond403 = (req: Request, res: Response) => {
 
 const respond419 = (req: Request, res: Response) => {
     const REQ_URL = req.path
-    if (_.includes(REQ_URL, '/reset')) {
+    if (_.includes(REQ_URL, '/logout')) {
         res.send('You are logged out!')
     } else {
         const err = ({ msg: 'API WHITELIST :: Unauthorized access for API [ ' + REQ_URL + ' ]', url: REQ_URL })
@@ -333,11 +333,11 @@ export const isAllowed = () => {
         }
     }
 }
-const redirectToLogin = (_req: Request) => {
-    // const redirectUrl = 'protected/v8/resource/'
-    // return `https://${req.get('host')}/${redirectUrl}` // 'http://localhost:3003/protected/v8/user/resource/'
+const redirectToLogin = (req: Request) => {
+    const redirectUrl = 'protected/v8/resource/'
+    return `https://${req.get('host')}/${redirectUrl}` // 'http://localhost:3003/protected/v8/user/resource/'
     // tslint:disable-next-line: no-commented-code
-    return 'http://localhost:3003/protected/v8/user/resource/'
+    // return 'http://localhost:3003/protected/v8/user/resource/'
 }
 
 const validateAPI = (req: Request, res: Response, next: NextFunction) => {

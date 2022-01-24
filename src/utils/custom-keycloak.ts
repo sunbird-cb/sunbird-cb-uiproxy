@@ -30,7 +30,7 @@ export class CustomKeycloak {
     const middleware = composable(
       keycloak.middleware({
         admin: '/callback',
-        logout: '/reset',
+        logout: '/logout',
       })
     )
     middleware(req, res, next)
@@ -59,31 +59,22 @@ export class CustomKeycloak {
     try {
       const userId = request.kauth.grant.access_token.content.sub.split(':')
       request.session.userId = userId[userId.length - 1]
-      // tslint:disable-next-line: no-console
-      console.log('userId ::', userId, '------', new Date().toString())
-      // tslint:disable-next-line: no-console
-      console.log('request.session after adding userId ::', request.session, '----cookie---', request.cookies,
-      '------', new Date().toString())
-
+      logInfo('userId ::', userId, '------', new Date().toString())
     } catch (err) {
       logError('userId conversation error' + request.kauth.grant.access_token.content.sub, '------', new Date().toString())
     }
     const postLoginRequest = []
     // tslint:disable-next-line: no-any
     postLoginRequest.push((callback: any) => {
-      // tslint:disable-next-line: no-console
-      console.log('pushing task to postLoginRequest', '------', new Date().toString())
       PERMISSION_HELPER.getCurrentUserRoles(request, callback)
     })
 
     // tslint:disable-next-line: no-any
-    async.series(postLoginRequest, (err: any, results: any) =>  {
+    async.series(postLoginRequest, (err: any) =>  {
       if (err) {
         logError('error loggin in user', '------', new Date().toString())
         next(err, null)
       } else {
-        // tslint:disable-next-line: no-console
-        console.log('async.series results -- ', results, '------', new Date().toString())
         logInfo(`${process.pid}: User authenticated`, '------', new Date().toString())
         next(null, 'loggedin')
       }
@@ -92,15 +83,12 @@ export class CustomKeycloak {
 
   // tslint:disable-next-line: no-any
   deauthenticated = (request: any) => {
-    // console.log('De')
     delete request.session.userRoles
     delete request.session.userId
     logInfo(`${process.pid}: User Deauthenticated`)
   }
 
   protect = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    // tslint:disable-next-line: no-console
-    console.log('custom-keycloak::protect start', '------', new Date())
     const keycloak = this.getKeyCloakObject(req)
     return keycloak.protect()(req, res, next)
   }

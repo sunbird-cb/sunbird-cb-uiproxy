@@ -224,7 +224,7 @@ export async function getHierarchyDetails(token: string, id: string) {
         const hierarchyResult = response.data.result.content
         logInfo('line 202 ====>', JSON.stringify(hierarchyResult))
         if (typeof hierarchyResult !== 'undefined' && hierarchyResult != null) {
-            return hierarchyResult.source
+            return hierarchyResult.channel
         }
     } catch (error) {
         logError('ERROR WHILE FETCHING THE Hierarchy DETAILS --> ', error)
@@ -246,7 +246,7 @@ export async function getUserChannel(token: string, userId: string) {
         const userProfileResult = response.data.result.response
         logInfo('line 222 ====>', JSON.stringify(userProfileResult))
         if (typeof userProfileResult !== 'undefined' && userProfileResult != null) {
-            return userProfileResult.channel
+            return userProfileResult.rootOrgId
         }
     } catch (error) {
         logError('ERROR WHILE FETCHING THE USER DETAILS --> ', error)

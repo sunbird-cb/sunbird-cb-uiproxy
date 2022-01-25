@@ -166,7 +166,7 @@ export class Server {
     this.app.use('/reset', (_req, res) => {
       logInfo('CLEARING RES COOKIES')
       res.cookie('connect.sid', '', { expires: new Date() })
-      res.redirect('/logout')
+      res.redirect('/reset')
     })
   }
 }

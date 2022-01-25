@@ -242,7 +242,7 @@ const respond403 = (req: Request, res: Response) => {
 
 const respond419 = (req: Request, res: Response) => {
     const REQ_URL = req.path
-    if (_.includes(REQ_URL, '/logout')) {
+    if (_.includes(REQ_URL, '/reset')) {
         res.send('You are logged out!')
     } else {
         const err = ({ msg: 'API WHITELIST :: Unauthorized access for API [ ' + REQ_URL + ' ]', url: REQ_URL })

@@ -26,7 +26,7 @@ contentPrivateApi.patch('/update/:id', async (req, res) => {
     try {
         const id = req.params.id
         // tslint:disable-next-line: no-commented-code
-        const content = req.body.content
+        const content = req.body.request.content
         const fields = Object.keys(content)
         const userId = extractUserId(req)
         const userToken = extractUserToken(req) as string
@@ -92,7 +92,7 @@ contentPrivateApi.patch('/update/:id', async (req, res) => {
 contentPrivateApi.patch('/migratereviewer/:id', async (req, res) => {
     try {
         const id = req.params.id
-        const content = req.body.content
+        const content = req.body.request.content
         const fields = Object.keys(content)
         const userId = extractUserId(req)
         const userToken = extractUserToken(req) as string
@@ -152,7 +152,7 @@ contentPrivateApi.patch('/migratereviewer/:id', async (req, res) => {
 contentPrivateApi.patch('/migratepublisher/:id', async (req, res) => {
     try {
         const id = req.params.id
-        const content = req.body.content
+        const content = req.body.request.content
         const fields = Object.keys(content)
         const userId = extractUserId(req)
         const userToken = extractUserToken(req) as string

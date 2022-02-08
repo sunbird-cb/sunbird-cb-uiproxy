@@ -1571,6 +1571,13 @@ export const API_LIST = {
                 ROLE.CBP_ADMIN,
             ],
         },
+        '/protected/v8/frac/bookmarkDataNode': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
     [
@@ -1779,6 +1786,7 @@ export const API_LIST = {
         '/proxies/v8/storage/upload',
         '/proxies/v8/storage/delete',
         '/proxies/v8/user/v1/extPatch',
-        '/proxies/v8/learner/course/v2/user/enrollment/admin/list'
+        '/proxies/v8/learner/course/v2/user/enrollment/admin/list',
+        '/protected/v8/frac/bookmarkDataNode'
     ],
 }

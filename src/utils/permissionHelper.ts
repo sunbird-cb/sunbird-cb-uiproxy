@@ -24,9 +24,6 @@ export const PERMISSION_HELPER = {
             if (!_.includes(reqObj.session.userRoles, 'PUBLIC')) {
                 reqObj.session.userRoles.push('PUBLIC')
             }
-            // tslint:disable-next-line: no-console
-            console.log('request.session after adding userId ::', reqObj.session, '----cookie---', reqObj.cookies,
-            '------', new Date().toString())
             this.createNodeBBUser(reqObj, callback)
             // tslint:disable-next-line: no-any
             // reqObj.session.save((error: any) => {
@@ -46,12 +43,9 @@ export const PERMISSION_HELPER = {
     },
     // tslint:disable-next-line: no-any
     setNodeBBUID(reqObj: any, callback: any, body: any) {
-        logInfo('permissionHelper:: setNodeBBUID function start', '------', new Date().toString())
+        logInfo('setNodeBBUID :: ', new Date().toString())
         // tslint:disable-next-line: no-any
         const nodeBBData: any = body
-        // tslint:disable-next-line: no-console
-        console.log('request.session after adding userId ::', reqObj.session, '----cookie---', reqObj.cookies,
-        '------', new Date().toString())
         if (reqObj.session) {
             reqObj.session.uid = nodeBBData.data.result.userId.uid
             logInfo('After appending uid to session', reqObj.session.uid)
@@ -67,11 +61,10 @@ export const PERMISSION_HELPER = {
                callback(null, nodeBBData)
             }
         })
-        logInfo('permissionHelper:: setNodeBBUID function end', '------', new Date().toString())
     },
     // tslint:disable-next-line: no-any
     getCurrentUserRoles(reqObj: any, callback: any) {
-        logInfo('Step 3: Get user roles function', '------', new Date().toString())
+        logInfo('Step 3: getCurrentUserRoles', '------', new Date().toString())
         const userId = reqObj.session.userId
         const readUrl = `${CONSTANTS.KONG_API_BASE}/user/v2/read/` + userId
         const options = {
@@ -85,15 +78,13 @@ export const PERMISSION_HELPER = {
         }
         // tslint:disable-next-line: no-any
         request.get(options, (err: any, _httpResponse: any, body: any) => {
-            logInfo('Inside user/v2/read', '------', new Date().toString())
             if (body) {
                 // tslint:disable-next-line: no-console
-                console.log('Success user/v2/read: body', body, '------', new Date().toString())
+                logInfo('Success user/v2/read::', '------', new Date().toString())
                 this.setRolesData(reqObj, callback, body)
             }
             if (err) {
-                // tslint:disable-next-line: no-console
-                console.log('Making axios call to nodeBB ERROR -- ', err, '------', new Date().toString())
+                logError('Making axios call to nodeBB ERROR -- ', err, '------', new Date().toString())
                 callback(err, null)
             }
         })
@@ -109,7 +100,6 @@ export const PERMISSION_HELPER = {
             identifier: reqObj.session.userId,
             fullname: reqObj.session.firstName + ' ' + reqObj.session.lastName,
         }
-        logInfo('Making axios call to nodeBB', '------', new Date().toString())
         try {
             const nodeBBResp = await axios({
                 ...axiosRequestConfig,
@@ -123,11 +113,8 @@ export const PERMISSION_HELPER = {
                 url: readUrl,
             })
             if (nodeBBResp) {
-                // tslint:disable-next-line: no-console
-                console.log('NodeBB axios call response', '------', new Date().toString())
                 this.setNodeBBUID(reqObj, callback, nodeBBResp)
             }
-            logInfo('permissionHelper::createNodeBBUser function end', '------', new Date().toString())
         } catch (err) {
             // tslint:disable-next-line: no-console
             console.log('Making axios call to nodeBB ERROR -- ', err, '------', new Date().toString())

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+        <style>
+            body {
+                font-family: 'Poppins', sans-serif;
+                position: relative;
+                letter-spacing: 0.2px;
+                background: url(images/Login_background.png) no-repeat center center fixed;
+                background-size: cover;
+            }
+           
+            .right_container {
+                background-color: #fff;
+                width: 45%;
+                height: 100vh;
+                box-sizing: border-box;
+                box-shadow: 0px 20px 60px #3e3e3e29;
+            }
+            .left_container{
+                padding: 4.5rem 6rem;
+                box-sizing: border-box;
+                width: 55%;
+                height: 100vh;
+            }
+            .logo_box {
+                width: 320px;
+            }
+            .slider_box {
+                padding: 5rem 0 2rem 0;
+                width: 320px;
+                box-sizing: border-box;box-sizing: border-box;
+            }
+            .text_box {
+                margin: 3rem 0;
+            }
+           
+            .right_inner_container {
+                width: 320px;
+            }
+            .m_b_2 {
+                margin-bottom: 1rem;
+            }
+            .button {
+                font-family: 'Poppins', sans-serif;
+                color: #F9F9F9;
+                font-size: 14px;
+                line-height: 19px;
+                height: 40px;
+                background-color: rgb(0, 116, 182, 1);
+                border-radius: 8px;
+                transition: all .25s ease-in;
+                width: 100%;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div class="main_container flex flex-row">
+            <div class="left_container flex flex-col items-center justify-center">
+                <div class="logo_box flex items-center">
+                    <img src="images/dopt_logo.png" alt="logo">
+                </div>
+                <div class="slider_box items-center flex">
+                    <img src="images/Hexagon.png" alt="slider1">
+                </div>
+            </div>
+            <div  class=" right_container flex flex-col items-center justify-center">
+                <div class="right_inner_container">
+                    <div class="right_logo_box">
+                        <img src="images/igot_karmayogi.svg" alt="logo">
+                    </div>
+                    <div class="text_box flex items-center justify-center">
+                        <h1 class="text-3xl"> You are logged out!</h1>
+                    </div>
+                    <div class="button_box flex flex-col items-center justify-center">
+                        <button class="button m_b_2">Login to iGot Karmayogi</button>
+                        <button class="button m_b_2">Login to MDO portal</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </body>
+</html>

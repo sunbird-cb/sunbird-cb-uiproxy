@@ -243,7 +243,7 @@ const respond403 = (req: Request, res: Response) => {
 const respond419 = (req: Request, res: Response) => {
     const REQ_URL = req.path
     if (_.includes(REQ_URL, '/reset')) {
-        res.send('You are logged out!')
+        res.sendFile('../../index.html')
     } else {
         const err = ({ msg: 'API WHITELIST :: Unauthorized access for API [ ' + REQ_URL + ' ]', url: REQ_URL })
         logError(err.msg)
@@ -364,9 +364,6 @@ const validateAPI = (req: Request, res: Response, next: NextFunction) => {
  */
 export function apiWhiteListLogger() {
     return (req: Request, res: Response, next: NextFunction) => {
-        // tslint:disable-next-line: no-console
-        console.log('apiWhiteListLogger::req.path', req.path , '-- req.query:: ', req.query, '-----cookies---- ', req.cookies,
-        '------', new Date().toString())
         if (req.path === '/' || checkIsStaticRoute(req.path)) {
             next()
             return
@@ -374,8 +371,6 @@ export function apiWhiteListLogger() {
         const REQ_URL = req.path
         if (!_.includes(REQ_URL, '/resource') && (req.session)) {
             if (!('userRoles' in req.session) || (('userRoles' in req.session) && (req.session.userRoles.length === 0))) {
-                // tslint:disable-next-line: no-console
-                console.log('apiWhiteListLogger :: req.session', req.session, '----cookie---', req.cookies, '------', new Date().toString())
                 logError('Portal_API_WHITELIST_LOGGER: User needs to authenticated themselves', '------', new Date().toString())
                 respond419(req, res)
             } else {

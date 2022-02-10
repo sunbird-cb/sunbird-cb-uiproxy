@@ -698,6 +698,8 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
+                ROLE.CBP_ADMIN,
+                ROLE.CONTENT_CREATOR,
             ],
         },
         '/protected/v8/user/profileRegistry/getUserRegistryByUser/:id': {

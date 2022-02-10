@@ -349,7 +349,7 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
                 ROLE.CBP_ADMIN,
-                ROLE.CONTENT_CREATOR
+                ROLE.CONTENT_CREATOR,
             ],
         },
         '/proxies/v8/user/v1/search': {
@@ -384,7 +384,7 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
                 ROLE.CBP_ADMIN,
-                ROLE.CONTENT_CREATOR
+                ROLE.CONTENT_CREATOR,
             ],
         },
         '/proxies/v8/user/v1/unblock': {
@@ -394,7 +394,7 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
                 ROLE.CBP_ADMIN,
-                ROLE.CONTENT_CREATOR
+                ROLE.CONTENT_CREATOR,
             ],
         },
         '/proxies/v8/data/v1/system/settings/get/orgTypeConfig': {

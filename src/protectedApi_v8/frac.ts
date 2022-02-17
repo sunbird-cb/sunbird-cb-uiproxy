@@ -145,7 +145,12 @@ fracApi.get('/getNodeById/:id/:type', async (req, res) => {
     try {
         const id = req.params.id
         const type = req.params.type
-        const response = await axios.get(API_END_POINTS.getNodeById(id, type), {
+        let apiEndpoint = API_END_POINTS.getNodeById(id, type)
+        const queryParams = req.query
+        if (queryParams.bookmarks) {
+            apiEndpoint = apiEndpoint + '&bookmarks=' + queryParams.bookmarks
+        }
+        const response = await axios.get(apiEndpoint, {
             ...axiosRequestConfig,
             headers: {
                 Authorization: extractAuthorizationFromRequest(req),

@@ -246,6 +246,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
+                ROLE.MDO_ADMIN
             ],
         },
         '/proxies/v8/dashboard/analytics/getDashboardConfig/Karmayogi/:comp': {
@@ -282,6 +283,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
                 ROLE.EDITOR,
+                ROLE.MDO_ADMIN
             ],
         },
         '/proxies/v8/v1/content/retire': {

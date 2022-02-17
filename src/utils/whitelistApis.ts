@@ -283,6 +283,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
                 ROLE.EDITOR,
+                ROLE.MDO_ADMIN
             ],
         },
         '/proxies/v8/v1/content/retire': {

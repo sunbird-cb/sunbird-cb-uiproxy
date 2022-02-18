@@ -275,3 +275,31 @@ export function proxyContentLearnerVM(route: Router, targetUrl: string, _timeout
   })
   return route
 }
+
+export function proxyAssessmentRead(route: Router, targetUrl: string, _timeout = 10000): Router {
+  route.all('/*', (req, res) => {
+    let url = removePrefix(`${PROXY_SLUG}/assessment/read`, req.originalUrl)
+    url = targetUrl + url + '?hierarchy=detail'
+    // tslint:disable-next-line: no-console
+    console.log('REQ_URL_UPDATED proxyAssessmentRead', url)
+    proxy.web(req, res, {
+      changeOrigin: true,
+      ignorePath: true,
+      target: url,
+    })
+  })
+  return route
+}
+
+export function proxyQuestionRead(route: Router, targetUrl: string, _timeout = 10000): Router {
+  route.all('/*', (req, res) => {
+    // tslint:disable-next-line: no-console
+    console.log('REQ_URL_UPDATED proxyAssessmentRead', targetUrl)
+    proxy.web(req, res, {
+      changeOrigin: true,
+      ignorePath: true,
+      target: targetUrl,
+    })
+  })
+  return route
+}

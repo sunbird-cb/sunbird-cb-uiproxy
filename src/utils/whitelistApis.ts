@@ -246,7 +246,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
-                ROLE.MDO_ADMIN
+                ROLE.MDO_ADMIN,
             ],
         },
         '/proxies/v8/dashboard/analytics/getDashboardConfig/Karmayogi/:comp': {
@@ -283,7 +283,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
                 ROLE.EDITOR,
-                ROLE.MDO_ADMIN
+                ROLE.MDO_ADMIN,
             ],
         },
         '/proxies/v8/v1/content/retire': {
@@ -554,7 +554,7 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        '/apis/proxies/v8/discussion/moderation':{
+        '/apis/proxies/v8/discussion/moderation': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -1805,6 +1805,6 @@ export const API_LIST = {
             '/proxies/v8/storage/delete',
             '/proxies/v8/user/v1/extPatch',
             '/proxies/v8/learner/course/v2/user/enrollment/admin/list',
-            '/protected/v8/frac/bookmarkDataNode'
+            '/protected/v8/frac/bookmarkDataNode',
         ],
 }

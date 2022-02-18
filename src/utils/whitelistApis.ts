@@ -554,7 +554,7 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        '/apis/proxies/v8/discussion/moderation': {
+        '/proxies/v8/discussion/moderation': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [

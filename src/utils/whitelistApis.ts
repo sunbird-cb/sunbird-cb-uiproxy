@@ -1595,6 +1595,20 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/assessment/read/:id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/question/read': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -1806,5 +1820,7 @@ export const API_LIST = {
             '/proxies/v8/user/v1/extPatch',
             '/proxies/v8/learner/course/v2/user/enrollment/admin/list',
             '/protected/v8/frac/bookmarkDataNode',
+            '/proxies/v8/assessment/read/:id',
+            '/proxies/v8/question/read',
         ],
 }

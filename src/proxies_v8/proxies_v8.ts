@@ -8,6 +8,7 @@ import { logInfo } from '../utils/logger'
 import {
   ilpProxyCreatorRoute,
   // proxyCreatorDiscussion,
+  proxyAssessmentRead,
   proxyContent,
   proxyContentLearnerVM,
   proxyCreatorKnowledge,
@@ -17,6 +18,7 @@ import {
   proxyCreatorSunbird,
   proxyCreatorSunbirdSearch,
   proxyCreatorToAppentUserId,
+  proxyQuestionRead,
   scormProxyCreatorRoute
 } from '../utils/proxyCreator'
 import { extractUserIdFromRequest, extractUserToken } from '../utils/requestExtract'
@@ -291,6 +293,16 @@ proxiesV8.use('/assets/*',
 proxiesV8.use('/discussion/*',
   // tslint:disable-next-line: max-line-length
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)
+
+proxiesV8.use('/assessment/read/*',
+  // tslint:disable-next-line: max-line-length
+  proxyAssessmentRead(express.Router(), `${CONSTANTS.KONG_API_BASE}` + '/questionset/v1/hierarchy')
+)
+
+proxiesV8.use('/question/read',
+  // tslint:disable-next-line: max-line-length
+  proxyQuestionRead(express.Router(), `${CONSTANTS.KONG_API_BASE}` + '/question/v1/list')
 )
 
 function removePrefix(prefix: string, s: string) {

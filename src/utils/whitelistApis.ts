@@ -1616,6 +1616,48 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/questionset/v1/create': {
+            ROLE_CHECK: [
+                ROLE.CONTENT_CREATOR,
+            ],
+            checksNeeded: [CHECK.ROLE],
+        },
+        '/proxies/v8/questionset/v1/read': {
+            ROLE_CHECK: [
+                ROLE.CONTENT_CREATOR,
+            ],
+            checksNeeded: [CHECK.ROLE],
+        },
+        '/proxies/v8/questionset/v1/update': {
+            ROLE_CHECK: [
+                ROLE.CONTENT_CREATOR,
+            ],
+            checksNeeded: [CHECK.ROLE],
+        },
+        '/proxies/v8/questionset/v1/review': {
+            ROLE_CHECK: [
+                ROLE.CONTENT_REVIEWER,
+            ],
+            checksNeeded: [CHECK.ROLE],
+        },
+        '/proxies/v8/questionset/v1/publish': {
+            ROLE_CHECK: [
+                ROLE.CONTENT_PUBLISHER,
+            ],
+            checksNeeded: [CHECK.ROLE],
+        },
+        '/proxies/v8/questionset/v1/hierarchy/update': {
+            ROLE_CHECK: [
+                ROLE.CONTENT_CREATOR,
+            ],
+            checksNeeded: [CHECK.ROLE],
+        },
+        '/proxies/v8/questionset/v1/retire': {
+            ROLE_CHECK: [
+                ROLE.CONTENT_CREATOR,
+            ],
+            checksNeeded: [CHECK.ROLE],
+        },
     },
     URL_PATTERN:
         [
@@ -1830,5 +1872,12 @@ export const API_LIST = {
             '/protected/v8/frac/bookmarkDataNode',
             '/proxies/v8/assessment/read/:id',
             '/proxies/v8/question/read',
+            '/proxies/v8/questionset/v1/create',
+            '/proxies/v8/questionset/v1/read',
+            '/proxies/v8/questionset/v1/update',
+            '/proxies/v8/questionset/v1/review',
+            '/proxies/v8/questionset/v1/publish',
+            '/proxies/v8/questionset/v1/hierarchy/update',
+            '/proxies/v8/questionset/v1/retire',
         ],
 }

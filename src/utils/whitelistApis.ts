@@ -1908,6 +1908,6 @@ export const API_LIST = {
             '/proxies/v8/ratings/v1/read/:activity_id/:activity_type/:user_id',
             '/proxies/v8/ratings/v1/upsert',
             '/proxies/v8/ratings/v1/summary/:activity_id/:activity_type',
-            '/proxies/v8/v1/ratings/v1/ratingLookUp',
+            '/proxies/v8/ratings/v1/ratingLookUp',
            ],
 }

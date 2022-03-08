@@ -15,6 +15,7 @@ const PROXY_SLUG_WAT = '/proxies/v8/wat'
 
 // tslint:disable-next-line: no-any
 proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
+  // tslint:disable-next-line: no-duplicate-string
   proxyReq.setHeader('X-Channel-Id', (_.get(req, 'session.rootOrgId')) ? _.get(req, 'session.rootOrgId') : CONSTANTS.X_Channel_Id)
   // tslint:disable-next-line: max-line-length
   proxyReq.setHeader('Authorization', CONSTANTS.SB_API_KEY)
@@ -134,7 +135,7 @@ export function proxyCreatorLearner(route: Router, targetUrl: string, _timeout =
   })
   return route
 }
-
+// tslint:disable-next-line
 export function proxyCreatorSunbird(route: Router, targetUrl: string, _timeout = 10000): Router {
   route.all('/*', (req, res) => {
     // tslint:disable-next-line: no-console
@@ -155,12 +156,12 @@ export function proxyCreatorSunbird(route: Router, targetUrl: string, _timeout =
       // tslint:disable-next-line: no-console
       console.log('REQ_URL_ORIGINAL proxyCreatorSunbird  ======= discussion', url)
     }
-    
+
     if (req.originalUrl.includes('/dashboard') && !req.originalUrl.includes('/dashboard/analytics/getChartV2/Karmayogi') && req.session) {
       if (req.originalUrl.includes('?')) {
-        url = `${url}&_uid=${req.rootOrgId}`
+        url = `${url}&_uid=${_.get(req, 'session.rootOrgId')}`
       } else {
-        url = `${url}?_uid=${req.rootOrgId}`
+        url = `${url}?_uid=${_.get(req, 'session.rootOrgId')}`
       }
       // tslint:disable-next-line: no-console
       console.log('REQ_URL_ORIGINAL proxyCreatorSunbird  ======= dashboard analytics', url)

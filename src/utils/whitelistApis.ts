@@ -1667,7 +1667,7 @@ export const API_LIST = {
         },
         '/proxies/v8/ratings/v1/read/:activity_id/:activity_type/:user_id': {
             ROLE_CHECK: [
-               ROLE.PUBLIC
+               ROLE.PUBLIC,
             ],
            checksNeeded: [CHECK.ROLE],
        },

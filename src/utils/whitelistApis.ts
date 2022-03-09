@@ -1665,6 +1665,12 @@ export const API_LIST = {
             ],
             checksNeeded: [CHECK.ROLE],
         },
+        '/proxies/v8/questionset/v1/hierarchy/:id': {
+            ROLE_CHECK: [
+                ROLE.CONTENT_CREATOR,
+            ],
+            checksNeeded: [CHECK.ROLE],
+        },
         '/proxies/v8/ratings/v1/read/:activity_id/:activity_type/:user_id': {
             ROLE_CHECK: [
                ROLE.PUBLIC,
@@ -1911,6 +1917,7 @@ export const API_LIST = {
             '/proxies/v8/questionset/v1/publish',
             '/proxies/v8/questionset/v1/hierarchy/update',
             '/proxies/v8/questionset/v1/retire',
+            '/proxies/v8/questionset/v1/hierarchy/:id',
             '/proxies/v8/ratings/v1/read/:activity_id/:activity_type/:user_id',
             '/proxies/v8/ratings/v1/upsert',
             '/proxies/v8/ratings/v1/summary/:activity_id/:activity_type',

@@ -1621,6 +1621,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/cbp/question/list': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.CONTENT_CREATOR,
+            ],
+        },
         '/proxies/v8/questionset/v1/create': {
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
@@ -1910,6 +1917,7 @@ export const API_LIST = {
             '/protected/v8/frac/bookmarkDataNode',
             '/proxies/v8/assessment/read/:id',
             '/proxies/v8/question/read',
+            '/proxies/v8/cbp/question/list',
             '/proxies/v8/questionset/v1/create',
             '/proxies/v8/questionset/v1/read/:id',
             '/proxies/v8/questionset/v1/update',

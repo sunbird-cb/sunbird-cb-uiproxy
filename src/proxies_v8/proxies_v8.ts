@@ -305,6 +305,11 @@ proxiesV8.use('/question/read',
   proxyQuestionRead(express.Router(), `${CONSTANTS.KONG_API_BASE}` + '/question/v1/list')
 )
 
+proxiesV8.use('/cbp/question/list',
+  // tslint:disable-next-line: max-line-length
+  proxyQuestionRead(express.Router(), `${CONSTANTS.KONG_API_BASE}` + '/question/v1/list')
+)
+
 proxiesV8.use('/questionset/*',
   // tslint:disable-next-line: max-line-length
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)

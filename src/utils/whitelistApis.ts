@@ -1650,7 +1650,7 @@ export const API_LIST = {
         },
         '/proxies/v8/questionset/v1/review': {
             ROLE_CHECK: [
-                ROLE.CONTENT_REVIEWER,
+                ROLE.CONTENT_CREATOR,
             ],
             checksNeeded: [CHECK.ROLE],
         },

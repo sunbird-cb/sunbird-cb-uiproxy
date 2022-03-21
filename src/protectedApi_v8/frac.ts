@@ -8,18 +8,18 @@ import { ERROR } from '../utils/message'
 import { extractAuthorizationFromRequest } from '../utils/requestExtract'
 
 const API_END_POINTS = {
-    addDataNode: `${CONSTANTS.FRAC_API_BASE}/fracapis/frac/addDataNode`,
-    addDataNodeBulk: `${CONSTANTS.FRAC_API_BASE}/fracapis/frac/addDataNodeBulk`,
-    bookmarkDataNode: `${CONSTANTS.FRAC_API_BASE}/fracapis/frac/bookmarkDataNode`,
-    filterByMappings: `${CONSTANTS.FRAC_API_BASE}/fracapis/frac/filterByMappings`,
-    getActivity: `${CONSTANTS.FRAC_API_BASE}/fracapis/frac/getAllNodes?type=ACTIVITY&status=VERIFIED`,
-    getCompetencyArea: `${CONSTANTS.FRAC_API_BASE}/fracapis/frac/getAllNodes?type=COMPETENCYAREA`,
-    getDictionary: `${CONSTANTS.FRAC_API_BASE}/fracapis/frac/getAllNodes?type=COMPETENCY&status=VERIFIED`,
-    getKnowledgeResource: `${CONSTANTS.FRAC_API_BASE}/fracapis/frac/getAllNodes?type=KNOWLEDGERESOURCE`,
+    addDataNode: `${CONSTANTS.FRAC_API_BASE}/frac/addDataNode`,
+    addDataNodeBulk: `${CONSTANTS.FRAC_API_BASE}/frac/addDataNodeBulk`,
+    bookmarkDataNode: `${CONSTANTS.FRAC_API_BASE}/frac/bookmarkDataNode`,
+    filterByMappings: `${CONSTANTS.FRAC_API_BASE}/frac/filterByMappings`,
+    getActivity: `${CONSTANTS.FRAC_API_BASE}/frac/getAllNodes?type=ACTIVITY&status=VERIFIED`,
+    getCompetencyArea: `${CONSTANTS.FRAC_API_BASE}/frac/getAllNodes?type=COMPETENCYAREA`,
+    getDictionary: `${CONSTANTS.FRAC_API_BASE}/frac/getAllNodes?type=COMPETENCY&status=VERIFIED`,
+    getKnowledgeResource: `${CONSTANTS.FRAC_API_BASE}/frac/getAllNodes?type=KNOWLEDGERESOURCE`,
     getNodeById: (id: string, type: string) =>
-        `${CONSTANTS.FRAC_API_BASE}/fracapis/frac/getNodeById?id=${id}&type=${type}&isDetail=true`,
-    getRole: `${CONSTANTS.FRAC_API_BASE}/fracapis/frac/getAllNodes?type=ROLE&status=VERIFIED`,
-    searchNodes: `${CONSTANTS.FRAC_API_BASE}/fracapis/frac/searchNodes`,
+        `${CONSTANTS.FRAC_API_BASE}/frac/getNodeById?id=${id}&type=${type}&isDetail=true`,
+    getRole: `${CONSTANTS.FRAC_API_BASE}/frac/getAllNodes?type=ROLE&status=VERIFIED`,
+    searchNodes: `${CONSTANTS.FRAC_API_BASE}/frac/searchNodes`,
 }
 
 export const fracApi = Router()

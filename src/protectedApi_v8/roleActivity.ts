@@ -11,7 +11,7 @@ import { extractAuthorizationFromRequest } from '../utils/requestExtract'
 export const roleActivityApi = Router()
 
 const API_END_POINTS = {
-    searchNodes: `${CONSTANTS.FRAC_API_BASE}/fracapis/frac/searchNodes`,
+    searchNodes: `${CONSTANTS.FRAC_API_BASE}/frac/searchNodes`,
 }
 
 roleActivityApi.get('/', async (req, res) => {

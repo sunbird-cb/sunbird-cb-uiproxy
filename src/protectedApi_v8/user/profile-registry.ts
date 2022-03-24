@@ -10,7 +10,7 @@ const fs = require('fs')
 
 const API_END_POINTS = {
   createUserRegistry: (userId: string) => `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/create/profile?userId=${userId}`,
-  getAllPosition: `${CONSTANTS.FRAC_API_BASE}/fracapis/frac/getAllNodes?type=POSITION&status=VERIFIED`,
+  getAllPosition: `${CONSTANTS.FRAC_API_BASE}/frac/getAllNodes?type=POSITION&status=VERIFIED`,
   getUserRegistry: `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/get/profile`,
   getUserRegistryById: (userId: string) => `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/search/profile?userId=${userId}`,
   searchUserRegistry: `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/search/profile`,

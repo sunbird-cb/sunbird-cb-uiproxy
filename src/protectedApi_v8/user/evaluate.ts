@@ -8,6 +8,7 @@ import { extractUserIdFromRequest, extractUserToken } from '../../utils/requestE
 const GENERAL_ERR_MSG = 'Failed due to unknown reason'
 const API_END_POINTS = {
   assessmentSubmitV2: `${CONSTANTS.KONG_API_BASE}/v2/user`,
+  assessmentSubmitV3: `${CONSTANTS.KONG_API_BASE}/v3/user`,
   iapSubmitAssessment: `${CONSTANTS.SB_EXT_API_BASE_2}/v3/iap-assessment`,
   postAssessment: `${CONSTANTS.POST_ASSESSMENT_BASE}/lmsapi/v1/post_assessment`,
 }
@@ -32,6 +33,34 @@ evaluateApi.post('/assessment/submit/v2', async (req, res) => {
       headers: {
         Authorization: CONSTANTS.SB_API_KEY,
         rootOrg,
+        userId,
+        'x-authenticated-user-token': extractUserToken(req),
+      },
+      method: 'POST',
+      url,
+    })
+    res.status(response.status).send(response.data)
+  } catch (err) {
+    res.status((err && err.response && err.response.status) || 500).send(
+      (err && err.response && err.response.data) || {
+        error: GENERAL_ERR_MSG,
+      }
+    )
+  }
+})
+
+evaluateApi.post('/assessment/submit/v3', async (req, res) => {
+  try {
+    const userId = extractUserIdFromRequest(req)
+    const url = `${API_END_POINTS.assessmentSubmitV2}/assessment/submit`
+    const requestBody = {
+      ...req.body,
+    }
+    const response = await axios({
+      ...axiosRequestConfig,
+      data: requestBody,
+      headers: {
+        Authorization: CONSTANTS.SB_API_KEY,
         userId,
         'x-authenticated-user-token': extractUserToken(req),
       },

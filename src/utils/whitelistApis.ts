@@ -1302,7 +1302,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
-        }
+        },
         '/protected/v8/connections/v2/connections/recommended/userDepartment': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys

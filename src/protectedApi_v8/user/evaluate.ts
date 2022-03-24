@@ -52,7 +52,7 @@ evaluateApi.post('/assessment/submit/v2', async (req, res) => {
 evaluateApi.post('/assessment/submit/v3', async (req, res) => {
   try {
     const userId = extractUserIdFromRequest(req)
-    const url = `${API_END_POINTS.assessmentSubmitV2}/assessment/submit`
+    const url = `${API_END_POINTS.assessmentSubmitV3}/assessment/submit`
     const requestBody = {
       ...req.body,
     }

@@ -153,7 +153,7 @@ export function proxyCreatorSunbird(route: Router, targetUrl: string, _timeout =
       } else {
         url = `${url}?_uid=${req.session.uid}`
       }
-      if(req.originalUrl.includes('/discussion/v2/topics')){
+      if (req.originalUrl.includes('/discussion/v2/topics')) {
         req.body.email = extractUserEmailFromRequest(req)
       }
       // tslint:disable-next-line: no-console

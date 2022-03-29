@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { createProxyServer } from 'http-proxy'
-import { extractUserIdFromRequest, extractUserToken } from '../utils/requestExtract'
+import { extractUserEmailFromRequest, extractUserIdFromRequest, extractUserToken } from '../utils/requestExtract'
 import { CONSTANTS } from './env'
 import { logInfo } from './logger'
 
@@ -152,6 +152,9 @@ export function proxyCreatorSunbird(route: Router, targetUrl: string, _timeout =
         url = `${url}&_uid=${req.session.uid}`
       } else {
         url = `${url}?_uid=${req.session.uid}`
+      }
+      if(req.originalUrl.includes('/discussion/v2/topics')){
+        req.body.email = extractUserEmailFromRequest(req)
       }
       // tslint:disable-next-line: no-console
       console.log('REQ_URL_ORIGINAL proxyCreatorSunbird  ======= discussion', url)

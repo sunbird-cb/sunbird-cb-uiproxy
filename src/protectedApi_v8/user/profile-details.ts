@@ -291,7 +291,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                     method: 'GET',
                     url: API_END_POINTS.kongUserRead(sbUserId),
                 })
-                if (sbUserReadResponse.data.params.status !== 'success') {
+                if (sbUserReadResponse.data.params.status !== 'SUCCESS') {
                     res.status(500).send(failedToReadUser)
                     return
                 }

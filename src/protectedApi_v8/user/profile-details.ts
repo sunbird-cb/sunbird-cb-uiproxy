@@ -291,7 +291,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                     method: 'GET',
                     url: API_END_POINTS.kongUserRead(sbUserId),
                 })
-                if (sbUserReadResponse.data.params.status !== 'SUCCESS') {
+                if (sbUserReadResponse.data.params.status !== 'success') {
                     res.status(500).send(failedToReadUser)
                     return
                 }
@@ -369,7 +369,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                     })
                     logInfo('Received response from password reset -> ' + passwordResetResponse)
 
-                    if (passwordResetResponse.data.params.status === 'SUCCESS') {
+                    if (passwordResetResponse.data.params.status === 'success') {
                         const welcomeMailRequest = {
                             allowedLoging: 'You can use your email to Login',
                             body: 'Hello',
@@ -394,7 +394,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                             url: API_END_POINTS.kongSendWelcomeEmail,
                         })
 
-                        if (welcomeMailResponse.data.params.status !== 'SUCCESS') {
+                        if (welcomeMailResponse.data.params.status !== 'success') {
                             res.status(500).send('Failed to send Welcome Email.')
                             return
                         }
@@ -576,7 +576,7 @@ profileDeatailsApi.post('/createUserV2WithoutRegistry', async (req, res) => {
                     method: 'GET',
                     url: API_END_POINTS.userRead(sbUserId),
                 })
-                if (sbUserReadResponse.data.params.status !== 'SUCCESS') {
+                if (sbUserReadResponse.data.params.status !== 'success') {
                     res.status(500).send(failedToReadUser)
                     return
                 } else {
@@ -668,7 +668,7 @@ profileDeatailsApi.post('/createUserWithoutInvitationEmail', async (req, res) =>
                     method: 'GET',
                     url: API_END_POINTS.kongUserRead(sbUserId),
                 })
-                if (sbUserReadResponse.data.params.status !== 'SUCCESS') {
+                if (sbUserReadResponse.data.params.status !== 'success') {
                     res.status(500).send(failedToReadUser)
                     return
                 }

@@ -1700,7 +1700,7 @@ export const API_LIST = {
             ],
             checksNeeded: [CHECK.ROLE],
         },
-        '/proxies/v8/ratings/v1/read/:activity_id/:activity_type/:user_id': {
+        '/proxies/v8/ratings/v1/read/:activityId/:activityType/:userId': {
             ROLE_CHECK: [
                ROLE.PUBLIC,
             ],
@@ -1712,7 +1712,7 @@ export const API_LIST = {
             ],
           checksNeeded: [CHECK.ROLE],
        },
-        '/proxies/v8/ratings/v1/summary/:activity_id/:activity_type': {
+        '/proxies/v8/ratings/v1/summary/:activityId/:activityType': {
            ROLE_CHECK: [
              ROLE.PUBLIC,
             ],
@@ -1950,9 +1950,9 @@ export const API_LIST = {
             '/proxies/v8/questionset/v1/retire/:id',
             '/proxies/v8/questionset/v1/reject/:id',
             '/proxies/v8/questionset/v1/hierarchy/:id',
-            '/proxies/v8/ratings/v1/read/:activity_id/:activity_type/:user_id',
+            '/proxies/v8/ratings/v1/read/:activityId/:activityType/:userId',
             '/proxies/v8/ratings/v1/upsert',
-            '/proxies/v8/ratings/v1/summary/:activity_id/:activity_type',
+            '/proxies/v8/ratings/v1/summary/:activityId/:activityType',
             '/proxies/v8/ratings/v1/ratingLookUp',
            ],
 }

@@ -174,7 +174,7 @@ cohortsApi.patch('/course/batch/cert/template/add', async (req, res) => {
     const response = await axios.patch(API_END_POINTS.addTemplate, template, {
       ...axiosRequestConfig,
       headers: {
-        Authorization: CONSTANTS.CERT_AUTH_TOKEN,
+        Authorization: CONSTANTS.SB_API_KEY,
         /* tslint:disable-next-line */
         'x-authenticated-user-token': extractUserToken(req),
       },
@@ -198,7 +198,7 @@ cohortsApi.post('/course/batch/cert/issue', async (req, res) => {
     const response = await axios.post(API_END_POINTS.issueCert, template, {
       ...axiosRequestConfig,
       headers: {
-        Authorization: CONSTANTS.CERT_AUTH_TOKEN,
+        Authorization: CONSTANTS.SB_API_KEY,
         /* tslint:disable-next-line */
         'x-authenticated-user-token': extractUserToken(req),
       },
@@ -222,7 +222,7 @@ cohortsApi.get('/course/batch/cert/download/:certId', async (req, res) => {
     const response = await axios.get(API_END_POINTS.downloadCert(certId), {
       ...axiosRequestConfig,
       headers: {
-        Authorization: CONSTANTS.CERT_AUTH_TOKEN,
+        Authorization: CONSTANTS.SB_API_KEY,
         /* tslint:disable-next-line */
         'x-authenticated-user-token': extractUserToken(req),
       },

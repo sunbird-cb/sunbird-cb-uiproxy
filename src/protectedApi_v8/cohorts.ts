@@ -7,16 +7,16 @@ import { ERROR } from '../utils/message'
 import { extractAuthorizationFromRequest, extractUserIdFromRequest, extractUserToken } from '../utils/requestExtract'
 
 const API_END_POINTS = {
-  addTemplate: `https://igot-dev.in/api/course/batch/cert/v1/template/add`,
+  addTemplate: `${CONSTANTS.HTTPS_HOST}/api/course/batch/cert/v1/template/add`,
   autoenrollment: `${CONSTANTS.KONG_API_BASE}/v1/autoenrollment`,
   batchParticipantsApi: `${CONSTANTS.KONG_API_BASE}/course/v1/batch/participants/list`,
   cohorts: `${CONSTANTS.KONG_API_BASE}/v2/resources`,
-  downloadCert: (certId: string) => `https://igot-dev.in/api/certreg/v2/certs/download/${certId}`,
+  downloadCert: (certId: string) => `${CONSTANTS.HTTPS_HOST}/api/certreg/v2/certs/download/${certId}`,
   groupCohorts: (groupId: number) =>
     `${CONSTANTS.USER_PROFILE_API_BASE}/groups/${groupId}/users `,
   hierarchyApiEndPoint: (contentId: string) =>
     `${CONSTANTS.KNOWLEDGE_MW_API_BASE}/action/content/v3/hierarchy/${contentId}?hierarchyType=detail`,
-  issueCert: 'https://igot-dev.in/api/course/batch/cert/v1/issue?reIssue=true',
+  issueCert: `${CONSTANTS.HTTPS_HOST}/api/course/batch/cert/v1/issue?reIssue=true`,
   kongSearchUser: `${CONSTANTS.KONG_API_BASE}/user/v1/search`,
   searchUserRegistry: `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/search/profile`,
 }

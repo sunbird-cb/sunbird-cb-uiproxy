@@ -243,7 +243,7 @@ const respond403 = (req: Request, res: Response) => {
 const respond419 = (req: Request, res: Response) => {
     const REQ_URL = req.path
     if (_.includes(REQ_URL, '/reset')) {
-        res.sendFile('index.html')
+        res.sendFile(__dirname + 'index.html')
     } else {
         const err = ({ msg: 'API WHITELIST :: Unauthorized access for API [ ' + REQ_URL + ' ]', url: REQ_URL })
         logError(err.msg)

@@ -194,6 +194,10 @@ proxiesV8.use('/api/user/v2/read',
   proxyCreatorToAppentUserId(express.Router(), `${CONSTANTS.KONG_API_BASE}/user/v2/read/`)
 )
 
+proxiesV8.use('/api/user/v5/read',
+  proxyCreatorToAppentUserId(express.Router(), `${CONSTANTS.KONG_API_BASE}/user/v5/read/`)
+)
+
 proxiesV8.use([
   '/action/questionset/v1/*',
   '/action/question/v1/*',

@@ -216,7 +216,7 @@ const createUserFailed = 'ERROR CREATING USER >'
 const failedToUpdateUser = 'Failed to update user profile data.'
 const unknownError = 'Failed due to unknown reason'
 
-// tslint:disable-next-line: max-lines-per-function
+// tslint:disable-next-line: all
 profileDeatailsApi.post('/createUser', async (req, res) => {
     try {
         const sbChannel = req.body.personalDetails.channel
@@ -224,6 +224,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
             res.status(400).send(channelParamMissing)
             return
         }
+        let statusString = ''
         const sbemail_ = req.body.personalDetails.email
         const sbemailVerified_ = true
         const sbfirstName_ = req.body.personalDetails.firstName
@@ -291,7 +292,8 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                     method: 'GET',
                     url: API_END_POINTS.kongUserRead(sbUserId),
                 })
-                if (sbUserReadResponse.data.params.status !== 'SUCCESS') {
+                statusString = sbUserReadResponse.data.params.status
+                if (statusString.toUpperCase() !== 'SUCCESS') {
                     res.status(500).send(failedToReadUser)
                     return
                 }
@@ -368,8 +370,8 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                         url: API_END_POINTS.kongUserResetPassword,
                     })
                     logInfo('Received response from password reset -> ' + passwordResetResponse)
-
-                    if (passwordResetResponse.data.params.status === 'SUCCESS') {
+                    statusString = passwordResetResponse.data.params.status
+                    if (statusString.toUpperCase() === 'SUCCESS') {
                         const welcomeMailRequest = {
                             allowedLoging: 'You can use your email to Login',
                             body: 'Hello',
@@ -393,8 +395,8 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                             method: 'POST',
                             url: API_END_POINTS.kongSendWelcomeEmail,
                         })
-
-                        if (welcomeMailResponse.data.params.status !== 'SUCCESS') {
+                        statusString = welcomeMailResponse.data.params.status
+                        if (statusString.toUpperCase() !== 'SUCCESS') {
                             res.status(500).send('Failed to send Welcome Email.')
                             return
                         }
@@ -448,7 +450,7 @@ profileDeatailsApi.post('/createUserV2WithRegistry', async (req, res) => {
         const sbemailVerified_ = true
         const sbfirstName_ = req.body.personalDetails.firstName
         const sblastName_ = req.body.personalDetails.lastName
-
+        let statusString = ''
         const searchresponse = await axios({
             ...axiosRequestConfig,
             data: { request: { query: '', filters: { email: sbemail_.toLowerCase() } } },
@@ -488,7 +490,8 @@ profileDeatailsApi.post('/createUserV2WithRegistry', async (req, res) => {
                     method: 'GET',
                     url: API_END_POINTS.userRead(sbUserId),
                 })
-                if (sbUserReadResponse.data.params.status !== 'SUCCESS') {
+                statusString = sbUserReadResponse.data.params.status
+                if (statusString.toUpperCase() !== 'SUCCESS') {
                     res.status(500).send(failedToReadUser)
                     return
                 }
@@ -536,7 +539,7 @@ profileDeatailsApi.post('/createUserV2WithoutRegistry', async (req, res) => {
         const sbemailVerified_ = true
         const sbfirstName_ = req.body.personalDetails.firstName
         const sblastName_ = req.body.personalDetails.lastName
-
+        let statusString = ''
         const searchresponse = await axios({
             ...axiosRequestConfig,
             data: { request: { query: '', filters: { email: sbemail_.toLowerCase() } } },
@@ -576,7 +579,8 @@ profileDeatailsApi.post('/createUserV2WithoutRegistry', async (req, res) => {
                     method: 'GET',
                     url: API_END_POINTS.userRead(sbUserId),
                 })
-                if (sbUserReadResponse.data.params.status !== 'SUCCESS') {
+                statusString = sbUserReadResponse.data.params.status
+                if (statusString.toUpperCase() !== 'SUCCESS') {
                     res.status(500).send(failedToReadUser)
                     return
                 } else {
@@ -606,7 +610,7 @@ profileDeatailsApi.post('/createUserWithoutInvitationEmail', async (req, res) =>
         const sbemailVerified_ = true
         const sbfirstName_ = req.body.personalDetails.firstName
         const sblastName_ = req.body.personalDetails.lastName
-
+        let statusString = ''
         const searchresponse = await axios({
             ...axiosRequestConfig,
             data: { request: { query: '', filters: { email: sbemail_.toLowerCase() } } },
@@ -668,7 +672,8 @@ profileDeatailsApi.post('/createUserWithoutInvitationEmail', async (req, res) =>
                     method: 'GET',
                     url: API_END_POINTS.kongUserRead(sbUserId),
                 })
-                if (sbUserReadResponse.data.params.status !== 'SUCCESS') {
+                statusString = sbUserReadResponse.data.params.status
+                if (statusString.toUpperCase() !== 'SUCCESS') {
                     res.status(500).send(failedToReadUser)
                     return
                 }

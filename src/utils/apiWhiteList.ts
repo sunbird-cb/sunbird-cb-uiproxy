@@ -192,10 +192,6 @@ const executeChecks = async (req: Request, res: Response , next: NextFunction, c
                 if (_isRejected) {
                     throw new Error(_isRejected.reason)
                 } else {
-                    if (_.includes(req.path, '/reset')) {
-                        logInfo('Trying to reset cookies')
-                        res.clearCookie('connect.sid', { path: '/' });
-                    }
                     next()
                 }
             } else {

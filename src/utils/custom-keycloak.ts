@@ -83,7 +83,7 @@ export class CustomKeycloak {
 
   // tslint:disable-next-line: no-any
   deauthenticated = (request: any) => {
-    logInfo('Initiating Deauthentication process. current SessionId' + request.session.id + ', value: ' + request.session)
+    logInfo('Initiating Deauthentication process. current SessionId' + request.session.id + ', value: ' + JSON.stringify(request.session))
     delete request.session.userRoles
     delete request.session.userId
     request.session.destroy()

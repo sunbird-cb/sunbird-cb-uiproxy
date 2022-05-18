@@ -83,7 +83,15 @@ export class CustomKeycloak {
 
   // tslint:disable-next-line: no-any
   deauthenticated = (request: any) => {
-    logInfo('Initiating Deauthentication process. current SessionId' + request.session.id + ', value: ' + JSON.stringify(request.session))
+    const keycloakToken = request.session.get('keycloak-token');
+    if(keycloakToken) {
+      logInfo('Initiating Deauthentication process. current SessionId' + request.session.id + ', value: ' + JSON.stringify(keycloakToken))
+      const tokenObject = JSON.parse(keycloakToken)
+      const refreshToken = tokenObject.get('refresh_token')
+      if(refreshToken) {
+        logInfo('Refresh Token: ' + refreshToken)
+      }
+    }
     delete request.session.userRoles
     delete request.session.userId
     request.session.destroy()

@@ -86,8 +86,10 @@ const urlChecks = {
         const data = (roleData) ? roleData : []
         logInfo('Portal_API_WHITELIST : Middleware for URL [ ' + REQ_URL + ' ]')
         if (_.includes(rolesForURL, 'ALL') && data.length > 0) {
+            logInfo('RolesForAll is getting called')
             resolve()
         } else if (_.intersection(rolesForURL, data).length > 0) {
+            logInfo('RolesForUrl is getting called')
             resolve()
         } else {
             return reject('User doesn\'t have appropriate roles')
@@ -190,6 +192,10 @@ const executeChecks = async (req: Request, res: Response , next: NextFunction, c
                 if (_isRejected) {
                     throw new Error(_isRejected.reason)
                 } else {
+                    if (_.includes(req.path, '/reset')) {
+                        logInfo('Trying to reset cookies')
+                        res.clearCookie('connect.sid', { path: '/' });
+                    }
                     next()
                 }
             } else {

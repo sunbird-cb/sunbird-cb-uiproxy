@@ -85,13 +85,15 @@ export class CustomKeycloak {
   deauthenticated = (request: any) => {
     logInfo('Initiating Deauthentication process. Session Object -> ' + JSON.stringify(request.session))
     logInfo('Session object has keycloak-token object ?? ' + request.session.hasOwnProperty('keycloak-token'))
-    const keycloakToken = request.session.get('keycloak-token')
-    if (keycloakToken) {
-      logInfo('Initiating Deauthentication process. current SessionId' + request.session.id + ', value: ' + JSON.stringify(keycloakToken))
-      const tokenObject = JSON.parse(keycloakToken)
-      const refreshToken = tokenObject.get('refresh_token')
-      if (refreshToken) {
-        logInfo('Refresh Token: ' + refreshToken)
+    if(request.session.hasOwnProperty('keycloak-token')) {
+      const keycloakToken = request.session['keycloak-token']
+      if (keycloakToken) {
+        const tokenObject = JSON.parse(keycloakToken)
+        logInfo('RefreshToken available ?? ' + tokenObject.hasOwnProperty('refresh_token'))
+        const refreshToken = tokenObject['refresh_token']
+        if (refreshToken) {
+          logInfo('Refresh Token: ' + refreshToken)
+        }
       }
     }
     delete request.session.userRoles

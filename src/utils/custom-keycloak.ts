@@ -83,18 +83,22 @@ export class CustomKeycloak {
 
   // tslint:disable-next-line: no-any
   deauthenticated = (request: any) => {
+    const keyCloakPropertyName = 'keycloak-token'
     logInfo('Initiating Deauthentication process. Session Object -> ' + JSON.stringify(request.session))
-    logInfo('Session object has keycloak-token object ?? ' + request.session.hasOwnProperty('keycloak-token'))
-    if(request.session.hasOwnProperty('keycloak-token')) {
-      const keycloakToken = request.session['keycloak-token']
+    if (request.session.hasOwnProperty(keyCloakPropertyName)) {
+      const keycloakToken = request.session[keyCloakPropertyName]
       if (keycloakToken) {
         const tokenObject = JSON.parse(keycloakToken)
         logInfo('RefreshToken available ?? ' + tokenObject.hasOwnProperty('refresh_token'))
-        const refreshToken = tokenObject['refresh_token']
+        const refreshToken = tokenObject.refresh_token
         if (refreshToken) {
           logInfo('Refresh Token: ' + refreshToken)
         }
+      } else {
+        logInfo('Not able to retrieve keycloak-token value from Session.')
       }
+    } else {
+      logInfo('Session does not have property with name: ' + keyCloakPropertyName)
     }
     delete request.session.userRoles
     delete request.session.userId

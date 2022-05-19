@@ -59,35 +59,35 @@ export const API_LIST = {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.PUBLIC,
+                ROLE.PUBLIC, 'ALL',
             ],
         },
         '/proxies/v8/api/user/v2/read/:id': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.PUBLIC,
+                ROLE.PUBLIC, 'ALL',
             ],
         },
         '/proxies/v8/api/user/v5/read': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.PUBLIC,
+                ROLE.PUBLIC, 'ALL',
             ],
         },
        '/proxies/v8/user/v1/updateLogin': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.PUBLIC,
+                ROLE.PUBLIC, 'ALL',
             ],
         },
         '/proxies/v8/api/user/v5/read/:id': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.PUBLIC,
+                ROLE.PUBLIC, 'ALL',
             ],
         },
         '/proxies/v8/event/v4/read/:do_id': {

@@ -85,19 +85,14 @@ export class CustomKeycloak {
   // tslint:disable-next-line: no-any
   deauthenticated = (reqObj: any) => {
     const keyCloakPropertyName = 'keycloak-token'
-    logInfo('Initiating Deauthentication process. Session Object -> ' + JSON.stringify(reqObj.session))
     if (reqObj.session.hasOwnProperty(keyCloakPropertyName)) {
       const keycloakToken = reqObj.session[keyCloakPropertyName]
       if (keycloakToken) {
         const tokenObject = JSON.parse(keycloakToken)
-        logInfo('RefreshToken available ?? ' + tokenObject.hasOwnProperty('refresh_token'))
         const refreshToken = tokenObject.refresh_token
         if (refreshToken) {
-          logInfo('Refresh Token: ' + refreshToken)
-          logInfo('Initiating logout session in keycloak')
           const host = reqObj.get('host')
           const urlValue = `https://${host}` + '/auth/realms/' + CONSTANTS.KEYCLOAK_REALM + '/protocol/openid-connect/logout'
-          logInfo('Constructed logout url value -> ' + urlValue)
           try {
               request.post({
                   form: {
@@ -110,12 +105,14 @@ export class CustomKeycloak {
               // tslint:disable-next-line: no-console
               console.log('Failed to call keycloak logout API ', err, '------', new Date().toString())
           }
+        } else {
+          logError('Not able to retrieve refresh_token value from Session. Logout process failed.')
         }
       } else {
-        logInfo('Not able to retrieve keycloak-token value from Session.')
+        logError('Not able to retrieve keycloak-token value from Session. Logout process failed.')
       }
     } else {
-      logInfo('Session does not have property with name: ' + keyCloakPropertyName)
+      logError('Session does not have property with name: ' + keyCloakPropertyName)
     }
     delete reqObj.session.userRoles
     delete reqObj.session.userId
@@ -124,7 +121,6 @@ export class CustomKeycloak {
   }
 
   protect = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    logInfo('KeyCloak.Protect :: ' + req.path)
     const keycloak = this.getKeyCloakObject(req)
     return keycloak.protect()(req, res, next)
   }

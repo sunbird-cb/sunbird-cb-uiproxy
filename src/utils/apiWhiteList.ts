@@ -85,6 +85,7 @@ const urlChecks = {
         const roleData = _.get(req, 'session.userRoles')
         const data = (roleData) ? roleData : []
         logInfo('Portal_API_WHITELIST : Middleware for URL [ ' + REQ_URL + ' ]')
+        logInfo('Configured Roles for URL -> ' + JSON.stringify(rolesForURL))
         if (_.includes(rolesForURL, 'ALL') && data.length > 0) {
             logInfo('RolesForAll is getting called')
             resolve()

@@ -59,14 +59,14 @@ export const API_LIST = {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.PUBLIC,
+                ROLE.PUBLIC, 'ALL',
             ],
         },
         '/proxies/v8/api/user/v2/read/:id': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.PUBLIC,
+                ROLE.PUBLIC, 'ALL',
             ],
         },
         '/proxies/v8/event/v4/read/:do_id': {
@@ -1153,7 +1153,7 @@ export const API_LIST = {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.PUBLIC,  
+                ROLE.PUBLIC,
             ],
         },
         '/protected/v8/user/details/detailV1': {

@@ -108,7 +108,7 @@ export class Server {
     )
     // TODO: See what needs to be logged
     this.app.use((req, _, next) => {
-      logInfo(`Worker ${process.pid} : ${req.url}`)
+      logInfo(`Server:ConfigureMiddleWare:: Worker ${process.pid} : ${req.url}`)
       next()
     })
     this.app.use(morgan('dev'))
@@ -165,8 +165,9 @@ export class Server {
   private resetCookies() {
     this.app.use('/reset', (_req, res) => {
       logInfo('CLEARING RES COOKIES')
-      res.cookie('connect.sid', '', { expires: new Date() })
-      res.redirect('/reset')
+      res.clearCookie('connect.sid', { path: '/' })
+      // res.cookie('connect.sid', '', { expires: new Date() })
+      res.redirect('/public/logout')
     })
   }
 }

@@ -254,6 +254,7 @@ export const API_LIST = {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
+                ROLE.CONTENT_PUBLISHER,
                 ROLE.CONTENT_REVIEWER,
             ],
         },

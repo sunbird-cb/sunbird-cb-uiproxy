@@ -401,8 +401,8 @@ proxiesV8.post('/notifyContentState', async (req, res) => {
   })
   logInfo('Response -> ' + JSON.stringify(stateEmailResponse.data))
   if (!stateEmailResponse.data.result.response) {
-    res.status(400).send('Failed to send content state notification...')
+    res.status(400).send(stateEmailResponse.data)
   } else {
-    res.status(200).send('Email sent successfully.')
+    res.status(200).send(stateEmailResponse.data)
   }
 })

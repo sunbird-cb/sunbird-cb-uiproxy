@@ -166,8 +166,13 @@ export class Server {
     this.app.use('/reset', (_req, res) => {
       logInfo('CLEARING RES COOKIES')
       res.clearCookie('connect.sid', { path: '/' })
-      // res.cookie('connect.sid', '', { expires: new Date() })
-      res.redirect('/public/logout')
+      const host = _req.get('host')
+      let redirectUrl = '/public/logout'
+      logInfo('Reset Cookies... received host value ' + host)
+      if (host === `${CONSTANTS.KARMAYOGI_PORTAL_HOST}`) {
+        redirectUrl = '/public/home'
+      }
+      res.redirect(redirectUrl)
     })
   }
 }

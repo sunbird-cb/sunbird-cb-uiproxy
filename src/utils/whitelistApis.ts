@@ -1721,6 +1721,13 @@ export const API_LIST = {
             ],
         checksNeeded: [CHECK.ROLE],
        },
+       '/proxies/v8/user/v1/positions': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -1951,5 +1958,6 @@ export const API_LIST = {
             '/proxies/v8/ratings/v1/upsert',
             '/proxies/v8/ratings/v1/summary/:activityId/:activityType',
             '/proxies/v8/ratings/v1/ratingLookUp',
+            '/proxies/v8/user/v1/positions'
            ],
 }

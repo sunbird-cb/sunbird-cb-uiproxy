@@ -16,5 +16,6 @@ export const ROLE = {
     MDO_ADMIN: 'MDO_ADMIN',
     PUBLIC: 'PUBLIC',
     SPV_ADMIN: 'SPV_ADMIN',
+    STATE_ADMIN: 'STATE_ADMIN',
     WAT_MEMBER: 'WAT_MEMBER',
 }

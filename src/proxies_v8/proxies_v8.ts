@@ -406,3 +406,32 @@ proxiesV8.post('/notifyContentState', async (req, res) => {
     res.status(200).send(stateEmailResponse.data)
   }
 })
+
+proxiesV8.get('/org/v1/profile/read/:orgId', async (req, res) => {
+  const orgId = req.params.orgId
+  const response = {
+    id: 'api.org.profile.read',
+    params: {
+      status: 'SUCCESS',
+    },
+    responseCode: 'OK',
+    result: {
+      response: {
+        organisationId: orgId,
+        profile: {
+          consultancy: {},
+          faculty: {},
+          infrastructure: {},
+          instituteProfile: {},
+          platformWalkthrough: {},
+          research: {},
+          rolesAndFunctions: {},
+          trainingPrograms: {},
+        },
+      },
+    },
+
+    ver: 'v1',
+  }
+  res.status(200).send(response)
+})

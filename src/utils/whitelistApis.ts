@@ -397,6 +397,16 @@ export const API_LIST = {
                 ROLE.SPV_ADMIN,
             ],
         },
+        '/proxies/v8/org/v1/profile/read/:orgId': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.CBC_ADMIN,
+                ROLE.MDO_ADMIN,
+                ROLE.SPV_ADMIN,
+                ROLE.STATE_ADMIN,
+            ],
+        },
         '/proxies/v8/org/v1/update': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -1305,7 +1315,7 @@ export const API_LIST = {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.PUBLIC, 'ALL'
+                ROLE.PUBLIC, 'ALL',
             ],
         },
         '/protected/v8/user/evaluate/assessment/submit/v2': {

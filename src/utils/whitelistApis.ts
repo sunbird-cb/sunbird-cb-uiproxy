@@ -362,6 +362,7 @@ export const API_LIST = {
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
+                ROLE.STATE_ADMIN,
             ],
         },
         '/proxies/v8/org/v1/search': {
@@ -378,6 +379,7 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
                 ROLE.CBP_ADMIN,
+                ROLE.STATE_ADMIN,
                 ROLE.CONTENT_CREATOR,
             ],
         },
@@ -395,6 +397,7 @@ export const API_LIST = {
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
+                ROLE.STATE_ADMIN,
             ],
         },
         '/proxies/v8/org/v1/profile/read/:orgId': {
@@ -414,6 +417,7 @@ export const API_LIST = {
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
+                ROLE.STATE_ADMIN,
             ],
         },
         '/proxies/v8/user/v1/block': {
@@ -423,6 +427,7 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
                 ROLE.CBP_ADMIN,
+                ROLE.STATE_ADMIN,
                 ROLE.CONTENT_CREATOR,
             ],
         },
@@ -433,6 +438,7 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
                 ROLE.CBP_ADMIN,
+                ROLE.STATE_ADMIN,
                 ROLE.CONTENT_CREATOR,
             ],
         },
@@ -443,6 +449,7 @@ export const API_LIST = {
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
+                ROLE.STATE_ADMIN,
             ],
         },
         '/proxies/v8/discussion/tags': {
@@ -459,6 +466,7 @@ export const API_LIST = {
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
+                ROLE.STATE_ADMIN,
             ],
         },
         '/proxies/v8/learnervm/private/content/v3/publish/:do_id': {
@@ -545,6 +553,7 @@ export const API_LIST = {
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
+                ROLE.STATE_ADMIN,
             ],
         },
         '/proxies/v8/user/private/v1/migrate': {
@@ -799,6 +808,7 @@ export const API_LIST = {
                 ROLE.WAT_MEMBER,
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
+                ROLE.STATE_ADMIN,
             ],
         },
         '/protected/v8/user/autocomplete/:query': {
@@ -830,6 +840,7 @@ export const API_LIST = {
                 ROLE.WAT_MEMBER,
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
+                ROLE.STATE_ADMIN
             ],
         },
         '/protected/v8/workallocation/getWorkOrders': {

@@ -840,7 +840,7 @@ export const API_LIST = {
                 ROLE.WAT_MEMBER,
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
-                ROLE.STATE_ADMIN
+                ROLE.STATE_ADMIN,
             ],
         },
         '/protected/v8/workallocation/getWorkOrders': {

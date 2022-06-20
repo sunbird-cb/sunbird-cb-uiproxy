@@ -20,6 +20,7 @@ const API_END_POINTS = {
         `${CONSTANTS.FRAC_API_BASE}/frac/getNodeById?id=${id}&type=${type}&isDetail=true`,
     getRole: `${CONSTANTS.FRAC_API_BASE}/frac/getAllNodes?type=ROLE&status=VERIFIED`,
     searchNodes: `${CONSTANTS.FRAC_API_BASE}/frac/searchNodes`,
+    filterNodes: `${CONSTANTS.FRAC_API_BASE}/frac/filterNodes`,
 }
 
 export const fracApi = Router()
@@ -215,6 +216,24 @@ fracApi.get('/:type/:key', async (req, res) => {
 fracApi.post('/bookmarkDataNode', async (req, res) => {
     try {
         const response = await axios.post(API_END_POINTS.bookmarkDataNode, req.body, {
+            ...axiosRequestConfig,
+            headers: {
+                Authorization: extractAuthorizationFromRequest(req),
+            },
+        })
+        res.status(response.status).send(response.data)
+    } catch (err) {
+        res.status((err && err.response && err.response.status) || 500).send(
+            (err && err.response && err.response.data) || {
+                error: unknownError,
+            }
+        )
+    }
+})
+
+fracApi.post('/filterNodes', async (req, res) => {
+    try {
+        const response = await axios.post(API_END_POINTS.filterNodes, req.body, {
             ...axiosRequestConfig,
             headers: {
                 Authorization: extractAuthorizationFromRequest(req),

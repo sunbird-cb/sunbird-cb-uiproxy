@@ -410,6 +410,16 @@ export const API_LIST = {
                 ROLE.STATE_ADMIN,
             ],
         },
+        '/proxies/v8/org/v1/profile/patch': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.CBC_ADMIN,
+                ROLE.MDO_ADMIN,
+                ROLE.SPV_ADMIN,
+                ROLE.STATE_ADMIN,
+            ],
+        },
         '/proxies/v8/org/v1/update': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -1771,6 +1781,14 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/org/ext/v1/create': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.SPV_ADMIN,
+                ROLE.STATE_ADMIN,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -1830,6 +1848,7 @@ export const API_LIST = {
             '/proxies/v8/user/v1/search',
             '/proxies/v8/org/v1/read',
             '/proxies/v8/org/v1/profile/read/:orgId',
+            '/proxies/v8/org/v1/profile/patch',
             '/proxies/v8/org/v1/create',
             '/proxies/v8/discussion/tags',
             '/proxies/v8/user/v1/block',
@@ -2006,5 +2025,6 @@ export const API_LIST = {
             '/proxies/v8/ratings/v1/summary/:activityId/:activityType',
             '/proxies/v8/ratings/v1/ratingLookUp',
             '/proxies/v8/user/v1/positions',
+            '/proxies/v8/org/ext/v1/create',
            ],
 }

@@ -35,6 +35,9 @@ publicApiV8.get(['/org/v1/list', '/org/v1/list/:type'], async (req, res) => {
   try {
     const sbUserReadResponse = await axios({
       ...axiosRequestConfig,
+      headers: {
+        Authorization: CONSTANTS.SB_API_KEY,
+      },
       method: 'GET',
       url: urlValue,
     })

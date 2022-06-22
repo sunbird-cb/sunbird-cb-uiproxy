@@ -225,35 +225,6 @@ proxiesV8.use('/notification/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 
-proxiesV8.get('/org/v1/profile/read/:orgId', async (req, res) => {
-  const orgId = req.params.orgId
-  const response = {
-    id: 'api.org.profile.read',
-    params: {
-      status: 'SUCCESS',
-    },
-    responseCode: 'OK',
-    result: {
-      response: {
-        organisationId: orgId,
-        profile: {
-          consultancy: {},
-          faculty: {},
-          infrastructure: {},
-          instituteProfile: {},
-          platformWalkthrough: {},
-          research: {},
-          rolesAndFunctions: {},
-          trainingPrograms: {},
-        },
-      },
-    },
-
-    ver: 'v1',
-  }
-  res.status(200).send(response)
-})
-
 proxiesV8.use('/org/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )

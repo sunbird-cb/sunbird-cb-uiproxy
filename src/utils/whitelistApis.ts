@@ -400,7 +400,7 @@ export const API_LIST = {
                 ROLE.STATE_ADMIN,
             ],
         },
-        '/proxies/v8/org/v1/profile/read/:orgId': {
+        '/proxies/v8/org/v1/profile/read': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -1847,7 +1847,7 @@ export const API_LIST = {
             '/proxies/v8/user/private/v1/assign/role',
             '/proxies/v8/user/v1/search',
             '/proxies/v8/org/v1/read',
-            '/proxies/v8/org/v1/profile/read/:orgId',
+            '/proxies/v8/org/v1/profile/read',
             '/proxies/v8/org/v1/profile/patch',
             '/proxies/v8/org/v1/create',
             '/proxies/v8/discussion/tags',

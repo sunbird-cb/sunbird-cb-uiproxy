@@ -26,6 +26,7 @@ import { extractUserIdFromRequest, extractUserToken } from '../utils/requestExtr
 
 const API_END_POINTS = {
   contentNotificationEmail: `${CONSTANTS.NOTIFICATION_SERVIC_API_BASE}/v1/notification/send/sync`,
+  kongSearchOrg: `${CONSTANTS.KONG_API_BASE}/org/v1/search`,
   orgTypeListEndPoint: `${CONSTANTS.KONG_API_BASE}/data/v1/system/settings/get/orgTypeList`,
 }
 
@@ -228,6 +229,26 @@ proxiesV8.use('/notification/*',
   // tslint:disable-next-line: max-line-length
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
+
+proxiesV8.post('/org/v1/search', async (req, res) => {
+  const roleData = lodash.get(req, 'session.userRoles')
+  const rootOrgId = lodash.get(req, 'session.rootOrgId')
+  if (roleData.includes('STATE_ADMIN')) {
+    req.body.request.filters.externalId = rootOrgId
+  }
+  const searchResponse = await axios({
+    ...axiosRequestConfig,
+    data: req.body,
+    headers: {
+        Authorization: CONSTANTS.SB_API_KEY,
+        // tslint:disable-next-line: all
+        'x-authenticated-user-token': extractUserToken(req),
+    },
+    method: 'POST',
+    url: API_END_POINTS.kongSearchOrg,
+  })
+  res.status(200).send(searchResponse.data)
+})
 
 proxiesV8.use('/org/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)

@@ -26,6 +26,7 @@ import { extractUserIdFromRequest, extractUserToken } from '../utils/requestExtr
 
 const API_END_POINTS = {
   contentNotificationEmail: `${CONSTANTS.NOTIFICATION_SERVIC_API_BASE}/v1/notification/send/sync`,
+  kongExtOrgSearch: `${CONSTANTS.KONG_API_BASE}/org/v1/cb/ext/search`,
   kongSearchOrg: `${CONSTANTS.KONG_API_BASE}/org/v1/search`,
   orgTypeListEndPoint: `${CONSTANTS.KONG_API_BASE}/data/v1/system/settings/get/orgTypeList`,
 }
@@ -233,8 +234,10 @@ proxiesV8.use('/notification/*',
 proxiesV8.post('/org/v1/search', async (req, res) => {
   const roleData = lodash.get(req, 'session.userRoles')
   const rootOrgId = lodash.get(req, 'session.rootOrgId')
+  let urlPath = API_END_POINTS.kongSearchOrg
   if (roleData.includes('STATE_ADMIN')) {
-    req.body.request.filters.externalId = rootOrgId
+    req.body.request.filters.sbRootOrgId = rootOrgId
+    urlPath = API_END_POINTS.kongExtOrgSearch
   }
   const searchResponse = await axios({
     ...axiosRequestConfig,
@@ -245,7 +248,7 @@ proxiesV8.post('/org/v1/search', async (req, res) => {
         'x-authenticated-user-token': extractUserToken(req),
     },
     method: 'POST',
-    url: API_END_POINTS.kongSearchOrg,
+    url: urlPath,
   })
   res.status(200).send(searchResponse.data)
 })

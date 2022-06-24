@@ -69,6 +69,13 @@ export const API_LIST = {
                 ROLE.PUBLIC, 'ALL',
             ],
         },
+        '/proxies/v8/user/v1/updateLogin': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC, 'ALL',
+            ],
+        },
         '/proxies/v8/event/v4/read/:do_id': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -233,6 +240,7 @@ export const API_LIST = {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
+                ROLE.CONTENT_PUBLISHER,
                 ROLE.CONTENT_REVIEWER,
             ],
         },
@@ -340,6 +348,7 @@ export const API_LIST = {
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
+                ROLE.STATE_ADMIN,
             ],
         },
         '/proxies/v8/org/v1/search': {
@@ -356,6 +365,7 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
                 ROLE.CBP_ADMIN,
+                ROLE.STATE_ADMIN,
                 ROLE.CONTENT_CREATOR,
             ],
         },
@@ -373,6 +383,27 @@ export const API_LIST = {
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
+                ROLE.STATE_ADMIN,
+            ],
+        },
+        '/proxies/v8/org/v1/profile/read': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.CBC_ADMIN,
+                ROLE.MDO_ADMIN,
+                ROLE.SPV_ADMIN,
+                ROLE.STATE_ADMIN,
+            ],
+        },
+        '/proxies/v8/org/v1/profile/patch': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.CBC_ADMIN,
+                ROLE.MDO_ADMIN,
+                ROLE.SPV_ADMIN,
+                ROLE.STATE_ADMIN,
             ],
         },
         '/proxies/v8/org/v1/update': {
@@ -382,6 +413,7 @@ export const API_LIST = {
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
+                ROLE.STATE_ADMIN,
             ],
         },
         '/proxies/v8/user/v1/block': {
@@ -391,6 +423,7 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
                 ROLE.CBP_ADMIN,
+                ROLE.STATE_ADMIN,
                 ROLE.CONTENT_CREATOR,
             ],
         },
@@ -401,6 +434,7 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
                 ROLE.CBP_ADMIN,
+                ROLE.STATE_ADMIN,
                 ROLE.CONTENT_CREATOR,
             ],
         },
@@ -411,6 +445,7 @@ export const API_LIST = {
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
+                ROLE.STATE_ADMIN,
             ],
         },
         '/proxies/v8/discussion/tags': {
@@ -427,6 +462,7 @@ export const API_LIST = {
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
+                ROLE.STATE_ADMIN,
             ],
         },
         '/proxies/v8/learnervm/private/content/v3/publish/:do_id': {
@@ -513,6 +549,7 @@ export const API_LIST = {
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
+                ROLE.STATE_ADMIN,
             ],
         },
         '/proxies/v8/user/private/v1/migrate': {
@@ -727,6 +764,7 @@ export const API_LIST = {
                 ROLE.SPV_ADMIN,
                 ROLE.CBP_ADMIN,
                 ROLE.CONTENT_CREATOR,
+                ROLE.STATE_ADMIN,
             ],
         },
         '/protected/v8/user/profileRegistry/getUserRegistryByUser/:id': {
@@ -767,6 +805,7 @@ export const API_LIST = {
                 ROLE.WAT_MEMBER,
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
+                ROLE.STATE_ADMIN,
             ],
         },
         '/protected/v8/user/autocomplete/:query': {
@@ -798,6 +837,7 @@ export const API_LIST = {
                 ROLE.WAT_MEMBER,
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
+                ROLE.STATE_ADMIN,
             ],
         },
         '/protected/v8/workallocation/getWorkOrders': {
@@ -1280,10 +1320,10 @@ export const API_LIST = {
             ],
         },
         '/reset': {
-            checksNeeded: [],
+            checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.PUBLIC,
+                ROLE.PUBLIC, 'ALL',
             ],
         },
         '/protected/v8/user/evaluate/assessment/submit/v2': {
@@ -1728,6 +1768,14 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/org/ext/v1/create': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.SPV_ADMIN,
+                ROLE.STATE_ADMIN,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -1739,6 +1787,7 @@ export const API_LIST = {
             '/authApi/readCert/:certId',
             '/proxies/v8/api/user/v2/read',
             '/proxies/v8/api/user/v2/read/:id',
+            '/proxies/v8/user/v1/updateLogin',
             '/proxies/v8/event/v4/read/:do_id',
             '/proxies/v8/event/v4/publish/:do_id',
             '/proxies/v8/event/v4/create',
@@ -1783,6 +1832,8 @@ export const API_LIST = {
             '/proxies/v8/user/private/v1/assign/role',
             '/proxies/v8/user/v1/search',
             '/proxies/v8/org/v1/read',
+            '/proxies/v8/org/v1/profile/read',
+            '/proxies/v8/org/v1/profile/patch',
             '/proxies/v8/org/v1/create',
             '/proxies/v8/discussion/tags',
             '/proxies/v8/user/v1/block',
@@ -1958,6 +2009,7 @@ export const API_LIST = {
             '/proxies/v8/ratings/v1/upsert',
             '/proxies/v8/ratings/v1/summary/:activityId/:activityType',
             '/proxies/v8/ratings/v1/ratingLookUp',
-            '/proxies/v8/user/v1/positions'
+            '/proxies/v8/user/v1/positions',
+            '/proxies/v8/org/ext/v1/create',
            ],
 }

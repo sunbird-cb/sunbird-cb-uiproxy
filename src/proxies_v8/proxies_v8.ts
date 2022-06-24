@@ -2,6 +2,7 @@ import axios from 'axios'
 import express from 'express'
 import { UploadedFile } from 'express-fileupload'
 import FormData from 'form-data'
+import lodash from 'lodash'
 import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
 import { logInfo } from '../utils/logger'
@@ -25,6 +26,9 @@ import { extractUserIdFromRequest, extractUserToken } from '../utils/requestExtr
 
 const API_END_POINTS = {
   contentNotificationEmail: `${CONSTANTS.NOTIFICATION_SERVIC_API_BASE}/v1/notification/send/sync`,
+  kongExtOrgSearch: `${CONSTANTS.KONG_API_BASE}/org/v1/cb/ext/search`,
+  kongSearchOrg: `${CONSTANTS.KONG_API_BASE}/org/v1/search`,
+  orgTypeListEndPoint: `${CONSTANTS.KONG_API_BASE}/data/v1/system/settings/get/orgTypeList`,
 }
 
 export const proxiesV8 = express.Router()
@@ -51,6 +55,7 @@ proxiesV8.post('/upload/*', (req, res) => {
           Authorization: CONSTANTS.SB_API_KEY,
           org: 'dopt',
           rootorg: 'igot',
+          // tslint:disable-next-line: all
           'x-authenticated-user-token': extractUserToken(req),
           'x-authenticated-userid': extractUserIdFromRequest(req),
         },
@@ -94,6 +99,7 @@ proxiesV8.post('/private/upload/*', (_req, _res) => {
           Authorization: CONSTANTS.SB_API_KEY,
           org: 'dopt',
           rootorg: 'igot',
+          // tslint:disable-next-line: all
           'x-authenticated-user-token': extractUserToken(_req),
           'x-authenticated-userid': extractUserIdFromRequest(_req),
         },
@@ -221,6 +227,28 @@ proxiesV8.use('/notification/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 
+proxiesV8.post('/org/v1/search', async (req, res) => {
+  const roleData = lodash.get(req, 'session.userRoles')
+  const rootOrgId = lodash.get(req, 'session.rootOrgId')
+  let urlPath = API_END_POINTS.kongSearchOrg
+  if (roleData.includes('STATE_ADMIN')) {
+    req.body.request.filters.sbRootOrgId = rootOrgId
+    urlPath = API_END_POINTS.kongExtOrgSearch
+  }
+  const searchResponse = await axios({
+    ...axiosRequestConfig,
+    data: req.body,
+    headers: {
+        Authorization: CONSTANTS.SB_API_KEY,
+        // tslint:disable-next-line: all
+        'x-authenticated-user-token': extractUserToken(req),
+    },
+    method: 'POST',
+    url: urlPath,
+  })
+  res.status(200).send(searchResponse.data)
+})
+
 proxiesV8.use('/org/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
@@ -276,6 +304,36 @@ proxiesV8.use('/wat/dashboard/*',
   // tslint:disable-next-line: max-line-length
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.DASHBOARD_API_BASE}`)
 )
+
+proxiesV8.get('/data/v1/system/settings/get/orgTypeList', async (req, res) => {
+  const roleData = lodash.get(req, 'session.userRoles')
+  logInfo('orgTypeList API call : Users Roles are...')
+  logInfo(roleData)
+  const response = await axios({
+    ...axiosRequestConfig,
+    headers: {
+      Authorization: CONSTANTS.SB_API_KEY,
+      // tslint:disable-next-line: all
+      'x-authenticated-user-token': extractUserToken(req),
+    },
+    method: 'GET',
+    url: API_END_POINTS.orgTypeListEndPoint,
+  })
+  if (roleData.includes('STATE_ADMIN')) {
+    const hiddenList = ['CBC', 'CBP', 'STATE']
+    const orgTypeListObj = JSON.parse(response.data.result.response.value)
+    const orgTypeList = orgTypeListObj.orgTypeList
+    // tslint:disable-next-line: no-any
+    orgTypeList.forEach((element: any) => {
+      if (hiddenList.includes(element.name)) {
+        element.isHidden = true
+      }
+    })
+    orgTypeListObj.orgTypeList = orgTypeList
+    response.data.result.response.value = JSON.stringify(orgTypeListObj)
+  }
+  res.status(200).send(response.data)
+})
 
 proxiesV8.use('/data/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)

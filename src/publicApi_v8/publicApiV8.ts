@@ -15,3 +15,5 @@ publicApiV8.use('/assets',
   proxyCreatorRoute(express.Router(), CONSTANTS.WEB_HOST_PROXY + '/web-hosted/web-client-public-assets'))
 
 publicApiV8.use('/workallocation', workallocationPublic)
+
+publicApiV8.use('/org/v1/list', proxyCreatorRoute(express.Router(), CONSTANTS.KONG_API_BASE + '/org/v1/list'))

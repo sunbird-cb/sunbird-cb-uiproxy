@@ -15,7 +15,7 @@ googleAuth.get('/auth', async (req, res) => {
     res.redirect(googleUrl)
 })
 
-googleAuth.post('/callback', async (req, res) => {
+googleAuth.get('/callback', async (req, res) => {
     try {
         const googleProfile = await getGoogleProfile(req)
         logInfo('Successfully got authenticated with google...')

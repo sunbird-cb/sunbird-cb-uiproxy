@@ -1,7 +1,7 @@
 import express from 'express'
 import { CONSTANTS } from '../utils/env'
 import { logError, logInfo } from '../utils/logger'
-const { googleOauth } = require('googleOauthHelper')
+import { getGoogleProfile } from './googleOAuthHelper'
 
 export const googleAuth = express.Router()
 
@@ -16,7 +16,7 @@ googleAuth.get('/auth', async (req, res) => {
 
 googleAuth.post('/callback', async (req, res) => {
     try {
-        const googleProfile = await googleOauth.getProfile(req)
+        const googleProfile = await getGoogleProfile(req)
         logInfo('Successfully got authenticated with google...')
         logInfo('Email: ' + googleProfile.emailId)
         res.status(200).send(googleProfile)

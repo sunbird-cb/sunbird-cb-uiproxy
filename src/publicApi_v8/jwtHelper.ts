@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
  * @param accessToken
  * @returns {*}
  */
-const getUserIdFromToken = (accessToken: string) => {
+export function getUserIdFromToken(accessToken: string) {
   const jwtPayload = jwt.decode(accessToken)
   if (jwtPayload && jwtPayload.sub) {
     const splittedSub = jwtPayload.sub.split(':')
@@ -21,8 +21,6 @@ const getUserIdFromToken = (accessToken: string) => {
  * @param token
  * @returns {null|{payload, signature, header}}
  */
-const decodeToken = (token: string) => {
+export function decodeToken(token: string) {
   return jwt.decode(token)
 }
-
-module.exports = {getUserIdFromToken, decodeToken}

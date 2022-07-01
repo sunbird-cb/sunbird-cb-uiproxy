@@ -573,6 +573,7 @@ export const API_LIST = {
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
+                ROLE.STATE_ADMIN,
             ],
         },
         '/proxies/v8/user/private/v1/assign/role/userrole': {

@@ -4,7 +4,7 @@ import { logError, logInfo } from '../utils/logger'
 import { decodeToken } from './jwtHelper'
 const _ = require('lodash')
 
-const redirectPath = 'apis/public/v8/google/callback'
+const redirectPath = '/apis/public/v8/google/callback'
 const defaultScope = ['https://www.googleapis.com/auth/userinfo.email']
 
 // tslint:disable-next-line: no-any

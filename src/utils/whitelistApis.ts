@@ -321,7 +321,7 @@ export const API_LIST = {
                 ROLE.EDITOR,
             ],
         },
-        '/proxies/v8/v1/content/copy': {
+        '/proxies/v8/v1/content/copy/:do_id': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -1846,7 +1846,7 @@ export const API_LIST = {
             '/proxies/v8/action/content/v3/create',
             '/proxies/v8/upload/action/content/v3/upload/:do_id',
             '/proxies/v8/v1/content/retire',
-            '/proxies/v8/v1/content/copy',
+            '/proxies/v8/v1/content/copy/:do_id',
             '/proxies/v8/action/content/v3/updateReviewStatus/:do_id',
             '/proxies/v8/action/content/v3/review/:do_id',
             '/proxies/v8/discussion/recent',

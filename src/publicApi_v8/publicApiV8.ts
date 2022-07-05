@@ -1,7 +1,7 @@
 import express from 'express'
 import { CONSTANTS } from '../utils/env'
 import { proxyCreatorRoute } from '../utils/proxyCreator'
-import { googleAuth } from './googleauth'
+import { googleOAuth2 } from './googleOAuth2'
 import { workallocationPublic } from './workallocationPublic'
 
 export const publicApiV8 = express.Router()
@@ -19,4 +19,4 @@ publicApiV8.use('/workallocation', workallocationPublic)
 
 publicApiV8.use('/org/v1/list', proxyCreatorRoute(express.Router(), CONSTANTS.KONG_API_BASE + '/org/v1/list'))
 
-publicApiV8.use('/google', googleAuth)
+publicApiV8.use('/google', googleOAuth2)

@@ -162,7 +162,7 @@ export const CONSTANTS = {
   KARMAYOGI_PORTAL_HOST: env.KARMAYOGI_PORTAL_HOST || 'igot-dev.in',
   GOOGLE_CLIENT_ID: env.GOOGLE_CLIENT_ID || 'googleClientId',
   GOOGLE_CLIENT_SECRET: env.GOOGLE_CLIENT_SECRET || 'googleClientSecret',
-  PARICHAY_CLIENT_ID: env.PARICHAY_CLIENT_ID || 'parichayClientId'
+  PARICHAY_CLIENT_ID: env.PARICHAY_CLIENT_ID || 'parichayClientId',
 }
 
 export const RESTRICTED_PYTHON_STMT: string[] = process.env.RESTRICTED_CHARACTERS

@@ -17,6 +17,6 @@ parichayAuth.get('/auth', async (req, res) => {
 })
 
 parichayAuth.get('/callback', async (req, res) => {
-    logInfo("Query Params -> " + req.query)
+    logInfo('Query Params -> ' + req.query)
     res.status(200)
 })

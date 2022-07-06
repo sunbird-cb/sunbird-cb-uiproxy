@@ -2,8 +2,8 @@ import express from 'express'
 import { CONSTANTS } from '../utils/env'
 import { proxyCreatorRoute } from '../utils/proxyCreator'
 import { googleOAuth2 } from './googleOAuth2'
-import { workallocationPublic } from './workallocationPublic'
 import { parichayAuth } from './parichayAuth'
+import { workallocationPublic } from './workallocationPublic'
 
 export const publicApiV8 = express.Router()
 

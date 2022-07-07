@@ -45,6 +45,7 @@ export async function getGoogleProfile(req: any) {
             })
             const googleProfileFetched = await oauth2.userinfo.get() || {}
             userInfo = googleProfileFetched.data || {}
+            logInfo('userInformation fetched -> ' + JSON.stringify(googleProfileFetched.data))
         }
         logInfo('userInformation fetched successfully. UserInfo: ' + JSON.stringify(userInfo))
         return {

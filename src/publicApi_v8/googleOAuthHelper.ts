@@ -5,7 +5,7 @@ import { decodeToken } from './jwtHelper'
 const _ = require('lodash')
 
 const redirectPath = '/apis/public/v8/google/callback'
-const defaultScope = ['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile', 'openid']
+const defaultScope = ['https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile+openid']
 
 // tslint:disable-next-line: no-any
 export function createConnection(req: any) {

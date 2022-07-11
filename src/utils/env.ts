@@ -163,6 +163,10 @@ export const CONSTANTS = {
   GOOGLE_CLIENT_ID: env.GOOGLE_CLIENT_ID || 'googleClientId',
   GOOGLE_CLIENT_SECRET: env.GOOGLE_CLIENT_SECRET || 'googleClientSecret',
   PARICHAY_CLIENT_ID: env.PARICHAY_CLIENT_ID || 'parichayClientId',
+  PARICHAY_CLIENT_SECRET: env.PARICHAY_CLIENT_SECRET || 'parichayClientSecret',
+  KEYCLOAK_GOOGLE_CLIENT_ID: env.KEYCLOAK_GOOGLE_CLIENT_ID || 'keycloakGoogleClientId',
+  KEYCLOAK_GOOGLE_CLIENT_SECRET: env.KEYCLOAK_GOOGLE_CLIENT_SECRET || 'keycloakGoogleClientSecret',
+  PORTAL_AUTH_SERVER_URL: env.PORTAL_AUTH_SERVER_URL || 'https://igot-dev.in/auth',
 }
 
 export const RESTRICTED_PYTHON_STMT: string[] = process.env.RESTRICTED_CHARACTERS

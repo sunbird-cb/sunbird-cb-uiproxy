@@ -1,7 +1,10 @@
+import axios from 'axios'
 const { google } = require('googleapis')
+import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
 import { logError, logInfo } from '../utils/logger'
 import { decodeToken } from './jwtHelper'
+
 const _ = require('lodash')
 
 const redirectPath = '/apis/public/v8/google/callback'
@@ -57,3 +60,20 @@ export async function getGoogleProfile(req: any) {
     }
     return {}
 }
+
+export async function fetchUserByEmailId(emailId: string) {
+    const sbUserExistsResponse = await axios({
+        ...axiosRequestConfig,
+        headers: {
+            Authorization: CONSTANTS.SB_API_KEY,
+        },
+        method: 'GET',
+        url: CONSTANTS.KONG_API_BASE + '/user/v1/exists/email/' + emailId,
+    })
+    if (sbUserExistsResponse.data.responseCode.toUpperCase() === 'OK') {
+        return sbUserExistsResponse.data.result.exists
+    } else {
+        logError('googleOauthHelper: fetchUserByEmailId failed' + JSON.stringify(sbUserExistsResponse.data))
+    }
+    return false
+  }

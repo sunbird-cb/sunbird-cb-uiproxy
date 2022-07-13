@@ -3,10 +3,7 @@ const { google } = require('googleapis')
 import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
 import { logError, logInfo } from '../utils/logger'
-import { decodeToken } from './jwtHelper'
 import { getKeyCloakClient } from './keycloakHelper'
-
-const _ = require('lodash')
 
 const API_END_POINTS = {
     kongCreateUser: `${CONSTANTS.KONG_API_BASE}/user/v2/signup`,
@@ -47,18 +44,11 @@ export async function getGoogleProfile(req: any) {
         })
         const googleProfileFetched = await oauth2.userinfo.get() || {}
         logInfo('userInformation fetched -> ' + JSON.stringify(googleProfileFetched.data))
-        const tokenInfo = decodeToken(tokens.id_token)
-        let userInfo = {
-            email: tokenInfo.email,
-            name: tokenInfo.name,
-            surname: '',
-        }
-        userInfo = googleProfileFetched.data || {}
-        logInfo('userInformation fetched successfully. UserInfo: ' + JSON.stringify(userInfo))
         return {
-            emailId: userInfo.email,
-            name: userInfo.name,
-            surname: userInfo.surname,
+            emailId: googleProfileFetched.data.email,
+            firstName: googleProfileFetched.data.given_name,
+            lastName: googleProfileFetched.data.family_name,
+            name: googleProfileFetched.data.name,
         }
     } catch (err) {
         logError('Failed to get user profile: ' + JSON.stringify(err))
@@ -112,44 +102,30 @@ export async function getQueryParams(queryObj: any) {
 }
 
 // tslint:disable-next-line: no-any
-export async function createSession(emailId: string, reqQuery: any, req: any, res: any) {
+export async function createSession(emailId: string, req: any, res: any) {
     // tslint:disable-next-line: no-any
     let grant: { access_token: { token: any }; refresh_token: { token: any } }
     const scope = 'offline_access'
     const keycloakClient = getKeyCloakClient()
-    if (_.get(req, 'session.mergeAccountInfo.initiatorAccountDetails') || reqQuery.merge_account_process === '1') {
+    logInfo('login in progress')
+    // tslint:disable-next-line: no-any
+    try {
         grant = await keycloakClient.grantManager.obtainDirectly(emailId, undefined, undefined, scope)
-        logInfo('grant received', JSON.stringify(grant.access_token.token))
-        if (!['android', 'desktop'].includes(reqQuery.client_id)) {
-            req.session.mergeAccountInfo.mergeFromAccountDetails = {
-              sessionToken: grant.access_token.token,
-            }
-          }
-        return {
-            access_token: grant.access_token.token,
-            refresh_token: grant.refresh_token.token,
-        }
-    } else {
-        logInfo('login in progress')
-        // tslint:disable-next-line: no-any
-        try {
-            grant = await keycloakClient.grantManager.obtainDirectly(emailId, undefined, undefined, scope)
-        } catch (err) {
-            logError('googleOauthHelper: createSession failed')
-            throw new Error('unable to create session')
-        }
-        keycloakClient.storeGrant(grant, req, res)
-        req.kauth.grant = grant
-        return new Promise((resolve, reject) => {
-            // tslint:disable-next-line: no-any
-            keycloakClient.authenticated(req, (error: any) => {
-                if (error) {
-                    logError('googleauthhelper:createSession error creating session')
-                    reject('GOOGLE_CREATE_SESSION_FAILED')
-                } else {
-                    resolve({access_token: grant.access_token.token, refresh_token: grant.refresh_token.token})
-                }
-            })
-        })
+    } catch (err) {
+        logError('googleOauthHelper: createSession failed')
+        throw new Error('unable to create session')
     }
+    keycloakClient.storeGrant(grant, req, res)
+    req.kauth.grant = grant
+    return new Promise((resolve, reject) => {
+        // tslint:disable-next-line: no-any
+        keycloakClient.authenticated(req, (error: any) => {
+            if (error) {
+                logError('googleauthhelper:createSession error creating session')
+                reject('GOOGLE_CREATE_SESSION_FAILED')
+            } else {
+                resolve({access_token: grant.access_token.token, refresh_token: grant.refresh_token.token})
+            }
+        })
+    })
 }

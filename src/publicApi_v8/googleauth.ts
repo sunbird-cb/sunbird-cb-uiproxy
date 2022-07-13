@@ -4,11 +4,6 @@ import { logError, logInfo } from '../utils/logger'
 import { createSession, createUserWithMailId, fetchUserByEmailId, getGoogleProfile, getQueryParams } from './googleOAuthHelper'
 
 export const googleAuth = express.Router()
-const lodash = require('lodash')
-
-const REQUIRED_STATE_FIELD = ['client_id', 'redirect_uri', 'error_callback', 'scope', 'state',
-'response_type', 'version', 'merge_account_process']
-const KEYCLOACK_AUTH_CALLBACK_STRING = 'auth_callback=1'
 
 googleAuth.get('/auth', async (req, res) => {
     logInfo('Received host ? ' + req.hostname)
@@ -33,18 +28,19 @@ googleAuth.get('/callback', async (req, res) => {
         logInfo('is Sunbird User Exist ? ' + isUserExist)
         if (!isUserExist) {
             newUserDetails = await createUserWithMailId(googleProfile.emailId,
-            googleProfile.name, googleProfile.surname ? googleProfile.surname : '')
+            googleProfile.firstName, googleProfile.lastName)
         }
-        const reqQuery = lodash.pick(JSON.parse(req.query.state), REQUIRED_STATE_FIELD)
-        const keyCloakToken = await createSession(googleProfile.emailId, reqQuery, req, res)
+        const keyCloakToken = await createSession(googleProfile.emailId, req, res)
         logInfo('keyCloakToken fetched' + JSON.stringify(keyCloakToken))
-        let redirectUrl = reqQuery.redirect_uri.replace(KEYCLOACK_AUTH_CALLBACK_STRING, '')
-        if (reqQuery.client_id === 'desktop') {
-          redirectUrl = reqQuery.redirect_uri.split('?')[0] + getQueryParams(keyCloakToken)
+        const host = req.get('host')
+        let redirectUrl = `https://${host}/protected/v8/resource/`
+        if (keyCloakToken) {
+          redirectUrl = redirectUrl + '?' + getQueryParams(keyCloakToken)
         }
         logInfo('redirect url ' + redirectUrl)
         logInfo('google sign in success', JSON.stringify({googleProfile, isUserExist, newUserDetails, redirectUrl}))
-        res.status(200).send(googleProfile)
+
+        res.redirect(redirectUrl)
     } catch (err) {
         logError('Failed to process callback event. Error: ' + JSON.stringify(err))
     }

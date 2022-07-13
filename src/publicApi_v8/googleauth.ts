@@ -25,7 +25,7 @@ googleAuth.get('/callback', async (req, res) => {
     let newUserDetails = {}
     try {
         logInfo('Successfully received callback from google. Received query params -> ' + JSON.stringify(req.query))
-        
+
         const googleProfile = await getGoogleProfile(req)
         logInfo('Successfully got authenticated with google...')
         logInfo('Email: ' + googleProfile.emailId)

@@ -40,6 +40,13 @@ export async function getGoogleProfile(req: any) {
         }
         const { tokens } = await client.getToken(req.query.code)
         client.setCredentials(tokens)
+        logInfo('userInformation being fetched from oauth2 api')
+        const oauth2 = await google.oauth2({
+            auth: client,
+            version: 'v2',
+        })
+        const googleProfileFetched = await oauth2.userinfo.get() || {}
+        logInfo('userInformation fetched -> ' + JSON.stringify(googleProfileFetched.data))
         const tokenInfo = decodeToken(tokens.id_token)
         let userInfo = {
             email: tokenInfo.email,

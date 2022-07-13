@@ -24,16 +24,18 @@ googleAuth.get('/auth', async (req, res) => {
 googleAuth.get('/callback', async (req, res) => {
     let newUserDetails = {}
     try {
-        const reqQuery = lodash.pick(JSON.parse(req.query.state), REQUIRED_STATE_FIELD)
+        logInfo('Successfully received callback from google. Received query params -> ' + JSON.stringify(req.query))
+        
         const googleProfile = await getGoogleProfile(req)
         logInfo('Successfully got authenticated with google...')
         logInfo('Email: ' + googleProfile.emailId)
         const isUserExist =  await fetchUserByEmailId(googleProfile.emailId)
         logInfo('is Sunbird User Exist ? ' + isUserExist)
         if (!isUserExist) {
-           newUserDetails = await createUserWithMailId(googleProfile.emailId,
+            newUserDetails = await createUserWithMailId(googleProfile.emailId,
             googleProfile.name, googleProfile.surname ? googleProfile.surname : '')
         }
+        const reqQuery = lodash.pick(JSON.parse(req.query.state), REQUIRED_STATE_FIELD)
         const keyCloakToken = await createSession(googleProfile.emailId, reqQuery, req, res)
         logInfo('keyCloakToken fetched' + JSON.stringify(keyCloakToken))
         let redirectUrl = reqQuery.redirect_uri.replace(KEYCLOACK_AUTH_CALLBACK_STRING, '')

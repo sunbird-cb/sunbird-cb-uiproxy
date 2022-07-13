@@ -43,7 +43,7 @@ parichayAuth.get('/callback', async (req, res) => {
             Authorization: tokenResponse.data.access_token,
         },
         method: 'GET',
-        url: 'https://parichay.staging.nic.in/v1/salt/api/oauth2/userdetails',
+        url: 'https://parichay.staging.nic.in/pnv1/salt/api/oauth2/userdetails',
     })
     logInfo('Received user Details -> ' + JSON.stringify(userDetailResponse.data))
     res.status(200).send(userDetailResponse.data)

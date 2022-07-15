@@ -1,7 +1,7 @@
 import express from 'express'
 import { CONSTANTS } from '../utils/env'
 import { logError, logInfo } from '../utils/logger'
-import { createSession, createUserWithMailId, fetchUserByEmailId, getGoogleProfile, getQueryParams } from './googleOAuthHelper'
+import { createSession, createUserWithMailId, fetchUserByEmailId, getGoogleProfile } from './googleOAuthHelper'
 
 export const googleAuth = express.Router()
 
@@ -33,10 +33,7 @@ googleAuth.get('/callback', async (req, res) => {
         const keyCloakToken = await createSession(googleProfile.emailId, req, res)
         logInfo('keyCloakToken fetched' + JSON.stringify(keyCloakToken))
         const host = req.get('host')
-        let redirectUrl = `https://${host}/protected/v8/resource/`
-        if (keyCloakToken) {
-          redirectUrl = redirectUrl + '?' + getQueryParams(keyCloakToken)
-        }
+        const redirectUrl = `https://${host}/protected/v8/resource/`
         logInfo('redirect url ' + redirectUrl)
         logInfo('google sign in success', JSON.stringify({googleProfile, isUserExist, newUserDetails, redirectUrl}))
 

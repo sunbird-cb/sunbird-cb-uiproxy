@@ -1,13 +1,7 @@
-import axios from 'axios'
 const { google } = require('googleapis')
-import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
 import { logError, logInfo } from '../utils/logger'
 import { getKeyCloakClient } from './keycloakHelper'
-
-const API_END_POINTS = {
-    kongCreateUser: `${CONSTANTS.KONG_API_BASE}/user/v2/signup`,
-}
 
 const redirectPath = '/apis/public/v8/google/callback'
 const defaultScope = ['https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile+openid']
@@ -54,44 +48,6 @@ export async function getGoogleProfile(req: any) {
         logError('Failed to get user profile: ' + JSON.stringify(err))
     }
     return {}
-}
-
-export async function fetchUserByEmailId(emailId: string) {
-    const sbUserExistsResponse = await axios({
-        ...axiosRequestConfig,
-        headers: {
-            Authorization: CONSTANTS.SB_API_KEY,
-        },
-        method: 'GET',
-        url: CONSTANTS.KONG_API_BASE + '/user/v1/exists/email/' + emailId,
-    })
-    if (sbUserExistsResponse.data.responseCode.toUpperCase() === 'OK') {
-        return sbUserExistsResponse.data.result.exists
-    } else {
-        logError('googleOauthHelper: fetchUserByEmailId failed' + JSON.stringify(sbUserExistsResponse.data))
-    }
-    return false
-}
-
-export async function createUserWithMailId(emailId: string, firstName: string, lastName: string) {
-    const response = await axios({
-        ...axiosRequestConfig,
-        data: { request: {
-            email: emailId,
-            emailVerified: true, firstName,
-            lastName,
-        } },
-         headers: {
-            Authorization: CONSTANTS.SB_API_KEY,
-        },
-        method: 'POST',
-        url: API_END_POINTS.kongCreateUser,
-    })
-    if (response.data.responseCode === 'CLIENT_ERROR') {
-        throw new Error('FAILED_TO_CREATE_USER')
-    } else {
-        return response.data
-    }
 }
 
 // tslint:disable-next-line: no-any

@@ -1,7 +1,8 @@
 import express from 'express'
 import { CONSTANTS } from '../utils/env'
 import { logError, logInfo } from '../utils/logger'
-import { createSession, createUserWithMailId, fetchUserByEmailId, getGoogleProfile } from './googleOAuthHelper'
+import { getGoogleProfile } from './googleOAuthHelper'
+import { createUserWithMailId, fetchUserByEmailId, updateKeycloakSession } from './ssoUserHelper'
 
 export const googleAuth = express.Router()
 
@@ -17,26 +18,20 @@ googleAuth.get('/auth', async (req, res) => {
 })
 
 googleAuth.get('/callback', async (req, res) => {
-    let newUserDetails = {}
     try {
         logInfo('Successfully received callback from google. Received query params -> ' + JSON.stringify(req.query))
-
         const googleProfile = await getGoogleProfile(req)
         logInfo('Successfully got authenticated with google...')
         logInfo('Email: ' + googleProfile.emailId)
         const isUserExist =  await fetchUserByEmailId(googleProfile.emailId)
         logInfo('is Sunbird User Exist ? ' + isUserExist)
         if (!isUserExist) {
-            newUserDetails = await createUserWithMailId(googleProfile.emailId,
+            await createUserWithMailId(googleProfile.emailId,
             googleProfile.firstName, googleProfile.lastName)
         }
-        const keyCloakToken = await createSession(googleProfile.emailId, req, res)
-        logInfo('keyCloakToken fetched' + JSON.stringify(keyCloakToken))
+        await updateKeycloakSession(googleProfile.emailId, req, res)
         const host = req.get('host')
         const redirectUrl = `https://${host}/protected/v8/resource/`
-        logInfo('redirect url ' + redirectUrl)
-        logInfo('google sign in success', JSON.stringify({googleProfile, isUserExist, newUserDetails, redirectUrl}))
-
         res.redirect(redirectUrl)
     } catch (err) {
         logError('Failed to process callback event. Error: ' + JSON.stringify(err))

@@ -3,6 +3,7 @@ import express from 'express'
 import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
 import { logInfo } from '../utils/logger'
+import { createUserWithMailId, fetchUserByEmailId, updateKeycloakSession } from './ssoUserHelper'
 
 export const parichayAuth = express.Router()
 
@@ -20,7 +21,6 @@ parichayAuth.get('/auth', async (req, res) => {
 
 parichayAuth.get('/callback', async (req, res) => {
     logInfo('Code Param Value -> ' + req.query.code)
-
     const tokenResponse = await axios({
         ...axiosRequestConfig,
         data: {
@@ -46,5 +46,17 @@ parichayAuth.get('/callback', async (req, res) => {
         url: 'https://parichay.staging.nic.in/pnv1/salt/api/oauth2/userdetails',
     })
     logInfo('Received user Details -> ' + JSON.stringify(userDetailResponse.data))
-    res.status(200).send(userDetailResponse.data)
+    logInfo('Successfully got authenticated with parichay...')
+
+    logInfo('Email: ' + userDetailResponse.data.loginId)
+    const isUserExist =  await fetchUserByEmailId(userDetailResponse.data.loginId)
+    logInfo('is Sunbird User Exist ? ' + isUserExist)
+    if (!isUserExist) {
+        await createUserWithMailId(userDetailResponse.data.loginId,
+            userDetailResponse.data.FirstName, userDetailResponse.data.LastName)
+    }
+    await updateKeycloakSession(userDetailResponse.data.loginId, req, res)
+    const host = req.get('host')
+    const redirectUrl = `https://${host}/protected/v8/resource/`
+    res.redirect(redirectUrl)
 })

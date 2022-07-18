@@ -159,7 +159,7 @@ export function proxyCreatorSunbird(route: Router, targetUrl: string, _timeout =
       // tslint:disable-next-line: no-console
       console.log('REQ_URL_ORIGINAL proxyCreatorSunbird  ======= discussion', url)
     }
-    
+
     // tslint:disable-next-line: no-console
     console.log('REQ_SESSION proxyCreatorSunbird : ', req.session)
 

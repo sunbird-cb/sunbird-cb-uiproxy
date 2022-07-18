@@ -11,3 +11,15 @@ export function getKeycloakConfig(url?: string, realm?: string) {
     'confidential-port': 0,
   }
 }
+
+export function getOAuthKeycloakConfig() {
+  return {
+    bearerOnly: true,
+    credentials: {
+      secret: CONSTANTS.KEYCLOAK_GOOGLE_CLIENT_SECRET,
+    },
+    realm: CONSTANTS.PORTAL_REALM,
+    resource: CONSTANTS.KEYCLOAK_GOOGLE_CLIENT_ID,
+    serverUrl: CONSTANTS.PORTAL_AUTH_SERVER_URL,
+  }
+}

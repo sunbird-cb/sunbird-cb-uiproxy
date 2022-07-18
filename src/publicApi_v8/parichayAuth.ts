@@ -10,13 +10,12 @@ export const parichayAuth = express.Router()
 parichayAuth.get('/auth', async (req, res) => {
     logInfo('Received host : ' + req.hostname)
     let oAuthParams = 'client_id=' + CONSTANTS.PARICHAY_CLIENT_ID
-    oAuthParams = oAuthParams + '&redirect_uri=https://igot-dev.in/apis/public/v8/parichay/callback'
+    oAuthParams = oAuthParams + '&redirect_uri=' + CONSTANTS.PARICHAY_CALLBACK_URL
     oAuthParams = oAuthParams + '&response_type=code&scope=user_details'
-    oAuthParams = oAuthParams + '&code_challenge=pHPBodvujcHz5TNz50MYzwYI915lZkxyspfifbMywDo'
+    oAuthParams = oAuthParams + '&code_challenge=' + CONSTANTS.PARICHAY_CODE_CHALLENGE
     oAuthParams = oAuthParams + '&code_challenge_method=S256'
-    const googleUrl = 'https://parichay.staging.nic.in/pnv1/oauth2/authorize?' + oAuthParams
-    logInfo('parichay Url -> ' + googleUrl)
-    res.redirect(googleUrl)
+    const parichayUrl = CONSTANTS.PARICHAY_AUTH_URL + '?' + oAuthParams
+    res.redirect(parichayUrl)
 })
 
 parichayAuth.get('/callback', async (req, res) => {
@@ -28,14 +27,13 @@ parichayAuth.get('/callback', async (req, res) => {
             client_secret: CONSTANTS.PARICHAY_CLIENT_SECRET,
             code: req.query.code,
             // tslint:disable-next-line: max-line-length
-            code_verifier: 'PC0_RZIP7avm_b2CjbJ6avC7cu870JTVN5VwsC..Ot8h0iqL0RQ0veSFU62wnvMV4tCXI~ozwwrJmDCp5H6k_nW.onAK9SzbndSrcAYv5lc~IBptKPYNChhslg1C98kr',
+            code_verifier: CONSTANTS.PARICHAY_CODE_VERIFIER,
             grant_type: 'authorization_code',
-            redirect_uri: 'https://igot-dev.in/apis/public/v8/parichay/callback',
+            redirect_uri: CONSTANTS.PARICHAY_CALLBACK_URL,
         },
         method: 'POST',
-        url: 'https://parichay.staging.nic.in/pnv1/salt/api/oauth2/token',
+        url: CONSTANTS.PARICHAY_TOKEN_URL,
     })
-    logInfo('Received response for Token API -> ' + JSON.stringify(tokenResponse.data))
 
     const userDetailResponse = await axios({
         ...axiosRequestConfig,
@@ -43,15 +41,12 @@ parichayAuth.get('/callback', async (req, res) => {
             Authorization: tokenResponse.data.access_token,
         },
         method: 'GET',
-        url: 'https://parichay.staging.nic.in/pnv1/salt/api/oauth2/userdetails',
+        url: CONSTANTS.PARICHAY_USER_DETAILS_URL,
     })
-    logInfo('Received user Details -> ' + JSON.stringify(userDetailResponse.data))
-    logInfo('Successfully got authenticated with parichay...')
 
-    logInfo('Email: ' + userDetailResponse.data.loginId)
     const isUserExist =  await fetchUserByEmailId(userDetailResponse.data.loginId)
-    logInfo('is Sunbird User Exist ? ' + isUserExist)
     if (!isUserExist) {
+        logInfo('is Sunbird User Exist not exist for email: ' + userDetailResponse.data.loginId)
         await createUserWithMailId(userDetailResponse.data.loginId,
             userDetailResponse.data.FirstName, userDetailResponse.data.LastName)
     }

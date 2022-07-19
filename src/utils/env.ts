@@ -171,6 +171,7 @@ export const CONSTANTS = {
   PARICHAY_CODE_VERIFIER: env.PARICHAY_CODE_VERIFIER || 'parichayCodeVerfifier',
   PARICHAY_AUTH_URL: env.PARICHAY_AUTH_URL || 'https://parichay.staging.nic.in/pnv1/oauth2/authorize',
   PARICHAY_CALLBACK_URL: env.HTTPS_HOST + '/apis/public/v8/parichay/callback',
+  GOOGLE_CALLBACK_URL: env.HTTPS_HOST + '/apis/public/v8/google/callback',
   PARICHAY_TOKEN_URL: env.PARICHAY_TOKEN_URL || 'parichayTokenUrl',
   PARICHAY_USER_DETAILS_URL: env.PARICHAY_USER_DETAILS_URL || 'parichayUserDetailsUrl',
 }

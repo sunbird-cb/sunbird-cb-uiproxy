@@ -8,8 +8,9 @@ export const googleAuth = express.Router()
 
 googleAuth.get('/auth', async (req, res) => {
     logInfo('Received host ? ' + req.hostname)
+    const redirectUrlHost = 'https://' + req.hostname + CONSTANTS.GOOGLE_AUTH_CALLBACK_URL
     let oAuthParams = 'client_id=' + CONSTANTS.GOOGLE_CLIENT_ID
-    oAuthParams = oAuthParams + '&redirect_uri=https://igot-dev.in/public/sso&prompt=consent'
+    oAuthParams = oAuthParams + '&redirect_uri=' + redirectUrlHost + '&prompt=consent'
     oAuthParams = oAuthParams + '&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email'
     oAuthParams = oAuthParams + '%20https://www.googleapis.com/auth/userinfo.profile'
     const googleUrl = 'https://accounts.google.com/o/oauth2/v2/auth?' + oAuthParams

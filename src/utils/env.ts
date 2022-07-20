@@ -171,9 +171,10 @@ export const CONSTANTS = {
   PARICHAY_CODE_CHALLENGE: env.PARICHAY_CODE_CHALLENGE || 'parichayCodeChallenge',
   PARICHAY_CODE_VERIFIER: env.PARICHAY_CODE_VERIFIER || 'parichayCodeVerfifier',
   PARICHAY_AUTH_URL: env.PARICHAY_AUTH_URL || 'https://parichay.staging.nic.in/pnv1/oauth2/authorize',
-  PARICHAY_CALLBACK_URL: env.HTTPS_HOST + '/apis/public/v8/parichay/callback',
+  PARICHAY_AUTH_CALLBACK_URL: env.PARICHAY_AUTH_CALLBACK_URL || '/apis/public/v8/parichay/callback',
   PARICHAY_TOKEN_URL: env.PARICHAY_TOKEN_URL || 'parichayTokenUrl',
   PARICHAY_USER_DETAILS_URL: env.PARICHAY_USER_DETAILS_URL || 'parichayUserDetailsUrl',
+  GOOGLE_AUTH_CALLBACK_URL: env.GOOGLE_AUTH_CALLBACK_URL || '/apis/public/v8/google/callback',
 }
 
 export const RESTRICTED_PYTHON_STMT: string[] = process.env.RESTRICTED_CHARACTERS

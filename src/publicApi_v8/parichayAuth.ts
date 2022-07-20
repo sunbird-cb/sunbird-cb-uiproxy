@@ -9,8 +9,9 @@ export const parichayAuth = express.Router()
 
 parichayAuth.get('/auth', async (req, res) => {
     logInfo('Received host : ' + req.hostname)
+    const redirectUrl = 'https://' + req.hostname + CONSTANTS.PARICHAY_AUTH_CALLBACK_URL
     let oAuthParams = 'client_id=' + CONSTANTS.PARICHAY_CLIENT_ID
-    oAuthParams = oAuthParams + '&redirect_uri=' + CONSTANTS.PARICHAY_CALLBACK_URL
+    oAuthParams = oAuthParams + '&redirect_uri=' + redirectUrl
     oAuthParams = oAuthParams + '&response_type=code&scope=user_details'
     oAuthParams = oAuthParams + '&code_challenge=' + CONSTANTS.PARICHAY_CODE_CHALLENGE
     oAuthParams = oAuthParams + '&code_challenge_method=S256'
@@ -20,6 +21,7 @@ parichayAuth.get('/auth', async (req, res) => {
 
 parichayAuth.get('/callback', async (req, res) => {
     logInfo('Code Param Value -> ' + req.query.code)
+    let redirectUrl = 'https://' + req.hostname + CONSTANTS.PARICHAY_AUTH_CALLBACK_URL
     const tokenResponse = await axios({
         ...axiosRequestConfig,
         data: {
@@ -29,7 +31,7 @@ parichayAuth.get('/callback', async (req, res) => {
             // tslint:disable-next-line: max-line-length
             code_verifier: CONSTANTS.PARICHAY_CODE_VERIFIER,
             grant_type: 'authorization_code',
-            redirect_uri: CONSTANTS.PARICHAY_CALLBACK_URL,
+            redirect_uri: redirectUrl,
         },
         method: 'POST',
         url: CONSTANTS.PARICHAY_TOKEN_URL,
@@ -52,6 +54,6 @@ parichayAuth.get('/callback', async (req, res) => {
     }
     await updateKeycloakSession(userDetailResponse.data.loginId, req, res)
     const host = req.get('host')
-    const redirectUrl = `https://${host}/protected/v8/resource/`
+    redirectUrl = `https://${host}/protected/v8/resource/`
     res.redirect(redirectUrl)
 })

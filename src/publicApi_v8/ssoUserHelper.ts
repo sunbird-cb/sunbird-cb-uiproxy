@@ -114,9 +114,11 @@ export async function createUserWithMailId(emailId: string, firstNameStr: string
 
 // tslint:disable-next-line: no-any
 const processTokenResponse = async (err: any, data: any) => {
+    logInfo('Inside token callback function..')
     if (err) {
         logError('Received error from keycloak: ' + JSON.stringify(err))
-    } else {
+    }
+    if (data) {
         logInfo('Received successful response from Keycloak: ' + JSON.stringify(data))
     }
 }
@@ -128,7 +130,9 @@ export async function updateKeycloakSession(emailId: string, req: any, res: any)
     logInfo('login in progress')
     try {
         try {
-        await keycloakClient.grantManager.obtainDirectly(emailId, undefined, processTokenResponse, scope)
+            logInfo('Calling token API with callback function...')
+            await keycloakClient.grantManager.obtainDirectly(emailId, undefined, processTokenResponse, scope)
+            logInfo('token API with callback function function is successfull...')
         } catch (err) {
             logError('Failed with callback API. ' + JSON.stringify(err))
         }

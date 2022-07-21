@@ -113,28 +113,21 @@ export async function createUserWithMailId(emailId: string, firstNameStr: string
 }
 
 // tslint:disable-next-line: no-any
-const processTokenResponse = async (err: any, data: any) => {
-    logInfo('Inside token callback function..')
-    if (err) {
-        logError('Received error from keycloak: ' + JSON.stringify(err))
-    }
-    if (data) {
-        logInfo('Received successful response from Keycloak: ' + JSON.stringify(data))
-    }
-}
-
-// tslint:disable-next-line: no-any
 export async function updateKeycloakSession(emailId: string, req: any, res: any) {
     const scope = 'offline_access'
     const keycloakClient = getKeyCloakClient()
     logInfo('login in progress')
     try {
         try {
-            logInfo('Calling token API with callback function...')
-            await keycloakClient.grantManager.obtainDirectly(emailId, undefined, processTokenResponse, scope)
-            logInfo('token API with callback function function is successfull...')
+            // tslint:disable-next-line: no-any
+            keycloakClient.grantManager.obtainDirectly(emailId, undefined, undefined, scope).then((grantRes: any) => {
+                logInfo('Direct handling... Received successful response from Keycloak: ' + JSON.stringify(grantRes))
+                // tslint:disable-next-line: no-any
+            }).catch((err: any) => {
+                logError('Direct handling... Received error from keycloak: ' + JSON.stringify(err))
+            })
         } catch (err) {
-            logError('Failed with callback API. ' + JSON.stringify(err))
+            logError('Failed with direct callback API. ' + JSON.stringify(err))
         }
         const grant = await keycloakClient.grantManager.obtainDirectly(emailId, undefined, undefined, scope)
         logInfo('Received response from Keycloak: ' + JSON.stringify(grant))

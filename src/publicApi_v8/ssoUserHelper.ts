@@ -124,6 +124,7 @@ export async function updateKeycloakSession(emailId: string, req: any, res: any)
         grant = await keycloakClient.grantManager.obtainDirectly(emailId, undefined, undefined, scope)
     } catch (err) {
         logError('googleOauthHelper: createSession failed')
+        logError(JSON.stringify(err))
         throw new Error('unable to create session')
     }
     keycloakClient.storeGrant(grant, req, res)

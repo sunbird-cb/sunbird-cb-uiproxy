@@ -18,6 +18,18 @@ googleAuth.get('/auth', async (req, res) => {
     res.redirect(googleUrl)
 })
 
+googleAuth.get('/testauth', async (req, res) => {
+    logInfo('Received host ? ' + req.hostname)
+    const redirectUrlHost = 'https://' + req.hostname + '/apis/public/v8/google/callback'
+    let oAuthParams = 'client_id=' + CONSTANTS.GOOGLE_CLIENT_ID
+    oAuthParams = oAuthParams + '&redirect_uri=' + redirectUrlHost + '&prompt=consent'
+    oAuthParams = oAuthParams + '&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email'
+    oAuthParams = oAuthParams + '%20https://www.googleapis.com/auth/userinfo.profile'
+    const googleUrl = 'https://accounts.google.com/o/oauth2/v2/auth?' + oAuthParams
+    logInfo('google Url -> ' + googleUrl)
+    res.redirect(googleUrl)
+})
+
 googleAuth.get('/callback', async (req, res) => {
     try {
         logInfo('Successfully received callback from google. Received query params -> ' + JSON.stringify(req.query))

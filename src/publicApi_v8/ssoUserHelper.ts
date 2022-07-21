@@ -114,30 +114,28 @@ export async function createUserWithMailId(emailId: string, firstNameStr: string
 
 // tslint:disable-next-line: no-any
 export async function updateKeycloakSession(emailId: string, req: any, res: any) {
-    // tslint:disable-next-line: no-any
-    let grant: { access_token: { token: any }; refresh_token: { token: any } }
     const scope = 'offline_access'
     const keycloakClient = getKeyCloakClient()
     logInfo('login in progress')
-    // tslint:disable-next-line: no-any
     try {
-        grant = await keycloakClient.grantManager.obtainDirectly(emailId, undefined, undefined, scope)
+        const grant = await keycloakClient.grantManager.obtainDirectly(emailId, undefined, undefined, scope)
+        logInfo('Received response from Keycloak: ' + JSON.stringify(grant))
+        keycloakClient.storeGrant(grant, req, res)
+        req.kauth.grant = grant
+        return new Promise((resolve, reject) => {
+            // tslint:disable-next-line: no-any
+            keycloakClient.authenticated(req, (error: any) => {
+                if (error) {
+                    logError('googleauthhelper:createSession error creating session')
+                    reject('GOOGLE_CREATE_SESSION_FAILED')
+                } else {
+                    resolve({access_token: grant.access_token.token, refresh_token: grant.refresh_token.token})
+                }
+            })
+        })
     } catch (err) {
         logError('googleOauthHelper: createSession failed')
         logError(JSON.stringify(err))
         throw new Error('unable to create session')
     }
-    keycloakClient.storeGrant(grant, req, res)
-    req.kauth.grant = grant
-    return new Promise((resolve, reject) => {
-        // tslint:disable-next-line: no-any
-        keycloakClient.authenticated(req, (error: any) => {
-            if (error) {
-                logError('googleauthhelper:createSession error creating session')
-                reject('GOOGLE_CREATE_SESSION_FAILED')
-            } else {
-                resolve({access_token: grant.access_token.token, refresh_token: grant.refresh_token.token})
-            }
-        })
-    })
 }

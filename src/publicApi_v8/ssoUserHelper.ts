@@ -113,11 +113,25 @@ export async function createUserWithMailId(emailId: string, firstNameStr: string
 }
 
 // tslint:disable-next-line: no-any
+const processTokenResponse = async (err: any, data: any) => {
+    if (err) {
+        logError('Received error from keycloak: ' + JSON.stringify(err))
+    } else {
+        logInfo('Received successful response from Keycloak: ' + JSON.stringify(data))
+    }
+}
+
+// tslint:disable-next-line: no-any
 export async function updateKeycloakSession(emailId: string, req: any, res: any) {
     const scope = 'offline_access'
     const keycloakClient = getKeyCloakClient()
     logInfo('login in progress')
     try {
+        try {
+        await keycloakClient.grantManager.obtainDirectly(emailId, undefined, processTokenResponse, scope)
+        } catch (err) {
+            logError('Failed with callback API. ' + JSON.stringify(err))
+        }
         const grant = await keycloakClient.grantManager.obtainDirectly(emailId, undefined, undefined, scope)
         logInfo('Received response from Keycloak: ' + JSON.stringify(grant))
         keycloakClient.storeGrant(grant, req, res)

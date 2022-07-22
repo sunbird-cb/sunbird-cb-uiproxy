@@ -38,16 +38,20 @@ googleAuth.get('/callback', async (req, res) => {
         const googleProfile = await getGoogleProfile(req)
         logInfo('Successfully got authenticated with google...')
         logInfo('Email: ' + googleProfile.emailId)
-        const isUserExist =  await fetchUserByEmailId(googleProfile.emailId)
-        logInfo('is Sunbird User Exist ? ' + isUserExist)
+        const isUserExist = await fetchUserByEmailId(googleProfile.emailId).catch((err) => {
+            logError('Error while checking user exist by email. Error: ' + JSON.stringify(err))
+            throw err
+        })
         if (!isUserExist) {
             await createUserWithMailId(googleProfile.emailId,
             googleProfile.firstName, googleProfile.lastName)
         }
-        await updateKeycloakSession(googleProfile.emailId, req, res)
-    } catch (err) {
-        logError('Failed to process callback event. Error: ' + JSON.stringify(err))
-        resRedirectUrl = `https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(err))
+        await updateKeycloakSession(googleProfile.emailId, req, res).catch((err) => {
+            throw err
+        })
+    } catch (error) {
+        logError('Failed to process callback event. Error: ' + JSON.stringify(error))
+        resRedirectUrl = `https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(error))
     }
     res.redirect(resRedirectUrl)
 })

@@ -31,6 +31,8 @@ googleAuth.get('/testauth', async (req, res) => {
 })
 
 googleAuth.get('/callback', async (req, res) => {
+    const host = req.get('host')
+    let resRedirectUrl = `https://${host}/protected/v8/resource/`
     try {
         logInfo('Successfully received callback from google. Received query params -> ' + JSON.stringify(req.query))
         const googleProfile = await getGoogleProfile(req)
@@ -43,10 +45,9 @@ googleAuth.get('/callback', async (req, res) => {
             googleProfile.firstName, googleProfile.lastName)
         }
         await updateKeycloakSession(googleProfile.emailId, req, res)
-        const host = req.get('host')
-        const redirectUrl = `https://${host}/protected/v8/resource/`
-        res.redirect(redirectUrl)
     } catch (err) {
         logError('Failed to process callback event. Error: ' + JSON.stringify(err))
+        resRedirectUrl = `https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(err))
     }
+    res.redirect(resRedirectUrl)
 })

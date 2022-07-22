@@ -12,20 +12,31 @@ const API_END_POINTS = {
 }
 
 export async function fetchUserByEmailId(emailId: string) {
-    const sbUserExistsResponse = await axios({
+    const sbUserSearchRes = await axios({
         ...axiosRequestConfig,
-        headers: {
-            Authorization: CONSTANTS.SB_API_KEY,
-        },
-        method: 'GET',
-        url: CONSTANTS.KONG_API_BASE + '/user/v1/exists/email/' + emailId,
+        data: { request: {
+            fields : ['userId', 'status', 'channel', 'rootOrgId', 'organisations'],
+            filters: { email: emailId.toLowerCase() },
+        } },
+        method: 'POST',
+        url: CONSTANTS.LEARNER_SERVICE_API_BASE + '/private/user/v1/search',
     })
-    if (sbUserExistsResponse.data.responseCode.toUpperCase() === 'OK') {
-        return sbUserExistsResponse.data.result.exists
+    if (sbUserSearchRes.data.responseCode.toUpperCase() === 'OK') {
+        if (sbUserSearchRes.data.result.response.count === 0) {
+            return false
+        } else if (sbUserSearchRes.data.result.response.count === 1) {
+            if (sbUserSearchRes.data.result.response.content.status === 0) {
+                throw new Error('Account Disabled. Please contact Admin.')
+            } else {
+                return true
+            }
+        } else {
+            throw new Error('More than one user account exists. Please contact Admin.')
+        }
     } else {
-        logError('googleOauthHelper: fetchUserByEmailId failed' + JSON.stringify(sbUserExistsResponse.data))
+        logError('googleOauthHelper: fetchUserByEmailId failed' + JSON.stringify(sbUserSearchRes.data))
+        throw new Error('Service Unavailable. Please contact Admin.')
     }
-    return false
 }
 
 export async function createUserWithMailId(emailId: string, firstNameStr: string, lastNameStr: string) {
@@ -117,19 +128,10 @@ export async function updateKeycloakSession(emailId: string, req: any, res: any)
     const scope = 'offline_access'
     const keycloakClient = getKeyCloakClient()
     logInfo('login in progress')
+    // tslint:disable-next-line: no-any
+    let grant: { access_token: { token: any }; refresh_token: { token: any } }
     try {
-        try {
-            // tslint:disable-next-line: no-any
-            keycloakClient.grantManager.obtainDirectly(emailId, undefined, undefined, scope).then((grantRes: any) => {
-                logInfo('Direct handling... Received successful response from Keycloak: ' + JSON.stringify(grantRes))
-                // tslint:disable-next-line: no-any
-            }).catch((err: any) => {
-                logError('Direct handling... Received error from keycloak: ' + JSON.stringify(err))
-            })
-        } catch (err) {
-            logError('Failed with direct callback API. ' + JSON.stringify(err))
-        }
-        const grant = await keycloakClient.grantManager.obtainDirectly(emailId, undefined, undefined, scope)
+        grant = await keycloakClient.grantManager.obtainDirectly(emailId, undefined, undefined, scope)
         logInfo('Received response from Keycloak: ' + JSON.stringify(grant))
         keycloakClient.storeGrant(grant, req, res)
         req.kauth.grant = grant
@@ -147,6 +149,6 @@ export async function updateKeycloakSession(emailId: string, req: any, res: any)
     } catch (err) {
         logError('googleOauthHelper: createSession failed')
         logError(JSON.stringify(err))
-        throw new Error('unable to create session')
+        throw new Error('Keycloak Service Unavilable.')
     }
 }

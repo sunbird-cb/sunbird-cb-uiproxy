@@ -29,7 +29,8 @@ const deauthenticated = async (reqObj: any) => {
           try {
               request.post({
                   form: {
-                      client_id: 'portal',
+                      client_id: CONSTANTS.KEYCLOAK_GOOGLE_CLIENT_ID,
+                      client_secret: CONSTANTS.KEYCLOAK_GOOGLE_CLIENT_SECRET,
                       refresh_token: refreshToken,
                   },
                   url: urlValue,

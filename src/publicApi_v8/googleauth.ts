@@ -56,6 +56,7 @@ googleAuth.get('/callback', async (req, res) => {
                     access_token: string, errMessage: string, keycloakSessionCreated: boolean, refresh_token: string
                 }
                 keycloakResult = await updateKeycloakSession(googleProfile.emailId, req, res)
+                logInfo('Keycloak Session Details:: ' + JSON.stringify(keycloakResult))
                 if (keycloakResult.errMessage !== '') {
                     result.errMessage = keycloakResult.errMessage
                 }

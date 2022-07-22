@@ -1,7 +1,9 @@
 import axios from 'axios'
+const async = require('async')
 import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
 import { logError, logInfo } from '../utils/logger'
+import { PERMISSION_HELPER } from '../utils/permissionHelper'
 import { getKeyCloakClient } from './keycloakHelper'
 
 const API_END_POINTS = {
@@ -157,13 +159,43 @@ export async function updateKeycloakSession(emailId: string, req: any, res: any)
         grant = await keycloakClient.grantManager.obtainDirectly(emailId, undefined, undefined, scope)
         logInfo('Received response from Keycloak: ' + JSON.stringify(grant))
         keycloakClient.storeGrant(grant, req, res)
-        result.access_token = grant.access_token.token
-        result.refresh_token = grant.refresh_token.token
-        result.keycloakSessionCreated = true
-        return Promise.resolve(result)
+        req.kauth.grant = grant
+        // tslint:disable-next-line: no-any
+        keycloakClient.authenticated(req, (error: any) => {
+            logInfo('ssoUserHelper::keycloakClient::authenticated..')
+            if (error) {
+                logError('googleauthhelper:createSession error creating session')
+                result.errMessage = 'GOOGLE_CREATE_SESSION_FAILED'
+            } else {
+                try {
+                    const userId = req.kauth.grant.access_token.content.sub.split(':')
+                    req.session.userId = userId[userId.length - 1]
+                    logInfo('userId ::', userId, '------', new Date().toString())
+                } catch (err) {
+                    logError('userId conversation error' + req.kauth.grant.access_token.content.sub, '------', new Date().toString())
+                }
+                const postLoginRequest = []
+                // tslint:disable-next-line: no-any
+                postLoginRequest.push((callback: any) => {
+                    PERMISSION_HELPER.getCurrentUserRoles(req, callback)
+                })
+                // tslint:disable-next-line: no-any
+                async.series(postLoginRequest, (err: any) =>  {
+                    if (err) {
+                        logError('error loggin in user', '------', new Date().toString())
+                    } else {
+                        logInfo(`${process.pid}: User authenticated`, '------', new Date().toString())
+                    }
+                })
+                result.access_token = grant.access_token.token
+                result.refresh_token = grant.refresh_token.token
+                result.keycloakSessionCreated = true
+            }
+            return Promise.resolve(result)
+        })
     } catch (err) {
         logError('googleOauthHelper: createSession failed. Error: ' + JSON.stringify(err))
         result.errMessage = 'FAILED_TO_CREATE_KEYCLOAK_SESSION'
-        return Promise.resolve(result)
     }
+    return Promise.resolve(result)
 }

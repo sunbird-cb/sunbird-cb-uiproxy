@@ -27,13 +27,13 @@ export async function fetchUserByEmailId(emailId: string) {
             logInfo('user accound doesnot exist. returning false')
             return false
         } else if (sbUserSearchRes.data.result.response.count === 1) {
-            logInfo('user account exist')
-            if (sbUserSearchRes.data.result.response.content.status === 0) {
-                logInfo('user account is diabled. throwing error')
-                throw new Error('Account Disabled. Please contact Admin.')
-            } else {
+            logInfo('user account exist. Data: ' + JSON.stringify(sbUserSearchRes.data))
+            if (sbUserSearchRes.data.result.response.content.status === 1) {
                 logInfo('user account enabled. returning true')
                 return true
+            } else {
+                logInfo('user account is diabled. throwing error')
+                throw new Error('Account Disabled. Please contact Admin.')
             }
         } else {
             throw new Error('More than one user account exists. Please contact Admin.')

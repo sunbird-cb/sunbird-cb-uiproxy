@@ -38,13 +38,10 @@ googleAuth.get('/callback', async (req, res) => {
         const googleProfile = await getGoogleProfile(req)
         logInfo('Successfully got authenticated with google...')
         logInfo('Email: ' + googleProfile.emailId)
-        let errorMessage = ''
-        const isUserExist = false
-        // tslint:disable-next-line: no-any
         let result: { errMessage: string, userExist: boolean,  }
         result = await fetchUserByEmailId(googleProfile.emailId)
-        logInfo('isUserExist ? ' + isUserExist + ', errorMessage ? ' + errorMessage)
-        if (result.errMessage !== '') {
+        logInfo('isUserExist ? ' + result.userExist + ', errorMessage ? ' + result.errMessage)
+        if (result.errMessage === '') {
             if (!result.userExist) {
                 createUserWithMailId(googleProfile.emailId,
                     googleProfile.firstName, googleProfile.lastName).then(() => {
@@ -53,16 +50,12 @@ googleAuth.get('/callback', async (req, res) => {
                         throw err
                     })
                 }).catch((err) => {
-                    errorMessage = err.message
                     logError('Error while signing up user. Error: ' + JSON.stringify(err.message))
                 })
             }
         } else {
             logInfo('Received error from user search. ')
-            errorMessage = result.errMessage
-        }
-        if (errorMessage !== '') {
-            resRedirectUrl = `https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(errorMessage))
+            resRedirectUrl = `https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(result.errMessage))
         }
     } catch (err) {
         logError('Failed to process callback event. Error: ' + JSON.stringify(err))

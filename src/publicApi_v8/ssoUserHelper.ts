@@ -30,7 +30,8 @@ export async function fetchUserByEmailId(emailId: string) {
         if (sbUserSearchRes.data.result.response.count === 0) {
             logInfo('user accound doesnot exist. returning false')
         } else if (sbUserSearchRes.data.result.response.count === 1) {
-            const status = sbUserSearchRes.data.result.response.content.status
+            let contentObj = sbUserSearchRes.data.result.response.content[0]
+            const status = contentObj.status
             logInfo('user account exist. Data: ' + JSON.stringify(sbUserSearchRes.data) + ', Status: ' + status)
             if (status === 1) {
                 logInfo('user account enabled. returning true')

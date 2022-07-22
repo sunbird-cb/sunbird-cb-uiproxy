@@ -38,20 +38,29 @@ googleAuth.get('/callback', async (req, res) => {
         const googleProfile = await getGoogleProfile(req)
         logInfo('Successfully got authenticated with google...')
         logInfo('Email: ' + googleProfile.emailId)
-        let isUserExist = false
+        let errorMessage = ''
         fetchUserByEmailId(googleProfile.emailId).then((userExist: boolean) => {
-            isUserExist = userExist
+            logInfo('Is User Exist ? ' + userExist)
+            if (!userExist) {
+                createUserWithMailId(googleProfile.emailId,
+                    googleProfile.firstName, googleProfile.lastName).then(() => {
+                    logInfo('User signed up successfully with Email: ' + googleProfile.emailId)
+                    updateKeycloakSession(googleProfile.emailId, req, res).catch((err) => {
+                        throw err
+                    })
+                }).catch((err) => {
+                    errorMessage = err.message
+                    logError('Error while signing up user. Error: ' + JSON.stringify(err.message))
+                })
+            }
         }).catch((err) => {
+            errorMessage = err.message
             logError('Error while checking user exist by email. Error: ' + JSON.stringify(err.message))
             throw new Error(err.message)
         })
-        if (!isUserExist) {
-            await createUserWithMailId(googleProfile.emailId,
-            googleProfile.firstName, googleProfile.lastName)
+        if (errorMessage !== '') {
+            resRedirectUrl = `https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(errorMessage))
         }
-        await updateKeycloakSession(googleProfile.emailId, req, res).catch((err) => {
-            throw err
-        })
     } catch (err) {
         logError('Failed to process callback event. Error: ' + JSON.stringify(err))
         resRedirectUrl = `https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(err))

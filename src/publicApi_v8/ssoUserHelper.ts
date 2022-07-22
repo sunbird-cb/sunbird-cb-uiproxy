@@ -45,6 +45,7 @@ export async function fetchUserByEmailId(emailId: string) {
 }
 
 export async function createUserWithMailId(emailId: string, firstNameStr: string, lastNameStr: string) {
+    const signUpErr = 'SIGN_UP_ERR-'
     let statusString = ''
     const createResponse = await axios({
         ...axiosRequestConfig,
@@ -64,7 +65,7 @@ export async function createUserWithMailId(emailId: string, firstNameStr: string
     })
     statusString = createResponse.data.params.status
     if (statusString.toUpperCase() !== 'SUCCESS') {
-        throw new Error('FAILED_TO_CREATE_USER')
+        throw new Error(signUpErr + 'FAILED_TO_CREATE_USER')
     }
     const sbUserId = createResponse.data.result.userId
     const sbUserReadResponse = await axios({
@@ -77,7 +78,7 @@ export async function createUserWithMailId(emailId: string, firstNameStr: string
     })
     statusString = sbUserReadResponse.data.params.status
     if (statusString.toUpperCase() !== 'SUCCESS') {
-        throw new Error('FAILED_TO_READ_CREATED_USER')
+        throw new Error(signUpErr + 'FAILED_TO_READ_CREATED_USER')
     }
     const sbUserOrgId = sbUserReadResponse.data.result.response.rootOrgId
     const sbProfileUpdateReq = {
@@ -104,7 +105,7 @@ export async function createUserWithMailId(emailId: string, firstNameStr: string
     })
     statusString = sbUserProfileUpdateResp.data.params.status
     if (statusString.toUpperCase() !== 'SUCCESS') {
-        throw new Error('FAILED_TO_UPDATE_USER')
+        throw new Error(signUpErr + 'FAILED_TO_UPDATE_USER')
     }
     const sbAssignRoleResp = await axios({
         ...axiosRequestConfig,
@@ -123,7 +124,7 @@ export async function createUserWithMailId(emailId: string, firstNameStr: string
     })
     statusString = sbAssignRoleResp.data.params.status
     if (statusString.toUpperCase() !== 'SUCCESS') {
-        throw new Error('FAILED_TO_UPDATE_USER')
+        throw new Error(signUpErr + 'FAILED_TO_UPDATE_USER')
     }
     return createResponse.data
 }

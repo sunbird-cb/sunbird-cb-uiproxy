@@ -50,13 +50,19 @@ parichayAuth.get('/callback', async (req, res) => {
             url: CONSTANTS.PARICHAY_USER_DETAILS_URL,
         })
 
-        const isUserExist =  await fetchUserByEmailId(userDetailResponse.data.loginId)
-        if (!isUserExist) {
-            logInfo('is Sunbird User Exist not exist for email: ' + userDetailResponse.data.loginId)
-            await createUserWithMailId(userDetailResponse.data.loginId,
-                userDetailResponse.data.FirstName, userDetailResponse.data.LastName)
+        let result: { errMessage: string, userExist: boolean,  }
+        result =  await fetchUserByEmailId(userDetailResponse.data.loginId)
+        if (result.errMessage === '') {
+            if (!result.userExist) {
+                logInfo('is Sunbird User Exist not exist for email: ' + userDetailResponse.data.loginId)
+                await createUserWithMailId(userDetailResponse.data.loginId,
+                    userDetailResponse.data.FirstName, userDetailResponse.data.LastName)
+            }
+            await updateKeycloakSession(userDetailResponse.data.loginId, req, res)
+        } else {
+            logInfo('Received error from user search. ')
+            resRedirectUrl = `https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(result.errMessage))
         }
-        await updateKeycloakSession(userDetailResponse.data.loginId, req, res)
     } catch (err) {
         logError('Failed to process callback API.. error: ' + JSON.stringify(err))
         resRedirectUrl = `https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(err))

@@ -39,33 +39,28 @@ googleAuth.get('/callback', async (req, res) => {
         logInfo('Successfully got authenticated with google...')
         logInfo('Email: ' + googleProfile.emailId)
         let errorMessage = ''
-        let isUserExist = false
+        const isUserExist = false
         // tslint:disable-next-line: no-any
-        await fetchUserByEmailId(googleProfile.emailId).then((result: any) => {
-            logInfo('Is User Exist ? ' + result.userExist)
-            isUserExist = result.userExist
-            if (result.errMessage !== '') {
-                if (!result.userExist) {
-                    createUserWithMailId(googleProfile.emailId,
-                        googleProfile.firstName, googleProfile.lastName).then(() => {
-                        logInfo('User signed up successfully with Email: ' + googleProfile.emailId)
-                        updateKeycloakSession(googleProfile.emailId, req, res).catch((err) => {
-                            throw err
-                        })
-                    }).catch((err) => {
-                        errorMessage = err.message
-                        logError('Error while signing up user. Error: ' + JSON.stringify(err.message))
-                    })
-                }
-            } else {
-                logInfo('Received error from user search. ')
-                errorMessage = result.errMessage
-            }
-        }).catch((err) => {
-            errorMessage = err.message
-            logError('Error while checking user exist by email. Error: ' + JSON.stringify(err.message))
-        })
+        let result: { errMessage: string, userExist: boolean,  }
+        result = await fetchUserByEmailId(googleProfile.emailId)
         logInfo('isUserExist ? ' + isUserExist + ', errorMessage ? ' + errorMessage)
+        if (result.errMessage !== '') {
+            if (!result.userExist) {
+                createUserWithMailId(googleProfile.emailId,
+                    googleProfile.firstName, googleProfile.lastName).then(() => {
+                    logInfo('User signed up successfully with Email: ' + googleProfile.emailId)
+                    updateKeycloakSession(googleProfile.emailId, req, res).catch((err) => {
+                        throw err
+                    })
+                }).catch((err) => {
+                    errorMessage = err.message
+                    logError('Error while signing up user. Error: ' + JSON.stringify(err.message))
+                })
+            }
+        } else {
+            logInfo('Received error from user search. ')
+            errorMessage = result.errMessage
+        }
         if (errorMessage !== '') {
             resRedirectUrl = `https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(errorMessage))
         }

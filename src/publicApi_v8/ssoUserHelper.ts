@@ -43,7 +43,7 @@ export async function fetchUserByEmailId(emailId: string) {
         }
     } else {
         logError('googleOauthHelper: fetchUserByEmailId failed' + JSON.stringify(sbUserSearchRes.data))
-        throw new Error('Service Unavailable. Please contact Admin.')
+        result.errMessage = 'Failed to verify email exist. Internal Server Error.'
     }
     return Promise.resolve(result)
 }

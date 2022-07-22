@@ -56,7 +56,6 @@ googleAuth.get('/callback', async (req, res) => {
         }).catch((err) => {
             errorMessage = err.message
             logError('Error while checking user exist by email. Error: ' + JSON.stringify(err.message))
-            throw new Error(err.message)
         })
         if (errorMessage !== '') {
             resRedirectUrl = `https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(errorMessage))

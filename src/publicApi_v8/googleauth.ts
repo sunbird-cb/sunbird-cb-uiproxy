@@ -38,7 +38,10 @@ googleAuth.get('/callback', async (req, res) => {
         const googleProfile = await getGoogleProfile(req)
         logInfo('Successfully got authenticated with google...')
         logInfo('Email: ' + googleProfile.emailId)
-        const isUserExist = await fetchUserByEmailId(googleProfile.emailId).catch((err) => {
+        let isUserExist = false
+        await fetchUserByEmailId(googleProfile.emailId).then((userExist: boolean) => {
+            isUserExist = userExist
+        }).catch((err) => {
             logError('Error while checking user exist by email. Error: ' + JSON.stringify(err))
             throw err
         })

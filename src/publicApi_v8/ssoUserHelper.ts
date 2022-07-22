@@ -22,12 +22,17 @@ export async function fetchUserByEmailId(emailId: string) {
         url: CONSTANTS.LEARNER_SERVICE_API_BASE + '/private/user/v1/search',
     })
     if (sbUserSearchRes.data.responseCode.toUpperCase() === 'OK') {
+        logInfo('Received user search response.')
         if (sbUserSearchRes.data.result.response.count === 0) {
+            logInfo('user accound doesnot exist. returning false')
             return false
         } else if (sbUserSearchRes.data.result.response.count === 1) {
+            logInfo('user account exist')
             if (sbUserSearchRes.data.result.response.content.status === 0) {
+                logInfo('user account is diabled. throwing error')
                 throw new Error('Account Disabled. Please contact Admin.')
             } else {
+                logInfo('user account enabled. returning true')
                 return true
             }
         } else {

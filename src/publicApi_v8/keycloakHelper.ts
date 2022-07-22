@@ -17,6 +17,7 @@ export function getKeyCloakClient() {
 
 // tslint:disable-next-line: no-any
 const deauthenticated = async (reqObj: any) => {
+    logInfo('keycloakHelper::deauthenticated...')
     const keyCloakPropertyName = 'keycloak-token'
     if (reqObj.session.hasOwnProperty(keyCloakPropertyName)) {
       const keycloakToken = reqObj.session[keyCloakPropertyName]
@@ -56,7 +57,7 @@ const deauthenticated = async (reqObj: any) => {
 
 // tslint:disable-next-line: no-any
 const authenticated = async (reqObj: any, next: any) => {
-    logInfo('Step 3: authenticated function', '------', new Date().toString())
+    logInfo('keycloakHelper::authenticated...')
     try {
         const userId = reqObj.kauth.grant.access_token.content.sub.split(':')
         reqObj.session.userId = userId[userId.length - 1]

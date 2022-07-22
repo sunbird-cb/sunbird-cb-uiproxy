@@ -53,13 +53,26 @@ parichayAuth.get('/callback', async (req, res) => {
         let result: { errMessage: string, userExist: boolean,  }
         result =  await fetchUserByEmailId(userDetailResponse.data.loginId)
         if (result.errMessage === '') {
+            let createResult: { errMessage: string, userCreated: boolean, userId: string }
             if (!result.userExist) {
                 logInfo('is Sunbird User Exist not exist for email: ' + userDetailResponse.data.loginId)
-                await createUserWithMailId(userDetailResponse.data.loginId,
+                createResult = await createUserWithMailId(userDetailResponse.data.loginId,
                     userDetailResponse.data.FirstName, userDetailResponse.data.LastName)
+                if (createResult.errMessage !== '') {
+                    result.errMessage = createResult.errMessage
+                }
             }
-            await updateKeycloakSession(userDetailResponse.data.loginId, req, res)
-        } else {
+            if (result.errMessage === '') {
+                let keycloakResult: {
+                    access_token: string, errMessage: string, keycloakSessionCreated: boolean, refresh_token: string
+                }
+                keycloakResult = await updateKeycloakSession(userDetailResponse.data.loginId, req, res)
+                if (keycloakResult.errMessage !== '') {
+                    result.errMessage = keycloakResult.errMessage
+                }
+            }
+        }
+        if (result.errMessage !== '') {
             logInfo('Received error from user search. ')
             resRedirectUrl = `https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(result.errMessage))
         }

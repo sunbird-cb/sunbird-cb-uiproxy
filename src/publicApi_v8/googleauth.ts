@@ -42,19 +42,27 @@ googleAuth.get('/callback', async (req, res) => {
         result = await fetchUserByEmailId(googleProfile.emailId)
         logInfo('isUserExist ? ' + result.userExist + ', errorMessage ? ' + result.errMessage)
         if (result.errMessage === '') {
+            let createResult: { errMessage: string, userCreated: boolean, userId: string }
             if (!result.userExist) {
-                createUserWithMailId(googleProfile.emailId,
-                    googleProfile.firstName, googleProfile.lastName).then(() => {
-                    logInfo('User signed up successfully with Email: ' + googleProfile.emailId)
-                    updateKeycloakSession(googleProfile.emailId, req, res).catch((err) => {
-                        throw err
-                    })
-                }).catch((err) => {
-                    logError('Error while signing up user. Error: ' + JSON.stringify(err.message))
-                })
+                createResult = await createUserWithMailId(googleProfile.emailId,
+                    googleProfile.firstName, googleProfile.lastName)
+                if (createResult.errMessage !== '') {
+                    result.errMessage = createResult.errMessage
+                }
             }
-        } else {
-            logInfo('Received error from user search. ')
+
+            if (result.errMessage === '') {
+                let keycloakResult: {
+                    access_token: string, errMessage: string, keycloakSessionCreated: boolean, refresh_token: string
+                }
+                keycloakResult = await updateKeycloakSession(googleProfile.emailId, req, res)
+                if (keycloakResult.errMessage !== '') {
+                    result.errMessage = keycloakResult.errMessage
+                }
+            }
+        }
+        if (result.errMessage !== '') {
+            logInfo('Received error in processing... Error ' + result.errMessage)
             resRedirectUrl = `https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(result.errMessage))
         }
     } catch (err) {

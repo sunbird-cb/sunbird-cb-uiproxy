@@ -21,27 +21,31 @@ export async function fetchUserByEmailId(emailId: string) {
         method: 'POST',
         url: CONSTANTS.LEARNER_SERVICE_API_BASE + '/private/user/v1/search',
     })
+    let result = {
+        errMessage : '', userExist : false
+    }
+
     if (sbUserSearchRes.data.responseCode.toUpperCase() === 'OK') {
         logInfo('Received user search response.')
         if (sbUserSearchRes.data.result.response.count === 0) {
             logInfo('user accound doesnot exist. returning false')
-            return false
         } else if (sbUserSearchRes.data.result.response.count === 1) {
             logInfo('user account exist. Data: ' + JSON.stringify(sbUserSearchRes.data))
             if (sbUserSearchRes.data.result.response.content.status === 1) {
                 logInfo('user account enabled. returning true')
-                return true
+                result.userExist = true
             } else {
                 logInfo('user account is diabled. throwing error')
-                throw new Error('Account Disabled. Please contact Admin.')
+                result.errMessage = 'Account Disabled. Please contact Admin.'
             }
         } else {
-            throw new Error('More than one user account exists. Please contact Admin.')
+            result.errMessage = 'More than one user account exists. Please contact Admin.'
         }
     } else {
         logError('googleOauthHelper: fetchUserByEmailId failed' + JSON.stringify(sbUserSearchRes.data))
         throw new Error('Service Unavailable. Please contact Admin.')
     }
+    return Promise.resolve(result)
 }
 
 export async function createUserWithMailId(emailId: string, firstNameStr: string, lastNameStr: string) {

@@ -39,19 +39,27 @@ googleAuth.get('/callback', async (req, res) => {
         logInfo('Successfully got authenticated with google...')
         logInfo('Email: ' + googleProfile.emailId)
         let errorMessage = ''
-        fetchUserByEmailId(googleProfile.emailId).then((userExist: boolean) => {
-            logInfo('Is User Exist ? ' + userExist)
-            if (!userExist) {
-                createUserWithMailId(googleProfile.emailId,
-                    googleProfile.firstName, googleProfile.lastName).then(() => {
-                    logInfo('User signed up successfully with Email: ' + googleProfile.emailId)
-                    updateKeycloakSession(googleProfile.emailId, req, res).catch((err) => {
-                        throw err
+        let isUserExist = false
+        // tslint:disable-next-line: no-any
+        await fetchUserByEmailId(googleProfile.emailId).then((result: any) => {
+            logInfo('Is User Exist ? ' + result.userExist)
+            isUserExist = result.userExist
+            if(result.errMessage !=='') {
+                if (!result.userExist) {
+                    createUserWithMailId(googleProfile.emailId,
+                        googleProfile.firstName, googleProfile.lastName).then(() => {
+                        logInfo('User signed up successfully with Email: ' + googleProfile.emailId)
+                        updateKeycloakSession(googleProfile.emailId, req, res).catch((err) => {
+                            throw err
+                        })
+                    }).catch((err) => {
+                        errorMessage = err.message
+                        logError('Error while signing up user. Error: ' + JSON.stringify(err.message))
                     })
-                }).catch((err) => {
-                    errorMessage = err.message
-                    logError('Error while signing up user. Error: ' + JSON.stringify(err.message))
-                })
+                }
+            } else {
+                logInfo('Received error from user search. ')
+                errorMessage = result.errMessage
             }
         }).catch((err) => {
             errorMessage = err.message

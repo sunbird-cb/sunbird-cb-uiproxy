@@ -44,7 +44,7 @@ googleAuth.get('/callback', async (req, res) => {
         await fetchUserByEmailId(googleProfile.emailId).then((result: any) => {
             logInfo('Is User Exist ? ' + result.userExist)
             isUserExist = result.userExist
-            if(result.errMessage !=='') {
+            if (result.errMessage !== '') {
                 if (!result.userExist) {
                     createUserWithMailId(googleProfile.emailId,
                         googleProfile.firstName, googleProfile.lastName).then(() => {
@@ -65,6 +65,7 @@ googleAuth.get('/callback', async (req, res) => {
             errorMessage = err.message
             logError('Error while checking user exist by email. Error: ' + JSON.stringify(err.message))
         })
+        logInfo('isUserExist ? ' + isUserExist + ', errorMessage ? ' + errorMessage)
         if (errorMessage !== '') {
             resRedirectUrl = `https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(errorMessage))
         }

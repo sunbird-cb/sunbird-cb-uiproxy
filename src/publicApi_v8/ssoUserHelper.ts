@@ -21,8 +21,8 @@ export async function fetchUserByEmailId(emailId: string) {
         method: 'POST',
         url: CONSTANTS.LEARNER_SERVICE_API_BASE + '/private/user/v1/search',
     })
-    let result = {
-        errMessage : '', userExist : false
+    const result = {
+        errMessage : '', userExist : false,
     }
 
     if (sbUserSearchRes.data.responseCode.toUpperCase() === 'OK') {

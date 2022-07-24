@@ -96,8 +96,8 @@ export class CustomKeycloak {
           let clientId = 'portal'
           if (reqObj.session.hasOwnProperty('keycloakClientId') && !reqObj.session.keycloakClientId) {
             clientId = reqObj.session.keycloakClientId
-            logInfo('updating clientId from session: ' + clientId)
           }
+          logInfo('clientId used in logout: ' + clientId)
           try {
               request.post({
                   form: {
@@ -121,6 +121,7 @@ export class CustomKeycloak {
     }
     delete reqObj.session.userRoles
     delete reqObj.session.userId
+    delete reqObj.session.keycloakClientId
     reqObj.session.destroy()
     logInfo(`${process.pid}: User Deauthenticated`)
   }

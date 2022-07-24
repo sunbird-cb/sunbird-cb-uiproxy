@@ -32,7 +32,7 @@ googleAuth.get('/testauth', async (req, res) => {
 
 googleAuth.get('/callback', async (req, res) => {
     const host = req.get('host')
-    let resRedirectUrl = `https://${host}/protected/v8/resource/`
+    let resRedirectUrl = `https://${host}/page/home`
     try {
         logInfo('Successfully received callback from google. Received query params -> ' + JSON.stringify(req.query))
         const googleProfile = await getGoogleProfile(req)

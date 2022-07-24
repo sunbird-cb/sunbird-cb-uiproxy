@@ -93,10 +93,15 @@ export class CustomKeycloak {
         if (refreshToken) {
           const host = reqObj.get('host')
           const urlValue = `https://${host}` + '/auth/realms/' + CONSTANTS.KEYCLOAK_REALM + '/protocol/openid-connect/logout'
+          let clientId = 'portal'
+          if (reqObj.session.hasOwnProperty('keycloakClientId') && !reqObj.session.keycloakClientId) {
+            clientId = reqObj.session.keycloakClientId
+            logInfo('updating clientId from session: ' + clientId)
+          }
           try {
               request.post({
                   form: {
-                      client_id: 'portal',
+                      client_id: clientId,
                       refresh_token: refreshToken,
                   },
                   url: urlValue,

@@ -94,13 +94,14 @@ export class CustomKeycloak {
           const host = reqObj.get('host')
           const urlValue = `https://${host}` + '/auth/realms/' + CONSTANTS.KEYCLOAK_REALM + '/protocol/openid-connect/logout'
           let clientId = 'portal'
-          let formData = {
+          const formData: Record<string, string> = {
             client_id: clientId,
-            refresh_token: refreshToken
+            refresh_token: refreshToken,
           }
+
           if (reqObj.session.hasOwnProperty('keycloakClientId') && (reqObj.session.keycloakClientId !== '')) {
             clientId = reqObj.session.keycloakClientId
-            formData['client_secret'] = CONSTANTS.KEYCLOAK_GOOGLE_CLIENT_SECRET
+            formData.client_secret = CONSTANTS.KEYCLOAK_GOOGLE_CLIENT_SECRET
           }
           logInfo('formData used in logout: ' + JSON.stringify(formData))
           try {

@@ -1,7 +1,7 @@
 const { google } = require('googleapis')
-import { getSSOKeyCloakClient } from '../configs/keycloak.config'
 import { CONSTANTS } from '../utils/env'
 import { logError, logInfo } from '../utils/logger'
+import { getKeyCloakClient } from './keycloakHelper'
 
 const redirectPath = '/apis/public/v8/google/callback'
 const defaultScope = ['https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile+openid']
@@ -62,7 +62,7 @@ export async function createSession(emailId: string, req: any, res: any) {
     // tslint:disable-next-line: no-any
     let grant: { access_token: { token: any }; refresh_token: { token: any } }
     const scope = 'offline_access'
-    const keycloakClient = getSSOKeyCloakClient()
+    const keycloakClient = getKeyCloakClient()
     logInfo('login in progress')
     // tslint:disable-next-line: no-any
     try {

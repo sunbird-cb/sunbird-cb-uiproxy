@@ -1,6 +1,4 @@
 import { CONSTANTS } from '../utils/env'
-import { getSessionConfig } from './session.config'
-const keycloak = require('keycloak-connect')
 
 export function getKeycloakConfig(url?: string, realm?: string) {
   return {
@@ -24,9 +22,4 @@ export function getOAuthKeycloakConfig() {
     resource: CONSTANTS.KEYCLOAK_GOOGLE_CLIENT_ID,
     serverUrl: CONSTANTS.PORTAL_AUTH_SERVER_URL,
   }
-}
-
-export function getSSOKeyCloakClient() {
-  const sessionConfig = getSessionConfig()
-  return new keycloak({ store: sessionConfig.store }, getOAuthKeycloakConfig())
 }

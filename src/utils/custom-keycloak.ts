@@ -99,7 +99,7 @@ export class CustomKeycloak {
           }
 
           if (reqObj.session.hasOwnProperty('keycloakClientId') && (reqObj.session.keycloakClientId !== '')) {
-            formData.clientId = reqObj.session.keycloakClientId
+            formData.client_id = reqObj.session.keycloakClientId
             formData.client_secret = reqObj.session.keycloakClientSecret
           }
           logInfo('formData used in logout: ' + JSON.stringify(formData))

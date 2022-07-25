@@ -1,10 +1,10 @@
 import axios from 'axios'
 const async = require('async')
+import { getSSOKeyCloakClient } from '../configs/keycloak.config'
 import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
 import { logError, logInfo } from '../utils/logger'
 import { PERMISSION_HELPER } from '../utils/permissionHelper'
-import { getKeyCloakClient } from './keycloakHelper'
 
 const API_END_POINTS = {
     kongAssignRoleUser: `${CONSTANTS.KONG_API_BASE}/user/private/v1/assign/role`,
@@ -148,7 +148,7 @@ export async function createUserWithMailId(emailId: string, firstNameStr: string
 // tslint:disable-next-line: no-any
 export async function updateKeycloakSession(emailId: string, req: any, res: any) {
     const scope = 'offline_access'
-    const keycloakClient = getKeyCloakClient()
+    const keycloakClient = getSSOKeyCloakClient()
     logInfo('login in progress')
     // tslint:disable-next-line: no-any
     let grant: { access_token: { token: any }; refresh_token: { token: any } }

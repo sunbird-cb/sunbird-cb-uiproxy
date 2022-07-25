@@ -172,6 +172,7 @@ export async function updateKeycloakSession(emailId: string, req: any, res: any)
                     req.session.userId = userId[userId.length - 1]
                     logInfo('userId ::', userId, '------', new Date().toString())
                     req.session.keycloakClientId = CONSTANTS.KEYCLOAK_GOOGLE_CLIENT_ID
+                    req.session.keycloakClientSecret = CONSTANTS.KEYCLOAK_GOOGLE_CLIENT_SECRET
                 } catch (err) {
                     logError('userId conversation error' + req.kauth.grant.access_token.content.sub, '------', new Date().toString())
                 }

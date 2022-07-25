@@ -93,15 +93,14 @@ export class CustomKeycloak {
         if (refreshToken) {
           const host = reqObj.get('host')
           const urlValue = `https://${host}` + '/auth/realms/' + CONSTANTS.KEYCLOAK_REALM + '/protocol/openid-connect/logout'
-          let clientId = 'portal'
           const formData: Record<string, string> = {
-            client_id: clientId,
+            client_id: 'portal',
             refresh_token: refreshToken,
           }
 
           if (reqObj.session.hasOwnProperty('keycloakClientId') && (reqObj.session.keycloakClientId !== '')) {
-            clientId = reqObj.session.keycloakClientId
-            formData.client_secret = CONSTANTS.KEYCLOAK_GOOGLE_CLIENT_SECRET
+            formData.clientId = reqObj.session.keycloakClientId
+            formData.client_secret = reqObj.session.keycloakClientSecret
           }
           logInfo('formData used in logout: ' + JSON.stringify(formData))
           try {
@@ -125,6 +124,7 @@ export class CustomKeycloak {
     delete reqObj.session.userRoles
     delete reqObj.session.userId
     delete reqObj.session.keycloakClientId
+    delete reqObj.session.keycloakClientSecret
     reqObj.session.destroy()
     logInfo(`${process.pid}: User Deauthenticated`)
   }

@@ -29,6 +29,8 @@ export async function getGoogleProfile(req: any) {
         if (req.query.error === 'access_denied') {
             throw new Error('GOOGLE_ACCESS_DENIED')
         }
+        logInfo('received code value: ' + req.query.code)
+        logInfo('decoded code value: ' + decodeURIComponent(req.query.code))
         const { tokens } = await client.getToken(decodeURIComponent(req.query.code))
         client.setCredentials(tokens)
         logInfo('userInformation being fetched from oauth2 api')

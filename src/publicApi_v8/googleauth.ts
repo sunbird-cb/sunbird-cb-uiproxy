@@ -15,7 +15,7 @@ const redirectUri = '&redirect_uri='
 
 googleAuth.get(['/auth', '/authV2', '/testauth'], async (req, res) => {
     let redirectUrlHost = HTTPS_PROTO + req.hostname
-    if(req.url.substring(req.url.lastIndexOf('/')) === '/auth') {
+    if (req.url.substring(req.url.lastIndexOf('/')) === '/auth') {
         redirectUrlHost = redirectUrlHost + CONSTANTS.GOOGLE_AUTH_CALLBACK_URL
     } else if (req.url.substring(req.url.lastIndexOf('/')) === '/authV2') {
         redirectUrlHost = redirectUrlHost + '/public/google/sso'

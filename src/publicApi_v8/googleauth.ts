@@ -13,8 +13,10 @@ const clientIdWithValue = 'client_id=' + CONSTANTS.GOOGLE_CLIENT_ID
 const redirectUri = '&redirect_uri='
 
 googleAuth.get(['/auth', '/authV2', '/testauth'], async (req, res) => {
-    let redirectUrlHost = HTTPS_PROTO + req.hostname + CONSTANTS.GOOGLE_AUTH_CALLBACK_URL
-    if (req.url.substring(req.url.lastIndexOf('/')) === '/authV2') {
+    let redirectUrlHost = HTTPS_PROTO + req.hostname
+    if(req.url.substring(req.url.lastIndexOf('/')) === '/auth') {
+        redirectUrlHost = redirectUrlHost + CONSTANTS.GOOGLE_AUTH_CALLBACK_URL
+    } else if (req.url.substring(req.url.lastIndexOf('/')) === '/authV2') {
         redirectUrlHost = redirectUrlHost + '/public/google/sso'
     } else if (req.url.substring(req.url.lastIndexOf('/')) === '/testauth') {
         redirectUrlHost = redirectUrlHost + '/apis/public/v8/google/callback'

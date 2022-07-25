@@ -6,28 +6,25 @@ import { createUserWithMailId, fetchUserByEmailId, updateKeycloakSession } from 
 
 export const googleAuth = express.Router()
 
-googleAuth.get('/auth', async (req, res) => {
-    logInfo('Received host ? ' + req.hostname)
-    const redirectUrlHost = 'https://' + req.hostname + CONSTANTS.GOOGLE_AUTH_CALLBACK_URL
-    let oAuthParams = 'client_id=' + CONSTANTS.GOOGLE_CLIENT_ID
-    oAuthParams = oAuthParams + '&redirect_uri=' + redirectUrlHost + '&prompt=consent'
-    oAuthParams = oAuthParams + '&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email'
-    oAuthParams = oAuthParams + '%20https://www.googleapis.com/auth/userinfo.profile'
-    const googleUrl = 'https://accounts.google.com/o/oauth2/v2/auth?' + oAuthParams
-    logInfo('google Url -> ' + googleUrl)
-    res.redirect(googleUrl)
-})
+const googleScope = 'https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile'
+const otherParams = '&prompt=consent&response_type=code&scope='
+const googleUrl = 'https://accounts.google.com/o/oauth2/v2/auth?'
+const HTTPS_PROTO = 'https://'
+const clientIdWithValue = 'client_id=' + CONSTANTS.GOOGLE_CLIENT_ID
+const redirectUri = '&redirect_uri='
 
-googleAuth.get('/testauth', async (req, res) => {
-    logInfo('Received host ? ' + req.hostname)
-    const redirectUrlHost = 'https://' + req.hostname + '/apis/public/v8/google/callback'
-    let oAuthParams = 'client_id=' + CONSTANTS.GOOGLE_CLIENT_ID
-    oAuthParams = oAuthParams + '&redirect_uri=' + redirectUrlHost + '&prompt=consent'
-    oAuthParams = oAuthParams + '&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email'
-    oAuthParams = oAuthParams + '%20https://www.googleapis.com/auth/userinfo.profile'
-    const googleUrl = 'https://accounts.google.com/o/oauth2/v2/auth?' + oAuthParams
-    logInfo('google Url -> ' + googleUrl)
-    res.redirect(googleUrl)
+googleAuth.get(['/auth', '/authV2', '/testauth'], async (req, res) => {
+    let redirectUrlHost = HTTPS_PROTO + req.hostname
+    if(req.url.substring(req.url.lastIndexOf('/')) === '/auth') {
+        redirectUrlHost = redirectUrlHost + CONSTANTS.GOOGLE_AUTH_CALLBACK_URL
+    } else if (req.url.substring(req.url.lastIndexOf('/')) === '/authV2') {
+        redirectUrlHost = redirectUrlHost + '/public/google/sso'
+    } else if (req.url.substring(req.url.lastIndexOf('/')) === '/testauth') {
+        redirectUrlHost = redirectUrlHost + '/apis/public/v8/google/callback'
+    }
+    let oAuthParams = clientIdWithValue + redirectUri + redirectUrlHost
+    oAuthParams = oAuthParams + otherParams + googleScope
+    res.redirect(googleUrl + oAuthParams)
 })
 
 googleAuth.get('/callback', async (req, res) => {

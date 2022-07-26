@@ -1797,6 +1797,13 @@ export const API_LIST = {
                 ROLE.STATE_ADMIN,
             ],
         },
+        '/proxies/v8/user/basicInfo': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -2035,5 +2042,6 @@ export const API_LIST = {
             '/proxies/v8/ratings/v1/ratingLookUp',
             '/proxies/v8/user/v1/positions',
             '/proxies/v8/org/ext/v1/create',
+            '/proxies/v8/user/basicInfo'
            ],
 }

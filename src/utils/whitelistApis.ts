@@ -2042,6 +2042,6 @@ export const API_LIST = {
             '/proxies/v8/ratings/v1/ratingLookUp',
             '/proxies/v8/user/v1/positions',
             '/proxies/v8/org/ext/v1/create',
-            '/proxies/v8/user/basicInfo'
+            '/proxies/v8/user/basicInfo',
            ],
 }

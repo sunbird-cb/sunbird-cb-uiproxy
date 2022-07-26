@@ -21,6 +21,13 @@ export const PERMISSION_HELPER = {
             reqObj.session.userRoles = userData.result.response.roles
             reqObj.session.orgs = userData.result.response.organisations
             reqObj.session.rootOrgId = userData.result.response.rootOrgId
+            reqObj.session.channel = userData.result.response.channel
+            if (userData.result.response.hasOwnProperty('profileDetails') &&
+                userData.result.response.profileDetails.hasOwnProperty('userRoles')) {
+                reqObj.session.userPositions = userData.result.response.profileDetails.userRoles
+            } else {
+                reqObj.session.userPositions = []
+            }
             if (!_.includes(reqObj.session.userRoles, 'PUBLIC')) {
                 reqObj.session.userRoles.push('PUBLIC')
             }

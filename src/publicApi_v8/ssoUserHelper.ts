@@ -166,6 +166,13 @@ export async function updateKeycloakSession(emailId: string, req: any, res: any)
         result.access_token = grant.access_token.token
         result.refresh_token = grant.refresh_token.token
         result.keycloakSessionCreated = true
+        keycloakClient.authenticated(req, (error: any) => {
+            logInfo('ssoUserHelper::keycloakClient::authenticated..')
+            if (error) {
+                logError('googleauthhelper:createSession error creating session')
+                result.errMessage = 'GOOGLE_CREATE_SESSION_FAILED'
+            }
+        })
         return Promise.resolve(result)
     } catch (err) {
         logError('googleOauthHelper: createSession failed. Error: ' + JSON.stringify(err))

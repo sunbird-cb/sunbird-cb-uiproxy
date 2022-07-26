@@ -58,13 +58,6 @@ const deauthenticated = async (reqObj: any) => {
 // tslint:disable-next-line: no-any
 const authenticated = async (reqObj: any, next: any) => {
     logInfo('keycloakHelper::authenticated...')
-    try {
-        const userId = reqObj.kauth.grant.access_token.content.sub.split(':')
-        reqObj.session.userId = userId[userId.length - 1]
-        logInfo('userId ::', userId, '------', new Date().toString())
-    } catch (err) {
-        logError('userId conversation error' + reqObj.kauth.grant.access_token.content.sub, '------', new Date().toString())
-    }
     const postLoginRequest = []
     // tslint:disable-next-line: no-any
     postLoginRequest.push((callback: any) => {

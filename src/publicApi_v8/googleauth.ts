@@ -59,20 +59,7 @@ googleAuth.get('/callback', async (req, res) => {
                 if (keycloakResult.errMessage !== '') {
                     result.errMessage = keycloakResult.errMessage
                 } else {
-                    logInfo('trying to identify is first time user...')
-                    if (req.session) {
-                        logInfo('Request has session object: ' + JSON.stringify(req.session))
-                        if (req.session.hasOwnProperty('rootOrgId') &&
-                            req.session.hasOwnProperty('channel') &&
-                            req.session.rootOrgId === CONSTANTS.CUSTODIAN_ORG_ID &&
-                            req.session.channel === CONSTANTS.CUSTODIAN_ORG_CHANNEL &&
-                            req.session.hasOwnProperty('userPositions') &&
-                            req.session.userPositions.length === 0) {
-                                isFirstTimeUser = true
-                        }
-                    } else {
-                        logError('request object do not have session')
-                    }
+                    isFirstTimeUser = true
                 }
             }
         }

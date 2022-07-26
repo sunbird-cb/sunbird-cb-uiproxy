@@ -166,6 +166,7 @@ export async function updateKeycloakSession(emailId: string, req: any, res: any)
         result.access_token = grant.access_token.token
         result.refresh_token = grant.refresh_token.token
         result.keycloakSessionCreated = true
+        // tslint:disable-next-line: no-any
         keycloakClient.authenticated(req, (error: any) => {
             logInfo('ssoUserHelper::keycloakClient::authenticated..')
             if (error) {

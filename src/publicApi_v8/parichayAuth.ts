@@ -40,7 +40,7 @@ parichayAuth.get('/callback', async (req, res) => {
             method: 'POST',
             url: CONSTANTS.PARICHAY_TOKEN_URL,
         })
-
+        logInfo('Parichay token: ' + JSON.stringify(tokenResponse.data))
         const userDetailResponse = await axios({
             ...axiosRequestConfig,
             headers: {
@@ -51,6 +51,7 @@ parichayAuth.get('/callback', async (req, res) => {
         })
 
         let result: { errMessage: string, userExist: boolean,  }
+        logInfo('User information from Parichay : ' + JSON.stringify(userDetailResponse.data))
         let isFirstTimeUser = false
         result =  await fetchUserByEmailId(userDetailResponse.data.loginId)
         if (result.errMessage === '') {

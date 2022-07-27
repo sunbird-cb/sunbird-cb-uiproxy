@@ -6,31 +6,57 @@ import { getKeyCloakClient } from './keycloakHelper'
 
 const API_END_POINTS = {
     kongAssignRoleUser: `${CONSTANTS.KONG_API_BASE}/user/private/v1/assign/role`,
-    kongCreateUser: `${CONSTANTS.KONG_API_BASE}/user/v2/signup`,
+    kongSignUpUser: `${CONSTANTS.KONG_API_BASE}/user/v2/signup`,
     kongUpdateUser: `${CONSTANTS.KONG_API_BASE}/user/private/v1/update`,
     kongUserRead: (userId: string) => `${CONSTANTS.KONG_API_BASE}/user/private/v1/read/${userId}`,
 }
 
 export async function fetchUserByEmailId(emailId: string) {
-    const sbUserExistsResponse = await axios({
+    const sbUserSearchRes = await axios({
         ...axiosRequestConfig,
-        headers: {
-            Authorization: CONSTANTS.SB_API_KEY,
-        },
-        method: 'GET',
-        url: CONSTANTS.KONG_API_BASE + '/user/v1/exists/email/' + emailId,
+        data: { request: {
+            fields : ['userId', 'status', 'channel', 'rootOrgId', 'organisations'],
+            filters: { email: emailId.toLowerCase() },
+        } },
+        method: 'POST',
+        url: CONSTANTS.LEARNER_SERVICE_API_BASE + '/private/user/v1/search',
     })
-    if (sbUserExistsResponse.data.responseCode.toUpperCase() === 'OK') {
-        return sbUserExistsResponse.data.result.exists
-    } else {
-        logError('googleOauthHelper: fetchUserByEmailId failed' + JSON.stringify(sbUserExistsResponse.data))
+    const result = {
+        errMessage : '', userExist : false,
     }
-    return false
+
+    if (sbUserSearchRes.data.responseCode.toUpperCase() === 'OK') {
+        logInfo('Received user search response.')
+        if (sbUserSearchRes.data.result.response.count === 0) {
+            logInfo('user accound doesnot exist. returning false')
+        } else if (sbUserSearchRes.data.result.response.count === 1) {
+            const contentObj = sbUserSearchRes.data.result.response.content[0]
+            const status = contentObj.status
+            logInfo('user account exist. Data: ' + JSON.stringify(sbUserSearchRes.data) + ', Status: ' + status)
+            if (status === 1) {
+                logInfo('user account enabled. returning true')
+                result.userExist = true
+            } else {
+                logInfo('user account is diabled. throwing error')
+                result.errMessage = 'Account Disabled. Please contact Admin.'
+            }
+        } else {
+            result.errMessage = 'More than one user account exists. Please contact Admin.'
+        }
+    } else {
+        logError('googleOauthHelper: fetchUserByEmailId failed' + JSON.stringify(sbUserSearchRes.data))
+        result.errMessage = 'Failed to verify email exist. Internal Server Error.'
+    }
+    return Promise.resolve(result)
 }
 
 export async function createUserWithMailId(emailId: string, firstNameStr: string, lastNameStr: string) {
+    const result = {
+        errMessage : '', userCreated : false, userId: '',
+    }
+    const signUpErr = 'SIGN_UP_ERR-'
     let statusString = ''
-    const createResponse = await axios({
+    const signUpResponse = await axios({
         ...axiosRequestConfig,
         data: {
             request:
@@ -44,24 +70,27 @@ export async function createUserWithMailId(emailId: string, firstNameStr: string
             Authorization: CONSTANTS.SB_API_KEY,
         },
         method: 'POST',
-        url: API_END_POINTS.kongCreateUser,
+        url: API_END_POINTS.kongSignUpUser,
     })
-    statusString = createResponse.data.params.status
+    statusString = signUpResponse.data.params.status
     if (statusString.toUpperCase() !== 'SUCCESS') {
-        throw new Error('FAILED_TO_CREATE_USER')
+        result.errMessage = signUpErr + 'FAILED_TO_CREATE_USER'
+        return Promise.resolve(result)
     }
-    const sbUserId = createResponse.data.result.userId
+    result.userCreated = true
+    result.userId = signUpResponse.data.result.userId
     const sbUserReadResponse = await axios({
         ...axiosRequestConfig,
         headers: {
             Authorization: CONSTANTS.SB_API_KEY,
         },
         method: 'GET',
-        url: API_END_POINTS.kongUserRead(sbUserId),
+        url: API_END_POINTS.kongUserRead(result.userId),
     })
     statusString = sbUserReadResponse.data.params.status
     if (statusString.toUpperCase() !== 'SUCCESS') {
-        throw new Error('FAILED_TO_READ_CREATED_USER')
+        result.errMessage = signUpErr + 'FAILED_TO_READ_CREATED_USER'
+        return Promise.resolve(result)
     }
     const sbUserOrgId = sbUserReadResponse.data.result.response.rootOrgId
     const sbProfileUpdateReq = {
@@ -75,7 +104,7 @@ export async function createUserWithMailId(emailId: string, firstNameStr: string
                 surname: lastNameStr,
             },
         },
-        userId: sbUserId,
+        userId: result.userId,
     }
     const sbUserProfileUpdateResp = await axios({
         ...axiosRequestConfig,
@@ -88,7 +117,8 @@ export async function createUserWithMailId(emailId: string, firstNameStr: string
     })
     statusString = sbUserProfileUpdateResp.data.params.status
     if (statusString.toUpperCase() !== 'SUCCESS') {
-        throw new Error('FAILED_TO_UPDATE_USER')
+        result.errMessage = signUpErr + 'FAILED_TO_UPDATE_USER'
+        return Promise.resolve(result)
     }
     const sbAssignRoleResp = await axios({
         ...axiosRequestConfig,
@@ -96,7 +126,7 @@ export async function createUserWithMailId(emailId: string, firstNameStr: string
             request: {
                 organisationId: sbUserOrgId,
                 roles: ['PUBLIC'],
-                userId: sbUserId,
+                userId: result.userId,
             },
         },
         headers: {
@@ -107,36 +137,47 @@ export async function createUserWithMailId(emailId: string, firstNameStr: string
     })
     statusString = sbAssignRoleResp.data.params.status
     if (statusString.toUpperCase() !== 'SUCCESS') {
-        throw new Error('FAILED_TO_UPDATE_USER')
+        result.errMessage = signUpErr + 'FAILED_TO_UPDATE_USER'
+        return Promise.resolve(result)
     }
-    return createResponse.data
+    return Promise.resolve(result)
 }
 
 // tslint:disable-next-line: no-any
 export async function updateKeycloakSession(emailId: string, req: any, res: any) {
-    // tslint:disable-next-line: no-any
-    let grant: { access_token: { token: any }; refresh_token: { token: any } }
     const scope = 'offline_access'
     const keycloakClient = getKeyCloakClient()
     logInfo('login in progress')
     // tslint:disable-next-line: no-any
+    let grant: { access_token: { token: any }; refresh_token: { token: any } }
+    const result = {
+        access_token: '', errMessage : '', keycloakSessionCreated: false, refresh_token: '',
+    }
     try {
         grant = await keycloakClient.grantManager.obtainDirectly(emailId, undefined, undefined, scope)
-    } catch (err) {
-        logError('googleOauthHelper: createSession failed')
-        throw new Error('unable to create session')
-    }
-    keycloakClient.storeGrant(grant, req, res)
-    req.kauth.grant = grant
-    return new Promise((resolve, reject) => {
+        logInfo('Received response from Keycloak: ' + JSON.stringify(grant))
+        keycloakClient.storeGrant(grant, req, res)
+        req.kauth.grant = grant
+        const userId = req.kauth.grant.access_token.content.sub.split(':')
+        req.session.userId = userId[userId.length - 1]
+        logInfo('userId ::', userId, '------', new Date().toString())
+        req.session.keycloakClientId = CONSTANTS.KEYCLOAK_GOOGLE_CLIENT_ID
+        req.session.keycloakClientSecret = CONSTANTS.KEYCLOAK_GOOGLE_CLIENT_SECRET
+        result.access_token = grant.access_token.token
+        result.refresh_token = grant.refresh_token.token
+        result.keycloakSessionCreated = true
         // tslint:disable-next-line: no-any
         keycloakClient.authenticated(req, (error: any) => {
+            logInfo('ssoUserHelper::keycloakClient::authenticated..')
             if (error) {
                 logError('googleauthhelper:createSession error creating session')
-                reject('GOOGLE_CREATE_SESSION_FAILED')
-            } else {
-                resolve({access_token: grant.access_token.token, refresh_token: grant.refresh_token.token})
+                result.errMessage = 'GOOGLE_CREATE_SESSION_FAILED'
             }
         })
-    })
+        return Promise.resolve(result)
+    } catch (err) {
+        logError('googleOauthHelper: createSession failed. Error: ' + JSON.stringify(err))
+        result.errMessage = 'FAILED_TO_CREATE_KEYCLOAK_SESSION'
+    }
+    return Promise.resolve(result)
 }

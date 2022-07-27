@@ -23,7 +23,7 @@ parichayAuth.get('/callback', async (req, res) => {
     logInfo('Received this request from -> ' + req.headers.referer)
     logInfo('Code Param Value -> ' + decodeURIComponent(req.query.code))
     const host = req.get('host')
-    let resRedirectUrl = `https://${host}/protected/v8/resource/`
+    let resRedirectUrl = `https://${host}/page/home`
     try {
         const redirectUrl = 'https://' + req.hostname + CONSTANTS.PARICHAY_AUTH_CALLBACK_URL
         const tokenResponse = await axios({
@@ -51,6 +51,7 @@ parichayAuth.get('/callback', async (req, res) => {
         })
 
         let result: { errMessage: string, userExist: boolean,  }
+        let isFirstTimeUser = false
         result =  await fetchUserByEmailId(userDetailResponse.data.loginId)
         if (result.errMessage === '') {
             let createResult: { errMessage: string, userCreated: boolean, userId: string }
@@ -69,12 +70,16 @@ parichayAuth.get('/callback', async (req, res) => {
                 keycloakResult = await updateKeycloakSession(userDetailResponse.data.loginId, req, res)
                 if (keycloakResult.errMessage !== '') {
                     result.errMessage = keycloakResult.errMessage
+                } else {
+                    isFirstTimeUser = true
                 }
             }
         }
         if (result.errMessage !== '') {
             logInfo('Received error from user search. ')
             resRedirectUrl = `https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(result.errMessage))
+        } else if (isFirstTimeUser) {
+            resRedirectUrl = `https://${host}/public/welcome`
         }
     } catch (err) {
         logError('Failed to process callback API.. error: ' + JSON.stringify(err))

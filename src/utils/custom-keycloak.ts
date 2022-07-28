@@ -112,6 +112,21 @@ export class CustomKeycloak {
               // tslint:disable-next-line: no-console
               console.log('Failed to call keycloak logout API ', err, '------', new Date().toString())
           }
+
+          if (reqObj.session.parichayToken) {
+            logInfo('Parichay login found... trying to logout from Parichay...')
+            try {
+              request.get({
+                  headers: {
+                    Authorization: reqObj.session.parichayToken.access_token,
+                  },
+                  url: CONSTANTS.PARICHAY_REVOKE_URL,
+              })
+            } catch (err) {
+                // tslint:disable-next-line: no-console
+                console.log('Failed to call parichay revoke API ', err, '------', new Date().toString())
+            }
+          }
         } else {
           logError('Not able to retrieve refresh_token value from Session. Logout process failed.')
         }

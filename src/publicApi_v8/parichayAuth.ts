@@ -2,6 +2,7 @@ import axios from 'axios'
 import express from 'express'
 import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
+import { getCurrnetExpiryTime } from '../utils/jwtHelper'
 import { logError, logInfo } from '../utils/logger'
 import { createUserWithMailId, fetchUserByEmailId, updateKeycloakSession } from './ssoUserHelper'
 
@@ -20,9 +21,13 @@ parichayAuth.get('/auth', async (req, res) => {
 })
 
 parichayAuth.get('/callback', async (req, res) => {
-    logInfo('Received this request from -> ' + req.headers.referer)
-    logInfo('Code Param Value -> ' + decodeURIComponent(req.query.code))
     const host = req.get('host')
+    logInfo('Received this request from -> ' + req.headers.referer)
+    if (!req.query.code) {
+        res.redirect(`https://${host}/public/logout?error=` + encodeURIComponent('Failed to login in Parichay. Code param is missing.'))
+        return
+    }
+    logInfo('Code Param Value -> ' + decodeURIComponent(req.query.code))
     let resRedirectUrl = `https://${host}/page/home`
     try {
         const redirectUrl = 'https://' + req.hostname + CONSTANTS.PARICHAY_AUTH_CALLBACK_URL
@@ -41,6 +46,13 @@ parichayAuth.get('/callback', async (req, res) => {
             url: CONSTANTS.PARICHAY_TOKEN_URL,
         })
         logInfo('Parichay token: ' + JSON.stringify(tokenResponse.data))
+        if (req.session) {
+            req.session.parichayToken = tokenResponse.data
+            req.session.cookie.expires = new Date(getCurrnetExpiryTime(tokenResponse.data.access_token))
+            logInfo('Parichay Token is set in request Session.')
+        } else {
+            logError('Failed to set parichay token in req session. Session not available...')
+        }
         const userDetailResponse = await axios({
             ...axiosRequestConfig,
             headers: {
@@ -50,9 +62,9 @@ parichayAuth.get('/callback', async (req, res) => {
             url: CONSTANTS.PARICHAY_USER_DETAILS_URL,
         })
 
-        let result: { errMessage: string, userExist: boolean,  }
         logInfo('User information from Parichay : ' + JSON.stringify(userDetailResponse.data))
         let isFirstTimeUser = false
+        let result: { errMessage: string, userExist: boolean,  }
         result =  await fetchUserByEmailId(userDetailResponse.data.loginId)
         if (result.errMessage === '') {
             let createResult: { errMessage: string, userCreated: boolean, userId: string }
@@ -84,7 +96,7 @@ parichayAuth.get('/callback', async (req, res) => {
         }
     } catch (err) {
         logError('Failed to process callback API.. error: ' + JSON.stringify(err))
-        resRedirectUrl = `https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(err))
+        resRedirectUrl = `https://${host}/public/logout?error=` + encodeURIComponent('Internal Server Error. Please contact administrator.')
     }
     res.redirect(resRedirectUrl)
 })

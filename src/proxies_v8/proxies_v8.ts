@@ -229,9 +229,10 @@ proxiesV8.get('/api/user/v2/read', async (req, res) => {
       res.redirect(`https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(response.data.params.errmsg)))
     }
   }).catch((err) => {
-    const errMsg = 'Internal Server Error'
-    if (err.response) {
-      logError('Received error for user read API. Error: ' + JSON.stringify(err.response))
+    let errMsg = 'Internal Server Error'
+    if (err.response && err.response.data) {
+      logError('Received error for user read API. Error: ' + JSON.stringify(err.response.data))
+      errMsg = err.response.data.params.errmsg
     }
     res.redirect(`https://${host}/public/logout?error=` + encodeURIComponent(errMsg))
   })

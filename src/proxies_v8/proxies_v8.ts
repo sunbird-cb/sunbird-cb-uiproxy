@@ -5,7 +5,7 @@ import FormData from 'form-data'
 import lodash from 'lodash'
 import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
-import { logInfo } from '../utils/logger'
+import { logError, logInfo } from '../utils/logger'
 import {
   ilpProxyCreatorRoute,
   // proxyCreatorDiscussion,
@@ -211,21 +211,30 @@ proxiesV8.get('/api/user/v2/read', async (req, res) => {
     }
     // tslint:disable-next-line: no-console
   console.log('REQ_URL_ORIGINAL proxyCreatorToAppentUserId', req.originalUrl)
-    const searchResponse = await axios({
-      ...axiosRequestConfig,
-      headers: {
-          Authorization: CONSTANTS.SB_API_KEY,
-          // tslint:disable-next-line: all
-          'x-authenticated-user-token': extractUserToken(req),
-      },
-      method: 'GET',
-      url: `${CONSTANTS.KONG_API_BASE}/user/v2/read/` + userId,
-    })
-  if (searchResponse.data.responseCode !== 'OK') {
-      res.redirect(`https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(searchResponse.data.params.errmsg)))
+
+  await axios({
+    ...axiosRequestConfig,
+    headers: {
+        Authorization: CONSTANTS.SB_API_KEY,
+        // tslint:disable-next-line: all
+        'x-authenticated-user-token': extractUserToken(req),
+    },
+    method: 'GET',
+    url: `${CONSTANTS.KONG_API_BASE}/user/v2/read/` + userId,
+  }).then((response) => {
+    if (response.data.responseCode === 'OK') {
+      res.status(200).send(response.data)
     } else {
-    res.status(200).send(searchResponse.data)
+      logError('User Read API.. Received non OK response.' + JSON.stringify(response.data))
+      res.redirect(`https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(response.data.params.errmsg)))
     }
+  }).catch((err) => {
+    const errMsg = 'Internal Server Error'
+    if (err.response) {
+      logError('Received error for user read API. Error: ' + JSON.stringify(err.response))
+    }
+    res.redirect(`https://${host}/public/logout?error=` + encodeURIComponent(errMsg))
+  })
 })
 
 proxiesV8.use('/api/user/v5/read',

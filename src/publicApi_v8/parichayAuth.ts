@@ -2,6 +2,7 @@ import axios from 'axios'
 import express from 'express'
 import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
+import { getCurrnetExpiryTime } from '../utils/jwtHelper'
 import { logError, logInfo } from '../utils/logger'
 import { createUserWithMailId, fetchUserByEmailId, updateKeycloakSession } from './ssoUserHelper'
 
@@ -20,9 +21,11 @@ parichayAuth.get('/auth', async (req, res) => {
 })
 
 parichayAuth.get('/callback', async (req, res) => {
-    logInfo('Received this request from -> ' + req.headers.referer)
-    logInfo('Code Param Value -> ' + decodeURIComponent(req.query.code))
     const host = req.get('host')
+    if (!req.query.code) {
+        res.redirect(`https://${host}/public/logout?error=` + encodeURIComponent('Failed to login in Parichay. Code param is missing.'))
+        return
+    }
     let resRedirectUrl = `https://${host}/page/home`
     try {
         const redirectUrl = 'https://' + req.hostname + CONSTANTS.PARICHAY_AUTH_CALLBACK_URL
@@ -40,7 +43,12 @@ parichayAuth.get('/callback', async (req, res) => {
             method: 'POST',
             url: CONSTANTS.PARICHAY_TOKEN_URL,
         })
-
+        if (req.session) {
+            req.session.parichayToken = tokenResponse.data
+            req.session.cookie.expires = new Date(getCurrnetExpiryTime(tokenResponse.data.access_token))
+        } else {
+            logError('Failed to set parichay token in req session. Session not available...')
+        }
         const userDetailResponse = await axios({
             ...axiosRequestConfig,
             headers: {
@@ -83,7 +91,7 @@ parichayAuth.get('/callback', async (req, res) => {
         }
     } catch (err) {
         logError('Failed to process callback API.. error: ' + JSON.stringify(err))
-        resRedirectUrl = `https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(err))
+        resRedirectUrl = `https://${host}/public/logout?error=` + encodeURIComponent('Internal Server Error. Please contact administrator.')
     }
     res.redirect(resRedirectUrl)
 })

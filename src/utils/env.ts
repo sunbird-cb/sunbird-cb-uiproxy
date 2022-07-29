@@ -176,6 +176,7 @@ export const CONSTANTS = {
   GOOGLE_AUTH_CALLBACK_URL: env.GOOGLE_AUTH_CALLBACK_URL || '/apis/public/v8/google/callback',
   CUSTODIAN_ORG_ID: env.CUSTODIAN_ORG_ID || 'id',
   CUSTODIAN_ORG_CHANNEL: env.CUSTODIAN_ORG_CHANNEL || 'igot',
+  PARICHAY_REVOKE_URL: env.PARICHAY_REVOKE_URL || 'parichayRevokeUrl',
 
 }
 

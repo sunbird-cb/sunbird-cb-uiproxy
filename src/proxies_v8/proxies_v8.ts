@@ -200,9 +200,33 @@ proxiesV8.use('/read/content-progres/*',
   proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/course/v1/content/state/read`)
 )
 
-proxiesV8.use('/api/user/v2/read',
-  proxyCreatorToAppentUserId(express.Router(), `${CONSTANTS.KONG_API_BASE}/user/v2/read/`)
-)
+proxiesV8.get('/api/user/v2/read', async (req, res) => {
+  const host = req.get('host')
+  const originalUrl = req.originalUrl
+  const lastIndex = originalUrl.lastIndexOf('/')
+  const subStr = originalUrl.substr(lastIndex).substr(1).split('-').length
+  let userId = extractUserIdFromRequest(req).split(':')[2]
+  if (subStr === 5 && (originalUrl.substr(lastIndex).substr(1))) {
+      userId = originalUrl.substr(lastIndex).substr(1)
+    }
+    // tslint:disable-next-line: no-console
+  console.log('REQ_URL_ORIGINAL proxyCreatorToAppentUserId', req.originalUrl)
+    const searchResponse = await axios({
+      ...axiosRequestConfig,
+      headers: {
+          Authorization: CONSTANTS.SB_API_KEY,
+          // tslint:disable-next-line: all
+          'x-authenticated-user-token': extractUserToken(req),
+      },
+      method: 'GET',
+      url: `${CONSTANTS.KONG_API_BASE}/user/v2/read/` + userId,
+    })
+  if (searchResponse.data.responseCode !== 'OK') {
+      res.redirect(`https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(searchResponse.data.params.errmsg)))
+    } else {
+    res.status(200).send(searchResponse.data)
+    }
+})
 
 proxiesV8.use('/api/user/v5/read',
   proxyCreatorToAppentUserId(express.Router(), `${CONSTANTS.KONG_API_BASE}/user/v5/read/`)

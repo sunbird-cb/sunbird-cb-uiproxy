@@ -234,6 +234,12 @@ proxiesV8.get('/api/user/v2/read', async (req, res) => {
       logError('Received error for user read API. Error: ' + JSON.stringify(err.response.data))
       errMsg = err.response.data.params.errmsg
     }
+    if (req.session) {
+      req.session.destroy((dErr) => {
+        logError('Failed to clear the session. ERROR: ' + JSON.stringify(dErr))
+      })
+    }
+    res.clearCookie('connect.sid', { path: '/' })
     res.redirect(`https://${host}/public/logout?error=` + encodeURIComponent(errMsg))
   })
 })

@@ -208,9 +208,7 @@ proxiesV8.get('/api/user/v2/read', async (req, res) => {
   let userId = extractUserIdFromRequest(req).split(':')[2]
   if (subStr === 5 && (originalUrl.substr(lastIndex).substr(1))) {
       userId = originalUrl.substr(lastIndex).substr(1)
-    }
-    // tslint:disable-next-line: no-console
-  console.log('REQ_URL_ORIGINAL proxyCreatorToAppentUserId', req.originalUrl)
+  }
 
   await axios({
     ...axiosRequestConfig,

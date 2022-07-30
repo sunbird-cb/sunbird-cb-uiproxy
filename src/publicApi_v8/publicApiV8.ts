@@ -19,7 +19,3 @@ publicApiV8.use('/assets',
 publicApiV8.use('/workallocation', workallocationPublic)
 
 publicApiV8.use('/org/v1/list', proxyCreatorRoute(express.Router(), CONSTANTS.KONG_API_BASE + '/org/v1/list'))
-
-publicApiV8.use('/google', googleAuth)
-
-publicApiV8.use('/parichay', parichayAuth)

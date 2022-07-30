@@ -26,7 +26,6 @@ export async function fetchUserByEmailId(emailId: string) {
     }
 
     if (sbUserSearchRes.data.responseCode.toUpperCase() === 'OK') {
-        logInfo('Received user search response.')
         if (sbUserSearchRes.data.result.response.count === 0) {
             logInfo('user accound doesnot exist. returning false')
         } else if (sbUserSearchRes.data.result.response.count === 1) {
@@ -147,7 +146,6 @@ export async function createUserWithMailId(emailId: string, firstNameStr: string
 export async function updateKeycloakSession(emailId: string, req: any, res: any) {
     const scope = 'offline_access'
     const keycloakClient = getKeyCloakClient()
-    logInfo('login in progress')
     // tslint:disable-next-line: no-any
     let grant: { access_token: { token: any }; refresh_token: { token: any } }
     const result = {
@@ -155,7 +153,6 @@ export async function updateKeycloakSession(emailId: string, req: any, res: any)
     }
     try {
         grant = await keycloakClient.grantManager.obtainDirectly(emailId, undefined, undefined, scope)
-        logInfo('Received response from Keycloak: ' + JSON.stringify(grant))
         keycloakClient.storeGrant(grant, req, res)
         req.kauth.grant = grant
         const userId = req.kauth.grant.access_token.content.sub.split(':')

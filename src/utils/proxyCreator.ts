@@ -160,9 +160,6 @@ export function proxyCreatorSunbird(route: Router, targetUrl: string, _timeout =
       console.log('REQ_URL_ORIGINAL proxyCreatorSunbird  ======= discussion', url)
     }
 
-    // tslint:disable-next-line: no-console
-    console.log('REQ_SESSION proxyCreatorSunbird : ', req.session)
-
     if (req.originalUrl.includes('/dashboard') && !req.originalUrl.includes('/dashboard/analytics/getChartV2/Karmayogi') && req.session) {
       if (req.originalUrl.includes('?')) {
         url = `${url}&_uid=${_.get(req, 'session.rootOrgId')}`

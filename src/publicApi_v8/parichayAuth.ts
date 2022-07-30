@@ -22,12 +22,10 @@ parichayAuth.get('/auth', async (req, res) => {
 
 parichayAuth.get('/callback', async (req, res) => {
     const host = req.get('host')
-    logInfo('Received this request from -> ' + req.headers.referer)
     if (!req.query.code) {
         res.redirect(`https://${host}/public/logout?error=` + encodeURIComponent('Failed to login in Parichay. Code param is missing.'))
         return
     }
-    logInfo('Code Param Value -> ' + decodeURIComponent(req.query.code))
     let resRedirectUrl = `https://${host}/page/home`
     try {
         const redirectUrl = 'https://' + req.hostname + CONSTANTS.PARICHAY_AUTH_CALLBACK_URL
@@ -45,7 +43,6 @@ parichayAuth.get('/callback', async (req, res) => {
             method: 'POST',
             url: CONSTANTS.PARICHAY_TOKEN_URL,
         })
-        logInfo('Parichay token: ' + JSON.stringify(tokenResponse.data))
         if (req.session) {
             req.session.parichayToken = tokenResponse.data
             req.session.cookie.expires = new Date(getCurrnetExpiryTime(tokenResponse.data.access_token))
@@ -69,7 +66,7 @@ parichayAuth.get('/callback', async (req, res) => {
         if (result.errMessage === '') {
             let createResult: { errMessage: string, userCreated: boolean, userId: string }
             if (!result.userExist) {
-                logInfo('is Sunbird User Exist not exist for email: ' + userDetailResponse.data.loginId)
+                logInfo('Sunbird User does not exist for email: ' + userDetailResponse.data.loginId)
                 createResult = await createUserWithMailId(userDetailResponse.data.loginId,
                     userDetailResponse.data.FirstName, userDetailResponse.data.LastName)
                 if (createResult.errMessage !== '') {

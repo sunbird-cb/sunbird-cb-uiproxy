@@ -64,7 +64,7 @@ parichayAuth.get('/callback', async (req, res) => {
         if (result.errMessage === '') {
             let createResult: { errMessage: string, userCreated: boolean, userId: string }
             if (!result.userExist) {
-                logInfo('is Sunbird User Exist not exist for email: ' + userDetailResponse.data.loginId)
+                logInfo('Sunbird User does not exist for email: ' + userDetailResponse.data.loginId)
                 createResult = await createUserWithMailId(userDetailResponse.data.loginId,
                     userDetailResponse.data.FirstName, userDetailResponse.data.LastName)
                 if (createResult.errMessage !== '') {

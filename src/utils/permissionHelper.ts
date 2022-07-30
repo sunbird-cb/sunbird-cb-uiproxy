@@ -64,7 +64,7 @@ export const PERMISSION_HELPER = {
               callback(error, null)
             } else {
                // tslint:disable-next-line: no-console
-               console.log(`setNodeBBUID::Success of save -- reqObj.session ${new Date()}--- `, reqObj.session )
+               console.log(`setNodeBBUID::Success of save -- reqObj.session ${new Date()}--- `)
                callback(null, nodeBBData)
             }
         })

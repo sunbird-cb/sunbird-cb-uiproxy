@@ -304,6 +304,34 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/forms/createForm': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/forms/getFormById': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/forms/getAllForms': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/forms/v1/saveFormSubmit': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/proxies/v8/upload/action/content/v3/upload/:do_id': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -1797,6 +1825,20 @@ export const API_LIST = {
                 ROLE.STATE_ADMIN,
             ],
         },
+        '/proxies/v8/user/basicInfo': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/user/basicProfileUpdate': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -1884,6 +1926,10 @@ export const API_LIST = {
             '/proxies/v8/dashboard/analytics/getDashboardsForProfile/Karmayogi',
             '/proxies/v8/dashboard/analytics/getChartV2/Karmayogi',
             '/proxies/v8/wat/dashboard/getDashboardConfig/Karmayogi/overview',
+            '/proxies/v8/forms/createForm',
+            '/proxies/v8/forms/getFormById',
+            '/proxies/v8/forms/getAllForms',
+            '/proxies/v8/forms/v1/saveFormSubmit',
             '/protected/v8/user/profileDetails/test',
             '/protected/v8/resource/',
             '/protected/v8/user/details',
@@ -2035,5 +2081,7 @@ export const API_LIST = {
             '/proxies/v8/ratings/v1/ratingLookUp',
             '/proxies/v8/user/v1/positions',
             '/proxies/v8/org/ext/v1/create',
+            '/proxies/v8/user/basicInfo',
+            '/proxies/v8/user/basicProfileUpdate',
            ],
 }

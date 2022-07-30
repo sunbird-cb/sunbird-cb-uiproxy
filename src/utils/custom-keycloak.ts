@@ -93,17 +93,39 @@ export class CustomKeycloak {
         if (refreshToken) {
           const host = reqObj.get('host')
           const urlValue = `https://${host}` + '/auth/realms/' + CONSTANTS.KEYCLOAK_REALM + '/protocol/openid-connect/logout'
+          const formData: Record<string, string> = {
+            client_id: 'portal',
+            refresh_token: refreshToken,
+          }
+
+          if (reqObj.session.hasOwnProperty('keycloakClientId') && (reqObj.session.keycloakClientId !== '')) {
+            formData.client_id = reqObj.session.keycloakClientId
+            formData.client_secret = reqObj.session.keycloakClientSecret
+          }
+          logInfo('formData used in logout: ' + JSON.stringify(formData))
           try {
               request.post({
-                  form: {
-                      client_id: 'portal',
-                      refresh_token: refreshToken,
-                  },
+                  form: formData,
                   url: urlValue,
               })
           } catch (err) {
               // tslint:disable-next-line: no-console
               console.log('Failed to call keycloak logout API ', err, '------', new Date().toString())
+          }
+
+          if (reqObj.session.parichayToken) {
+            logInfo('Parichay login found... trying to logout from Parichay...')
+            try {
+              request.get({
+                  headers: {
+                    Authorization: reqObj.session.parichayToken.access_token,
+                  },
+                  url: CONSTANTS.PARICHAY_REVOKE_URL,
+              })
+            } catch (err) {
+                // tslint:disable-next-line: no-console
+                console.log('Failed to call parichay revoke API ', err, '------', new Date().toString())
+            }
           }
         } else {
           logError('Not able to retrieve refresh_token value from Session. Logout process failed.')
@@ -116,6 +138,8 @@ export class CustomKeycloak {
     }
     delete reqObj.session.userRoles
     delete reqObj.session.userId
+    delete reqObj.session.keycloakClientId
+    delete reqObj.session.keycloakClientSecret
     reqObj.session.destroy()
     logInfo(`${process.pid}: User Deauthenticated`)
   }

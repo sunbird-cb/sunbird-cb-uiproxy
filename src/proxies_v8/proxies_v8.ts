@@ -5,7 +5,7 @@ import FormData from 'form-data'
 import lodash from 'lodash'
 import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
-import { logInfo } from '../utils/logger'
+import { logError, logInfo } from '../utils/logger'
 import {
   ilpProxyCreatorRoute,
   // proxyCreatorDiscussion,
@@ -179,6 +179,10 @@ proxiesV8.use('/v1/content/retire',
   proxyCreatorKnowledge(express.Router(), `${CONSTANTS.KNOWLEDGE_MW_API_BASE}`)
 )
 
+proxiesV8.use('/v1/content/copy/*',
+  proxyCreatorKnowledge(express.Router(), `${CONSTANTS.KNOWLEDGE_MW_API_BASE}`)
+)
+
 proxiesV8.use('/private/content/*',
   proxyContent(express.Router(), `${CONSTANTS.CONTENT_SERVICE_API_BASE}`)
 )
@@ -196,8 +200,50 @@ proxiesV8.use('/read/content-progres/*',
   proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/course/v1/content/state/read`)
 )
 
-proxiesV8.use('/api/user/v2/read',
-  proxyCreatorToAppentUserId(express.Router(), `${CONSTANTS.KONG_API_BASE}/user/v2/read/`)
+proxiesV8.get('/api/user/v2/read', async (req, res) => {
+  const host = req.get('host')
+  const originalUrl = req.originalUrl
+  const lastIndex = originalUrl.lastIndexOf('/')
+  const subStr = originalUrl.substr(lastIndex).substr(1).split('-').length
+  let userId = extractUserIdFromRequest(req).split(':')[2]
+  if (subStr === 5 && (originalUrl.substr(lastIndex).substr(1))) {
+      userId = originalUrl.substr(lastIndex).substr(1)
+  }
+
+  await axios({
+    ...axiosRequestConfig,
+    headers: {
+        Authorization: CONSTANTS.SB_API_KEY,
+        // tslint:disable-next-line: all
+        'x-authenticated-user-token': extractUserToken(req),
+    },
+    method: 'GET',
+    url: `${CONSTANTS.KONG_API_BASE}/user/v2/read/` + userId,
+  }).then((response) => {
+    if (response.data.responseCode === 'OK') {
+      res.status(200).send(response.data)
+    } else {
+      logError('User Read API.. Received non OK response.' + JSON.stringify(response.data))
+      res.redirect(`https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(response.data.params.errmsg)))
+    }
+  }).catch((err) => {
+    let errMsg = 'Internal Server Error'
+    if (err.response && err.response.data) {
+      logError('Received error for user read API. Error: ' + JSON.stringify(err.response.data))
+      errMsg = err.response.data.params.errmsg
+    }
+    if (req.session) {
+      req.session.destroy((dErr) => {
+        logError('Failed to clear the session. ERROR: ' + JSON.stringify(dErr))
+      })
+    }
+    res.clearCookie('connect.sid', { path: '/' })
+    res.redirect(`https://${host}/public/logout?error=` + encodeURIComponent(errMsg))
+  })
+})
+
+proxiesV8.use('/api/user/v5/read',
+  proxyCreatorToAppentUserId(express.Router(), `${CONSTANTS.KONG_API_BASE}/user/v5/read/`)
 )
 
 proxiesV8.use([

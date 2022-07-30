@@ -307,6 +307,13 @@ export const API_LIST = {
                 ROLE.EDITOR,
             ],
         },
+        '/proxies/v8/action/content/v3/copy/:do_id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.CONTENT_CREATOR,
+            ],
+        },
         '/proxies/v8/action/content/v3/updateReviewStatus/:do_id': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -1777,6 +1784,20 @@ export const API_LIST = {
                 ROLE.STATE_ADMIN,
             ],
         },
+        '/proxies/v8/user/basicInfo': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/user/basicProfileUpdate': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -1824,6 +1845,7 @@ export const API_LIST = {
             '/proxies/v8/action/content/v3/create',
             '/proxies/v8/upload/action/content/v3/upload/:do_id',
             '/proxies/v8/v1/content/retire',
+            '/proxies/v8/action/content/v3/copy/:do_id',
             '/proxies/v8/action/content/v3/updateReviewStatus/:do_id',
             '/proxies/v8/action/content/v3/review/:do_id',
             '/proxies/v8/discussion/recent',
@@ -2012,5 +2034,7 @@ export const API_LIST = {
             '/proxies/v8/ratings/v1/ratingLookUp',
             '/proxies/v8/user/v1/positions',
             '/proxies/v8/org/ext/v1/create',
+            '/proxies/v8/user/basicInfo',
+            '/proxies/v8/user/basicProfileUpdate',
            ],
 }

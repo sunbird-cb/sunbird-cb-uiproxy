@@ -22,7 +22,7 @@ export async function fetchUserByEmailId(emailId: string) {
         url: CONSTANTS.LEARNER_SERVICE_API_BASE + '/private/user/v1/search',
     })
     const result = {
-        errMessage : '', userExist : false,
+        errMessage : '', rootOrgId: '', userExist : false,
     }
 
     if (sbUserSearchRes.data.responseCode.toUpperCase() === 'OK') {
@@ -35,6 +35,7 @@ export async function fetchUserByEmailId(emailId: string) {
             if (status === 1) {
                 logInfo('user account enabled. returning true')
                 result.userExist = true
+                result.rootOrgId = contentObj.rootOrgId
             } else {
                 logInfo('user account is diabled. throwing error')
                 result.errMessage = 'Account Disabled. Please contact Admin.'

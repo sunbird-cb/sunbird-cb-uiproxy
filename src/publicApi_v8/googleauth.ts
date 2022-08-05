@@ -35,7 +35,7 @@ googleAuth.get('/callback', async (req, res) => {
         const googleProfile = await getGoogleProfile(req)
         logInfo('Successfully got authenticated with google...')
         logInfo('Email: ' + googleProfile.emailId)
-        let result: { errMessage: string, userExist: boolean,  }
+        let result: { errMessage: string, rootOrgId: string, userExist: boolean, }
         result = await fetchUserByEmailId(googleProfile.emailId)
         logInfo('isUserExist ? ' + result.userExist + ', errorMessage ? ' + result.errMessage)
         let isFirstTimeUser = false
@@ -48,6 +48,10 @@ googleAuth.get('/callback', async (req, res) => {
                     result.errMessage = createResult.errMessage
                 }
                 isFirstTimeUser = true
+            } else {
+                if (result.rootOrgId !== '' && result.rootOrgId === CONSTANTS.X_Channel_Id) {
+                    isFirstTimeUser = true
+                }
             }
 
             if (result.errMessage === '') {
@@ -68,6 +72,8 @@ googleAuth.get('/callback', async (req, res) => {
             resRedirectUrl = `https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(result.errMessage))
         } else if (isFirstTimeUser) {
             resRedirectUrl = `https://${host}/public/welcome`
+        } else {
+            resRedirectUrl = `https://${host}/public/home`
         }
     } catch (err) {
         logError('Failed to process callback event. Error: ' + JSON.stringify(err))

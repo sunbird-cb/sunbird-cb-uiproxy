@@ -1944,6 +1944,8 @@ export const API_LIST = {
             '/proxies/v8/forms/getFormById',
             '/proxies/v8/forms/getAllForms',
             '/proxies/v8/forms/v1/saveFormSubmit',
+            '/proxies/v8/forms/tagFormToCourse',
+            '/proxies/v8/forms/untagFormToCourse',
             '/protected/v8/user/profileDetails/test',
             '/protected/v8/resource/',
             '/protected/v8/user/details',

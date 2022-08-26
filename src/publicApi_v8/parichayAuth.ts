@@ -46,14 +46,14 @@ parichayAuth.get('/callback', async (req, res) => {
         if (req.session) {
             req.session.parichayToken = tokenResponse.data
             req.session.cookie.expires = new Date(getCurrnetExpiryTime(tokenResponse.data.access_token))
-            logInfo('Parichay Token is set in request Session.')
+            logInfo('Parichay Token is set in request Session.' + tokenResponse.data.access_token)
         } else {
             logError('Failed to set parichay token in req session. Session not available...')
         }
         const userDetailResponse = await axios({
             ...axiosRequestConfig,
             headers: {
-                Authorization: tokenResponse.data.access_token,
+                Authorization: 'bearer ' + tokenResponse.data.access_token,
             },
             method: 'GET',
             url: CONSTANTS.PARICHAY_USER_DETAILS_URL,

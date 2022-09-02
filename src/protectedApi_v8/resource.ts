@@ -12,10 +12,10 @@ userAuthKeyCloakApi.get('/', (req, res) => {
         if (queryParam && queryParam.includes('localhost')) {
             isLocal = 1
         }
-        if(req.query.redirect_uri) {
+        if (req.query.redirect_uri) {
             logInfo('Received redirectUrl value : ' + req.query.redirect_uri)
             res.redirect(req.query.redirect_uri)
-            return;
+            return
         }
     }
     let redirectUrl = ''

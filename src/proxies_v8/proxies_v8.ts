@@ -1,5 +1,4 @@
 import axios from 'axios'
-import bodyParser from 'body-parser'
 import express from 'express'
 import { UploadedFile } from 'express-fileupload'
 import FormData from 'form-data'
@@ -33,8 +32,7 @@ const API_END_POINTS = {
 }
 
 export const proxiesV8 = express.Router()
-
-proxiesV8.use(bodyParser.raw())
+const FILE_NOT_FOUND_ERR = 'File not found in the request'
 
 proxiesV8.get('/', (_req, res) => {
   res.json({
@@ -60,6 +58,7 @@ proxiesV8.post('/upload/*', (req, res) => {
           rootorg: 'igot',
           // tslint:disable-next-line: all
           'x-authenticated-user-token': extractUserToken(req),
+          // tslint:disable-next-line: all
           'x-authenticated-userid': extractUserIdFromRequest(req),
         },
         host: 'knowledge-mw-service',
@@ -82,7 +81,7 @@ proxiesV8.post('/upload/*', (req, res) => {
       }
     )
   } else {
-    res.send('File not found')
+    res.send(FILE_NOT_FOUND_ERR)
   }
 })
 
@@ -126,7 +125,7 @@ proxiesV8.post('/private/upload/*', (_req, _res) => {
       }
     )
   } else {
-    _res.send('File not found')
+    _res.send(FILE_NOT_FOUND_ERR)
   }
 })
 
@@ -305,6 +304,48 @@ proxiesV8.use('/org/*',
 proxiesV8.use('/dashboard/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
+
+proxiesV8.post('/user/v1/bulkupload', (req, res) => {
+  if (req.files && req.files.data) {
+    const url = removePrefix('/proxies/v8', req.originalUrl)
+    const file: UploadedFile = req.files.data as UploadedFile
+    const formData = new FormData()
+    formData.append('file', Buffer.from(file.data), {
+      contentType: file.mimetype,
+      filename: file.name,
+    })
+    formData.submit(
+      {
+        headers: {
+          // tslint:disable-next-line:max-line-length
+          Authorization: CONSTANTS.SB_API_KEY,
+          // tslint:disable-next-line: all
+          'x-authenticated-user-token': extractUserToken(req),
+          'x-authenticated-userid': extractUserIdFromRequest(req),
+        },
+        host: 'kong',
+        path: url,
+        port: 8000,
+      },
+      // tslint:disable-next-line: all
+      (err, response) => {
+        // tslint:disable-next-line: all
+        response.on('data', (data) => {
+          if (!err && (response.statusCode === 200 || response.statusCode === 201)) {
+            res.send(JSON.parse(data.toString('utf8')))
+          } else {
+            res.send(data.toString('utf8'))
+          }
+        })
+        if (err) {
+          res.send(err)
+        }
+      }
+    )
+  } else {
+    res.send(FILE_NOT_FOUND_ERR)
+  }
+})
 
 proxiesV8.use('/user/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)

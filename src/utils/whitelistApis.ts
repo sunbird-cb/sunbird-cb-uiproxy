@@ -2114,6 +2114,6 @@ export const API_LIST = {
             '/proxies/v8/org/ext/v1/create',
             '/proxies/v8/user/basicInfo',
             '/proxies/v8/user/basicProfileUpdate',
-            '/proxies/v8/user/v1/bulkupload'
+            '/proxies/v8/user/v1/bulkupload',
            ],
 }

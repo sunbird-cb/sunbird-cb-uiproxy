@@ -1,4 +1,5 @@
 import axios from 'axios'
+import bodyParser from 'body-parser'
 import express from 'express'
 import { UploadedFile } from 'express-fileupload'
 import FormData from 'form-data'
@@ -32,6 +33,8 @@ const API_END_POINTS = {
 }
 
 export const proxiesV8 = express.Router()
+
+proxiesV8.use(bodyParser.raw())
 
 proxiesV8.get('/', (_req, res) => {
   res.json({

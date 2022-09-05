@@ -73,10 +73,12 @@ export class Server {
       }
       next()
     })
-    this.app.use((_req: express.Request, res: express.Response, next: express.NextFunction) => {
-      res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
-      res.header('Expires', '-1')
-      res.header('Pragma', 'no-cache')
+    this.app.use((_req: express.Request, _res: express.Response, next: express.NextFunction) => {
+      // tslint:disable
+      // res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
+      // res.header('Expires', '-1')
+      // res.header('Pragma', 'no-cache')
+      // tslint:enable
       next()
     })
   }

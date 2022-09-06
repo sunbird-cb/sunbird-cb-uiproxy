@@ -76,7 +76,7 @@ export class Server {
     this.app.use((_req: express.Request, res: express.Response, next: express.NextFunction) => {
       // tslint:disable
       // res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
-       res.header('Cache-Control', 'private, max-age=604800, must-revalidate')
+       res.header('Cache-Control', 'max-age=14400, must-revalidate')
       // res.header('Expires', '-1')
       // res.header('Pragma', 'no-cache')
       // tslint:enable

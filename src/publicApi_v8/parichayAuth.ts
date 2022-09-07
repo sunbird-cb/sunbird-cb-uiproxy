@@ -53,7 +53,7 @@ parichayAuth.get('/callback', async (req, res) => {
         const userDetailResponse = await axios({
             ...axiosRequestConfig,
             headers: {
-                Authorization: 'bearer ' + tokenResponse.data.access_token,
+                Authorization: tokenResponse.data.access_token,
             },
             method: 'GET',
             url: CONSTANTS.PARICHAY_USER_DETAILS_URL,

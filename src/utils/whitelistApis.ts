@@ -1824,13 +1824,37 @@ export const API_LIST = {
              ROLE.PUBLIC,
             ],
          checksNeeded: [CHECK.ROLE],
-       },
+        },
         '/proxies/v8/ratings/v1/ratingLookUp': {
-           ROLE_CHECK: [
-             ROLE.PUBLIC,
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
             ],
-        checksNeeded: [CHECK.ROLE],
-       },
+            checksNeeded: [CHECK.ROLE],
+        },
+        '/proxies/v8/moderatoradmin/feedback/persist/text/moderated': {
+            ROLE_CHECK: [
+                ROLE.SPV_ADMIN,
+            ],
+            checksNeeded: [CHECK.ROLE],
+        },
+        '/proxies/v8/moderatoradmin/feedback/text/fetch': {
+            ROLE_CHECK: [
+                ROLE.SPV_ADMIN,
+            ],
+            checksNeeded: [CHECK.ROLE],
+        },
+        '/proxies/v8/moderatoradmin/profanity/type/text': {
+            ROLE_CHECK: [
+                ROLE.SPV_ADMIN,
+            ],
+            checksNeeded: [CHECK.ROLE],
+        },
+        '/proxies/v8/moderatoradmin/feedback/flag/values': {
+            ROLE_CHECK: [
+                ROLE.SPV_ADMIN,
+            ],
+            checksNeeded: [CHECK.ROLE],
+        },
        '/proxies/v8/user/v1/positions': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -2110,6 +2134,10 @@ export const API_LIST = {
             '/proxies/v8/ratings/v1/upsert',
             '/proxies/v8/ratings/v1/summary/:activityId/:activityType',
             '/proxies/v8/ratings/v1/ratingLookUp',
+            '/proxies/v8/moderatoradmin/feedback/persist/text/moderated',
+            '/proxies/v8/moderatoradmin/feedback/text/fetch',
+            '/proxies/v8/moderatoradmin/profanity/type/text',
+            '/proxies/v8/moderatoradmin/feedback/flag/values',
             '/proxies/v8/user/v1/positions',
             '/proxies/v8/org/ext/v1/create',
             '/proxies/v8/user/basicInfo',

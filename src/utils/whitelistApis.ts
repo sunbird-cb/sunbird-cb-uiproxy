@@ -1824,37 +1824,37 @@ export const API_LIST = {
              ROLE.PUBLIC,
             ],
          checksNeeded: [CHECK.ROLE],
-       },
+        },
         '/proxies/v8/ratings/v1/ratingLookUp': {
-           ROLE_CHECK: [
-             ROLE.PUBLIC,
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
             ],
-        checksNeeded: [CHECK.ROLE],
-       },
-       '/proxies/v8/moderatoradmin/feedback/persist/text/moderated': {
-          ROLE_CHECK: [
-            ROLE.SPV_ADMIN,
-           ],
-       checksNeeded: [CHECK.ROLE],
-      },
-      '/proxies/v8/moderatoradmin/feedback/text/fetch': {
-         ROLE_CHECK: [
-           ROLE.SPV_ADMIN,
-          ],
-      checksNeeded: [CHECK.ROLE],
-     },
-     '/proxies/v8/moderatoradmin/profanity/type/text': {
-        ROLE_CHECK: [
-          ROLE.SPV_ADMIN,
-         ],
-     checksNeeded: [CHECK.ROLE],
-    },
-    '/proxies/v8/moderatoradmin/feedback/flag/values': {
-       ROLE_CHECK: [
-         ROLE.SPV_ADMIN,
-        ],
-    checksNeeded: [CHECK.ROLE],
-   },
+            checksNeeded: [CHECK.ROLE],
+        },
+        '/proxies/v8/moderatoradmin/feedback/persist/text/moderated': {
+            ROLE_CHECK: [
+                ROLE.SPV_ADMIN,
+            ],
+            checksNeeded: [CHECK.ROLE],
+        },
+        '/proxies/v8/moderatoradmin/feedback/text/fetch': {
+            ROLE_CHECK: [
+                ROLE.SPV_ADMIN,
+            ],
+            checksNeeded: [CHECK.ROLE],
+        },
+        '/proxies/v8/moderatoradmin/profanity/type/text': {
+            ROLE_CHECK: [
+                ROLE.SPV_ADMIN,
+            ],
+            checksNeeded: [CHECK.ROLE],
+        },
+        '/proxies/v8/moderatoradmin/feedback/flag/values': {
+            ROLE_CHECK: [
+                ROLE.SPV_ADMIN,
+            ],
+            checksNeeded: [CHECK.ROLE],
+        },
        '/proxies/v8/user/v1/positions': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys

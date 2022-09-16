@@ -22,7 +22,7 @@ proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
   proxyReq.setHeader('x-authenticated-user-token', extractUserToken(req))
   proxyReq.setHeader('x-authenticated-userid', extractUserIdFromRequest(req))
   let rootOrgId = ''
-  if(req.session.hasOwnProperty('rootOrgId')) {
+  if (req.session.hasOwnProperty('rootOrgId')) {
     rootOrgId = req.session.rootOrgId
   }
   proxyReq.setHeader('x-authenticated-user-orgid', rootOrgId)

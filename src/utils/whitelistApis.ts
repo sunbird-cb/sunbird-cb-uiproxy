@@ -1891,6 +1891,18 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
             ],
         },
+        '/proxies/v8/vegaadmin/router': {
+            checksNeeded: [CHECK.ROLE],
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/vegaadmin/console': {
+            checksNeeded: [CHECK.ROLE],
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -1985,6 +1997,8 @@ export const API_LIST = {
             '/proxies/v8/forms/getAllApplications',
             '/proxies/v8/forms/tagFormToCourse',
             '/proxies/v8/forms/untagFormToCourse',
+            '/proxies/v8/proxies/v8/vegaadmin/router',
+            '/proxies/v8/proxies/v8/vegaadmin/console',
             '/protected/v8/user/profileDetails/test',
             '/protected/v8/resource/',
             '/protected/v8/user/details',

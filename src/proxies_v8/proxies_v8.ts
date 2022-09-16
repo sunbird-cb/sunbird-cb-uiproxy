@@ -32,6 +32,8 @@ const API_END_POINTS = {
 }
 
 export const proxiesV8 = express.Router()
+const _ = require('lodash')
+
 const FILE_NOT_FOUND_ERR = 'File not found in the request'
 
 proxiesV8.get('/', (_req, res) => {
@@ -314,12 +316,17 @@ proxiesV8.post('/user/v1/bulkupload', (req, res) => {
       contentType: file.mimetype,
       filename: file.name,
     })
+    let rootOrgId = _.get(req, 'session.rootOrgId')
+    if (!rootOrgId) {
+      rootOrgId = ''
+    }
     formData.submit(
       {
         headers: {
           // tslint:disable-next-line:max-line-length
           Authorization: CONSTANTS.SB_API_KEY,
           // tslint:disable-next-line: all
+          'x-authenticated-user-orgid': rootOrgId,
           'x-authenticated-user-token': extractUserToken(req),
           'x-authenticated-userid': extractUserIdFromRequest(req),
         },

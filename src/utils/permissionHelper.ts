@@ -72,6 +72,7 @@ export const PERMISSION_HELPER = {
     // tslint:disable-next-line: no-any
     getCurrentUserRoles(reqObj: any, callback: any) {
         logInfo('Step 3: getCurrentUserRoles', '------', new Date().toString())
+        logInfo('AccessToken: ' + reqObj.kauth.grant.access_token.token)
         const userId = reqObj.session.userId
         const readUrl = `${CONSTANTS.KONG_API_BASE}/user/v2/read/` + userId
         const options = {

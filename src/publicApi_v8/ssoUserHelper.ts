@@ -5,10 +5,7 @@ import { logError, logInfo } from '../utils/logger'
 import { getKeyCloakClient } from './keycloakHelper'
 
 const API_END_POINTS = {
-    kongAssignRoleUser: `${CONSTANTS.KONG_API_BASE}/user/private/v1/assign/role`,
-    kongSignUpUser: `${CONSTANTS.KONG_API_BASE}/user/v2/signup`,
-    kongUpdateUser: `${CONSTANTS.KONG_API_BASE}/user/private/v1/update`,
-    kongUserRead: (userId: string) => `${CONSTANTS.KONG_API_BASE}/user/private/v1/read/${userId}`,
+    cbExtSignUpUser: `${CONSTANTS.KONG_API_BASE}/user/v1/ext/signup`,
 }
 
 export async function fetchUserByEmailId(emailId: string) {
@@ -70,7 +67,7 @@ export async function createUserWithMailId(emailId: string, firstNameStr: string
             Authorization: CONSTANTS.SB_API_KEY,
         },
         method: 'POST',
-        url: API_END_POINTS.kongSignUpUser,
+        url: API_END_POINTS.cbExtSignUpUser,
     })
     statusString = signUpResponse.data.params.status
     if (statusString.toUpperCase() !== 'SUCCESS') {
@@ -79,67 +76,6 @@ export async function createUserWithMailId(emailId: string, firstNameStr: string
     }
     result.userCreated = true
     result.userId = signUpResponse.data.result.userId
-    const sbUserReadResponse = await axios({
-        ...axiosRequestConfig,
-        headers: {
-            Authorization: CONSTANTS.SB_API_KEY,
-        },
-        method: 'GET',
-        url: API_END_POINTS.kongUserRead(result.userId),
-    })
-    statusString = sbUserReadResponse.data.params.status
-    if (statusString.toUpperCase() !== 'SUCCESS') {
-        result.errMessage = signUpErr + 'FAILED_TO_READ_CREATED_USER'
-        return Promise.resolve(result)
-    }
-    const sbUserOrgId = sbUserReadResponse.data.result.response.rootOrgId
-    const sbProfileUpdateReq = {
-        profileDetails: {
-            employmentDetails: {
-                departmentName: sbUserReadResponse.data.result.response.channel,
-            },
-            personalDetails: {
-                firstname: firstNameStr,
-                primaryEmail: emailId,
-                surname: lastNameStr,
-            },
-        },
-        userId: result.userId,
-    }
-    const sbUserProfileUpdateResp = await axios({
-        ...axiosRequestConfig,
-        data: { request: sbProfileUpdateReq },
-        headers: {
-            Authorization: CONSTANTS.SB_API_KEY,
-        },
-        method: 'PATCH',
-        url: API_END_POINTS.kongUpdateUser,
-    })
-    statusString = sbUserProfileUpdateResp.data.params.status
-    if (statusString.toUpperCase() !== 'SUCCESS') {
-        result.errMessage = signUpErr + 'FAILED_TO_UPDATE_USER'
-        return Promise.resolve(result)
-    }
-    const sbAssignRoleResp = await axios({
-        ...axiosRequestConfig,
-        data: {
-            request: {
-                organisationId: sbUserOrgId,
-                roles: ['PUBLIC'],
-                userId: result.userId,
-            },
-        },
-        headers: {
-            Authorization: CONSTANTS.SB_API_KEY,
-        },
-        method: 'POST',
-        url: API_END_POINTS.kongAssignRoleUser,
-    })
-    statusString = sbAssignRoleResp.data.params.status
-    if (statusString.toUpperCase() !== 'SUCCESS') {
-        result.errMessage = signUpErr + 'FAILED_TO_UPDATE_USER'
-        return Promise.resolve(result)
-    }
     return Promise.resolve(result)
 }
 

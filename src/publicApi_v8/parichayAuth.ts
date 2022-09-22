@@ -60,9 +60,10 @@ parichayAuth.get('/callback', async (req, res) => {
         })
 
         logInfo('User information from Parichay : ' + JSON.stringify(userDetailResponse.data))
-        let isFirstTimeUser = false
-        let result: { errMessage: string, userExist: boolean,  }
+        let result: { errMessage: string, rootOrgId: string, userExist: boolean, }
         result =  await fetchUserByEmailId(userDetailResponse.data.loginId)
+        logInfo('isUserExist ? ' + result.userExist + 'rootOrgId: ? ' + result.rootOrgId + ', errorMessage ? ' + result.errMessage)
+        let isFirstTimeUser = false
         if (result.errMessage === '') {
             let createResult: { errMessage: string, userCreated: boolean, userId: string }
             if (!result.userExist) {
@@ -72,6 +73,12 @@ parichayAuth.get('/callback', async (req, res) => {
                 if (createResult.errMessage !== '') {
                     result.errMessage = createResult.errMessage
                 }
+                isFirstTimeUser = true
+            } else {
+                logInfo('result.rootOrgId = ' + result.rootOrgId + ', XChannelId = ' + CONSTANTS.X_Channel_Id)
+                if (result.rootOrgId !== '' && result.rootOrgId === CONSTANTS.X_Channel_Id) {
+                    isFirstTimeUser = true
+                }
             }
             if (result.errMessage === '') {
                 let keycloakResult: {
@@ -80,8 +87,6 @@ parichayAuth.get('/callback', async (req, res) => {
                 keycloakResult = await updateKeycloakSession(userDetailResponse.data.loginId, req, res)
                 if (keycloakResult.errMessage !== '') {
                     result.errMessage = keycloakResult.errMessage
-                } else {
-                    isFirstTimeUser = true
                 }
             }
         }
@@ -90,6 +95,8 @@ parichayAuth.get('/callback', async (req, res) => {
             resRedirectUrl = `https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(result.errMessage))
         } else if (isFirstTimeUser) {
             resRedirectUrl = `https://${host}/public/welcome`
+        } else {
+            resRedirectUrl = `https://${host}/public/home`
         }
     } catch (err) {
         logError('Failed to process callback API.. error: ' + JSON.stringify(err))

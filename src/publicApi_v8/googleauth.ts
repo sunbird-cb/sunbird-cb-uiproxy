@@ -63,8 +63,6 @@ googleAuth.get('/callback', async (req, res) => {
                 logInfo('Keycloak Session Details:: ' + JSON.stringify(keycloakResult))
                 if (keycloakResult.errMessage !== '') {
                     result.errMessage = keycloakResult.errMessage
-                } else {
-                    isFirstTimeUser = true
                 }
             }
         }

@@ -96,7 +96,7 @@ parichayAuth.get('/callback', async (req, res) => {
         } else if (isFirstTimeUser) {
             resRedirectUrl = `https://${host}/public/welcome`
         } else {
-            resRedirectUrl = `https://${host}/public/home`
+            resRedirectUrl = `https://${host}/page/home`
         }
     } catch (err) {
         logError('Failed to process callback API.. error: ' + JSON.stringify(err))

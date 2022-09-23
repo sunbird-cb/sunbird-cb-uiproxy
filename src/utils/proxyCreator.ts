@@ -15,7 +15,6 @@ const PROXY_SLUG_WAT = '/proxies/v8/wat'
 
 // tslint:disable-next-line: no-any
 proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
-  logInfo('proxyReq event...')
   // tslint:disable-next-line: no-duplicate-string
   proxyReq.setHeader('X-Channel-Id', (_.get(req, 'session.rootOrgId')) ? _.get(req, 'session.rootOrgId') : CONSTANTS.X_Channel_Id)
   // tslint:disable-next-line: max-line-length
@@ -27,7 +26,6 @@ proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
     rootOrgId = req.session.rootOrgId
   }
   proxyReq.setHeader('x-authenticated-user-orgid', rootOrgId)
-  logInfo('proxyReq event... setting rootOrgId: ' + rootOrgId)
 
   // condition has been added to set the session in nodebb req header
   /* tslint:disable-next-line */

@@ -1749,11 +1749,13 @@ export const API_LIST = {
                 ROLE.CONTENT_CREATOR,
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.CONTENT_REVIEWER,
+                ROLE.MDO_ADMIN,
             ],
         },
         '/proxies/v8/questionset/v1/create': {
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
+                ROLE.MDO_ADMIN,
             ],
             checksNeeded: [CHECK.ROLE],
         },
@@ -1762,6 +1764,7 @@ export const API_LIST = {
                 ROLE.CONTENT_CREATOR,
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.CONTENT_REVIEWER,
+                ROLE.MDO_ADMIN,
             ],
             checksNeeded: [CHECK.ROLE],
         },
@@ -1770,24 +1773,28 @@ export const API_LIST = {
                 ROLE.CONTENT_CREATOR,
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.CONTENT_REVIEWER,
+                ROLE.MDO_ADMIN,
             ],
             checksNeeded: [CHECK.ROLE],
         },
         '/proxies/v8/questionset/v1/review/:id': {
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
+                ROLE.MDO_ADMIN,
             ],
             checksNeeded: [CHECK.ROLE],
         },
         '/proxies/v8/questionset/v1/publish/:id': {
             ROLE_CHECK: [
                 ROLE.CONTENT_PUBLISHER,
+                ROLE.MDO_ADMIN,
             ],
             checksNeeded: [CHECK.ROLE],
         },
         '/proxies/v8/questionset/v1/hierarchy/update': {
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
+                ROLE.MDO_ADMIN,
             ],
             checksNeeded: [CHECK.ROLE],
         },
@@ -1811,6 +1818,7 @@ export const API_LIST = {
                 ROLE.CONTENT_CREATOR,
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.CONTENT_REVIEWER,
+                ROLE.MDO_ADMIN,
             ],
             checksNeeded: [CHECK.ROLE],
         },

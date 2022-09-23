@@ -35,9 +35,9 @@ googleAuth.get('/callback', async (req, res) => {
         const googleProfile = await getGoogleProfile(req)
         logInfo('Successfully got authenticated with google...')
         logInfo('Email: ' + googleProfile.emailId)
-        let result: { errMessage: string, userExist: boolean,  }
+        let result: { errMessage: string, rootOrgId: string, userExist: boolean, }
         result = await fetchUserByEmailId(googleProfile.emailId)
-        logInfo('isUserExist ? ' + result.userExist + ', errorMessage ? ' + result.errMessage)
+        logInfo('isUserExist ? ' + result.userExist + 'rootOrgId: ? ' + result.rootOrgId + ', errorMessage ? ' + result.errMessage)
         let isFirstTimeUser = false
         if (result.errMessage === '') {
             let createResult: { errMessage: string, userCreated: boolean, userId: string }
@@ -48,6 +48,11 @@ googleAuth.get('/callback', async (req, res) => {
                     result.errMessage = createResult.errMessage
                 }
                 isFirstTimeUser = true
+            } else {
+                logInfo('result.rootOrgId = ' + result.rootOrgId + ', XChannelId = ' + CONSTANTS.X_Channel_Id)
+                if (result.rootOrgId !== '' && result.rootOrgId === CONSTANTS.X_Channel_Id) {
+                    isFirstTimeUser = true
+                }
             }
 
             if (result.errMessage === '') {
@@ -58,8 +63,6 @@ googleAuth.get('/callback', async (req, res) => {
                 logInfo('Keycloak Session Details:: ' + JSON.stringify(keycloakResult))
                 if (keycloakResult.errMessage !== '') {
                     result.errMessage = keycloakResult.errMessage
-                } else {
-                    isFirstTimeUser = true
                 }
             }
         }

@@ -46,7 +46,7 @@ parichayAuth.get('/callback', async (req, res) => {
         if (req.session) {
             req.session.parichayToken = tokenResponse.data
             req.session.cookie.expires = new Date(getCurrnetExpiryTime(tokenResponse.data.access_token))
-            logInfo('Parichay Token is set in request Session.')
+            logInfo('Parichay Token is set in request Session.' + tokenResponse.data.access_token)
         } else {
             logError('Failed to set parichay token in req session. Session not available...')
         }
@@ -60,9 +60,10 @@ parichayAuth.get('/callback', async (req, res) => {
         })
 
         logInfo('User information from Parichay : ' + JSON.stringify(userDetailResponse.data))
-        let isFirstTimeUser = false
-        let result: { errMessage: string, userExist: boolean,  }
+        let result: { errMessage: string, rootOrgId: string, userExist: boolean, }
         result =  await fetchUserByEmailId(userDetailResponse.data.loginId)
+        logInfo('isUserExist ? ' + result.userExist + 'rootOrgId: ? ' + result.rootOrgId + ', errorMessage ? ' + result.errMessage)
+        let isFirstTimeUser = false
         if (result.errMessage === '') {
             let createResult: { errMessage: string, userCreated: boolean, userId: string }
             if (!result.userExist) {
@@ -72,6 +73,12 @@ parichayAuth.get('/callback', async (req, res) => {
                 if (createResult.errMessage !== '') {
                     result.errMessage = createResult.errMessage
                 }
+                isFirstTimeUser = true
+            } else {
+                logInfo('result.rootOrgId = ' + result.rootOrgId + ', XChannelId = ' + CONSTANTS.X_Channel_Id)
+                if (result.rootOrgId !== '' && result.rootOrgId === CONSTANTS.X_Channel_Id) {
+                    isFirstTimeUser = true
+                }
             }
             if (result.errMessage === '') {
                 let keycloakResult: {
@@ -80,8 +87,6 @@ parichayAuth.get('/callback', async (req, res) => {
                 keycloakResult = await updateKeycloakSession(userDetailResponse.data.loginId, req, res)
                 if (keycloakResult.errMessage !== '') {
                     result.errMessage = keycloakResult.errMessage
-                } else {
-                    isFirstTimeUser = true
                 }
             }
         }

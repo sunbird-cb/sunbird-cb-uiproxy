@@ -58,7 +58,7 @@ parichayAuth.get('/callback', async (req, res) => {
             url: CONSTANTS.PARICHAY_USER_DETAILS_URL,
         })
 
-        let result: { errMessage: string, userExist: boolean,  }
+        let result: { errMessage: string, rootOrgId: string, userExist: boolean, }
         let isFirstTimeUser = false
         result =  await fetchUserByEmailId(userDetailResponse.data.loginId)
         if (result.errMessage === '') {
@@ -69,6 +69,12 @@ parichayAuth.get('/callback', async (req, res) => {
                     userDetailResponse.data.FirstName, userDetailResponse.data.LastName)
                 if (createResult.errMessage !== '') {
                     result.errMessage = createResult.errMessage
+                }
+                isFirstTimeUser = true
+            } else {
+                logInfo('result.rootOrgId = ' + result.rootOrgId + ', XChannelId = ' + CONSTANTS.X_Channel_Id)
+                if (result.rootOrgId !== '' && result.rootOrgId === CONSTANTS.X_Channel_Id) {
+                    isFirstTimeUser = true
                 }
             }
             if (result.errMessage === '') {

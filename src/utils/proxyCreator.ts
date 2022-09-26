@@ -21,6 +21,11 @@ proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
   proxyReq.setHeader('Authorization', CONSTANTS.SB_API_KEY)
   proxyReq.setHeader('x-authenticated-user-token', extractUserToken(req))
   proxyReq.setHeader('x-authenticated-userid', extractUserIdFromRequest(req))
+  let rootOrgId = ''
+  if (req.session.hasOwnProperty('rootOrgId')) {
+    rootOrgId = req.session.rootOrgId
+  }
+  proxyReq.setHeader('x-authenticated-user-orgid', rootOrgId)
 
   // condition has been added to set the session in nodebb req header
   /* tslint:disable-next-line */

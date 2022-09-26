@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { logInfo } from '../utils/logger'
 const _                 = require('lodash')
 export const userAuthKeyCloakApi = Router()
 userAuthKeyCloakApi.get('/', (req, res) => {
@@ -7,8 +8,13 @@ userAuthKeyCloakApi.get('/', (req, res) => {
     let isLocal = 0
     if (!_.isEmpty(req.query)) {
         queryParam = req.query.q
-        if (queryParam.includes('localhost')) {
+        if (queryParam && queryParam.includes('localhost')) {
             isLocal = 1
+        }
+        if (req.query.redirect_uri) {
+            logInfo('Received redirectUrl value : ' + req.query.redirect_uri)
+            res.redirect(req.query.redirect_uri)
+            return
         }
     }
     let redirectUrl = ''

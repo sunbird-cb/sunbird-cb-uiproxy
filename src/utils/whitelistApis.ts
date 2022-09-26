@@ -1798,6 +1798,72 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/forms/tagFormToCourse': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/forms/untagFormToCourse': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/forms/getAllApplications': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/forms/searchForms': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/moderatoradmin/feedback/persist/text/moderated': {
+            ROLE_CHECK: [
+                ROLE.SPV_ADMIN,
+            ],
+            checksNeeded: [CHECK.ROLE],
+        },
+        '/proxies/v8/moderatoradmin/feedback/text/fetch': {
+            ROLE_CHECK: [
+                ROLE.SPV_ADMIN,
+            ],
+            checksNeeded: [CHECK.ROLE],
+        },
+        '/proxies/v8/moderatoradmin/profanity/type/text': {
+            ROLE_CHECK: [
+                ROLE.SPV_ADMIN,
+            ],
+            checksNeeded: [CHECK.ROLE],
+        },
+        '/proxies/v8/moderatoradmin/feedback/flag/values': {
+            ROLE_CHECK: [
+                ROLE.SPV_ADMIN,
+            ],
+            checksNeeded: [CHECK.ROLE],
+        },
+        '/proxies/v8/user/v1/bulkupload': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+            ],
+        },
+        '/proxies/v8/user/v1/bulkupload/:orgId': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -2036,5 +2102,15 @@ export const API_LIST = {
             '/proxies/v8/org/ext/v1/create',
             '/proxies/v8/user/basicInfo',
             '/proxies/v8/user/basicProfileUpdate',
+            '/proxies/v8/forms/getAllApplications',
+            '/proxies/v8/forms/tagFormToCourse',
+            '/proxies/v8/forms/untagFormToCourse',
+            '/proxies/v8/forms/searchForms',
+            '/proxies/v8/moderatoradmin/feedback/persist/text/moderated',
+            '/proxies/v8/moderatoradmin/feedback/text/fetch',
+            '/proxies/v8/moderatoradmin/profanity/type/text',
+            '/proxies/v8/moderatoradmin/feedback/flag/values',
+            '/proxies/v8/user/v1/bulkupload',
+            '/proxies/v8/user/v1/bulkupload/:orgId',
            ],
 }

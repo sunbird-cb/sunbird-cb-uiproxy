@@ -121,6 +121,19 @@ export class CustomKeycloak {
                     Authorization: reqObj.session.parichayToken.access_token,
                   },
                   url: CONSTANTS.PARICHAY_REVOKE_URL,
+                }, (err, res, body) => {
+                  if (err) {
+                    logError('Received error when calling Parichay logout... ')
+                    logError(JSON.stringify(err))
+                  }
+                  if (res) {
+                    logInfo('Received response from Parichay logout... ')
+                    logInfo(JSON.stringify(res.body))
+                  }
+                  if (body) {
+                    logInfo('Received body from Parichay logout...')
+                    logInfo(JSON.stringify(body))
+                  }
               })
             } catch (err) {
                 // tslint:disable-next-line: no-console

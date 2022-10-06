@@ -26,6 +26,11 @@ proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
     rootOrgId = req.session.rootOrgId
   }
   proxyReq.setHeader('x-authenticated-user-orgid', rootOrgId)
+  let channel = ''
+  if (req.session.hasOwnProperty('channel')) {
+    channel = req.session.channel
+  }
+  proxyReq.setHeader('x-authenticated-user-orgname', channel)
 
   // condition has been added to set the session in nodebb req header
   /* tslint:disable-next-line */

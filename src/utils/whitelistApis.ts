@@ -612,6 +612,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/discussion/mainCategories': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/proxies/v8/user/v1/autocomplete/:key': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -1749,11 +1756,13 @@ export const API_LIST = {
                 ROLE.CONTENT_CREATOR,
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.CONTENT_REVIEWER,
+                ROLE.MDO_ADMIN,
             ],
         },
         '/proxies/v8/questionset/v1/create': {
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
+                ROLE.MDO_ADMIN,
             ],
             checksNeeded: [CHECK.ROLE],
         },
@@ -1762,6 +1771,7 @@ export const API_LIST = {
                 ROLE.CONTENT_CREATOR,
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.CONTENT_REVIEWER,
+                ROLE.MDO_ADMIN,
             ],
             checksNeeded: [CHECK.ROLE],
         },
@@ -1770,24 +1780,28 @@ export const API_LIST = {
                 ROLE.CONTENT_CREATOR,
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.CONTENT_REVIEWER,
+                ROLE.MDO_ADMIN,
             ],
             checksNeeded: [CHECK.ROLE],
         },
         '/proxies/v8/questionset/v1/review/:id': {
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
+                ROLE.MDO_ADMIN,
             ],
             checksNeeded: [CHECK.ROLE],
         },
         '/proxies/v8/questionset/v1/publish/:id': {
             ROLE_CHECK: [
                 ROLE.CONTENT_PUBLISHER,
+                ROLE.MDO_ADMIN,
             ],
             checksNeeded: [CHECK.ROLE],
         },
         '/proxies/v8/questionset/v1/hierarchy/update': {
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
+                ROLE.MDO_ADMIN,
             ],
             checksNeeded: [CHECK.ROLE],
         },
@@ -1811,6 +1825,7 @@ export const API_LIST = {
                 ROLE.CONTENT_CREATOR,
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.CONTENT_REVIEWER,
+                ROLE.MDO_ADMIN,
             ],
             checksNeeded: [CHECK.ROLE],
         },
@@ -1982,6 +1997,7 @@ export const API_LIST = {
             '/proxies/v8/discussion/user/:userKey/upvoted',
             '/proxies/v8/discussion/user/:userKey/downvoted',
             '/proxies/v8/discussion/categories',
+            '/proxies/v8/discussion/mainCategories',
             '/proxies/v8/user/v1/autocomplete/:key',
             '/proxies/v8/user/v1/migrate',
             '/proxies/v8/user/private/v1/migrate',

@@ -16,7 +16,7 @@ const API_END_POINTS = {
     `${CONSTANTS.USER_PROFILE_API_BASE}/groups/${groupId}/users `,
   hierarchyApiEndPoint: (contentId: string) =>
     `${CONSTANTS.KNOWLEDGE_MW_API_BASE}/action/content/v3/hierarchy/${contentId}?hierarchyType=detail`,
-  issueCert: `${CONSTANTS.HTTPS_HOST}/api/course/batch/cert/v1/issue?reIssue=true`,
+  issueCert: `${CONSTANTS.KONG_API_BASE}/course/batch/cert/v1/issue?reIssue=true`,
   kongSearchUser: `${CONSTANTS.KONG_API_BASE}/user/v1/search`,
   searchUserRegistry: `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/search/profile`,
 }

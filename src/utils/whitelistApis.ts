@@ -1920,6 +1920,20 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
             ],
         },
+        '/proxies/v8/otp/v1/generate': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/otp/v1/verify': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -2175,5 +2189,7 @@ export const API_LIST = {
             '/proxies/v8/user/basicProfileUpdate',
             '/proxies/v8/user/v1/bulkupload',
             '/proxies/v8/user/v1/bulkupload/:orgId',
+            '/proxies/v8/otp/v1/generate',
+            '/proxies/v8/otp/v1/otp',
            ],
 }

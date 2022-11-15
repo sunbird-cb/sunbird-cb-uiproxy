@@ -428,6 +428,13 @@ export const API_LIST = {
                 ROLE.STATE_ADMIN,
             ],
         },
+        '/proxies/v8/data/v1/system/settings/get/notificationPreference': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/proxies/v8/org/v1/search': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -1957,6 +1964,7 @@ export const API_LIST = {
             '/proxies/v8/sunbirdigot/search',
             '/proxies/v8/discussion/user/v1/create',
             '/proxies/v8/data/v1/system/settings/get/orgTypeList',
+            '/proxies/v8/data/v1/system/settings/get/notificationPreference',
             '/proxies/v8/org/v1/search',
             '/proxies/v8/org/v1/update',
             '/proxies/v8/notifyContentState',

@@ -1948,6 +1948,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+      '/proxies/v8/player/questionset/v1/retake': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -2207,5 +2214,6 @@ export const API_LIST = {
             '/proxies/v8/otp/v1/generate',
             '/proxies/v8/otp/v1/otp',
             '/proxies/v8/user/v1/notificationPreference',
+            '/proxies/v8/player/questionset/v1/retake',
            ],
 }

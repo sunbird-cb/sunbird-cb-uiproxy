@@ -2059,7 +2059,7 @@ export const API_LIST = {
             '/proxies/v8/forms/tagFormToCourse',
             '/proxies/v8/forms/untagFormToCourse',
             '/proxies/v8/forms/searchForms',
-            '/proxies/v8/forms/getCourseListForSurveys'
+            '/proxies/v8/forms/getCourseListForSurveys',
             '/protected/v8/user/profileDetails/test',
             '/protected/v8/resource/',
             '/protected/v8/user/details',

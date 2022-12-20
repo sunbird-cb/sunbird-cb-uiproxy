@@ -360,6 +360,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/forms/getCourseListForSurveys': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/proxies/v8/upload/action/content/v3/upload/:do_id': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -2052,6 +2059,7 @@ export const API_LIST = {
             '/proxies/v8/forms/tagFormToCourse',
             '/proxies/v8/forms/untagFormToCourse',
             '/proxies/v8/forms/searchForms',
+            '/proxies/v8/forms/getCourseListForSurveys'
             '/protected/v8/user/profileDetails/test',
             '/protected/v8/resource/',
             '/protected/v8/user/details',

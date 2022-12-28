@@ -423,6 +423,7 @@ export const API_LIST = {
                 ROLE.EDITOR,
                 ROLE.CONTENT_REVIEWER,
                 ROLE.CONTENT_PUBLISHER,
+                ROLE.MDO_ADMIN,
             ],
         },
         '/proxies/v8/data/v1/system/settings/get/orgTypeList': {

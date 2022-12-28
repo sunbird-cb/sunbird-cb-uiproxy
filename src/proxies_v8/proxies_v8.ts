@@ -319,6 +319,10 @@ proxiesV8.post('/user/v1/bulkupload', (req, res) => {
     if (!rootOrgId) {
       rootOrgId = ''
     }
+    let channel = _.get(req, 'session.channel')
+    if (!channel) {
+      channel = ''
+    }
     formData.submit(
       {
         headers: {
@@ -326,6 +330,7 @@ proxiesV8.post('/user/v1/bulkupload', (req, res) => {
           Authorization: CONSTANTS.SB_API_KEY,
           // tslint:disable-next-line: all
           'x-authenticated-user-orgid': rootOrgId,
+          'x-authenticated-user-orgname': channel,
           'x-authenticated-user-token': extractUserToken(req),
           'x-authenticated-userid': extractUserIdFromRequest(req),
         },

@@ -413,6 +413,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.CONTENT_PUBLISHER,
+                ROLE.MDO_ADMIN,
             ],
         },
         '/proxies/v8/action/content/v3/update/:do_id': {

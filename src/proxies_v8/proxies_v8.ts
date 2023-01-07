@@ -209,11 +209,14 @@ proxiesV8.get(['/api/user/v2/read', '/api/user/v2/read/:id'], async (req, res) =
   const originalUrl = req.originalUrl
   const lastIndex = originalUrl.lastIndexOf('/')
   const subStr = originalUrl.substr(lastIndex).substr(1).split('-').length
-  const userId = extractUserIdFromRequest(req).split(':')[2]
+  const loggedInUserId = extractUserIdFromRequest(req).split(':')[2]
   let urlUserId = ''
+  let userId = loggedInUserId
   if (subStr === 5 && (originalUrl.substr(lastIndex).substr(1))) {
     urlUserId = originalUrl.substr(lastIndex).substr(1)
+    userId = urlUserId
   }
+  logInfo('UserRead API userId: ' + userId)
 
   await axios({
     ...axiosRequestConfig,
@@ -223,28 +226,28 @@ proxiesV8.get(['/api/user/v2/read', '/api/user/v2/read/:id'], async (req, res) =
         'x-authenticated-user-token': extractUserToken(req),
     },
     method: 'GET',
-    url: `${CONSTANTS.KONG_API_BASE}/user/v2/read/` + (urlUserId.length > 1) ? urlUserId : userId,
+    url: `${CONSTANTS.KONG_API_BASE}/user/v2/read/` + userId,
   }).then((response) => {
-    logInfo('Received response for user READ API. userId: ' + userId + ', urlUserId: ' + urlUserId)
+    logInfo('Received response for user READ API. LoggedInuserId: ' + loggedInUserId + ', urlUserId: ' + urlUserId)
     logInfo('Received data: ' + response.data)
     if (response.data.responseCode === 'OK') {
       res.status(200).send(response.data)
     } else {
       logError('User Read API.. Received non OK response.' + JSON.stringify(response.data))
-      if (urlUserId.length > 1 && urlUserId !== userId) {
+      if (urlUserId.length > 1 && urlUserId !== loggedInUserId) {
         res.status(400).send(response.data)
       } else {
         res.redirect(`https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(response.data.params.errmsg)))
       }
     }
   }).catch((err) => {
-    logError('Failed to do user read API. Received Exception: userId : ' + userId + ', urlUserId: ' + urlUserId)
+    logError('Failed to do user read API. Received Exception: loggedInUserId : ' + loggedInUserId + ', urlUserId: ' + urlUserId)
     let errMsg = 'Internal Server Error'
     if (err.response && err.response.data) {
       logError('Received error for user read API. Error: ' + JSON.stringify(err.response.data))
       errMsg = err.response.data.params.errmsg
     }
-    if (urlUserId.length > 1 && urlUserId !== userId) {
+    if (urlUserId.length > 1 && urlUserId !== loggedInUserId) {
       res.status(400).send(err.response.data)
     } else {
       if (req.session) {

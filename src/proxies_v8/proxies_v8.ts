@@ -209,9 +209,12 @@ proxiesV8.get(['/api/user/v2/read', '/api/user/v2/read/:id'], async (req, res) =
   const originalUrl = req.originalUrl
   const lastIndex = originalUrl.lastIndexOf('/')
   const subStr = originalUrl.substr(lastIndex).substr(1).split('-').length
-  let userId = extractUserIdFromRequest(req).split(':')[2]
+  const loggedInUserId = extractUserIdFromRequest(req).split(':')[2]
+  let urlUserId = ''
+  let userId = loggedInUserId
   if (subStr === 5 && (originalUrl.substr(lastIndex).substr(1))) {
-      userId = originalUrl.substr(lastIndex).substr(1)
+    urlUserId = originalUrl.substr(lastIndex).substr(1)
+    userId = urlUserId
   }
 
   await axios({
@@ -228,21 +231,30 @@ proxiesV8.get(['/api/user/v2/read', '/api/user/v2/read/:id'], async (req, res) =
       res.status(200).send(response.data)
     } else {
       logError('User Read API.. Received non OK response.' + JSON.stringify(response.data))
-      res.redirect(`https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(response.data.params.errmsg)))
+      if (urlUserId.length > 1 && urlUserId !== loggedInUserId) {
+        res.status(400).send(response.data)
+      } else {
+        res.redirect(`https://${host}/public/logout?error=` + encodeURIComponent(JSON.stringify(response.data.params.errmsg)))
+      }
     }
   }).catch((err) => {
+    logError('Failed to do user read API. Received Exception: loggedInUserId : ' + loggedInUserId + ', urlUserId: ' + urlUserId)
     let errMsg = 'Internal Server Error'
     if (err.response && err.response.data) {
       logError('Received error for user read API. Error: ' + JSON.stringify(err.response.data))
       errMsg = err.response.data.params.errmsg
     }
-    if (req.session) {
-      req.session.destroy((dErr) => {
-        logError('Failed to clear the session. ERROR: ' + JSON.stringify(dErr))
-      })
+    if (urlUserId.length > 1 && urlUserId !== loggedInUserId) {
+      res.status(400).send(err.response.data)
+    } else {
+      if (req.session) {
+        req.session.destroy((dErr) => {
+          logError('Failed to clear the session. ERROR: ' + JSON.stringify(dErr))
+        })
+      }
+      res.clearCookie('connect.sid', { path: '/' })
+      res.redirect(`https://${host}/public/logout?error=` + encodeURIComponent(errMsg))
     }
-    res.clearCookie('connect.sid', { path: '/' })
-    res.redirect(`https://${host}/public/logout?error=` + encodeURIComponent(errMsg))
   })
 })
 

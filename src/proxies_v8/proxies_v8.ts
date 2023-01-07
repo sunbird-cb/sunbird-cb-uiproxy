@@ -236,6 +236,7 @@ proxiesV8.get(['/api/user/v2/read', '/api/user/v2/read/:id'], async (req, res) =
       }
     }
   }).catch((err) => {
+    logError('Failed to do user read API. Received Exception: userId : ' + userId + ', urlUserId: ' + urlUserId)
     let errMsg = 'Internal Server Error'
     if (err.response && err.response.data) {
       logError('Received error for user read API. Error: ' + JSON.stringify(err.response.data))

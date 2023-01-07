@@ -225,6 +225,8 @@ proxiesV8.get(['/api/user/v2/read', '/api/user/v2/read/:id'], async (req, res) =
     method: 'GET',
     url: `${CONSTANTS.KONG_API_BASE}/user/v2/read/` + (urlUserId.length > 1) ? urlUserId : userId,
   }).then((response) => {
+    logInfo('Received response for user READ API. userId: ' + userId + ', urlUserId: ' + urlUserId)
+    logInfo('Received data: ' + response.data)
     if (response.data.responseCode === 'OK') {
       res.status(200).send(response.data)
     } else {

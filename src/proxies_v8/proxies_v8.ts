@@ -279,6 +279,10 @@ proxiesV8.use('/action/*',
   proxyCreatorKnowledge(express.Router(), `${CONSTANTS.KNOWLEDGE_MW_API_BASE}`)
 )
 
+proxiesV8.use('/mdo/content/*',
+  proxyCreatorKnowledge(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)
+
 proxiesV8.use('/learner/*',
   // tslint:disable-next-line: max-line-length
   proxyCreatorLearner(express.Router(), `${CONSTANTS.KONG_API_BASE}`)

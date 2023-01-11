@@ -1992,6 +1992,20 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
             ],
         },
+        '/proxies/v8/mdo/content/v3/batch/addUser': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+            ],
+        },
+        '/proxies/v8/mdo/content/v3/batch/removeUser': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -2257,5 +2271,7 @@ export const API_LIST = {
             '/proxies/v8/mdo/content/v3/hierarchy/update',
             '/proxies/v8/mdo/content/v3/update/:do_id',
             '/proxies/v8/mdo/content/v3/publish/:do_id',
+            '/proxies/v8/mdo/content/v3/batch/addUser',
+            '/proxies/v8/mdo/content/v3/batch/removeUser',
            ],
 }

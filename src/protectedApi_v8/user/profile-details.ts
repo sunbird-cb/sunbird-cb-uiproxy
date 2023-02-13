@@ -375,14 +375,14 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                         const welcomeMailRequest = {
                             allowedLoging: 'You can use your email to Login',
                             body: 'Hello',
-                            emailTemplateType: 'iGotWelcome',
+                            emailTemplateType: 'iGotWelcome_v3',
                             firstName: sbUserProfile.firstName,
                             link: passwordResetResponse.data.result.link,
                             mode: 'email',
                             orgName: sbChannel,
                             recipientEmails: [ sbemail_ ],
                             setPasswordLink: true,
-                            subject: 'Welcome Email',
+                            subject: 'Welcome to iGOT Karmayogi... Activate your account now!',
                             welcomeMessage: 'Hello',
                         }
 

@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { createProxyServer } from 'http-proxy'
-import { extractUserEmailFromRequest, extractUserIdFromRequest, extractUserToken } from '../utils/requestExtract'
+import { extractUserEmailFromRequest, extractUserId, extractUserToken } from '../utils/requestExtract'
 import { CONSTANTS } from './env'
 import { logInfo } from './logger'
 
@@ -15,12 +15,13 @@ const PROXY_SLUG_WAT = '/proxies/v8/wat'
 
 // tslint:disable-next-line: no-any
 proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
+  logInfo('proxyReqOn method. Adding more headers in request...')
   // tslint:disable-next-line: no-duplicate-string
   proxyReq.setHeader('X-Channel-Id', (_.get(req, 'session.rootOrgId')) ? _.get(req, 'session.rootOrgId') : CONSTANTS.X_Channel_Id)
   // tslint:disable-next-line: max-line-length
   proxyReq.setHeader('Authorization', CONSTANTS.SB_API_KEY)
   proxyReq.setHeader('x-authenticated-user-token', extractUserToken(req))
-  proxyReq.setHeader('x-authenticated-userid', extractUserIdFromRequest(req))
+  proxyReq.setHeader('x-authenticated-userid', extractUserId(req))
   let rootOrgId = ''
   if (req.session.hasOwnProperty('rootOrgId')) {
     rootOrgId = req.session.rootOrgId
@@ -243,7 +244,7 @@ export function proxyCreatorToAppentUserId(route: Router, targetUrl: string, _ti
     const originalUrl = req.originalUrl
     const lastIndex = originalUrl.lastIndexOf('/')
     const subStr = originalUrl.substr(lastIndex).substr(1).split('-').length
-    let userId = extractUserIdFromRequest(req).split(':')[2]
+    let userId = extractUserId(req)
     if (subStr === 5 && (originalUrl.substr(lastIndex).substr(1))) {
       userId = originalUrl.substr(lastIndex).substr(1)
     }

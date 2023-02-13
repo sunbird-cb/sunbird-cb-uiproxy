@@ -360,6 +360,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/forms/getCourseListForSurveys': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/proxies/v8/upload/action/content/v3/upload/:do_id': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -406,6 +413,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.CONTENT_PUBLISHER,
+                ROLE.MDO_ADMIN,
             ],
         },
         '/proxies/v8/action/content/v3/update/:do_id': {
@@ -416,6 +424,7 @@ export const API_LIST = {
                 ROLE.EDITOR,
                 ROLE.CONTENT_REVIEWER,
                 ROLE.CONTENT_PUBLISHER,
+                ROLE.MDO_ADMIN,
             ],
         },
         '/proxies/v8/data/v1/system/settings/get/orgTypeList': {
@@ -426,6 +435,13 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
                 ROLE.STATE_ADMIN,
+            ],
+        },
+        '/proxies/v8/data/v1/system/settings/get/notificationPreference': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
             ],
         },
         '/proxies/v8/org/v1/search': {
@@ -1934,6 +1950,62 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/user/v1/notificationPreference': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+      '/proxies/v8/user/assessment/retake/:id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/mdo/content/v3/create': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+            ],
+        },
+        '/proxies/v8/mdo/content/v3/hierarchy/update': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+            ],
+        },
+        '/proxies/v8/mdo/content/v3/update/:do_id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+            ],
+        },
+        '/proxies/v8/mdo/content/v3/publish/:do_id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+            ],
+        },
+        '/proxies/v8/mdo/content/v3/batch/addUser': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+            ],
+        },
+        '/proxies/v8/mdo/content/v3/batch/removeUser': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -1957,6 +2029,7 @@ export const API_LIST = {
             '/proxies/v8/sunbirdigot/search',
             '/proxies/v8/discussion/user/v1/create',
             '/proxies/v8/data/v1/system/settings/get/orgTypeList',
+            '/proxies/v8/data/v1/system/settings/get/notificationPreference',
             '/proxies/v8/org/v1/search',
             '/proxies/v8/org/v1/update',
             '/proxies/v8/notifyContentState',
@@ -2030,6 +2103,7 @@ export const API_LIST = {
             '/proxies/v8/forms/tagFormToCourse',
             '/proxies/v8/forms/untagFormToCourse',
             '/proxies/v8/forms/searchForms',
+            '/proxies/v8/forms/getCourseListForSurveys',
             '/protected/v8/user/profileDetails/test',
             '/protected/v8/resource/',
             '/protected/v8/user/details',
@@ -2191,5 +2265,13 @@ export const API_LIST = {
             '/proxies/v8/user/v1/bulkupload/:orgId',
             '/proxies/v8/otp/v1/generate',
             '/proxies/v8/otp/v1/otp',
+            '/proxies/v8/user/v1/notificationPreference',
+            '/proxies/v8/user/assessment/retake/:id',
+            '/proxies/v8/mdo/content/v3/create',
+            '/proxies/v8/mdo/content/v3/hierarchy/update',
+            '/proxies/v8/mdo/content/v3/update/:do_id',
+            '/proxies/v8/mdo/content/v3/publish/:do_id',
+            '/proxies/v8/mdo/content/v3/batch/addUser',
+            '/proxies/v8/mdo/content/v3/batch/removeUser',
            ],
 }

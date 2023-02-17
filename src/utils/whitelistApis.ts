@@ -2006,6 +2006,27 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
             ],
         },
+      '/proxies/v8/user/offensive/data/flag/create': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+      '/proxies/v8/user/offensive/data/flag/update': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+      '/proxies/v8/user/offensive/data/flag/getFlaggedData': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -2273,5 +2294,8 @@ export const API_LIST = {
             '/proxies/v8/mdo/content/v3/publish/:do_id',
             '/proxies/v8/mdo/content/v3/batch/addUser',
             '/proxies/v8/mdo/content/v3/batch/removeUser',
+            '/proxies/v8/user/offensive/data/flag/create',
+            '/proxies/v8/user/offensive/data/flag/update',
+            '/proxies/v8/user/offensive/data/flag/getFlaggedData',
            ],
 }

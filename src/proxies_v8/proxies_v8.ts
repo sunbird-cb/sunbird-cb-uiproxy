@@ -26,7 +26,7 @@ import { extractUserIdFromRequest, extractUserToken } from '../utils/requestExtr
 
 const API_END_POINTS = {
   contentNotificationEmail: `${CONSTANTS.NOTIFICATION_SERVIC_API_BASE}/v1/notification/send/sync`,
-  kongExtOrgSearch: `${CONSTANTS.KONG_API_BASE}/org/v1/cb/ext/search`,
+  kongExtOrgSearch: `${CONSTANTS.KONG_API_BASE}/org/v1/ext/search`,
   kongSearchOrg: `${CONSTANTS.KONG_API_BASE}/org/v1/search`,
   orgTypeListEndPoint: `${CONSTANTS.KONG_API_BASE}/data/v1/system/settings/get/orgTypeList`,
 }

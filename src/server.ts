@@ -71,7 +71,7 @@ export class Server {
       if (rootOrg && req.hostname.toLowerCase().includes('localhost')) {
         res.cookie('rootorg', rootOrg)
         res.cookie('secure', true)
-        res.cookie('sameSite', 'Lax')
+        res.cookie('sameSite', 'lax')
       }
       next()
     })

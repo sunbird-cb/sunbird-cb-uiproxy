@@ -70,8 +70,6 @@ export class Server {
       const rootOrg = req.headers ? req.headers.rootOrg || req.headers.rootorg : ''
       if (rootOrg && req.hostname.toLowerCase().includes('localhost')) {
         res.cookie('rootorg', rootOrg)
-        res.cookie('secure', true)
-        res.cookie('sameSite', 'lax')
       }
       next()
     })

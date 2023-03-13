@@ -74,8 +74,4 @@ const authenticated = async (reqObj: any, res: any, next: any) => {
             next(null, 'loggedin')
         }
     })
-    res.cookie('secure', true)
-    res.cookie('sameSite', 'lax')
-    reqObj.cookie('secure', true)
-    reqObj.cookie('sameSite', 'lax')
 }

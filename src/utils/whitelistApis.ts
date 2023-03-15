@@ -2118,6 +2118,7 @@ export const API_LIST = {
             '/proxies/v8/wat/dashboard/getDashboardConfig/Karmayogi/overview',
             '/proxies/v8/forms/createForm',
             '/proxies/v8/forms/getFormById',
+            '/proxies/v8/forms/getCollectiveAggregation',
             '/proxies/v8/forms/getAllForms',
             '/proxies/v8/forms/v1/saveFormSubmit',
             '/proxies/v8/forms/getAllApplications',

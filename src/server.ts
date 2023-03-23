@@ -113,7 +113,7 @@ export class Server {
     )
     // TODO: See what needs to be logged
     this.app.use((req, _, next) => {
-      logInfo(`Server:ConfigureMiddleWare:: Worker ${process.pid} : ${req.url}`)
+      logInfo(`Server:ConfigureMiddleWare:: Worker ${process.pid} : ${req.protocol}://${req.hostname}/${req.url}`)
       next()
     })
     this.app.use(morgan('dev'))

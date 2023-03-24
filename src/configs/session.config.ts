@@ -39,8 +39,7 @@ export function getSessionConfig(
     sessionConfig = {
       cookie: {
         maxAge: CONSTANTS.KEYCLOAK_SESSION_TTL,
-        sameSite: 'None',
-        secure: true,
+        sameSite: 'lax'
       },
       resave: false,
       saveUninitialized: false,

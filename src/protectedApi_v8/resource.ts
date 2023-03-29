@@ -6,7 +6,7 @@ userAuthKeyCloakApi.get('/', (req, res) => {
     const host = req.get('host')
     let queryParam = ''
     let isLocal = 0
-    logInfo('Received query param: ' + req.query)
+    logInfo('Received query param: ' + JSON.stringify(req.query))
     if (!_.isEmpty(req.query)) {
         queryParam = req.query.q
         if (queryParam && queryParam.includes('localhost')) {

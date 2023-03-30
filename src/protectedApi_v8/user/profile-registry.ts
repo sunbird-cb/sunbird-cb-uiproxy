@@ -17,9 +17,9 @@ const API_END_POINTS = {
   updateUserRegistry: (userId: string) => `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/update/profile?userId=${userId}`,
   updateUserWorkflowRegistry: (userId: string) =>
     `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/update/workflow/profile?userId=${userId}`,
-  getMasterNationalities: `${CONSTANTS.KONG_API_BASE}/metaData/v1/nationalities`,
-  getMasterLanguages: `${CONSTANTS.KONG_API_BASE}/metaData/v1/languages`,
-  getProfilePageMetaData: `${CONSTANTS.KONG_API_BASE}/metaData/v1/profilePageMetaData`,
+  masterNationalities: `${CONSTANTS.KONG_API_BASE}/metaData/v1/nationalities`,
+  masterLanguages: `${CONSTANTS.KONG_API_BASE}/metaData/v1/languages`,
+  profilePageMetaData: `${CONSTANTS.KONG_API_BASE}/metaData/v1/profilePageMetaData`,
 }
 
 const profileStatusCheckConfig = {
@@ -153,7 +153,7 @@ profileRegistryApi.get('/getUserRegistryByUser/:id', async (req, res) => {
   }
 })
 
-profileRegistryApi.get('/getMasterNationalities', async (req, res) => {
+profileRegistryApi.get('/masterNationalities', async (req, res) => {
   try {
     const response = await axios.get(API_END_POINTS.getMasterNationalities, {
       ...axiosRequestConfig,
@@ -172,7 +172,7 @@ profileRegistryApi.get('/getMasterNationalities', async (req, res) => {
   }
 })
 
-profileRegistryApi.get('/getMasterLanguages', async (req, res) => {
+profileRegistryApi.get('/masterLanguages', async (req, res) => {
   try {
     const response = await axios.get(API_END_POINTS.getMasterLanguages, {
       ...axiosRequestConfig,
@@ -191,7 +191,7 @@ profileRegistryApi.get('/getMasterLanguages', async (req, res) => {
   }
 })
 
-profileRegistryApi.get('/getProfilePageMeta', async (req, res) => {
+profileRegistryApi.get('/profilePageMeta', async (req, res) => {
   try {
     const response = await axios.get(API_END_POINTS.getProfilePageMetaData, {
       ...axiosRequestConfig,

@@ -59,7 +59,7 @@ export class CustomKeycloak {
     logInfo('Cookie from request object, As it is: ', JSON.stringify(reqObj.session.cookie))
     reqObj.session.cookie.secure = true
     logInfo('Cookie from request object, After updating: ', JSON.stringify(reqObj.session.cookie))
-    if (resObj) {
+    if (resObj && resObj.headers) {
       resObj.headers['set-cookie'] = reqObj.session.cookie
       logInfo('Added set-cookie header in response object...')
     } else {

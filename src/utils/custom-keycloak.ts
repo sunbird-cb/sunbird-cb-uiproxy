@@ -59,7 +59,12 @@ export class CustomKeycloak {
     logInfo('Cookie from request object, As it is: ', JSON.stringify(reqObj.session.cookie))
     reqObj.session.cookie.secure = true
     logInfo('Cookie from request object, After updating: ', JSON.stringify(reqObj.session.cookie))
-    resObj.headers['set-cookie'] = reqObj.session.cookie
+    if (resObj) {
+      resObj.headers['set-cookie'] = reqObj.session.cookie
+      logInfo('Added set-cookie header in response object...')
+    } else {
+      logError('response object is null in Keycloak.authenticated method.')
+    }
     logInfo('Step 3: authenticated function', '------', new Date().toString())
     try {
       const userId = reqObj.kauth.grant.access_token.content.sub.split(':')

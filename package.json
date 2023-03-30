@@ -45,7 +45,7 @@
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
     "keycloak-admin": "^1.13.0",
-    "keycloak-connect": "git+https://github.com/sunbird-cb/keycloak-nodejs-connect.git#2.5.0-secureFlagV2",
+    "keycloak-connect": "git+https://github.com/sunbird-cb/keycloak-nodejs-connect.git#2.5.0-secureFlagV3",
     "lodash": "^4.17.21",
     "morgan": "^1.9.1",
     "node-xlsx": "^0.15.0",

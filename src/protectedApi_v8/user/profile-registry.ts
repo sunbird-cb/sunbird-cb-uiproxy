@@ -6,13 +6,15 @@ import { logError, logInfo } from '../../utils/logger'
 import { extractAuthorizationFromRequest,
   extractUserIdFromRequest,
   IAuthorizedRequest } from '../../utils/requestExtract'
-const fs = require('fs')
 
 const API_END_POINTS = {
   createUserRegistry: (userId: string) => `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/create/profile?userId=${userId}`,
   getAllPosition: `${CONSTANTS.FRAC_API_BASE}/frac/getAllNodes?type=POSITION&status=VERIFIED`,
   getUserRegistry: `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/get/profile`,
   getUserRegistryById: (userId: string) => `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/search/profile?userId=${userId}`,
+  masterLanguages: `${CONSTANTS.KONG_API_BASE}/metaData/v1/languages`,
+  masterNationalities: `${CONSTANTS.KONG_API_BASE}/metaData/v1/nationalities`,
+  profilePageMetaData: `${CONSTANTS.KONG_API_BASE}/metaData/v1/profilePageMetaData`,
   searchUserRegistry: `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/search/profile`,
   updateUserRegistry: (userId: string) => `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/update/profile?userId=${userId}`,
   updateUserWorkflowRegistry: (userId: string) =>
@@ -25,6 +27,8 @@ const profileStatusCheckConfig = {
 }
 
 const ERROR_MESSAGE_CREATE_REGISTRY = 'ERROR CREATING USER REGISTRY >'
+const CONNECTION_ERROR = 'CONNECTIONS REQUESTS ERROR> '
+const unknown = 'Connections Apis:- Failed due to unknown reason'
 
 export const profileRegistryApi = Router()
 
@@ -152,175 +156,60 @@ profileRegistryApi.get('/getUserRegistryByUser/:id', async (req, res) => {
 
 profileRegistryApi.get('/getMasterNationalities', async (_req, res) => {
   try {
-    // tslint:disable-next-line: no-identical-functions
-    fs.readFile(__dirname + '/../../static-data/nationality.json', (err: Error, json: string) => {
-      if (!err) {
-        const obj = JSON.parse(json)
-        res.json(obj)
-      }
+    const response = await axios.get(API_END_POINTS.masterNationalities, {
+      ...axiosRequestConfig,
+      headers: {
+        Authorization: CONSTANTS.SB_API_KEY,
+      },
     })
+    res.send((response.data))
   } catch (err) {
-    res.status((err && err.response && err.response.status) || 500).send(err)
+    logError(CONNECTION_ERROR, err)
+    res.status((err && err.response && err.response.status) || 500).send(
+      (err && err.response && err.response.data) || {
+        error: unknown,
+      }
+    )
   }
 })
 
 profileRegistryApi.get('/getMasterLanguages', async (_req, res) => {
   try {
-    fs.readFile(__dirname + '/../../static-data/languages.json', (err: Error, json: string) => {
-      if (!err) {
-        const obj = JSON.parse(json)
-        res.json({
-          languages: obj.languages.map((item: string) => {
-            return { name: item }
-          }),
-        })
-      }
+    const response = await axios.get(API_END_POINTS.masterLanguages, {
+      ...axiosRequestConfig,
+      headers: {
+        Authorization: CONSTANTS.SB_API_KEY,
+      },
     })
+    res.send((response.data))
   } catch (err) {
-    res.status((err && err.response && err.response.status) || 500).send(err)
+    logError(CONNECTION_ERROR, err)
+    res.status((err && err.response && err.response.status) || 500).send(
+      (err && err.response && err.response.data) || {
+        error: unknown,
+      }
+    )
   }
 })
 
 profileRegistryApi.get('/getProfilePageMeta', async (_req, res) => {
   try {
-    const govtOrg = await govtOrgMeta()
-      .catch((err) => {
-        logError(`error fetching govtOrgMeta`, err)
-      })
-    const industries = await industreisMeta()
-      .catch((err) => {
-        logError(`error fetching industreisMeta`, err)
-      })
-    const degrees = await degreesMeta()
-      .catch((err) => {
-        logError(`error fetching degreesMeta`, err)
-      })
-    let designations = Object.create({})
-    designations = await designationMeta()
-      .catch((err) => {
-        logError(`error fetching designationMeta`, err)
-      })
-    designations.designations = await designationMetaFrac(_req)
-      .catch((err) => {
-        logError('error fetching desingations from FRAC', err)
-      })
-    res.json({
-      degrees,
-      designations,
-      govtOrg,
-      industries,
+    const response = await axios.get(API_END_POINTS.profilePageMetaData, {
+      ...axiosRequestConfig,
+      headers: {
+        Authorization: CONSTANTS.SB_API_KEY,
+      },
     })
+    res.send((response.data))
   } catch (err) {
-    res.status((err && err.response && err.response.status) || 500).send(err)
+    logError(CONNECTION_ERROR, err)
+    res.status((err && err.response && err.response.status) || 500).send(
+      (err && err.response && err.response.data) || {
+        error: unknown,
+      }
+    )
   }
 })
-
-export async function govtOrgMeta() {
-  return new Promise(async (resolve, reject) => {
-    try {
-      await fs.readFile(__dirname + '/../../static-data/govtOrg.json', (err: Error, json: string) => {
-        if (!err) {
-          const obj = JSON.parse(json)
-          const result = {
-            cadre: obj.cadre.map((item: string) => {
-              return { name: item }
-            }),
-            ministries: obj.ministries.map((item: string) => {
-              return { name: item }
-            }),
-            service: obj.services.map((item: string) => {
-              return { name: item }
-            }),
-          }
-          resolve(result)
-        } else {
-          reject(err)
-
-        }
-      })
-    } catch (err) {
-      logError('ERROR on govtOrgMeta')
-      throw err
-    }
-  })
-}
-
-export async function industreisMeta() {
-  return new Promise(async (resolve, reject) => {
-    try {
-      await fs.readFile(__dirname + '/../../static-data/industries.json', (err: Error, json: string) => {
-        if (!err) {
-          const obj = JSON.parse(json)
-          resolve(
-            obj.industries.map((item: string) => {
-              return { name: item }
-            })
-          )
-        } else {
-          reject(err)
-
-        }
-      })
-    } catch (err) {
-      logError('ERROR on industreisMeta')
-      throw err
-    }
-  })
-}
-
-export async function degreesMeta() {
-  return new Promise(async (resolve, reject) => {
-    try {
-      await fs.readFile(__dirname + '/../../static-data/degrees.json', (err: Error, json: string) => {
-        if (!err) {
-          const obj = JSON.parse(json)
-          const result = {
-            graduations: obj.graduations.map((item: string) => {
-              return { name: item }
-            }),
-            postGraduations: obj.postGraduations.map((item: string) => {
-              return { name: item }
-            }),
-          }
-          resolve(result)
-        } else {
-          reject(err)
-
-        }
-      })
-    } catch (err) {
-      logError('ERROR on degreesMeta')
-      throw err
-    }
-  })
-}
-
-export async function designationMeta() {
-  return new Promise(async (resolve, reject) => {
-    try {
-      await fs.readFile(__dirname + '/../../static-data/designation.json', (err: Error, json: string) => {
-        if (!err) {
-          const obj = JSON.parse(json)
-          const result = {
-            designations: obj.designations.map((item: string) => {
-              return { name: item }
-            }),
-            gradePay: obj.gradePay.map((item: string) => {
-              return { name: item }
-            }),
-          }
-          resolve(result)
-        } else {
-          reject(err)
-
-        }
-      })
-    } catch (err) {
-      logError('ERROR on designationMeta')
-      throw err
-    }
-  })
-}
 
 profileRegistryApi.post('/createUserRegistryV2/:userId', async (req, res) => {
   try {

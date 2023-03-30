@@ -114,7 +114,6 @@ export class Server {
       logInfo('adding x-forward-proto header with https to request...')
       req.headers['x-forwarded-proto'] = 'https'
       logInfo(`Server:ConfigureMiddleWare:: Worker ${process.pid} : ${req.protocol}://${req.hostname}/${req.url}`)
-      
       next()
     })
     this.app.use(morgan('dev'))

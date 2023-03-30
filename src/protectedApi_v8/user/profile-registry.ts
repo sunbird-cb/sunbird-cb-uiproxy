@@ -12,9 +12,9 @@ const API_END_POINTS = {
   getAllPosition: `${CONSTANTS.FRAC_API_BASE}/frac/getAllNodes?type=POSITION&status=VERIFIED`,
   getUserRegistry: `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/get/profile`,
   getUserRegistryById: (userId: string) => `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/search/profile?userId=${userId}`,
-  masterLanguages: `${CONSTANTS.KONG_API_BASE}/metaData/v1/languages`,
-  masterNationalities: `${CONSTANTS.KONG_API_BASE}/metaData/v1/nationalities`,
-  profilePageMetaData: `${CONSTANTS.KONG_API_BASE}/metaData/v1/profilePageMetaData`,
+  masterLanguages: `${CONSTANTS.KONG_API_BASE}/masterData/v1/languages`,
+  masterNationalities: `${CONSTANTS.KONG_API_BASE}/masterData/v1/nationalities`,
+  profilePageMetaData: `${CONSTANTS.KONG_API_BASE}/masterData/v1/profilePageMetaData`,
   searchUserRegistry: `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/search/profile`,
   updateUserRegistry: (userId: string) => `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/update/profile?userId=${userId}`,
   updateUserWorkflowRegistry: (userId: string) =>

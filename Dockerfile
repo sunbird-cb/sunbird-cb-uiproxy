@@ -5,7 +5,7 @@ RUN mkdir -p /usr/src/app/user_upload
 RUN mkdir -p /usr/src/app/logs
 
 COPY package*.json ./
-RUN npm install
+RUN npm install --only=production
 COPY dist/ .
 
 EXPOSE 8080

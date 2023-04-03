@@ -7,20 +7,14 @@ userAuthKeyCloakApi.get('/', (req, res) => {
     const host = req.get('host')
     let queryParam = ''
     let isLocal = 0
-    logInfo('Received query param: ' + JSON.stringify(req.query))
     if (req.session && req.session.authenticated ) {
-        logInfo('================ User is authenticated ================')
-        logInfo('Cookie from request: ', JSON.stringify(req.session.cookie))
-        logInfo('request cookie -> ', JSON.stringify(req.cookies))
+        logInfo('User is authenticated.. Updating Cookie with Secure and SameSite flags')
         res.cookie('connect.sid', req.cookies['connect.sid'], {
             httpOnly: true,
             maxAge: CONSTANTS.KEYCLOAK_SESSION_TTL,
             sameSite: 'None',
             secure: true,
         })
-        logInfo('response cookie -> ', JSON.stringify(res.cookie))
-    } else {
-        logInfo('================ User is NOT authenticated ================')
     }
     if (!_.isEmpty(req.query)) {
         queryParam = req.query.q

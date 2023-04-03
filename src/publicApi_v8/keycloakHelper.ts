@@ -56,8 +56,7 @@ const deauthenticated = async (reqObj: any) => {
 }
 
 // tslint:disable-next-line: no-any
-const authenticated = async (reqObj: any, res: any, next: any) => {
-    logInfo('keycloakHelper::authenticated... Cookie: ' + res.cookie)
+const authenticated = async (reqObj: any, next: any) => {
     const postLoginRequest = []
     // tslint:disable-next-line: no-any
     postLoginRequest.push((callback: any) => {

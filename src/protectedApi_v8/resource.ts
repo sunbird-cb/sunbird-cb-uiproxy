@@ -11,7 +11,7 @@ userAuthKeyCloakApi.get('/', (req, res) => {
         logInfo('================ User is authenticated ================')
         logInfo('Cookie from request: ', JSON.stringify(req.session.cookie))
         logInfo('request cookie -> ', JSON.stringify(req.cookies))
-        res.cookie('connect-sid', req.cookies['connect-sid'])
+        res.cookie('connect.sid', req.cookies['connect.sid'])
         res.cookie('secure', true)
         logInfo('response cookie -> ', JSON.stringify(res.cookie))
     } else {
@@ -29,7 +29,8 @@ userAuthKeyCloakApi.get('/', (req, res) => {
         }
     }
     let redirectUrl = ''
-    if (isLocal) {
+    if (isLocal) {0.
+
         redirectUrl = queryParam
     } else {
         redirectUrl = `https://${host}${queryParam}` //   'https://' + host + '/page/home'

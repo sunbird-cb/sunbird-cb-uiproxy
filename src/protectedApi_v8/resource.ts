@@ -7,6 +7,12 @@ userAuthKeyCloakApi.get('/', (req, res) => {
     let queryParam = ''
     let isLocal = 0
     logInfo('Received query param: ' + JSON.stringify(req.query))
+    if (req.session && req.session.authenticated ) {
+        logInfo('================ User is authenticated ================')  
+        logInfo('Cookie from request: ', JSON.stringify(req.session.cookie))
+    } else {
+        logInfo('================ User is NOT authenticated ================')
+    }
     if (!_.isEmpty(req.query)) {
         queryParam = req.query.q
         if (queryParam && queryParam.includes('localhost')) {

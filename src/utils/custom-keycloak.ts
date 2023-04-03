@@ -56,6 +56,7 @@ export class CustomKeycloak {
 
   // tslint:disable-next-line: no-any
   authenticated = (reqObj: any, resObj: any, next: any) => {
+    reqObj.session.authenticated = true
     logInfo('Cookie from request object, As it is: ', JSON.stringify(reqObj.session.cookie))
     reqObj.session.cookie.secure = true
     logInfo('Cookie from request object, After updating: ', JSON.stringify(reqObj.session.cookie))

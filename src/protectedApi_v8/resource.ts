@@ -17,6 +17,8 @@ userAuthKeyCloakApi.get('/', (req, res) => {
             res.redirect(req.query.redirect_uri)
             return
         }
+        logInfo('request cookie -> ' + JSON.stringify(req.cookies))
+        logInfo('response cookie -> ' + JSON.stringify(res.cookie))
     }
     let redirectUrl = ''
     if (isLocal) {

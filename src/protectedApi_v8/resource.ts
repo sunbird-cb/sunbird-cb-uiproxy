@@ -8,8 +8,11 @@ userAuthKeyCloakApi.get('/', (req, res) => {
     let isLocal = 0
     logInfo('Received query param: ' + JSON.stringify(req.query))
     if (req.session && req.session.authenticated ) {
-        logInfo('================ User is authenticated ================')  
+        logInfo('================ User is authenticated ================')
         logInfo('Cookie from request: ', JSON.stringify(req.session.cookie))
+        logInfo('request cookie -> ', JSON.stringify(req.cookies))
+        logInfo('request connect.sid', req.cookies.get('connect.sid'))
+        logInfo('response cookie -> ', JSON.stringify(res.cookie))
     } else {
         logInfo('================ User is NOT authenticated ================')
     }
@@ -23,8 +26,6 @@ userAuthKeyCloakApi.get('/', (req, res) => {
             res.redirect(req.query.redirect_uri)
             return
         }
-        logInfo('request cookie -> ' + JSON.stringify(req.cookies))
-        logInfo('response cookie -> ' + JSON.stringify(res.cookie))
     }
     let redirectUrl = ''
     if (isLocal) {

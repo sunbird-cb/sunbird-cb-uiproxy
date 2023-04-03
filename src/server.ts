@@ -70,8 +70,6 @@ export class Server {
       const rootOrg = req.headers ? req.headers.rootOrg || req.headers.rootorg : ''
       if (rootOrg && req.hostname.toLowerCase().includes('localhost')) {
         res.cookie('rootorg', rootOrg)
-        res.cookie('secure', true)
-        res.cookie('sameSite', 'Lax')
       }
       next()
     })
@@ -113,6 +111,8 @@ export class Server {
     )
     // TODO: See what needs to be logged
     this.app.use((req, _, next) => {
+      logInfo('adding x-forward-proto header with https to request...')
+      req.headers['x-forwarded-proto'] = 'https'
       logInfo(`Server:ConfigureMiddleWare:: Worker ${process.pid} : ${req.protocol}://${req.hostname}/${req.url}`)
       next()
     })

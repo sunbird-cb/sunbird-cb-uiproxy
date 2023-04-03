@@ -57,6 +57,7 @@ export class CustomKeycloak {
   // tslint:disable-next-line: no-any
   authenticated = (reqObj: any, next: any) => {
     logInfo('Step 3: authenticated function', '------', new Date().toString())
+    reqObj.session.authenticated = true
     try {
       const userId = reqObj.kauth.grant.access_token.content.sub.split(':')
       reqObj.session.userId = userId[userId.length - 1]

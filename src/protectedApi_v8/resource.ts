@@ -15,6 +15,14 @@ userAuthKeyCloakApi.get('/', (req, res) => {
             sameSite: 'None',
             secure: true,
         })
+        if(req.cookies['express.sid']) {
+            res.cookie('express.sid', req.cookies['express.sid'], {
+                httpOnly: true,
+                maxAge: CONSTANTS.KEYCLOAK_SESSION_TTL,
+                sameSite: 'None',
+                secure: true,
+            })
+        }
     }
     if (!_.isEmpty(req.query)) {
         queryParam = req.query.q

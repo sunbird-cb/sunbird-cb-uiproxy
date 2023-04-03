@@ -15,9 +15,9 @@ userAuthKeyCloakApi.get('/', (req, res) => {
         res.cookie('connect.sid', req.cookies['connect.sid'], {
             httpOnly: true,
             maxAge: CONSTANTS.KEYCLOAK_SESSION_TTL,
+            sameSite: 'None',
             secure: true,
         })
-        res.cookie('secure', true)
         logInfo('response cookie -> ', JSON.stringify(res.cookie))
     } else {
         logInfo('================ User is NOT authenticated ================')

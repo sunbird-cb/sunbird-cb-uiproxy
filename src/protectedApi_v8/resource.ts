@@ -5,6 +5,7 @@ const _                 = require('lodash')
 export const userAuthKeyCloakApi = Router()
 userAuthKeyCloakApi.get('/', (req, res) => {
     const host = req.get('host')
+    const expressSid = 'express.sid'
     let queryParam = ''
     let isLocal = 0
     if (req.session && req.session.authenticated ) {
@@ -15,8 +16,8 @@ userAuthKeyCloakApi.get('/', (req, res) => {
             sameSite: 'None',
             secure: true,
         })
-        if(req.cookies['express.sid']) {
-            res.cookie('express.sid', req.cookies['express.sid'], {
+        if (req.cookies[expressSid]) {
+            res.cookie(expressSid, req.cookies[expressSid], {
                 httpOnly: true,
                 maxAge: CONSTANTS.KEYCLOAK_SESSION_TTL,
                 sameSite: 'None',

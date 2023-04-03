@@ -48,7 +48,6 @@ export class Server {
     this.app.use(expressSession(sessionConfig))
     this.app.use(express.urlencoded({ extended: false, limit: '50mb' }))
     this.app.use(express.json({ limit: '50mb' }))
-    this.setCookie()
     this.app.all('*', apiWhiteListLogger())
     if (CONSTANTS.PORTAL_API_WHITELIST_CHECK === 'true') {
       this.app.all('*', isAllowed())
@@ -62,26 +61,6 @@ export class Server {
     this.authoringApi()
     this.resetCookies()
     this.app.use(haltOnTimedOut)
-  }
-
-  private setCookie() {
-    this.app.use(cookieParser())
-    this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-      const rootOrg = req.headers ? req.headers.rootOrg || req.headers.rootorg : ''
-      if (rootOrg && req.hostname.toLowerCase().includes('localhost')) {
-        res.cookie('rootorg', rootOrg)
-      }
-      next()
-    })
-    this.app.use((_req: express.Request, _res: express.Response, next: express.NextFunction) => {
-      // tslint:disable
-      // res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
-      //  res.header('Cache-Control', 'max-age=14400, must-revalidate')
-      // res.header('Expires', '-1')
-      // res.header('Pragma', 'no-cache')
-      // tslint:enable
-      next()
-    })
   }
 
   private configureMiddleware() {

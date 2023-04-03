@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { CONSTANTS } from '../utils/env'
 import { logInfo } from '../utils/logger'
 const _                 = require('lodash')
 export const userAuthKeyCloakApi = Router()
@@ -11,7 +12,11 @@ userAuthKeyCloakApi.get('/', (req, res) => {
         logInfo('================ User is authenticated ================')
         logInfo('Cookie from request: ', JSON.stringify(req.session.cookie))
         logInfo('request cookie -> ', JSON.stringify(req.cookies))
-        res.cookie('connect.sid', req.cookies['connect.sid'])
+        res.cookie('connect.sid', req.cookies['connect.sid'], {
+            httpOnly: true,
+            maxAge: CONSTANTS.KEYCLOAK_SESSION_TTL,
+            secure: true,
+        })
         res.cookie('secure', true)
         logInfo('response cookie -> ', JSON.stringify(res.cookie))
     } else {

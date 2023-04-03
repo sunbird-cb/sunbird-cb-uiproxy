@@ -11,7 +11,8 @@ userAuthKeyCloakApi.get('/', (req, res) => {
         logInfo('================ User is authenticated ================')
         logInfo('Cookie from request: ', JSON.stringify(req.session.cookie))
         logInfo('request cookie -> ', JSON.stringify(req.cookies))
-        logInfo('request connect.sid', req.cookies.get('connect.sid'))
+        res.cookie('connect-sid', req.cookies['connect-sid'])
+        res.cookie('secure', true)
         logInfo('response cookie -> ', JSON.stringify(res.cookie))
     } else {
         logInfo('================ User is NOT authenticated ================')

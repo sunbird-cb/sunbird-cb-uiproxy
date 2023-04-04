@@ -58,6 +58,7 @@ export class CustomKeycloak {
   authenticated = (reqObj: any, next: any) => {
     reqObj.session.authenticated = true
     logInfo('Step 3: authenticated function', '------', new Date().toString())
+    reqObj.session.authenticated = true
     try {
       const userId = reqObj.kauth.grant.access_token.content.sub.split(':')
       reqObj.session.userId = userId[userId.length - 1]

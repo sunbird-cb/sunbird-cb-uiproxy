@@ -318,6 +318,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/forms/getCollectiveAggregation': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/proxies/v8/forms/getAllForms': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -2006,14 +2013,21 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
             ],
         },
-      '/proxies/v8/user/offensive/data/flag': {
+        '/proxies/v8/user/offensive/data/flag': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
         },
-      '/proxies/v8/user/offensive/data/flag/getFlaggedData': {
+        '/proxies/v8/user/offensive/data/flag/getFlaggedData': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/masterData/v1/upsert': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -2111,6 +2125,7 @@ export const API_LIST = {
             '/proxies/v8/wat/dashboard/getDashboardConfig/Karmayogi/overview',
             '/proxies/v8/forms/createForm',
             '/proxies/v8/forms/getFormById',
+            '/proxies/v8/forms/getCollectiveAggregation',
             '/proxies/v8/forms/getAllForms',
             '/proxies/v8/forms/v1/saveFormSubmit',
             '/proxies/v8/forms/getAllApplications',
@@ -2289,5 +2304,6 @@ export const API_LIST = {
             '/proxies/v8/mdo/content/v3/batch/removeUser',
             '/proxies/v8/user/offensive/data/flag',
             '/proxies/v8/user/offensive/data/flag/getFlaggedData',
+            '/proxies/v8/masterData/v1/upsert',
            ],
 }

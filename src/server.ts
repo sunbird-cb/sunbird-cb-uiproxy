@@ -48,8 +48,8 @@ export class Server {
     this.app.use(expressSession(sessionConfig))
     this.app.use(express.urlencoded({ extended: false, limit: '50mb' }))
     this.app.use(express.json({ limit: '50mb' }))
-    this.app.all('*', apiWhiteListLogger())
     this.setCookie()
+    this.app.all('*', apiWhiteListLogger())
     if (CONSTANTS.PORTAL_API_WHITELIST_CHECK === 'true') {
       this.app.all('*', isAllowed())
     }

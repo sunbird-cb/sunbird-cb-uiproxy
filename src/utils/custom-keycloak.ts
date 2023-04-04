@@ -56,7 +56,6 @@ export class CustomKeycloak {
 
   // tslint:disable-next-line: no-any
   authenticated = (reqObj: any, next: any) => {
-    reqObj.session.authenticated = true
     logInfo('Step 3: authenticated function', '------', new Date().toString())
     reqObj.session.authenticated = true
     try {

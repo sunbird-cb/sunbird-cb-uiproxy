@@ -5,7 +5,6 @@ const _                 = require('lodash')
 export const userAuthKeyCloakApi = Router()
 userAuthKeyCloakApi.get('/', (req, res) => {
     const host = req.get('host')
-    const expressSid = 'express.sid'
     let queryParam = ''
     let isLocal = 0
     logInfo('Received query param: ' + JSON.stringify(req.query))

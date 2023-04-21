@@ -2034,6 +2034,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/user/v1/bulkupload/download/:id' : {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -2305,5 +2312,6 @@ export const API_LIST = {
             '/proxies/v8/user/offensive/data/flag',
             '/proxies/v8/user/offensive/data/flag/getFlaggedData',
             '/proxies/v8/masterData/v1/upsert',
+            '/proxies/v8/user/v1/bulkupload/download/:id',
            ],
 }

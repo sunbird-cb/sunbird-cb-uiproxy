@@ -292,12 +292,15 @@ cohortsApi.get('/course/getUsersForBatch/:batchId', async (req, res) => {
   }
 })
 
+// tslint:disable-next-line: all
 function getUsers(userprofile: IUserProfile): ICohortsUser {
   let designationValue = ''
   let primaryEmail = ''
   let mobileNumber = 0
-  if (userprofile.profileDetails !== undefined) {
-    if (userprofile.profileDetails.professionalDetails !== undefined && userprofile.profileDetails.professionalDetails.length > 0) {
+  const profileDetails = userprofile.hasOwnProperty('profileDetails') ? userprofile.profileDetails : null
+  if (profileDetails != null) {
+    const professionalDetails = profileDetails.hasOwnProperty('professionalDetails') ? profileDetails.professionalDetails : null
+    if (professionalDetails != null) {
       if (userprofile.profileDetails.professionalDetails[0].designation !== undefined) {
         designationValue = userprofile.profileDetails.professionalDetails[0].designation
       } else {
@@ -310,6 +313,7 @@ function getUsers(userprofile: IUserProfile): ICohortsUser {
       mobileNumber = userprofile.profileDetails.personalDetails.mobile
     }
   }
+
   return {
     city: '',
     department: userprofile.channel === undefined ? '' : userprofile.channel,

@@ -2020,6 +2020,54 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/workflow/position/update': {
+             checksNeeded: [CHECK.ROLE],
+             // tslint:disable-next-line: object-literal-sort-keys
+             ROLE_CHECK: [
+                 ROLE.SPV_ADMIN,
+                 ROLE.MDO_ADMIN,
+             ],
+         },
+         '/proxies/v8/workflow/org/update': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.SPV_ADMIN,
+                ROLE.MDO_ADMIN,
+            ],
+        },
+        '/proxies/v8/workflow/domain/update': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.SPV_ADMIN,
+                ROLE.MDO_ADMIN,
+            ],
+        },
+        '/proxies/v8/workflow/position/search': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.SPV_ADMIN,
+                ROLE.MDO_ADMIN,
+            ],
+        },
+        '/proxies/v8/workflow/org/search': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.SPV_ADMIN,
+                ROLE.MDO_ADMIN,
+            ],
+        },
+        '/proxies/v8/workflow/domain/search': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.SPV_ADMIN,
+                ROLE.MDO_ADMIN,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -2289,5 +2337,11 @@ export const API_LIST = {
             '/proxies/v8/mdo/content/v3/batch/removeUser',
             '/proxies/v8/user/offensive/data/flag',
             '/proxies/v8/user/offensive/data/flag/getFlaggedData',
+            '/proxies/v8/workflow/position/update',
+            '/proxies/v8/workflow/org/update',
+            '/proxies/v8/workflow/domain/update',
+            '/proxies/v8/workflow/position/search',
+            '/proxies/v8/workflow/org/search',
+            '/proxies/v8/workflow/domain/search'
            ],
 }

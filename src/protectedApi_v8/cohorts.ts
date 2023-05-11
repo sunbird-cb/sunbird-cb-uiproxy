@@ -300,13 +300,14 @@ function getUsers(userprofile: IUserProfile): ICohortsUser {
   const profileDetails = userprofile.hasOwnProperty('profileDetails') ? userprofile.profileDetails : null
   if (profileDetails != null) {
     const professionalDetails = profileDetails.hasOwnProperty('professionalDetails') ? profileDetails.professionalDetails : null
-    //const designation = professionalDetails && professionalDetails[0].designation ? professionalDetails[0].designation : null	
+    
     if (professionalDetails[0].hasOwnProperty('designation') && professionalDetails[0].designation !== undefined) {
         designationValue = userprofile.profileDetails.professionalDetails[0].designation
      } else {
-        designationValue = userprofile.profileDetails.professionalDetails[0].designationOther === undefined ? '' : userprofile.profileDetails.professionalDetails[0].designationOther
+         designationValue = userprofile.profileDetails.professionalDetails[0].designationOther === undefined ? '' :
+         userprofile.profileDetails.professionalDetails[0].designationOther
     }
-    if (professionalDetails != null && designationValue!='') {
+    if (professionalDetails != null && designationValue !== '') {
       if (userprofile.profileDetails.professionalDetails[0].designation !== undefined) {
         designationValue = userprofile.profileDetails.professionalDetails[0].designation
       } else {

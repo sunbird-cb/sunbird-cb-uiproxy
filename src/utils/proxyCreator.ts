@@ -32,6 +32,7 @@ proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
     channel = req.session.channel
   }
   proxyReq.setHeader('x-authenticated-user-orgname', channel)
+  proxyReq.setHeader('x-authenticated-user-channel', channel)
   proxyReq.setHeader('x-authenticated-user-nodebb-uid', req.session.uid)
 
   // condition has been added to set the session in nodebb req header

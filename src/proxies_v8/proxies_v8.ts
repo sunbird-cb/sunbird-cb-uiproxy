@@ -346,6 +346,7 @@ proxiesV8.post('/user/v1/bulkupload', (req, res) => {
           // tslint:disable-next-line:max-line-length
           Authorization: CONSTANTS.SB_API_KEY,
           // tslint:disable-next-line: all
+          'x-authenticated-user-channel': channel,
           'x-authenticated-user-orgid': rootOrgId,
           'x-authenticated-user-orgname': channel,
           'x-authenticated-user-token': extractUserToken(req),

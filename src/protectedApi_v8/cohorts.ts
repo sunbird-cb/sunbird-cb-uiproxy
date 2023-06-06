@@ -146,6 +146,12 @@ cohortsApi.get('/user/autoenrollment/:courseId', async (req, res) => {
     const courseId = req.params.courseId
     const wid = req.headers.wid as string
     const rootOrgValue = req.headers.rootorg
+    let rootOrgId = ''
+    // tslint:disable-next-line
+    if (typeof req.session != "undefined" && typeof req.session.rootOrgId != "undefined") {
+      // tslint:disable-next-line
+      rootOrgId = req.session.rootOrgId
+    }
     const response = await axios.get(API_END_POINTS.autoenrollment, {
       ...axiosRequestConfig,
       headers: {
@@ -153,6 +159,7 @@ cohortsApi.get('/user/autoenrollment/:courseId', async (req, res) => {
         courseId,
         rootOrg: rootOrgValue,
         userUUID: wid,
+        'x-authenticated-user-orgid': rootOrgId,
         // tslint:disable-next-line: no-duplicate-string
         'x-authenticated-user-token': extractUserToken(req),
       },

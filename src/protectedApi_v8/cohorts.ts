@@ -46,6 +46,12 @@ cohortsApi.get('/:cohortType/:contentId', async (req, res) => {
       res.status(400).send(ERROR.ERROR_NO_ORG_DATA)
       return
     }
+    let rootOrgId = ''
+    // tslint:disable-next-line
+    if (typeof req.session != "undefined" && typeof req.session.rootOrgId != "undefined") {
+      // tslint:disable-next-line
+      rootOrgId = req.session.rootOrgId
+    }
     if (cohortType === 'authors') {
       const host = req.protocol + '://' + req.get('host')
       const userList = await getAuthorsDetails(host, extractAuthorizationFromRequest(req), contentId)
@@ -59,6 +65,7 @@ cohortsApi.get('/:cohortType/:contentId', async (req, res) => {
           resourceId: contentId,
           rootOrg: rootOrgValue,
           userUUID: extractUserIdFromRequest(req),
+          'x-authenticated-user-orgid': rootOrgId,
           // tslint:disable-next-line: no-duplicate-string
           'x-authenticated-user-token': extractUserToken(req),
         },

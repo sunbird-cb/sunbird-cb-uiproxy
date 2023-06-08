@@ -46,6 +46,12 @@ cohortsApi.get('/:cohortType/:contentId', async (req, res) => {
       res.status(400).send(ERROR.ERROR_NO_ORG_DATA)
       return
     }
+    let rootOrgId = ''
+    // tslint:disable-next-line
+    if (typeof req.session != "undefined" && typeof req.session.rootOrgId != "undefined") {
+      // tslint:disable-next-line
+      rootOrgId = req.session.rootOrgId
+    }
     if (cohortType === 'authors') {
       const host = req.protocol + '://' + req.get('host')
       const userList = await getAuthorsDetails(host, extractAuthorizationFromRequest(req), contentId)
@@ -59,6 +65,7 @@ cohortsApi.get('/:cohortType/:contentId', async (req, res) => {
           resourceId: contentId,
           rootOrg: rootOrgValue,
           userUUID: extractUserIdFromRequest(req),
+          'x-authenticated-user-orgid': rootOrgId,
           // tslint:disable-next-line: no-duplicate-string
           'x-authenticated-user-token': extractUserToken(req),
         },
@@ -146,6 +153,12 @@ cohortsApi.get('/user/autoenrollment/:courseId', async (req, res) => {
     const courseId = req.params.courseId
     const wid = req.headers.wid as string
     const rootOrgValue = req.headers.rootorg
+    let rootOrgId = ''
+    // tslint:disable-next-line
+    if (typeof req.session != "undefined" && typeof req.session.rootOrgId != "undefined") {
+      // tslint:disable-next-line
+      rootOrgId = req.session.rootOrgId
+    }
     const response = await axios.get(API_END_POINTS.autoenrollment, {
       ...axiosRequestConfig,
       headers: {
@@ -153,6 +166,7 @@ cohortsApi.get('/user/autoenrollment/:courseId', async (req, res) => {
         courseId,
         rootOrg: rootOrgValue,
         userUUID: wid,
+        'x-authenticated-user-orgid': rootOrgId,
         // tslint:disable-next-line: no-duplicate-string
         'x-authenticated-user-token': extractUserToken(req),
       },

@@ -2366,6 +2366,6 @@ export const API_LIST = {
             '/proxies/v8/workflow/domain/update',
             '/proxies/v8/workflow/position/search',
             '/proxies/v8/workflow/org/search',
-            '/proxies/v8/workflow/domain/search'
+            '/proxies/v8/workflow/domain/search',
            ],
 }

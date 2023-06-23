@@ -228,7 +228,6 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
         const sbemail_ = req.body.personalDetails.email
         const sbemailVerified_ = true
         const sbfirstName_ = req.body.personalDetails.firstName
-        const sblastName_ = req.body.personalDetails.lastName
         const isEmailRequired = (req.body.personalDetails.isEmailRequired) ? req.body.personalDetails.isEmailRequired : true
         const searchresponse = await axios({
             ...axiosRequestConfig,
@@ -264,7 +263,6 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
         } else {
             const sbUserProfile: Partial<ISBUser> = {
                 channel: sbChannel, email: sbemail_, emailVerified: sbemailVerified_, firstName: sbfirstName_,
-                lastName: sblastName_,
             }
             const response = await axios({
                 ...axiosRequestConfig,
@@ -302,7 +300,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                    username: sbUserReadResponse.data.result.response.userName,
                    // tslint:disable-next-line: object-literal-sort-keys
                    identifier: sbUserReadResponse.data.result.response.identifier,
-                   fullname: sbUserReadResponse.data.result.response.firstName + ' ' + sbUserReadResponse.data.result.response.lastName,
+                   fullname: sbUserReadResponse.data.result.response.firstName,
                 }
                 await axios({
                     ...axiosRequestConfig,
@@ -321,11 +319,12 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                         employmentDetails: {
                             departmentName: sbChannel,
                         },
+                        mandatoryFieldsExists: false,
                         personalDetails: {
                             firstname: sbfirstName_,
                             primaryEmail: sbemail_,
-                            surname: sblastName_,
                         },
+                        verifiedKarmayogi: false,
                     },
                     userId: sbUserId,
                 }
@@ -407,7 +406,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                 }
 
                 const sbUserProfileResponse: Partial<ISunbirdbUserResponse> = {
-                    email: sbemail_, firstName: sbfirstName_, lastName: sblastName_,
+                    email: sbemail_, firstName: sbfirstName_,
                     userId: sbUserId,
                     userOrgId: sbUserOrgId,
                 }

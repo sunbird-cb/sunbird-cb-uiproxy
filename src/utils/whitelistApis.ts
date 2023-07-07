@@ -2031,7 +2031,7 @@ export const API_LIST = {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.PUBLIC,
+                ROLE.SPV_ADMIN,
             ],
         },
         '/proxies/v8/user/v1/bulkuser/download/:id' : {

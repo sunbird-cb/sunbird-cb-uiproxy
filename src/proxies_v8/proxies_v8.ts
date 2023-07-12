@@ -487,12 +487,12 @@ proxiesV8.use('/discussion/*',
 
 proxiesV8.use('/assessment/read/*',
   // tslint:disable-next-line: max-line-length
-  proxyAssessmentRead(express.Router(), `${CONSTANTS.KONG_API_BASE}` + '/player/questionset/v1/hierarchy')
+  proxyAssessmentRead(express.Router(), `${CONSTANTS.KONG_API_BASE}` + '/player/questionset/v4/hierarchy')
 )
 
 proxiesV8.use('/question/read',
   // tslint:disable-next-line: max-line-length
-  proxyQuestionRead(express.Router(), `${CONSTANTS.KONG_API_BASE}` + '/player/question/v1/list')
+  proxyQuestionRead(express.Router(), `${CONSTANTS.KONG_API_BASE}` + '/player/question/v4/list')
 )
 
 proxiesV8.use('/cbp/question/list',

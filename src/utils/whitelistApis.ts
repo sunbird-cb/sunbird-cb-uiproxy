@@ -442,6 +442,7 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
                 ROLE.STATE_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/data/v1/system/settings/get/notificationPreference': {

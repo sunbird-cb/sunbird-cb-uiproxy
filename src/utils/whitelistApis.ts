@@ -2089,6 +2089,20 @@ export const API_LIST = {
                ROLE.MDO_ADMIN,
            ],
        },
+       '/protected/v8/user/evaluate/assessment/submit/v4': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/user/assessment/v4/result': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
        '/proxies/v8/workflow/blendedprogram/enrol': {
            checksNeeded: [CHECK.ROLE],
            // tslint:disable-next-line: object-literal-sort-keys
@@ -2411,6 +2425,8 @@ export const API_LIST = {
             '/proxies/v8/workflow/position/search',
             '/proxies/v8/workflow/org/search',
             '/proxies/v8/workflow/domain/search',
+            '/protected/v8/user/evaluate/assessment/submit/v4',
+            '/proxies/v8/user/assessment/v4/result',
             '/proxies/v8/workflow/blendedprogram/enrol',
             '/proxies/v8/workflow/blendedprogram/search',
             '/proxies/v8/workflow/blendedprogram/user/search',

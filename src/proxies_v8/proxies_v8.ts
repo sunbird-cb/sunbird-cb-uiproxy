@@ -44,7 +44,7 @@ proxiesV8.get('/', (_req, res) => {
 
 proxiesV8.post('/upload/*', (req, res) => {
   if (req.files && req.files.data) {
-    const url = removePrefix('/proxies/v8/upload', req.originalUrl)
+    const url = removePrefix('/proxies/v8/upload/action', req.originalUrl)
     const file: UploadedFile = req.files.data as UploadedFile
     const formData = new FormData()
     formData.append('file', Buffer.from(file.data), {
@@ -63,9 +63,9 @@ proxiesV8.post('/upload/*', (req, res) => {
           // tslint:disable-next-line: all
           'x-authenticated-userid': extractUserIdFromRequest(req),
         },
-        host: 'knowledge-mw-service',
+        host: 'content-service',
         path: url,
-        port: 5000,
+        port: 9000,
       },
       (err, response) => {
 

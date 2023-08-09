@@ -1,4 +1,5 @@
 import axios from 'axios'
+import lodash from 'lodash'
 import { axiosRequestConfig } from '../configs/request.config'
 import { CONSTANTS } from '../utils/env'
 import { logError, logInfo } from '../utils/logger'
@@ -47,22 +48,50 @@ export async function fetchUserByEmailId(emailId: string) {
     return Promise.resolve(result)
 }
 
-export async function createUserWithMailId(emailId: string, firstNameStr: string, lastNameStr: string) {
+export async function createUserWithMailId(emailId: string, firstNameStr: string, lastNameStr: string, mobileNoStr = '') {
     const result = {
         errMessage : '', userCreated : false, userId: '',
     }
     const signUpErr = 'SIGN_UP_ERR-'
     let statusString = ''
+    let _reqPayload = {
+        request:
+        {
+            email: emailId,
+            emailVerified: true,
+            firstName: firstNameStr.trim() + ' ' + lastNameStr.trim(),
+            phone: '',
+            roles: [ 'PUBLIC' ],
+        },
+    }
+    let _validPhone
+    try {
+        // Check mobile number is valid for length
+        if (mobileNoStr && mobileNoStr.length >= 10) {
+            // Check phone number starts with `+` and country code belongs to 91
+            if (mobileNoStr.charAt(0) === '+' && mobileNoStr.slice(1, 3) === '91' &&
+                mobileNoStr.slice(3, mobileNoStr.length).length === 10) {
+                _validPhone = mobileNoStr.slice(3, mobileNoStr.length)
+            } else if (mobileNoStr.slice(0, 2) === '91' && mobileNoStr.slice(2, mobileNoStr.length).length === 10) {
+                // Check phone number starts with 91
+                _validPhone = mobileNoStr.slice(2, mobileNoStr.length)
+            } else {
+                // Accept the incoming phone number as it is; since it is not prefixed with `+` or country code
+                _validPhone = mobileNoStr
+            }
+        }
+    } catch (error) {
+        logError('ssoUserHelper:createUserWithMailId - Error while validating phone number')
+    }
+    // Update the request object
+    if (_validPhone) {
+        _reqPayload.request.phone = _validPhone
+    } else {
+        _reqPayload = lodash.omit(_reqPayload, 'phone')
+    }
     const signUpResponse = await axios({
         ...axiosRequestConfig,
-        data: {
-            request:
-            {
-                email: emailId,
-                emailVerified: true,
-                firstName: firstNameStr,
-                lastName : lastNameStr,
-        } },
+        data: _reqPayload,
          headers: {
             Authorization: CONSTANTS.SB_API_KEY,
         },

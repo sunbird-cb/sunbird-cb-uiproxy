@@ -1,7 +1,7 @@
 {
   "name": "ui_web-services-v8",
   "version": "1.0.0",
-  "description": "",
+  "description": "SB CB UI PROXY",
   "main": "index.js",
   "scripts": {
     "build": "gulp build",
@@ -15,8 +15,11 @@
     "start": "node index.js"
   },
   "keywords": [],
+  "engines": {
+    "node": ">=14.19.0"
+  },
   "author": "Christopher Fernandes",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@types/cors": "^2.8.6",
     "@types/node-xlsx": "^0.15.0",

@@ -19,6 +19,7 @@ const API_END_POINTS = {
     createNodeBBUser: `${CONSTANTS.KONG_API_BASE}/discussion/user/v1/create`,
     getMasterLanguages: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/getMasterLanguages`,
     getMasterNationalities: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/getMasterNationalities`,
+    getMasterCountries: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/getMasterCountries`,
     getOSUserRegistryById: (userId: string) => `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/search/profile?userId=${userId}`,
     getProfilePageMeta: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/getProfilePageMeta`,
     getUserRegistry: `${CONSTANTS.USER_PROFILE_API_BASE}/public/v8/profileDetails/getUserRegistry`,
@@ -161,6 +162,18 @@ profileDeatailsApi.get('/getMasterNationalities', async (_req, res) => {
         res.status(response.status).send(response.data)
     } catch (err) {
         logError('ERROR FETCHING MASTER NATIONALITIES >', err)
+        res.status((err && err.response && err.response.status) || 500).send(err)
+    }
+})
+
+profileDeatailsApi.get('/getMasterCountries', async (_req, res) => {
+    try {
+        const response = await axios.get(API_END_POINTS.getMasterCountries, {
+            ...axiosRequestConfig,
+        })
+        res.status(response.status).send(response.data)
+    } catch (err) {
+        logError('ERROR FETCHING MASTER COUNTRIES >', err)
         res.status((err && err.response && err.response.status) || 500).send(err)
     }
 })

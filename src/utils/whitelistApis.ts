@@ -44,6 +44,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.CONTENT_CREATOR,
             ],
         },
@@ -102,6 +103,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/event/v4/create': {
@@ -109,6 +111,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/user/v1/read/:id': {
@@ -274,6 +277,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/dashboard/analytics/getDashboardConfig/Karmayogi/:comp': {
@@ -381,6 +385,7 @@ export const API_LIST = {
                 ROLE.CONTENT_CREATOR,
                 ROLE.EDITOR,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/v1/content/retire': {
@@ -432,6 +437,7 @@ export const API_LIST = {
                 ROLE.CONTENT_REVIEWER,
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/data/v1/system/settings/get/orgTypeList': {
@@ -440,8 +446,10 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.SPV_ADMIN,
                 ROLE.STATE_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/data/v1/system/settings/get/notificationPreference': {
@@ -463,6 +471,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.SPV_ADMIN,
                 ROLE.CBP_ADMIN,
                 ROLE.STATE_ADMIN,
@@ -482,6 +491,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.SPV_ADMIN,
                 ROLE.STATE_ADMIN,
             ],
@@ -492,6 +502,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.SPV_ADMIN,
                 ROLE.STATE_ADMIN,
             ],
@@ -502,6 +513,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.SPV_ADMIN,
                 ROLE.STATE_ADMIN,
             ],
@@ -512,6 +524,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.SPV_ADMIN,
                 ROLE.STATE_ADMIN,
             ],
@@ -521,6 +534,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.SPV_ADMIN,
                 ROLE.CBP_ADMIN,
                 ROLE.STATE_ADMIN,
@@ -532,6 +546,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.SPV_ADMIN,
                 ROLE.CBP_ADMIN,
                 ROLE.STATE_ADMIN,
@@ -544,6 +559,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.SPV_ADMIN,
                 ROLE.STATE_ADMIN,
             ],
@@ -561,6 +577,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.SPV_ADMIN,
                 ROLE.STATE_ADMIN,
             ],
@@ -655,6 +672,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.SPV_ADMIN,
                 ROLE.STATE_ADMIN,
             ],
@@ -665,6 +683,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.SPV_ADMIN,
             ],
         },
@@ -826,6 +845,7 @@ export const API_LIST = {
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/protected/v8/portal/spv/department': {
@@ -861,6 +881,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/protected/v8/user/profileDetails/createUser': {
@@ -868,6 +889,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.SPV_ADMIN,
                 ROLE.CBP_ADMIN,
                 ROLE.CONTENT_CREATOR,
@@ -901,6 +923,8 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
+                ROLE.MDO_LEADER,
                 ROLE.SPV_ADMIN,
             ],
         },
@@ -909,6 +933,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.WAT_MEMBER,
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
@@ -941,6 +966,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.WAT_MEMBER,
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
@@ -952,6 +978,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.WAT_MEMBER,
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
@@ -962,6 +989,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.WAT_MEMBER,
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
@@ -972,12 +1000,14 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.WAT_MEMBER,
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
             ],
             SCOPE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/protected/v8/workallocation/user/autocomplete/:searchTerm': {
@@ -1020,6 +1050,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.WAT_MEMBER,
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
@@ -1030,6 +1061,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.WAT_MEMBER,
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
@@ -1040,6 +1072,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.WAT_MEMBER,
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
@@ -1050,6 +1083,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.WAT_MEMBER,
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
@@ -1256,6 +1290,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/protected/v8/workallocation/v2/update': {
@@ -1263,6 +1298,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.WAT_MEMBER,
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
@@ -1357,6 +1393,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.WAT_MEMBER,
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
@@ -1367,6 +1404,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.WAT_MEMBER,
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
@@ -1377,6 +1415,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.WAT_MEMBER,
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
@@ -1387,6 +1426,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.WAT_MEMBER,
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
@@ -1397,6 +1437,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.WAT_MEMBER,
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
@@ -1421,6 +1462,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.WAT_MEMBER,
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
@@ -1541,6 +1583,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/authApi/batch/:key': {
@@ -1556,6 +1599,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/authApi/readCert/:certId': {
@@ -1575,30 +1619,35 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         }, '/proxies/v8/staff/position/:orgId': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         }, '/proxies/v8/budget/scheme': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         }, '/proxies/v8/budget/scheme/:orgId': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         }, '/proxies/v8/budget/scheme/:orgId/:budgetYear': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         }, '/proxies/v8/orghistory/:orgId/:key': {
             checksNeeded: [CHECK.ROLE],
@@ -1606,6 +1655,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CBC_ADMIN,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.SPV_ADMIN,
             ],
         },
@@ -1726,6 +1776,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/storage/delete': {
@@ -1733,6 +1784,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/user/v1/extPatch': {
@@ -1748,6 +1800,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.PUBLIC,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.CBP_ADMIN,
             ],
         },
@@ -1780,12 +1833,14 @@ export const API_LIST = {
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.CONTENT_REVIEWER,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/questionset/v1/create': {
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
             checksNeeded: [CHECK.ROLE],
         },
@@ -1795,6 +1850,7 @@ export const API_LIST = {
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.CONTENT_REVIEWER,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
             checksNeeded: [CHECK.ROLE],
         },
@@ -1804,6 +1860,7 @@ export const API_LIST = {
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.CONTENT_REVIEWER,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
             checksNeeded: [CHECK.ROLE],
         },
@@ -1811,6 +1868,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
             checksNeeded: [CHECK.ROLE],
         },
@@ -1818,6 +1876,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
             checksNeeded: [CHECK.ROLE],
         },
@@ -1825,6 +1884,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
             checksNeeded: [CHECK.ROLE],
         },
@@ -1849,6 +1909,7 @@ export const API_LIST = {
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.CONTENT_REVIEWER,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
             checksNeeded: [CHECK.ROLE],
         },
@@ -1934,6 +1995,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/user/v1/bulkupload/:orgId': {
@@ -1941,6 +2003,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/otp/v1/generate': {
@@ -1976,6 +2039,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/mdo/content/v3/hierarchy/update': {
@@ -1983,6 +2047,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/mdo/content/v3/update/:do_id': {
@@ -1990,6 +2055,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/mdo/content/v3/publish/:do_id': {
@@ -1997,6 +2063,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/mdo/content/v3/batch/addUser': {
@@ -2004,6 +2071,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/mdo/content/v3/batch/removeUser': {
@@ -2011,6 +2079,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/user/offensive/data/flag': {
@@ -2039,6 +2108,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/workflow/position/update': {
@@ -2047,6 +2117,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.SPV_ADMIN,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/workflow/org/update': {
@@ -2055,6 +2126,7 @@ export const API_LIST = {
            ROLE_CHECK: [
                ROLE.SPV_ADMIN,
                ROLE.MDO_ADMIN,
+               ROLE.MDO_LEADER,
            ],
        },
        '/proxies/v8/workflow/domain/update': {
@@ -2063,6 +2135,7 @@ export const API_LIST = {
            ROLE_CHECK: [
                ROLE.SPV_ADMIN,
                ROLE.MDO_ADMIN,
+               ROLE.MDO_LEADER,
            ],
        },
        '/proxies/v8/workflow/position/search': {
@@ -2071,6 +2144,7 @@ export const API_LIST = {
            ROLE_CHECK: [
                ROLE.SPV_ADMIN,
                ROLE.MDO_ADMIN,
+               ROLE.MDO_LEADER,
            ],
        },
        '/proxies/v8/workflow/org/search': {
@@ -2079,6 +2153,7 @@ export const API_LIST = {
            ROLE_CHECK: [
                ROLE.SPV_ADMIN,
                ROLE.MDO_ADMIN,
+               ROLE.MDO_LEADER,
            ],
        },
        '/proxies/v8/workflow/domain/search': {
@@ -2087,8 +2162,23 @@ export const API_LIST = {
            ROLE_CHECK: [
                ROLE.SPV_ADMIN,
                ROLE.MDO_ADMIN,
+               ROLE.MDO_LEADER,
            ],
        },
+       '/protected/v8/user/evaluate/assessment/submit/v4': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/user/assessment/v4/result': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
        '/proxies/v8/workflow/blendedprogram/enrol': {
            checksNeeded: [CHECK.ROLE],
            // tslint:disable-next-line: object-literal-sort-keys
@@ -2102,6 +2192,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.PROGRAM_COORDINATOR,
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/workflow/blendedprogram/user/search': {
@@ -2116,6 +2207,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.PROGRAM_COORDINATOR,
             ],
         },
@@ -2124,6 +2216,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/workflow/blendedprogram/read/pc/:id': {
@@ -2411,6 +2504,8 @@ export const API_LIST = {
             '/proxies/v8/workflow/position/search',
             '/proxies/v8/workflow/org/search',
             '/proxies/v8/workflow/domain/search',
+            '/protected/v8/user/evaluate/assessment/submit/v4',
+            '/proxies/v8/user/assessment/v4/result',
             '/proxies/v8/workflow/blendedprogram/enrol',
             '/proxies/v8/workflow/blendedprogram/search',
             '/proxies/v8/workflow/blendedprogram/user/search',

@@ -1317,6 +1317,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/protected/v8/user/profileRegistry/getMasterCountries': {
+             checksNeeded: [CHECK.ROLE],
+             // tslint:disable-next-line: object-literal-sort-keys
+             ROLE_CHECK: [
+                 ROLE.PUBLIC,
+             ],
+        },
         '/protected/v8/user/profileRegistry/getMasterLanguages': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -2289,6 +2296,7 @@ export const API_LIST = {
             '/protected/v8/workflowhandler/userWFApplicationFieldsSearch',
             '/protected/v8/user/details/detailV1',
             '/protected/v8/user/profileRegistry/getMasterNationalities',
+            '/protected/v8/user/profileRegistry/getMasterCountries',
             '/protected/v8/user/profileRegistry/getMasterLanguages',
             '/protected/v8/user/profileRegistry/getProfilePageMeta',
             '/protected/v8/user/notifications/settings',

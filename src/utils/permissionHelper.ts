@@ -31,6 +31,7 @@ export const PERMISSION_HELPER = {
             if (!_.includes(reqObj.session.userRoles, 'PUBLIC')) {
                 reqObj.session.userRoles.push('PUBLIC')
             }
+            callback(null, userData)
             // tslint:disable-next-line: no-any
             // this.createNodeBBUser(reqObj, callback)
             // reqObj.session.save((error: any) => {

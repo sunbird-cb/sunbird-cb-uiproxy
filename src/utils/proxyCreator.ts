@@ -33,13 +33,15 @@ proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
   }
   proxyReq.setHeader('x-authenticated-user-orgname', channel)
   proxyReq.setHeader('x-authenticated-user-channel', channel)
-  proxyReq.setHeader('x-authenticated-user-nodebb-uid', req.session.uid)
+  if (req.session.hasOwnProperty('uid')) {
+    proxyReq.setHeader('x-authenticated-user-nodebb-uid', req.session.uid)
+  }
 
   // condition has been added to set the session in nodebb req header
   /* tslint:disable-next-line */
   if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/v1/create') && req.session) {
 
-    if (req.body) {
+    if (req.body && req.session.hasOwnProperty('uid')) {
       req.body._uid = req.session.uid
     }
     // tslint:disable-next-line: no-console
@@ -161,10 +163,12 @@ export function proxyCreatorSunbird(route: Router, targetUrl: string, _timeout =
     }
 
     if (req.originalUrl.includes('/discussion') && !req.originalUrl.includes('/discussion/user/v1/create') && req.session) {
-      if (req.originalUrl.includes('?')) {
-        url = `${url}&_uid=${req.session.uid}`
-      } else {
-        url = `${url}?_uid=${req.session.uid}`
+      if (req.session.hasOwnProperty('uid')) {
+        if (req.originalUrl.includes('?')) {
+          url = `${url}&_uid=${req.session.uid}`
+        } else {
+          url = `${url}?_uid=${req.session.uid}`
+        }
       }
       if (req.originalUrl.includes('/discussion/v2/topics')) {
         req.body.email = extractUserEmailFromRequest(req)

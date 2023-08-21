@@ -31,9 +31,8 @@ export const PERMISSION_HELPER = {
             if (!_.includes(reqObj.session.userRoles, 'PUBLIC')) {
                 reqObj.session.userRoles.push('PUBLIC')
             }
-            callback(null, userData)
+            this.createNodeBBUser(reqObj, callback)
             // tslint:disable-next-line: no-any
-            // this.createNodeBBUser(reqObj, callback)
             // reqObj.session.save((error: any) => {
             //     if (error) {
             //         logError('reqObj.session.save error -- ', error)
@@ -62,7 +61,7 @@ export const PERMISSION_HELPER = {
         reqObj.session.save((error: any) => {
             if (error) {
               logError('reqObj.session.save error -- ', error, '------', new Date().toString())
-              callback(error, null)
+              callback(null, null)
             } else {
                // tslint:disable-next-line: no-console
                console.log(`setNodeBBUID::Success of save -- reqObj.session ${new Date()}--- `)
@@ -133,7 +132,7 @@ export const PERMISSION_HELPER = {
         } catch (err) {
             // tslint:disable-next-line: no-console
             console.log('Making axios call to nodeBB ERROR -- ', err, '------', new Date().toString())
-            callback(err, null)
-          }
+            callback(null, null)
+        }
     },
 }

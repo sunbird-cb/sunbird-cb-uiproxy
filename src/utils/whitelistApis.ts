@@ -2232,7 +2232,15 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
             ],
-        }
+        },
+        '/proxies/v8/blendedprogram/v1/update/progress': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PROGRAM_COORDINATOR,
+            ],
+        },   
+        
 
     },
     URL_PATTERN:
@@ -2520,6 +2528,7 @@ export const API_LIST = {
             '/proxies/v8/workflow/blendedprogram/update',
             '/proxies/v8/workflow/blendedprogram/read/mdo/:id',
             '/proxies/v8/workflow/blendedprogram/read/pc/:id',
-            '/proxies/v8/workflow/blendedprogram/admin/enrol'
+            '/proxies/v8/workflow/blendedprogram/admin/enrol',
+            '/proxies/v8/blendedprogram/v1/update/progress', 
            ],
 }

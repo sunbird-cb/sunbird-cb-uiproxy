@@ -519,6 +519,11 @@ proxiesV8.use('/workflow/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 
+proxiesV8.use('/blendedprogram/*',
+  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)
+
+
 function removePrefix(prefix: string, s: string) {
   return s.substr(prefix.length)
 }

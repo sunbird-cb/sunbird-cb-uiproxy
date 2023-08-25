@@ -1353,6 +1353,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/protected/v8/user/profileRegistry/getMasterCountries': {
+             checksNeeded: [CHECK.ROLE],
+             // tslint:disable-next-line: object-literal-sort-keys
+             ROLE_CHECK: [
+                 ROLE.PUBLIC,
+             ],
+        },
         '/protected/v8/user/profileRegistry/getMasterLanguages': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -2226,7 +2233,30 @@ export const API_LIST = {
                 ROLE.PROGRAM_COORDINATOR,
             ],
         },
-        '/proxies/v8/workflow/blendedprogram/admin/enrol' :{
+        '/proxies/v8/ratings/v2/read': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/workflow/blendedprogram/v1/stats': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.CBP_ADMIN,
+                ROLE.PROGRAM_COORDINATOR,
+            ],
+        },
+        '/proxies/v8/storage/v1/report/:reportType/:date/:orgId/:fileName': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+                ROLE.CBP_ADMIN,
+            ],
+        },
+        '/proxies/v8/workflow/blendedprogram/admin/enrol' : {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -2239,8 +2269,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.PROGRAM_COORDINATOR,
             ],
-        },   
-        
+        },
 
     },
     URL_PATTERN:
@@ -2421,6 +2450,7 @@ export const API_LIST = {
             '/protected/v8/workflowhandler/userWFApplicationFieldsSearch',
             '/protected/v8/user/details/detailV1',
             '/protected/v8/user/profileRegistry/getMasterNationalities',
+            '/protected/v8/user/profileRegistry/getMasterCountries',
             '/protected/v8/user/profileRegistry/getMasterLanguages',
             '/protected/v8/user/profileRegistry/getProfilePageMeta',
             '/protected/v8/user/notifications/settings',
@@ -2528,7 +2558,10 @@ export const API_LIST = {
             '/proxies/v8/workflow/blendedprogram/update',
             '/proxies/v8/workflow/blendedprogram/read/mdo/:id',
             '/proxies/v8/workflow/blendedprogram/read/pc/:id',
+            '/proxies/v8/ratings/v2/read',
+            '/proxies/v8/workflow/blendedprogram/v1/stats',
+            '/proxies/v8/storage/v1/report/:reportType/:date/:orgId/:fileName',
             '/proxies/v8/workflow/blendedprogram/admin/enrol',
-            '/proxies/v8/blendedprogram/v1/update/progress', 
+            '/proxies/v8/blendedprogram/v1/update/progress',
            ],
 }

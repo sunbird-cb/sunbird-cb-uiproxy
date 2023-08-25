@@ -12,6 +12,7 @@ const API_END_POINTS = {
   getAllPosition: `${CONSTANTS.FRAC_API_BASE}/frac/getAllNodes?type=POSITION&status=VERIFIED`,
   getUserRegistry: `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/get/profile`,
   getUserRegistryById: (userId: string) => `${CONSTANTS.NETWORK_HUB_SERVICE_BACKEND}/v1/user/search/profile?userId=${userId}`,
+  masterCountries: `${CONSTANTS.KONG_API_BASE}/masterData/v1/countries`,
   masterLanguages: `${CONSTANTS.KONG_API_BASE}/masterData/v1/languages`,
   masterNationalities: `${CONSTANTS.KONG_API_BASE}/masterData/v1/nationalities`,
   profilePageMetaData: `${CONSTANTS.KONG_API_BASE}/masterData/v1/profilePageMetaData`,
@@ -157,6 +158,25 @@ profileRegistryApi.get('/getUserRegistryByUser/:id', async (req, res) => {
 profileRegistryApi.get('/getMasterNationalities', async (_req, res) => {
   try {
     const response = await axios.get(API_END_POINTS.masterNationalities, {
+      ...axiosRequestConfig,
+      headers: {
+        Authorization: CONSTANTS.SB_API_KEY,
+      },
+    })
+    res.send((response.data))
+  } catch (err) {
+    logError(CONNECTION_ERROR, err)
+    res.status((err && err.response && err.response.status) || 500).send(
+      (err && err.response && err.response.data) || {
+        error: unknown,
+      }
+    )
+  }
+})
+
+profileRegistryApi.get('/getMasterCountries', async (_req, res) => {
+  try {
+    const response = await axios.get(API_END_POINTS.masterCountries, {
       ...axiosRequestConfig,
       headers: {
         Authorization: CONSTANTS.SB_API_KEY,

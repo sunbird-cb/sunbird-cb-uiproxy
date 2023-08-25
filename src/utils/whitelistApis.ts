@@ -2186,6 +2186,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/ratings/v2/read': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
        '/proxies/v8/workflow/blendedprogram/enrol': {
            checksNeeded: [CHECK.ROLE],
            // tslint:disable-next-line: object-literal-sort-keys
@@ -2231,13 +2238,6 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.PROGRAM_COORDINATOR,
-            ],
-        },
-        '/proxies/v8/ratings/v2/read': {
-            checksNeeded: [CHECK.ROLE],
-            // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [
-                ROLE.PUBLIC,
             ],
         },
         '/proxies/v8/workflow/blendedprogram/v1/stats': {
@@ -2552,13 +2552,13 @@ export const API_LIST = {
             '/proxies/v8/workflow/domain/search',
             '/protected/v8/user/evaluate/assessment/submit/v4',
             '/proxies/v8/user/assessment/v4/result',
+            '/proxies/v8/ratings/v2/read',
             '/proxies/v8/workflow/blendedprogram/enrol',
             '/proxies/v8/workflow/blendedprogram/search',
             '/proxies/v8/workflow/blendedprogram/user/search',
             '/proxies/v8/workflow/blendedprogram/update',
             '/proxies/v8/workflow/blendedprogram/read/mdo/:id',
             '/proxies/v8/workflow/blendedprogram/read/pc/:id',
-            '/proxies/v8/ratings/v2/read',
             '/proxies/v8/workflow/blendedprogram/v1/stats',
             '/proxies/v8/storage/v1/report/:reportType/:date/:orgId/:fileName',
             '/proxies/v8/workflow/blendedprogram/admin/enrol',

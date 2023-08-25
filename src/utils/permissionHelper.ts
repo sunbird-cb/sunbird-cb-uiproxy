@@ -71,8 +71,8 @@ export const PERMISSION_HELPER = {
     },
     // tslint:disable-next-line: no-any
     getCurrentUserRoles(reqObj: any, callback: any) {
-        logInfo('Step 3: getCurrentUserRoles', '------', new Date().toString())
         const userId = reqObj.session.userId
+        logInfo('Step 3: getCurrentUserRoles for user ' + userId, '------', new Date().toString())
         const readUrl = `${CONSTANTS.KONG_API_BASE}/user/v2/read/` + userId
         const options = {
             headers: {
@@ -86,9 +86,16 @@ export const PERMISSION_HELPER = {
         // tslint:disable-next-line: no-any
         request.get(options, (err: any, _httpResponse: any, body: any) => {
             if (body) {
-                // tslint:disable-next-line: no-console
-                logInfo('Success user/v2/read::', '------', new Date().toString())
-                this.setRolesData(reqObj, callback, body)
+                // tslint:disable-next-line: no-any
+                const userData: any = JSON.parse(body)
+                if (userData.responseCode.toUpperCase() === 'OK') {
+                    logInfo('Success user/v2/read::', '------', new Date().toString())
+                    this.setRolesData(reqObj, callback, body)
+                } else {
+                    const errMsg = 'Failed to read the user with Id: ' + userId + 'Error: ' + userData.responseCode
+                    logError(errMsg)
+                    callback(errMsg, null)
+                }
             }
             if (err) {
                 logError('Making axios call to nodeBB ERROR -- ', err, '------', new Date().toString())

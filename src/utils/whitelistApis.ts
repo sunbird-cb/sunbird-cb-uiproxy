@@ -2248,6 +2248,14 @@ export const API_LIST = {
                 ROLE.PROGRAM_COORDINATOR,
             ],
         },
+        '/proxies/v8/storage/v1/report/:reportType/:date/:orgId/:fileName': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+                ROLE.CBP_ADMIN,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -2537,5 +2545,6 @@ export const API_LIST = {
             '/proxies/v8/workflow/blendedprogram/read/pc/:id',
             '/proxies/v8/ratings/v2/read',
             '/proxies/v8/workflow/blendedprogram/v1/stats',
+            '/proxies/v8/storage/v1/report/:reportType/:date/:orgId/:fileName',
            ],
 }

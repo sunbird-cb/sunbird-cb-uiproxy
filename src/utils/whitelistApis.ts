@@ -2193,7 +2193,7 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        '/proxies/v8/batchsesion/qrcode': {
+        '/proxies/v8/batchsesion/qrcode/:courseid/:batchid': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -2569,7 +2569,7 @@ export const API_LIST = {
             '/proxies/v8/workflow/blendedprogram/v1/stats',
             '/proxies/v8/storage/v1/report/:reportType/:date/:orgId/:fileName',
             '/proxies/v8/workflow/blendedprogram/admin/enrol',
-            '/proxies/v8/batchsesion/qrcode',
+            '/proxies/v8/batchsesion/qrcode/:courseid/:batchid',
             '/proxies/v8/blendedprogram/v1/update/progress',
            ],
 }

@@ -2277,6 +2277,14 @@ export const API_LIST = {
                 ROLE.PROGRAM_COORDINATOR,
             ],
         },
+        '/proxies/v8/workflow/blendedprogram/remove': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
+            ],
+        },
 
     },
     URL_PATTERN:
@@ -2571,5 +2579,6 @@ export const API_LIST = {
             '/proxies/v8/workflow/blendedprogram/admin/enrol',
             '/proxies/v8/batchsesion/qrcode/:courseid/:batchid',
             '/proxies/v8/blendedprogram/v1/update/progress',
+            '/proxies/v8/workflow/blendedprogram/remove',
            ],
 }

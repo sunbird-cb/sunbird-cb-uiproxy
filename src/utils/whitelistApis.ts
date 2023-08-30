@@ -2286,11 +2286,16 @@ export const API_LIST = {
                 ROLE.MDO_LEADER,
             ],
         },
+        '/proxies/v8/course/v1/batch/read/:id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
         [
-            '/proxies/v8/course/v1/batch/read/:id',
-            '/proxies/v8/course/v1/batch/read/:id',
             // '/authApi/content/v3/create',
             // '/authApi/content/v3/read/:do_id',
             // '/authApi/content/v3/update/:do_id',
@@ -2582,5 +2587,6 @@ export const API_LIST = {
             '/proxies/v8/batchsesion/qrcode/:courseid/:batchid',
             '/proxies/v8/blendedprogram/v1/update/progress',
             '/proxies/v8/workflow/blendedprogram/remove',
+            '/proxies/v8/course/v1/batch/read/:id',
            ],
 }

@@ -56,7 +56,7 @@ export const CONSTANTS = {
   KHUB_GRAPH_DATA: env.KHUB_GRAPH_DATA || 'http://localhost:3016',
   KHUB_SEARCH_BASE: env.KHUB_SEARCH_BASE || 'http://localhost:3014',
   KNOWLEDGE_MW_API_BASE: env.KNOWLEDGE_MW_API_BASE || 'http://knowledge-mw-service:5000',
-  KONG_API_BASE: env.KONG_API_BASE || 'https://igot-dev.in/api',
+  KONG_API_BASE: env.KONG_API_BASE || 'https://portal.karmayogi.nic.in/api',
   PORTAL_CASSANDRA_CONSISTENCY_LEVEL: env.PORTAL_CASSANDRA_CONSISTENCY_LEVEL || 'one',
   POST_ASSESSMENT_BASE: env.POST_ASSESSMENT_BASE || 'http://localhost.com',
   POST_ASSESSMENT_CLIENT_ID: env.POST_ASSESSMENT_CLIENT_ID || '',
@@ -68,7 +68,7 @@ export const CONSTANTS = {
   LIKE_API_BASE: env.LIKE_API_BASE || env.SB_EXT_API_BASE_2,
   MULTI_TENANT_KEYCLOAK:
     env.MULTI_TENANT_KEYCLOAK ||
-    'igot,https://igot-dev.in/auth,sunbird',
+    'igot,https://portal.karmayogi.nic.in/auth,sunbird',
   NAVIGATOR_JSON_HOST:
     env.NAVIGATOR_JSON_HOST || 'http://localhost:3007/web-hosted/navigator/json',
   NODE_API_BASE: env.NODE_API_BASE || 'http://localhost:5001',
@@ -139,10 +139,10 @@ export const CONSTANTS = {
   DISCUSSION_CATEGORY_LIST: env.DISCUSSION_CATEGORY_LIST || 'cid[]=5&cid[]=6&cid[]=8&cid[]=9&cid[]=10&cid[]=11&cid[]=12&cid[]=13',
   WORKFLOW_HANDLER_SERVICE_API_BASE: env.WORKFLOW_HANDLER_SERVICE_API_BASE || 'http://localhost:5099',
   SUNBIRD_PROXY_URL: env.SUNBIRD_PROXY_URL || 'https://igot-sunbird.idc.tarento.com/apis/proxies/v8/action',
-  SUNBIRD_PROXY_API_BASE: env.SUNBIRD_PROXY_API_BASE || 'https://igot-dev.in/api',
+  SUNBIRD_PROXY_API_BASE: env.SUNBIRD_PROXY_API_BASE || 'https://portal.karmayogi.nic.in/api',
   SCORING_SERVICE_API_BASE: env.SCORING_SERVICE_API_BASE || 'http://localhost:7014',
   // tslint:disable-next-line:max-line-length
-  SB_API_KEY: env.SB_API_KEY || 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJRekw4VVA1dUtqUFdaZVpMd1ZtTFJvNHdqWTg2a2FrcSJ9.TPjV0xLacSbp3FbJ7XeqHoKFN35Rl4YHx3DZNN9pm0o',
+  SB_API_KEY: env.SB_API_KEY || 'bearer apiKey',
   LEARNER_SERVICE_API_BASE: env.LEARNER_SERVICE_API_BASE || 'http://learner-service:9000',
   X_Channel_Id: env.X_CHANNEL_ID || '0131397178949058560',
   NOTIFICATION_SERVIC_API_BASE: env.NOTIFICATION_SERVIC_API_BASE || 'http://notification-service:9000',
@@ -159,15 +159,15 @@ export const CONSTANTS = {
   // tslint:disable-next-line: max-line-length
   CERT_AUTH_TOKEN: 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJRekw4VVA1dUtqUFdaZVpMd1ZtTFJvNHdqWTg2a2FrcSJ9.TPjV0xLacSbp3FbJ7XeqHoKFN35Rl4YHx3DZNN9pm0o',
   // tslint:disable-next-line: max-line-length
-  KEYCLOAK_PUBLIC_KEY: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoBa+pmsxpPhGED2/zexM/PL+rLv2YnLCbX2agY2fllucCvnPNmWRTyg8L+qgkJBpHuhcHqXEFTfBm2WCe4yke+0LnGi6SGsCJTrc2Sh+Lgo/L9r1lr7uOoD8BHE6ywnbHG2ok7qyomCTD9LpG1WXFk4T3WUH9+gN2vm77s3YJz2yfo2UlMd1Dp9nWZhfwB1vwJLuRHnqEKkSH8M2K8SFRdpgOyLdM9fprr7Ebgr7SWdoAy2q3mUONSmDsftKDeEWjr6MXGTATfbMfKE3GFqddMjFHkmvh42aM+RlU3N2xo2msF8M2sYF6YlIDkED+9h+y0QROJjQlBr774GAd06I0wIDAQAB',
-  KARMAYOGI_PORTAL_HOST: env.KARMAYOGI_PORTAL_HOST || 'igot-dev.in',
+  KEYCLOAK_PUBLIC_KEY: 'publicKey',
+  KARMAYOGI_PORTAL_HOST: env.KARMAYOGI_PORTAL_HOST || 'portal.karmayogi.nic.in',
   GOOGLE_CLIENT_ID: env.GOOGLE_CLIENT_ID || 'googleClientId',
   GOOGLE_CLIENT_SECRET: env.GOOGLE_CLIENT_SECRET || 'googleClientSecret',
   PARICHAY_CLIENT_ID: env.PARICHAY_CLIENT_ID || 'parichayClientId',
   PARICHAY_CLIENT_SECRET: env.PARICHAY_CLIENT_SECRET || 'parichayClientSecret',
   KEYCLOAK_GOOGLE_CLIENT_ID: env.KEYCLOAK_GOOGLE_CLIENT_ID || 'keycloakGoogleClientId',
   KEYCLOAK_GOOGLE_CLIENT_SECRET: env.KEYCLOAK_GOOGLE_CLIENT_SECRET || 'keycloakGoogleClientSecret',
-  PORTAL_AUTH_SERVER_URL: env.PORTAL_AUTH_SERVER_URL || 'https://igot-dev.in/auth',
+  PORTAL_AUTH_SERVER_URL: env.PORTAL_AUTH_SERVER_URL || 'https://portal.karmayogi.nic.in/auth',
   PARICHAY_CODE_CHALLENGE: env.PARICHAY_CODE_CHALLENGE || 'parichayCodeChallenge',
   PARICHAY_CODE_VERIFIER: env.PARICHAY_CODE_VERIFIER || 'parichayCodeVerfifier',
   PARICHAY_AUTH_URL: env.PARICHAY_AUTH_URL || 'parichayAuthUrl',
@@ -178,7 +178,7 @@ export const CONSTANTS = {
   CUSTODIAN_ORG_ID: env.CUSTODIAN_ORG_ID || 'id',
   CUSTODIAN_ORG_CHANNEL: env.CUSTODIAN_ORG_CHANNEL || 'igot',
   PARICHAY_REVOKE_URL: env.PARICHAY_REVOKE_URL || 'parichayRevokeUrl',
-
+  PORTAL_CREATE_NODEBB_USER: env.PORTAL_CREATE_NODEBB_USER || 'false',
 }
 
 export const RESTRICTED_PYTHON_STMT: string[] = process.env.RESTRICTED_CHARACTERS

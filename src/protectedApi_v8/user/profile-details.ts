@@ -8,6 +8,7 @@ import { logError, logInfo } from '../../utils/logger'
 import { ERROR } from '../../utils/message'
 import { extractUserIdFromRequest, extractUserToken } from '../../utils/requestExtract'
 
+const _                 = require('lodash')
 const uuidv1            = require('uuid/v1')
 const dateFormat        = require('dateformat')
 
@@ -225,87 +226,75 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
             return
         }
         let statusString = ''
+        let errMsg = ''
         const sbemail_ = req.body.personalDetails.email
         const sbemailVerified_ = true
         const sbfirstName_ = req.body.personalDetails.firstName
         const isEmailRequired = (req.body.personalDetails.isEmailRequired) ? req.body.personalDetails.isEmailRequired : true
-        const searchresponse = await axios({
+        const userRoles = (req.body.personalDetails.roles) ? req.body.personalDetails.roles : undefined
+        let sbUserProfile: Partial<ISBUser> = {
+            channel: sbChannel, email: sbemail_, emailVerified: sbemailVerified_,
+            firstName: sbfirstName_, roles: userRoles,
+        }
+        if (userRoles === undefined) {
+            sbUserProfile = _.omit(sbUserProfile, 'roles')
+        }
+        let userCreateResponse
+        try {
+        userCreateResponse = await axios({
             ...axiosRequestConfig,
-            data: { request: { query: '', filters: { email: sbemail_.toLowerCase() } } },
-            headers: {
+            data: { request: sbUserProfile },
+                headers: {
                 Authorization: CONSTANTS.SB_API_KEY,
                 // tslint:disable-next-line: all
                 'x-authenticated-user-token': extractUserToken(req),
             },
             method: 'POST',
-            url: API_END_POINTS.kongSearchUser,
+            url: API_END_POINTS.kongCreateUser,
         })
-        if (searchresponse.data.result.response.count > 0) {
-            res.status(400).send(
-            {
-                id: 'api.error.createUser',
-                ver: '1.0',
-                // tslint:disable-next-line: object-literal-sort-keys
-                ts: dateFormat(new Date(), 'yyyy-mm-dd HH:MM:ss:lo'),
-                params:
-                {
-                    resmsgid: uuidv1(),
-                    // tslint:disable-next-line: object-literal-sort-keys
-                    msgid: null,
-                    status: 'failed',
-                    err: 'USR_EMAIL_EXISTS',
-                    errmsg: emailAdressExist,
-                },
-                responseCode: 'USR_EMAIL_EXISTS',
-                result: {},
-            })
-            return
-        } else {
-            const sbUserProfile: Partial<ISBUser> = {
-                channel: sbChannel, email: sbemail_, emailVerified: sbemailVerified_, firstName: sbfirstName_,
+        } catch (createErr) {
+            errMsg = createErr.response.data.params.errmsg
+            let errStatus = 500
+            if (createErr.response.data.responseCode === 'CLIENT_ERROR') {
+                errStatus = 400
             }
-            const response = await axios({
+            logError ('Failed to create User, error msg : ' + errMsg)
+            res.status(errStatus).send(createErr.response.data)
+        }
+        if (userCreateResponse && userCreateResponse.data && userCreateResponse.data.responseCode === 'CLIENT_ERROR') {
+            errMsg = userCreateResponse.data.params ? userCreateResponse.data.params.errmsg : failedToCreateUser
+            res.status(400).send(userCreateResponse.data)
+            return
+        } else if (userCreateResponse) {
+            const sbUserId = userCreateResponse.data.result.userId
+            const sbUserReadResponse = await axios({
                 ...axiosRequestConfig,
-                data: { request: sbUserProfile },
-                 headers: {
+                headers: {
                     Authorization: CONSTANTS.SB_API_KEY,
                     // tslint:disable-next-line: all
                     'x-authenticated-user-token': extractUserToken(req),
                 },
-                method: 'POST',
-                url: API_END_POINTS.kongCreateUser,
+                method: 'GET',
+                url: API_END_POINTS.kongUserRead(sbUserId),
             })
-            if (response.data.responseCode === 'CLIENT_ERROR') {
-                res.status(400).send(failedToCreateUser)
+            statusString = sbUserReadResponse.data.params.status
+            if (statusString.toUpperCase() !== 'SUCCESS') {
+                res.status(500).send(failedToReadUser)
                 return
-            } else {
-                const sbUserId = response.data.result.userId
-                const sbUserReadResponse = await axios({
-                    ...axiosRequestConfig,
-                    headers: {
-                        Authorization: CONSTANTS.SB_API_KEY,
-                        // tslint:disable-next-line: all
-                        'x-authenticated-user-token': extractUserToken(req),
-                    },
-                    method: 'GET',
-                    url: API_END_POINTS.kongUserRead(sbUserId),
-                })
-                statusString = sbUserReadResponse.data.params.status
-                if (statusString.toUpperCase() !== 'SUCCESS') {
-                    res.status(500).send(failedToReadUser)
-                    return
-                }
+            }
+            if (CONSTANTS.PORTAL_CREATE_NODEBB_USER === 'true') {
+                try {
                 // tslint:disable-next-line: no-commented-code
                 const nodebbPayload =  {
-                   username: sbUserReadResponse.data.result.response.userName,
-                   // tslint:disable-next-line: object-literal-sort-keys
-                   identifier: sbUserReadResponse.data.result.response.identifier,
-                   fullname: sbUserReadResponse.data.result.response.firstName,
+                    username: sbUserReadResponse.data.result.response.userName,
+                    // tslint:disable-next-line: object-literal-sort-keys
+                    identifier: sbUserReadResponse.data.result.response.identifier,
+                    fullname: sbUserReadResponse.data.result.response.firstName,
                 }
                 await axios({
                     ...axiosRequestConfig,
                     data: { request: nodebbPayload },
-                     headers: {
+                        headers: {
                         Authorization: CONSTANTS.SB_API_KEY,
                         // tslint:disable-next-line: all
                         'x-authenticated-user-token': extractUserToken(req),
@@ -313,108 +302,112 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                     method: 'POST',
                     url: API_END_POINTS.createNodeBBUser,
                 })
-                const sbUserOrgId = sbUserReadResponse.data.result.response.rootOrgId
-                const sbProfileUpdateReq = {
-                    profileDetails: {
-                        employmentDetails: {
-                            departmentName: sbChannel,
-                        },
-                        mandatoryFieldsExists: false,
-                        personalDetails: {
-                            firstname: sbfirstName_,
-                            primaryEmail: sbemail_,
-                        },
-                        verifiedKarmayogi: false,
+                } catch (nodeBBerr) {
+                    logError('Failed to create NodeBB account for user: ' + sbUserId)
+                }
+            }
+            const sbUserOrgId = sbUserReadResponse.data.result.response.rootOrgId
+            const sbProfileUpdateReq = {
+                profileDetails: {
+                    employmentDetails: {
+                        departmentName: sbChannel,
                     },
+                    mandatoryFieldsExists: false,
+                    personalDetails: {
+                        firstname: sbfirstName_,
+                        primaryEmail: sbemail_,
+                    },
+                    verifiedKarmayogi: false,
+                },
+                userId: sbUserId,
+            }
+            if (req.body.personalDetails.designation) {
+                const arrDesignation = []
+                const objDesignation = {
+                    designation: (req.body.personalDetails.designation) ? req.body.personalDetails.designation :  '',
+                }
+                arrDesignation.push(objDesignation)
+                const profDetailsPropertyName = 'professionalDetails'
+                sbProfileUpdateReq[profDetailsPropertyName] = arrDesignation
+            }
+
+            const sbUserProfileUpdateResp = await axios({
+                ...axiosRequestConfig,
+                data: { request: sbProfileUpdateReq },
+                headers: {
+                    Authorization: CONSTANTS.SB_API_KEY,
+                },
+                method: 'PATCH',
+                url: API_END_POINTS.kongUpdateUser,
+            })
+            if (sbUserProfileUpdateResp.data.responseCode === 'CLIENT_ERROR') {
+                errMsg = sbUserProfileUpdateResp.data.params ? sbUserProfileUpdateResp.data.params.errmsg : failedToUpdateUser
+                res.status(400).send(errMsg)
+                return
+            }
+            if (isEmailRequired) {
+                const passwordResetRequest = {
+                    key: 'email',
+                    type: 'email',
                     userId: sbUserId,
                 }
-                if (req.body.personalDetails.designation) {
-                    const arrDesignation = []
-                    const objDesignation = {
-                        designation: (req.body.personalDetails.designation) ? req.body.personalDetails.designation :  '',
-                    }
-                    arrDesignation.push(objDesignation)
-                    const profDetailsPropertyName = 'professionalDetails'
-                    sbProfileUpdateReq[profDetailsPropertyName] = arrDesignation
-                }
 
-                const sbUserProfileUpdateResp = await axios({
+                // logInfo('Sending Password reset request -> ' + JSON.stringify(passwordResetRequest))
+                const passwordResetResponse = await axios({
                     ...axiosRequestConfig,
-                    data: { request: sbProfileUpdateReq },
+                    data: { request: passwordResetRequest },
                     headers: {
                         Authorization: CONSTANTS.SB_API_KEY,
                     },
-                    method: 'PATCH',
-                    url: API_END_POINTS.kongUpdateUser,
+                    method: 'POST',
+                    url: API_END_POINTS.kongUserResetPassword,
                 })
-                if (sbUserProfileUpdateResp.data.responseCode === 'CLIENT_ERROR') {
-                    res.status(400).send(failedToUpdateUser)
-                    return
-                }
-                if (isEmailRequired) {
-                    const passwordResetRequest = {
-                        key: 'email',
-                        type: 'email',
-                        userId: sbUserId,
+                // logInfo('Received response from password reset -> ' + JSON.stringify(passwordResetResponse.data))
+                statusString = passwordResetResponse.data.params.status
+                if (statusString.toUpperCase() === 'SUCCESS') {
+                    const welcomeMailRequest = {
+                        allowedLoging: 'You can use your email to Login',
+                        body: 'Hello',
+                        emailTemplateType: 'iGotWelcome_v3',
+                        firstName: sbUserProfile.firstName,
+                        link: passwordResetResponse.data.result.link,
+                        mode: 'email',
+                        orgName: sbChannel,
+                        recipientEmails: [ sbemail_ ],
+                        setPasswordLink: true,
+                        subject: 'Welcome to iGOT Karmayogi... Activate your account now!',
+                        welcomeMessage: 'Hello',
                     }
 
-                    logInfo('Sending Password reset request -> ' + passwordResetRequest)
-                    const passwordResetResponse = await axios({
+                    const welcomeMailResponse = await axios({
                         ...axiosRequestConfig,
-                        data: { request: passwordResetRequest },
+                        data: { request: welcomeMailRequest },
                         headers: {
                             Authorization: CONSTANTS.SB_API_KEY,
                         },
                         method: 'POST',
-                        url: API_END_POINTS.kongUserResetPassword,
+                        url: API_END_POINTS.kongSendWelcomeEmail,
                     })
-                    logInfo('Received response from password reset -> ' + passwordResetResponse)
-                    statusString = passwordResetResponse.data.params.status
-                    if (statusString.toUpperCase() === 'SUCCESS') {
-                        const welcomeMailRequest = {
-                            allowedLoging: 'You can use your email to Login',
-                            body: 'Hello',
-                            emailTemplateType: 'iGotWelcome_v3',
-                            firstName: sbUserProfile.firstName,
-                            link: passwordResetResponse.data.result.link,
-                            mode: 'email',
-                            orgName: sbChannel,
-                            recipientEmails: [ sbemail_ ],
-                            setPasswordLink: true,
-                            subject: 'Welcome to iGOT Karmayogi... Activate your account now!',
-                            welcomeMessage: 'Hello',
-                        }
-
-                        const welcomeMailResponse = await axios({
-                            ...axiosRequestConfig,
-                            data: { request: welcomeMailRequest },
-                            headers: {
-                                Authorization: CONSTANTS.SB_API_KEY,
-                            },
-                            method: 'POST',
-                            url: API_END_POINTS.kongSendWelcomeEmail,
-                        })
-                        statusString = welcomeMailResponse.data.params.status
-                        if (statusString.toUpperCase() !== 'SUCCESS') {
-                            res.status(500).send('Failed to send Welcome Email.')
-                            return
-                        }
-                    } else {
-                        res.status(500).send('Failed to reset the password for user.')
+                    statusString = welcomeMailResponse.data.params.status
+                    if (statusString.toUpperCase() !== 'SUCCESS') {
+                        res.status(500).send('Failed to send Welcome Email.')
                         return
                     }
+                } else {
+                    res.status(500).send('Failed to reset the password for user.')
+                    return
                 }
-
-                const sbUserProfileResponse: Partial<ISunbirdbUserResponse> = {
-                    email: sbemail_, firstName: sbfirstName_,
-                    userId: sbUserId,
-                    userOrgId: sbUserOrgId,
-                }
-                res.send(sbUserProfileResponse)
             }
+
+            const sbUserProfileResponse: Partial<ISunbirdbUserResponse> = {
+                email: sbemail_, firstName: sbfirstName_,
+                userId: sbUserId,
+                userOrgId: sbUserOrgId,
+            }
+            res.send(sbUserProfileResponse)
         }
     } catch (err) {
-        logError(createUserFailed, err)
+        logError('test1 --> ' + createUserFailed, err)
         res.status((err && err.response && err.response.status) || 500).send(err)
     }
 })

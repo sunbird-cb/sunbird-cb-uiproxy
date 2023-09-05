@@ -306,10 +306,20 @@ authApi.post('/batch/:key', async (req: Request, res: Response) => {
         res.status(400).send('Unsupported operation name - ' + key)
         break
     }
+    let rootOrgId = ''
+    if (req && req.session && req.session.hasOwnProperty('rootOrgId')) {
+      rootOrgId = req.session.rootOrgId
+    }
+    let channel = ''
+    if (req && req.session && req.session.hasOwnProperty('channel')) {
+      channel = req.session.channel
+    }
     const response = await axios.post(targetUrl, req.body, {
         ...axiosRequestConfig,
         headers: {
           Authorization: CONSTANTS.SB_API_KEY,
+          'x-authenticated-user-channel': channel,
+          'x-authenticated-user-orgid': rootOrgId,
           // tslint:disable-next-line: no-duplicate-string
           'x-authenticated-user-token': extractUserToken(req),
         },

@@ -89,22 +89,29 @@ export async function createUserWithMailId(emailId: string, firstNameStr: string
     } else {
         _reqPayload = lodash.omit(_reqPayload, 'phone')
     }
-    const signUpResponse = await axios({
-        ...axiosRequestConfig,
-        data: _reqPayload,
-         headers: {
-            Authorization: CONSTANTS.SB_API_KEY,
-        },
-        method: 'POST',
-        url: API_END_POINTS.cbExtSignUpUser,
-    })
-    statusString = signUpResponse.data.params.status
-    if (statusString.toUpperCase() !== 'SUCCESS') {
-        result.errMessage = signUpErr + 'FAILED_TO_CREATE_USER'
-        return Promise.resolve(result)
+    let signUpResponse
+    try {
+        signUpResponse = await axios({
+            ...axiosRequestConfig,
+            data: _reqPayload,
+            headers: {
+                Authorization: CONSTANTS.SB_API_KEY,
+            },
+            method: 'POST',
+            url: API_END_POINTS.cbExtSignUpUser,
+        })
+        statusString = signUpResponse.data.params.status
+        if (statusString.toUpperCase() !== 'SUCCESS') {
+            result.errMessage = signUpErr + 'FAILED_TO_CREATE_USER'
+        } else {
+            result.userCreated = true
+            result.userId = signUpResponse.data.result.userId
+        }
+    } catch (signUpErr) {
+        const errMsg = signUpErr.response.data.params.errmsg
+        logError ('Failed to create User, error msg : ' + errMsg)
+        result.errMessage = errMsg
     }
-    result.userCreated = true
-    result.userId = signUpResponse.data.result.userId
     return Promise.resolve(result)
 }
 

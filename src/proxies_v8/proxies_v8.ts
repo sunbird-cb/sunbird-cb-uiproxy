@@ -43,8 +43,6 @@ proxiesV8.get('/', (_req, res) => {
 })
 
 proxiesV8.post('/upload/*', (req, res) => {
-  let startTime = Date.now()
-  logInfo('**** Proxies:: upload request started... ****')
   if (req.files && req.files.data) {
     const url = removePrefix('/proxies/v8/upload/action', req.originalUrl)
     const file: UploadedFile = req.files.data as UploadedFile
@@ -53,8 +51,6 @@ proxiesV8.post('/upload/*', (req, res) => {
       contentType: file.mimetype,
       filename: file.name,
     })
-    logInfo('**** Proxies:: upload request calling upstream:: timeTaken ****' + (Date.now() - startTime))
-    startTime = Date.now()
     formData.submit(
       {
         headers: {
@@ -73,7 +69,6 @@ proxiesV8.post('/upload/*', (req, res) => {
       },
       (err, response) => {
         response.on('data', (data) => {
-          logInfo('**** Proxies:: upload API. Received response from upStream... timeTaken :: ' + (Date.now() - startTime))
           if (!err && (response.statusCode === 200 || response.statusCode === 201)) {
             res.send(JSON.parse(data.toString('utf8')))
           } else {

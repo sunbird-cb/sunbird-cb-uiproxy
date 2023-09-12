@@ -2308,21 +2308,21 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },   
-        '/proxies/v8/v1/user/feed/create': {
+        '/proxies/v8/user/feed/v1/create': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
         },   
-        '/proxies/v8/v1/user/feed/delete': {
+        '/proxies/v8/user/feed/v1/delete': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
         },   
-        '/proxies/v8/v1/user/feed/update': {
+        '/proxies/v8/user/feed/v1/update': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -2625,9 +2625,10 @@ export const API_LIST = {
             '/proxies/v8/workflow/blendedprogram/remove',
             '/proxies/v8/course/v1/batch/read/:id',
             '/proxies/v8/blendedprogram/v1/getUserContentProgress',
-            '/proxies/v8/v1/user/feed',
-            '/proxies/v8/v1/user/feed/create',
-            '/proxies/v8/v1/user/feed/delete',
-            '/proxies/v8/v1/user/feed/update',
+            '/proxies/v8/user/v1/feed/:userId',
+            '/proxies/v8/user/feed/v1/create',              
+            '/proxies/v8/user/feed/v1/delete',      
+            '/proxies/v8/user/feed/v1/update',  
+     
            ],
 }

@@ -2301,6 +2301,34 @@ export const API_LIST = {
                 ROLE.PROGRAM_COORDINATOR,
             ],
         },
+        '/proxies/v8/user/v1/feed/:userId': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },   
+        '/proxies/v8/v1/user/feed/create': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },   
+        '/proxies/v8/v1/user/feed/delete': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },   
+        '/proxies/v8/v1/user/feed/update': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },   
     },
     URL_PATTERN:
         [
@@ -2597,5 +2625,9 @@ export const API_LIST = {
             '/proxies/v8/workflow/blendedprogram/remove',
             '/proxies/v8/course/v1/batch/read/:id',
             '/proxies/v8/blendedprogram/v1/getUserContentProgress',
+            '/proxies/v8/v1/user/feed',
+            '/proxies/v8/v1/user/feed/create',
+            '/proxies/v8/v1/user/feed/delete',
+            '/proxies/v8/v1/user/feed/update',
            ],
 }

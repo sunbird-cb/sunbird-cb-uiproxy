@@ -68,7 +68,6 @@ proxiesV8.post('/upload/*', (req, res) => {
         port: 9000,
       },
       (err, response) => {
-
         response.on('data', (data) => {
           if (!err && (response.statusCode === 200 || response.statusCode === 201)) {
             res.send(JSON.parse(data.toString('utf8')))
@@ -79,7 +78,6 @@ proxiesV8.post('/upload/*', (req, res) => {
         if (err) {
           res.send(err)
         }
-
       }
     )
   } else {

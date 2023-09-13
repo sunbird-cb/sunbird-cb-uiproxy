@@ -386,6 +386,7 @@ export const API_LIST = {
                 ROLE.EDITOR,
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
+                ROLE.PROGRAM_COORDINATOR,
             ],
         },
         '/proxies/v8/v1/content/retire': {
@@ -2300,6 +2301,34 @@ export const API_LIST = {
                 ROLE.PROGRAM_COORDINATOR,
             ],
         },
+        '/proxies/v8/user/v1/feed/:userId': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },   
+        '/proxies/v8/user/feed/v1/create': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },   
+        '/proxies/v8/user/feed/v1/delete': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },   
+        '/proxies/v8/user/feed/v1/update': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },   
        '/proxies/v8/faq/v1/assistant/configs/language': {
            checksNeeded: [CHECK.ROLE],
            // tslint:disable-next-line: object-literal-sort-keys
@@ -2610,6 +2639,10 @@ export const API_LIST = {
             '/proxies/v8/workflow/blendedprogram/remove',
             '/proxies/v8/course/v1/batch/read/:id',
             '/proxies/v8/blendedprogram/v1/getUserContentProgress',
+            '/proxies/v8/user/v1/feed/:userId',
+            '/proxies/v8/user/feed/v1/create',              
+            '/proxies/v8/user/feed/v1/delete',      
+            '/proxies/v8/user/feed/v1/update',
             '/proxies/v8/faq/v1/assistant/configs/language',
             '/proxies/v8/faq/v1/assistant/available/language',
            ],

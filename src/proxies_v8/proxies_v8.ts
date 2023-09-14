@@ -68,7 +68,6 @@ proxiesV8.post('/upload/*', (req, res) => {
         port: 9000,
       },
       (err, response) => {
-
         response.on('data', (data) => {
           if (!err && (response.statusCode === 200 || response.statusCode === 201)) {
             res.send(JSON.parse(data.toString('utf8')))
@@ -79,7 +78,6 @@ proxiesV8.post('/upload/*', (req, res) => {
         if (err) {
           res.send(err)
         }
-
       }
     )
   } else {
@@ -516,6 +514,23 @@ proxiesV8.use('/moderatoradmin/*',
 )
 
 proxiesV8.use('/workflow/*',
+  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)
+
+proxiesV8.use('/blendedprogram/*',
+  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)
+
+proxiesV8.use('/batchsesion/*',
+  // tslint:disable-next-line: max-line-length
+  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)
+
+proxiesV8.use('/course/*',
+  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)
+
+proxiesV8.use('/faq/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 

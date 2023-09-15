@@ -7,7 +7,7 @@ import { logError, logInfo } from './logger'
 import { extractUserToken } from './requestExtract'
 
 export const PERMISSION_HELPER = {
-    // tslint:disable-next-line: no-any
+    // tslint:disable-next-line: all
     setRolesData(reqObj: any, callback: any, body: any) {
         logInfo('permission helper:: setRolesData function ', '------', new Date().toString())
         // tslint:disable-next-line: no-any

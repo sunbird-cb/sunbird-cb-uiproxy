@@ -59,10 +59,13 @@ const deauthenticated = async (reqObj: any) => {
 const authenticated = async (reqObj: any, next: any) => {
     logInfo('keycloakHelper::authenticated...')
     const postLoginRequest = []
-    // tslint:disable-next-line: no-any
-    postLoginRequest.push((callback: any) => {
-        PERMISSION_HELPER.getCurrentUserRoles(reqObj, callback)
-    })
+    if (!reqObj.session.hasOwnProperty('basicDetailsExist')
+      || !reqObj.session.basicDetailsExist) {
+      // tslint:disable-next-line: no-any
+      postLoginRequest.push((callback: any) => {
+          PERMISSION_HELPER.getCurrentUserRoles(reqObj, callback)
+      })
+    }
 
     // tslint:disable-next-line: no-any
     async.series(postLoginRequest, (err: any) =>  {

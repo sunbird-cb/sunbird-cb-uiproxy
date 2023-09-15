@@ -31,6 +31,7 @@ export const PERMISSION_HELPER = {
             if (!_.includes(reqObj.session.userRoles, 'PUBLIC')) {
                 reqObj.session.userRoles.push('PUBLIC')
             }
+            reqObj.session.basicDetailsExist = true
             if (CONSTANTS.PORTAL_CREATE_NODEBB_USER === 'true') {
                 this.createNodeBBUser(reqObj, callback)
             } else {
@@ -147,7 +148,7 @@ export const PERMISSION_HELPER = {
             // tslint:disable-next-line: no-console
             console.log('Making axios call to nodeBB ERROR -- ', err, '------', new Date().toString())
             callback(null, null)
-          }
+        }
     },
     waitForKeycloak() {
         // temporary fix for Keycloak session saving.

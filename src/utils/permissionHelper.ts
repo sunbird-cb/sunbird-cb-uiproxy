@@ -146,7 +146,8 @@ export const PERMISSION_HELPER = {
             }
         } catch (err) {
             // tslint:disable-next-line: no-console
-            console.log('Making axios call to nodeBB ERROR -- ', err, '------', new Date().toString())
+            // console.log('Making axios call to nodeBB ERROR -- ', err, '------', new Date().toString())
+            logError('Failed to create NodeBB user.')
             callback(null, null)
         }
     },

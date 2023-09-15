@@ -34,6 +34,7 @@ export const PERMISSION_HELPER = {
             if (CONSTANTS.PORTAL_CREATE_NODEBB_USER === 'true') {
                 this.createNodeBBUser(reqObj, callback)
             } else {
+                this.waitForKeycloak()
                 // tslint:disable-next-line: no-any
                 reqObj.session.save((error: any) => {
                     if (error) {
@@ -147,5 +148,15 @@ export const PERMISSION_HELPER = {
             console.log('Making axios call to nodeBB ERROR -- ', err, '------', new Date().toString())
             callback(null, null)
           }
+    },
+    waitForKeycloak() {
+        // temporary fix for Keycloak session saving.
+        // We can remove after fixing NodeBB CreateUser Issue.
+        logInfo('Starting delay... ')
+        const promise = new Promise((f) => setTimeout(f, 1500))
+        promise.catch((error) => {
+            logError(error)
+        })
+        logInfo('after delay')
     },
 }

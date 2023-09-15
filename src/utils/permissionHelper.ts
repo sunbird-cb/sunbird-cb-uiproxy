@@ -43,7 +43,7 @@ export const PERMISSION_HELPER = {
                 })
                 // tslint:disable-next-line: no-console
                 console.log(`createNodeBBUser::Skipped. ReqObj.session saved. ${new Date()}--- `)
-                callback(null, userData)
+                callback(null, null)
             }
             // tslint:disable-next-line: no-any
             // reqObj.session.save((error: any) => {

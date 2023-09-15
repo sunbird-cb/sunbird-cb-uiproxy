@@ -34,7 +34,16 @@ export const PERMISSION_HELPER = {
             if (CONSTANTS.PORTAL_CREATE_NODEBB_USER === 'true') {
                 this.createNodeBBUser(reqObj, callback)
             } else {
-                callback(null, null)
+                // tslint:disable-next-line: no-any
+                reqObj.session.save((error: any) => {
+                    if (error) {
+                        logError('reqObj.session.save error -- ', error, '------', new Date().toString())
+                        callback('reqObj.saveSession failed', null)
+                    }
+                })
+                // tslint:disable-next-line: no-console
+                console.log(`createNodeBBUser::Skipped. ReqObj.session saved. ${new Date()}--- `)
+                callback(null, userData)
             }
             // tslint:disable-next-line: no-any
             // reqObj.session.save((error: any) => {

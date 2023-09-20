@@ -2330,20 +2330,27 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-       '/proxies/v8/faq/v1/assistant/configs/language': {
-           checksNeeded: [CHECK.ROLE],
-           // tslint:disable-next-line: object-literal-sort-keys
-           ROLE_CHECK: [
-               ROLE.PUBLIC,
-           ],
-       },
-       '/proxies/v8/faq/v1/assistant/available/language': {
-           checksNeeded: [CHECK.ROLE],
-           // tslint:disable-next-line: object-literal-sort-keys
-           ROLE_CHECK: [
-               ROLE.PUBLIC,
-           ],
-       },
+        '/proxies/v8/faq/v1/assistant/configs/language': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/faq/v1/assistant/available/language': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        }, 
+        '/proxies/v8/curatedprogram/v1/enrol': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },      
     },
     URL_PATTERN:
         [
@@ -2646,5 +2653,6 @@ export const API_LIST = {
             '/proxies/v8/user/feed/v1/update',
             '/proxies/v8/faq/v1/assistant/configs/language',
             '/proxies/v8/faq/v1/assistant/available/language',
+            '/proxies/v8/curatedprogram/v1/enrol',
            ],
 }

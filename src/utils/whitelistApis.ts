@@ -2372,7 +2372,7 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        '/proxies/v8/blendedprogram/enrol/status/count': {
+        '/proxies/v8/workflow/blendedprogram/enrol/status/count': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [

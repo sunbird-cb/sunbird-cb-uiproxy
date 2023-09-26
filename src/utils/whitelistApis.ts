@@ -2683,6 +2683,6 @@ export const API_LIST = {
             '/proxies/v8/faq/v1/assistant/configs/language',
             '/proxies/v8/faq/v1/assistant/available/language',
             '/proxies/v8/curatedprogram/v1/enrol',
-            '/proxies/v8/blendedprogram/enrol/status/count',
+            '/proxies/v8/workflow/blendedprogram/enrol/status/count',
            ],
 }

@@ -2306,6 +2306,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
+                ROLE.PROGRAM_COORDINATOR,
             ],
         },
         '/proxies/v8/course/v1/batch/read/:id': {
@@ -2371,6 +2372,14 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/blendedprogram/enrol/status/count': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        }, 
+
     },
     URL_PATTERN:
         [
@@ -2674,5 +2683,6 @@ export const API_LIST = {
             '/proxies/v8/faq/v1/assistant/configs/language',
             '/proxies/v8/faq/v1/assistant/available/language',
             '/proxies/v8/curatedprogram/v1/enrol',
+            '/proxies/v8/blendedprogram/enrol/status/count',
            ],
 }

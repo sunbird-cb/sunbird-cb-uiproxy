@@ -368,7 +368,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                     const welcomeMailRequest = {
                         allowedLoging: 'You can use your email to Login',
                         body: 'Hello',
-                        emailTemplateType: 'iGotWelcome_v3',
+                        emailTemplateType: 'iGotWelcome_v4',
                         firstName: sbUserProfile.firstName,
                         link: passwordResetResponse.data.result.link,
                         mode: 'email',
@@ -377,6 +377,9 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                         setPasswordLink: true,
                         subject: 'Welcome to iGOT Karmayogi... Activate your account now!',
                         welcomeMessage: 'Hello',
+                        signinLink: req.get('host') + '/protected/v8/resource',
+                        discoverLink: req.get('host') + '/page/learn',
+                        meetingLink: CONSTANTS.9_TO_5_MEETING_LINK,
                     }
 
                     const welcomeMailResponse = await axios({

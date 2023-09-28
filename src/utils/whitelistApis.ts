@@ -209,6 +209,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CONTENT_REVIEWER,
                 ROLE.CONTENT_PUBLISHER,
+                ROLE.SPV_PUBLISHER,
             ],
         },
         '/proxies/v8/discussion/forum/v2/read': {
@@ -259,6 +260,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.CONTENT_REVIEWER,
+                ROLE.SPV_PUBLISHER,
             ],
         },
         '/proxies/v8/action/content/v3/hierarchy/update': {
@@ -269,6 +271,7 @@ export const API_LIST = {
                 ROLE.EDITOR,
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.CONTENT_REVIEWER,
+                ROLE.SPV_PUBLISHER,
             ],
         },
         '/proxies/v8/action/content/v3/create': {
@@ -278,6 +281,7 @@ export const API_LIST = {
                 ROLE.CONTENT_CREATOR,
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
+                ROLE.PROGRAM_COORDINATOR,
             ],
         },
         '/proxies/v8/dashboard/analytics/getDashboardConfig/Karmayogi/:comp': {
@@ -386,6 +390,7 @@ export const API_LIST = {
                 ROLE.EDITOR,
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
+                ROLE.PROGRAM_COORDINATOR,
             ],
         },
         '/proxies/v8/v1/content/retire': {
@@ -409,6 +414,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CONTENT_REVIEWER,
                 ROLE.CONTENT_PUBLISHER,
+                ROLE.SPV_PUBLISHER,
             ],
         },
         '/proxies/v8/action/content/v3/review/:do_id': {
@@ -418,6 +424,7 @@ export const API_LIST = {
                 ROLE.CONTENT_CREATOR,
                 ROLE.CONTENT_REVIEWER,
                 ROLE.CONTENT_PUBLISHER,
+                ROLE.SPV_PUBLISHER,
             ],
         },
         '/proxies/v8/action/content/v3/publish/:do_id': {
@@ -426,6 +433,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.MDO_ADMIN,
+                ROLE.SPV_PUBLISHER,
             ],
         },
         '/proxies/v8/action/content/v3/update/:do_id': {
@@ -438,6 +446,7 @@ export const API_LIST = {
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
+                ROLE.SPV_PUBLISHER,
             ],
         },
         '/proxies/v8/data/v1/system/settings/get/orgTypeList': {
@@ -587,6 +596,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.CONTENT_PUBLISHER,
+                ROLE.SPV_PUBLISHER,
             ],
         },
         '/proxies/v8/learnervm/private/content/v3/review/:do_id': {
@@ -1181,6 +1191,7 @@ export const API_LIST = {
                 ROLE.EDITOR,
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.CONTENT_REVIEWER,
+                ROLE.SPV_PUBLISHER,
             ],
         },
         // '/protected/v8/connections/connections/recommended': {
@@ -1254,6 +1265,7 @@ export const API_LIST = {
                 ROLE.EDITOR,
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.CONTENT_REVIEWER,
+                ROLE.SPV_PUBLISHER,
             ],
         },
         '/protected/v8/profanity/getPdfProfanityForContent/:contentId': {
@@ -1264,6 +1276,7 @@ export const API_LIST = {
                 ROLE.CONTENT_REVIEWER,
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.EDITOR,
+                ROLE.SPV_PUBLISHER,
             ],
         },
         '/protected/v8/catalog': {
@@ -1283,6 +1296,7 @@ export const API_LIST = {
                 ROLE.CONTENT_REVIEWER,
                 ROLE.EDITOR,
                 ROLE.CONTENT_PUBLISHER,
+                ROLE.SPV_PUBLISHER,
             ],
         },
         '/protected/v8/portal/mdo/deptAction/userrole': {
@@ -1607,6 +1621,7 @@ export const API_LIST = {
                 ROLE.CONTENT_CREATOR,
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
+                ROLE.PROGRAM_COORDINATOR,
             ],
         },
         '/authApi/readCert/:certId': {
@@ -1841,6 +1856,7 @@ export const API_LIST = {
                 ROLE.CONTENT_REVIEWER,
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
+                ROLE.SPV_PUBLISHER,
             ],
         },
         '/proxies/v8/questionset/v1/create': {
@@ -1858,6 +1874,7 @@ export const API_LIST = {
                 ROLE.CONTENT_REVIEWER,
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
+                ROLE.SPV_PUBLISHER,
             ],
             checksNeeded: [CHECK.ROLE],
         },
@@ -1868,6 +1885,7 @@ export const API_LIST = {
                 ROLE.CONTENT_REVIEWER,
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
+                ROLE.SPV_PUBLISHER,
             ],
             checksNeeded: [CHECK.ROLE],
         },
@@ -1884,6 +1902,7 @@ export const API_LIST = {
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
+                ROLE.SPV_PUBLISHER,
             ],
             checksNeeded: [CHECK.ROLE],
         },
@@ -1900,6 +1919,7 @@ export const API_LIST = {
                 ROLE.CONTENT_CREATOR,
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.CONTENT_REVIEWER,
+                ROLE.SPV_PUBLISHER,
             ],
             checksNeeded: [CHECK.ROLE],
         },
@@ -1907,6 +1927,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.CONTENT_REVIEWER,
+                ROLE.SPV_PUBLISHER,
             ],
             checksNeeded: [CHECK.ROLE],
         },
@@ -1917,6 +1938,7 @@ export const API_LIST = {
                 ROLE.CONTENT_REVIEWER,
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
+                ROLE.SPV_PUBLISHER,
             ],
             checksNeeded: [CHECK.ROLE],
         },
@@ -2207,6 +2229,22 @@ export const API_LIST = {
                 ROLE.PROGRAM_COORDINATOR,
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
+                ROLE.PROGRAM_COORDINATOR,
+            ],
+        },
+        '/proxies/v8/workflow/blendedprogram/searchv2/pc': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PROGRAM_COORDINATOR,               
+            ],
+        },
+        '/proxies/v8/workflow/blendedprogram/searchv2/mdo': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [              
+                ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/workflow/blendedprogram/user/search': {
@@ -2216,13 +2254,19 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        '/proxies/v8/workflow/blendedprogram/update': {
+        '/proxies/v8/workflow/blendedprogram/update/pc': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PROGRAM_COORDINATOR,
+            ],
+        },
+        '/proxies/v8/workflow/blendedprogram/update/mdo': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
-                ROLE.MDO_LEADER,
-                ROLE.PROGRAM_COORDINATOR,
+                ROLE.MDO_LEADER,  
             ],
         },
         '/proxies/v8/workflow/blendedprogram/read/mdo/:id': {
@@ -2256,6 +2300,107 @@ export const API_LIST = {
                 ROLE.CBP_ADMIN,
             ],
         },
+        '/proxies/v8/batchsesion/qrcode/:courseid/:batchid': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/workflow/blendedprogram/admin/enrol' : {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+            ],
+        },
+        '/proxies/v8/blendedprogram/v1/update/progress': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PROGRAM_COORDINATOR,
+            ],
+        },
+        '/proxies/v8/workflow/blendedprogram/remove': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
+                ROLE.PROGRAM_COORDINATOR,
+            ],
+        },
+        '/proxies/v8/course/v1/batch/read/:id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/blendedprogram/v1/getUserContentProgress': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PROGRAM_COORDINATOR,
+            ],
+        },
+        '/proxies/v8/user/v1/feed/:userId': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/user/feed/v1/create': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/user/feed/v1/delete': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/user/feed/v1/update': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+       '/proxies/v8/faq/v1/assistant/configs/language': {
+           checksNeeded: [CHECK.ROLE],
+           // tslint:disable-next-line: object-literal-sort-keys
+           ROLE_CHECK: [
+               ROLE.PUBLIC,
+           ],
+       },
+       '/proxies/v8/faq/v1/assistant/available/language': {
+           checksNeeded: [CHECK.ROLE],
+           // tslint:disable-next-line: object-literal-sort-keys
+           ROLE_CHECK: [
+               ROLE.PUBLIC,
+           ],
+       },
+        '/proxies/v8/curatedprogram/v1/enrol': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/workflow/blendedprogram/enrol/status/count': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        }, 
+
     },
     URL_PATTERN:
         [
@@ -2540,11 +2685,28 @@ export const API_LIST = {
             '/proxies/v8/ratings/v2/read',
             '/proxies/v8/workflow/blendedprogram/enrol',
             '/proxies/v8/workflow/blendedprogram/search',
+            '/proxies/v8/workflow/blendedprogram/searchv2/pc',
+            '/proxies/v8/workflow/blendedprogram/searchv2/mdo',
             '/proxies/v8/workflow/blendedprogram/user/search',
-            '/proxies/v8/workflow/blendedprogram/update',
+            '/proxies/v8/workflow/blendedprogram/update/pc',
+            '/proxies/v8/workflow/blendedprogram/update/mdo',
             '/proxies/v8/workflow/blendedprogram/read/mdo/:id',
             '/proxies/v8/workflow/blendedprogram/read/pc/:id',
             '/proxies/v8/workflow/blendedprogram/v1/stats',
             '/proxies/v8/storage/v1/report/:reportType/:date/:orgId/:fileName',
+            '/proxies/v8/workflow/blendedprogram/admin/enrol',
+            '/proxies/v8/batchsesion/qrcode/:courseid/:batchid',
+            '/proxies/v8/blendedprogram/v1/update/progress',
+            '/proxies/v8/workflow/blendedprogram/remove',
+            '/proxies/v8/course/v1/batch/read/:id',
+            '/proxies/v8/blendedprogram/v1/getUserContentProgress',
+            '/proxies/v8/user/v1/feed/:userId',
+            '/proxies/v8/user/feed/v1/create',
+            '/proxies/v8/user/feed/v1/delete',
+            '/proxies/v8/user/feed/v1/update',
+            '/proxies/v8/faq/v1/assistant/configs/language',
+            '/proxies/v8/faq/v1/assistant/available/language',
+            '/proxies/v8/curatedprogram/v1/enrol',
+            '/proxies/v8/workflow/blendedprogram/enrol/status/count',
            ],
 }

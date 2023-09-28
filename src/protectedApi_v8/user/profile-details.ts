@@ -368,7 +368,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                     const welcomeMailRequest = {
                         allowedLoging: 'You can use your email to Login',
                         body: 'Hello',
-                        discoverLink: req.get('host') + '/page/learn',
+                        discoverLink: CONSTANTS.HTTPS_HOST + '/page/learn',
                         emailTemplateType: 'iGotWelcome_v4',
                         firstName: sbUserProfile.firstName,
                         link: passwordResetResponse.data.result.link,
@@ -377,7 +377,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                         orgName: sbChannel,
                         recipientEmails: [ sbemail_ ],
                         setPasswordLink: true,
-                        signinLink: req.get('host') + '/protected/v8/resource',
+                        signinLink: CONSTANTS.HTTPS_HOST + '/protected/v8/resource',
                         subject: 'Welcome to iGOT Karmayogi... Activate your account now!',
                         welcomeMessage: 'Hello',
                     }

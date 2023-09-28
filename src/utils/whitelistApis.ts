@@ -2280,9 +2280,9 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
-				        ROLE.MDO_LEADER,
+                ROLE.MDO_LEADER,
             ],
-        },	
+        },
     },
     URL_PATTERN:
         [
@@ -2573,6 +2573,6 @@ export const API_LIST = {
             '/proxies/v8/workflow/blendedprogram/read/pc/:id',
             '/proxies/v8/workflow/blendedprogram/v1/stats',
             '/proxies/v8/storage/v1/report/:reportType/:date/:orgId/:fileName',
-            '/proxies/v8/storage/v1/reportInfo/:orgId'
+            '/proxies/v8/storage/v1/reportInfo/:orgId',
            ],
 }

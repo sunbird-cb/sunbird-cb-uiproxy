@@ -2232,6 +2232,21 @@ export const API_LIST = {
                 ROLE.PROGRAM_COORDINATOR,
             ],
         },
+        '/proxies/v8/workflow/blendedprogram/searchv2/pc': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PROGRAM_COORDINATOR,               
+            ],
+        },
+        '/proxies/v8/workflow/blendedprogram/searchv2/mdo': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [              
+                ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
+            ],
+        },
         '/proxies/v8/workflow/blendedprogram/user/search': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -2670,6 +2685,8 @@ export const API_LIST = {
             '/proxies/v8/ratings/v2/read',
             '/proxies/v8/workflow/blendedprogram/enrol',
             '/proxies/v8/workflow/blendedprogram/search',
+            '/proxies/v8/workflow/blendedprogram/searchv2/pc',
+            '/proxies/v8/workflow/blendedprogram/searchv2/mdo',
             '/proxies/v8/workflow/blendedprogram/user/search',
             '/proxies/v8/workflow/blendedprogram/update/pc',
             '/proxies/v8/workflow/blendedprogram/update/mdo',

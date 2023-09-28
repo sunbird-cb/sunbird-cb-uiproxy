@@ -2239,13 +2239,19 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        '/proxies/v8/workflow/blendedprogram/update': {
+        '/proxies/v8/workflow/blendedprogram/update/pc': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PROGRAM_COORDINATOR,
+            ],
+        },
+        '/proxies/v8/workflow/blendedprogram/update/mdo': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
-                ROLE.MDO_LEADER,
-                ROLE.PROGRAM_COORDINATOR,
+                ROLE.MDO_LEADER,  
             ],
         },
         '/proxies/v8/workflow/blendedprogram/read/mdo/:id': {
@@ -2665,7 +2671,8 @@ export const API_LIST = {
             '/proxies/v8/workflow/blendedprogram/enrol',
             '/proxies/v8/workflow/blendedprogram/search',
             '/proxies/v8/workflow/blendedprogram/user/search',
-            '/proxies/v8/workflow/blendedprogram/update',
+            '/proxies/v8/workflow/blendedprogram/update/pc',
+            '/proxies/v8/workflow/blendedprogram/update/mdo',
             '/proxies/v8/workflow/blendedprogram/read/mdo/:id',
             '/proxies/v8/workflow/blendedprogram/read/pc/:id',
             '/proxies/v8/workflow/blendedprogram/v1/stats',

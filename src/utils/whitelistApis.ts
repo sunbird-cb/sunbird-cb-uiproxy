@@ -2321,13 +2321,19 @@ export const API_LIST = {
                 ROLE.PROGRAM_COORDINATOR,
             ],
         },
-        '/proxies/v8/workflow/blendedprogram/remove': {
+        '/proxies/v8/workflow/blendedprogram/remove/pc': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PROGRAM_COORDINATOR,
+            ],
+        },
+        '/proxies/v8/workflow/blendedprogram/remove/mdo': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
-                ROLE.MDO_LEADER,
-                ROLE.PROGRAM_COORDINATOR,
+                ROLE.MDO_LEADER,  
             ],
         },
         '/proxies/v8/course/v1/batch/read/:id': {
@@ -2704,7 +2710,8 @@ export const API_LIST = {
             '/proxies/v8/workflow/blendedprogram/admin/enrol',
             '/proxies/v8/batchsesion/qrcode/:courseid/:batchid',
             '/proxies/v8/blendedprogram/v1/update/progress',
-            '/proxies/v8/workflow/blendedprogram/remove',
+            '/proxies/v8/workflow/blendedprogram/remove/pc',
+            '/proxies/v8/workflow/blendedprogram/remove/mdo',
             '/proxies/v8/course/v1/batch/read/:id',
             '/proxies/v8/blendedprogram/v1/getUserContentProgress',
             '/proxies/v8/user/v1/feed/:userId',

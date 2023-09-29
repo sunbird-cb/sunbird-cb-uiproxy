@@ -2407,7 +2407,14 @@ export const API_LIST = {
                ROLE.PUBLIC,
            ],
        },
-
+        '/proxies/v8/storage/v1/reportInfo/:orgId': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+				        ROLE.MDO_LEADER,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -2716,5 +2723,6 @@ export const API_LIST = {
             '/proxies/v8/curatedprogram/v1/enrol',
             '/proxies/v8/workflow/blendedprogram/enrol/status/count',
             '/proxies/v8/workflow/blendedprogram/unenrol',
+            '/proxies/v8/storage/v1/reportInfo/:orgId',
            ],
 }

@@ -216,6 +216,8 @@ const failedToCreateUserInOpenSaber = 'Not able to create User Registry in Opens
 const createUserFailed = 'ERROR CREATING USER >'
 const failedToUpdateUser = 'Failed to update user profile data.'
 const unknownError = 'Failed due to unknown reason'
+const failedToCheckMDOLeader = 'Failed to check MDO_LEADER role exist.'
+const errorMDOLeaderExist = 'MDO_LDEADER already exist in org. Can not add another MDO_LEADER.'
 
 // tslint:disable-next-line: all
 profileDeatailsApi.post('/createUser', async (req, res) => {
@@ -238,6 +240,37 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
         }
         if (userRoles === undefined) {
             sbUserProfile = _.omit(sbUserProfile, 'roles')
+        } else {
+            const roleExist = isMdoLeaderExist(userRoles, 'MDO_LEADER')
+            if (roleExist) {
+                const roleCheckResp = await axios({
+                    ...axiosRequestConfig,
+                    data: { request: {
+                            chennel: sbChannel,
+                            'organisations.roles': [ 'MDO_LEADER' ],
+                            status : 1,
+                        }},
+                        headers: {
+                        Authorization: CONSTANTS.SB_API_KEY,
+                        // tslint:disable-next-line: all
+                        'x-authenticated-user-token': extractUserToken(req),
+                    },
+                    method: 'POST',
+                    url: API_END_POINTS.kongSearchUser,
+                })
+                if (roleCheckResp && roleCheckResp.data && roleCheckResp.data.responseCode === 'CLIENT_ERROR') {
+                    errMsg = roleCheckResp.data.params ? roleCheckResp.data.params.errmsg : failedToCheckMDOLeader
+                    res.status(400).send(roleCheckResp.data)
+                    return
+                } else {
+                    if (roleCheckResp && roleCheckResp.data.result && roleCheckResp.data.result.response
+                        && roleCheckResp.data.result.response.count && roleCheckResp.data.result.response.count > 0) {
+                            errMsg = roleCheckResp.data.params ? roleCheckResp.data.params.errmsg : errorMDOLeaderExist
+                            res.status(400).send(roleCheckResp.data)
+                            return
+                        }
+                }
+            }
         }
         let userCreateResponse
         try {
@@ -754,4 +787,15 @@ function getUserRegistry(personalDetailsRegistry: IPersonalDetails, deptName: st
             certificateDetails: '',
         },
     }
+}
+
+// tslint:disable-next-line: all
+function isMdoLeaderExist(array: any, mdoRole: string) {
+    if (array === null || array === undefined || !Array.isArray(array)) {
+        logInfo('MDO_LEADER role is not exist.')
+        return false
+    }
+
+    // Check if every element in the array is a string
+    return array.includes(mdoRole)
 }

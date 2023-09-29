@@ -2236,13 +2236,13 @@ export const API_LIST = {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.PROGRAM_COORDINATOR,               
+                ROLE.PROGRAM_COORDINATOR,
             ],
         },
         '/proxies/v8/workflow/blendedprogram/searchv2/mdo': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [              
+            ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
             ],
@@ -2266,7 +2266,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
-                ROLE.MDO_LEADER,  
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/workflow/blendedprogram/read/mdo/:id': {
@@ -2333,7 +2333,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
-                ROLE.MDO_LEADER,  
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/course/v1/batch/read/:id': {
@@ -2405,7 +2405,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
-        }, 
+        },
         '/proxies/v8/workflow/blendedprogram/unenrol': {
            checksNeeded: [CHECK.ROLE],
            // tslint:disable-next-line: object-literal-sort-keys

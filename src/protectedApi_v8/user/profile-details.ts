@@ -269,7 +269,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                     res.status(400).send(roleCheckResp.data)
                     return
                 } else {
-                    logInfo('Received response for role check - ' + roleCheckResp.data.result)
+                    logInfo('Received response for role check - ' + JSON.stringify(roleCheckResp.data.result))
                     if (roleCheckResp && roleCheckResp.data.result && roleCheckResp.data.result.response
                         && roleCheckResp.data.result.response.count && roleCheckResp.data.result.response.count > 0) {
                             errMsg = roleCheckResp.data.params ? roleCheckResp.data.params.errmsg : errorMDOLeaderExist

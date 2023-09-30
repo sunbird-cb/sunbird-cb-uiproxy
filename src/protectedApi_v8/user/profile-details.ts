@@ -245,12 +245,17 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
             if (roleExist) {
                 const roleCheckResp = await axios({
                     ...axiosRequestConfig,
-                    data: { request: {
-                            chennel: sbChannel,
-                            'organisations.roles': [ 'MDO_LEADER' ],
-                            status : 1,
-                        }},
-                        headers: {
+                    data: {
+                        request: {
+                            filters : {
+                                chennel: sbChannel,
+                                'organisations.roles': [ 'MDO_LEADER' ],
+                                status : 1,
+                            },
+                            limit: 0,
+                        },
+                    },
+                    headers: {
                         Authorization: CONSTANTS.SB_API_KEY,
                         // tslint:disable-next-line: all
                         'x-authenticated-user-token': extractUserToken(req),

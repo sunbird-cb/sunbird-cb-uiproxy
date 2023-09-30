@@ -133,7 +133,7 @@ export interface ISBUser {
   channel: string
   userName: string
   password: string
-  role: string[]
+  roles: string[]
 }
 
 export interface IPersonalDetails {

@@ -236,12 +236,13 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
         const userRoles = (req.body.personalDetails.roles) ? req.body.personalDetails.roles : undefined
         let sbUserProfile: Partial<ISBUser> = {
             channel: sbChannel, email: sbemail_, emailVerified: sbemailVerified_,
-            firstName: sbfirstName_, role: userRoles,
+            firstName: sbfirstName_, roles: userRoles,
         }
         if (userRoles === undefined) {
-            sbUserProfile = _.omit(sbUserProfile, 'role')
+            sbUserProfile = _.omit(sbUserProfile, 'roles')
         } else {
             const roleExist = isMdoLeaderExist(userRoles, 'MDO_LEADER')
+            logInfo('MDO_Leader check required ? ' + roleExist)
             if (roleExist) {
                 const roleCheckResp = await axios({
                     ...axiosRequestConfig,
@@ -268,6 +269,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                     res.status(400).send(roleCheckResp.data)
                     return
                 } else {
+                    logInfo('Received response for role check - ' + roleCheckResp.data.result)
                     if (roleCheckResp && roleCheckResp.data.result && roleCheckResp.data.result.response
                         && roleCheckResp.data.result.response.count && roleCheckResp.data.result.response.count > 0) {
                             errMsg = roleCheckResp.data.params ? roleCheckResp.data.params.errmsg : errorMDOLeaderExist

@@ -270,7 +270,10 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                 } else {
                     if (roleCheckResp && roleCheckResp.data.result && roleCheckResp.data.result.response
                         && roleCheckResp.data.result.response.count && roleCheckResp.data.result.response.count > 0) {
-                            errMsg = roleCheckResp.data.params ? roleCheckResp.data.params.errmsg : errorMDOLeaderExist
+                            roleCheckResp.data.params.errmsg = errorMDOLeaderExist
+                            roleCheckResp.data.params.status = 'FAILED'
+                            roleCheckResp.data.responseCode = 'CLIENT_ERROR'
+                            roleCheckResp.data.result = {}
                             res.status(400).send(roleCheckResp.data)
                             return
                         }

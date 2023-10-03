@@ -2297,6 +2297,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
                 ROLE.CBP_ADMIN,
             ],
         },
@@ -2312,6 +2313,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/blendedprogram/v1/update/progress': {

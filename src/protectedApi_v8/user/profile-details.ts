@@ -368,13 +368,16 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                     const welcomeMailRequest = {
                         allowedLoging: 'You can use your email to Login',
                         body: 'Hello',
-                        emailTemplateType: 'iGotWelcome_v3',
+                        discoverLink: CONSTANTS.HTTPS_HOST + '/page/learn',
+                        emailTemplateType: 'iGotWelcome_v4',
                         firstName: sbUserProfile.firstName,
                         link: passwordResetResponse.data.result.link,
+                        meetingLink: CONSTANTS.NINE_TO_FIVE_MEETING_LINK,
                         mode: 'email',
                         orgName: sbChannel,
                         recipientEmails: [ sbemail_ ],
                         setPasswordLink: true,
+                        signinLink: CONSTANTS.HTTPS_HOST + '/protected/v8/resource',
                         subject: 'Welcome to iGOT Karmayogi... Activate your account now!',
                         welcomeMessage: 'Hello',
                     }

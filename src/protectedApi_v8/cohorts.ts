@@ -254,9 +254,10 @@ cohortsApi.get('/course/batch/cert/download/:certId', async (req, res) => {
   }
 })
 
-cohortsApi.get('/course/getUsersForBatch/:batchId', async (req, res) => {
+cohortsApi.get('/course/getUsersForBatch/:batchId/:deptName?', async (req, res) => {
   try {
     const batchId = req.params.batchId
+    const deptName = req.params.deptName
     const reqBody = {
       request: {
         batch: {
@@ -289,8 +290,10 @@ cohortsApi.get('/course/getUsersForBatch/:batchId', async (req, res) => {
       if (searchresponse.data.result.response.count > 0) {
         for (const profileObj of searchresponse.data.result.response.content) {
           const user: ICohortsUser = getUsers(profileObj)
-          user.department = profileObj.channel
-          userlist.push(user)
+          if (!deptName || (profileObj.channel && profileObj.channel === deptName)) {
+            user.department = profileObj.channel;
+            userlist.push(user);
+          }
         }
       }
     }

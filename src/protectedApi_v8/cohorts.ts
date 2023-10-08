@@ -257,7 +257,7 @@ cohortsApi.get('/course/batch/cert/download/:certId', async (req, res) => {
 cohortsApi.post('/course/batch/cert/download/mobile', async (req, res) => {
   try {
     const svgContent = req.body.printUri
-    let _decodedSvg = decodeURIComponent(svgContent.replace(/data:image\/svg\+xml,/, '')).replace(/\<!--\s*[a-zA-Z0-9\-]*\s*--\>/g, '')
+    const _decodedSvg = decodeURIComponent(svgContent.replace(/data:image\/svg\+xml,/, '')).replace(/\<!--\s*[a-zA-Z0-9\-]*\s*--\>/g, '')
 
     res.status(200).send(_decodedSvg)
   } catch (err) {
@@ -308,8 +308,8 @@ cohortsApi.get('/course/getUsersForBatch/:batchId/:deptName?', async (req, res) 
         for (const profileObj of searchresponse.data.result.response.content) {
           const user: ICohortsUser = getUsers(profileObj)
           if (!deptName || (profileObj.channel && profileObj.channel === deptName)) {
-            user.department = profileObj.channel;
-            userlist.push(user);
+            user.department = profileObj.channel
+            userlist.push(user)
           }
         }
       }

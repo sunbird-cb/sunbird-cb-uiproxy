@@ -13,6 +13,12 @@ publicApiV8.get('/', (_req, res) => {
   })
 })
 
+publicApiV8.get('/systemDate', (_req, res) => {
+  res.json({
+    systemDate: new Date().getTime(),
+  })
+})
+
 publicApiV8.post('/course/batch/cert/download/mobile', async (req, res) => {
   try {
     const svgContent = req.body.printUri

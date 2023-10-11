@@ -5,7 +5,6 @@ import { CONSTANTS } from '../utils/env'
 import { logError } from '../utils/logger'
 import { ERROR } from '../utils/message'
 import { extractAuthorizationFromRequest, extractUserIdFromRequest, extractUserToken } from '../utils/requestExtract'
-const puppeteer = require('puppeteer')
 
 const API_END_POINTS = {
   addTemplate: `${CONSTANTS.HTTPS_HOST}/api/course/batch/cert/v1/template/add`,
@@ -244,38 +243,6 @@ cohortsApi.get('/course/batch/cert/download/:certId', async (req, res) => {
     })
 
     res.status(response.status).send(response.data)
-  } catch (err) {
-    logError(err)
-
-    res.status((err && err.response && err.response.status) || 500).send(
-      (err && err.response && err.response.data) || {
-        error: unknownError,
-      }
-    )
-  }
-})
-
-cohortsApi.post('/course/batch/cert/download/mobile', async (req, res) => {
-  try {
-    const svgContent = req.body['printUri']
-    if (req.body['outputFormat'] === 'svg') {
-      let _decodedSvg = decodeURIComponent(svgContent.replace(/data:image\/svg\+xml,/, '')).replace(/\<!--\s*[a-zA-Z0-9\-]*\s*--\>/g, '')
-      res.type('html')
-      res.status(200).send(_decodedSvg)
-    } else if (req.body['outputFormat'] === 'pdf') {
-      const browser = await puppeteer.launch({ headless: true })
-      const page = await browser.newPage()
-      await page.goto(svgContent, { waitUntil: "networkidle2" })
-      const buffer = await page.pdf({ path: 'certificate.pdf', printBackground: true, width: '1204px', height: '662px' })
-      res.set({ 'Content-Type': 'application/pdf', 'Content-Length': buffer.length })
-      res.send(buffer)
-      browser.close()
-    } else {
-      res.status(400).json({
-        msg: 'Output format should be svg or pdf',
-        err: 'Unsupported output format'
-      })
-    }
   } catch (err) {
     logError(err)
 

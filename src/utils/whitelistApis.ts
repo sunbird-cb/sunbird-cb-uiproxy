@@ -1779,7 +1779,7 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        '/protected/v8/cohorts/course/batch/cert/download/mobile': {
+        '/public/v8/cohorts/course/batch/cert/download/mobile': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [

@@ -54,6 +54,7 @@
     "node-xlsx": "^0.15.0",
     "path-to-regexp": "^6.2.0",
     "pino": "^6.11.3",
+    "puppeteer": "19.7.0",
     "request": "^2.88.0",
     "uuid": "^3.3.2"
   },

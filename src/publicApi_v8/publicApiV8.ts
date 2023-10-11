@@ -46,7 +46,7 @@ publicApiV8.post('/course/batch/cert/download/mobile', async (req, res) => {
 
     res.status((err && err.response && err.response.status) || 500).send(
       (err && err.response && err.response.data) || {
-        error: err,
+        error: 'Failed due to unknown reason',
       }
     )
   }

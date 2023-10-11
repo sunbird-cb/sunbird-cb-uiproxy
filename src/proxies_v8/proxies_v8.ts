@@ -340,6 +340,8 @@ proxiesV8.post('/user/v1/bulkupload', (req, res) => {
     if (!channel) {
       channel = ''
     }
+    // tslint:disable-next-line: no-console
+    console.log("channel",channel)
     formData.submit(
       {
         headers: {

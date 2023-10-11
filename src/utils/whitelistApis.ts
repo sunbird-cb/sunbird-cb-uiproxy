@@ -2664,6 +2664,7 @@ export const API_LIST = {
             '/proxies/v8/action/content/v3/upload/:do_id',
             '/proxies/v8/learner/course/v1/batch/list',
             '/protected/v8/cohorts/course/batch/cert/download/:certId',
+            '/public/v8/cohorts/course/batch/cert/download/mobile',
             '/protected/v8/cohorts/course/batch/cert/issue',
             '/protected/v8/cohorts/course/batch/cert/template/add',
             '/proxies/v8/storage/upload',

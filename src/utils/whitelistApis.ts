@@ -210,6 +210,7 @@ export const API_LIST = {
                 ROLE.CONTENT_REVIEWER,
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.SPV_PUBLISHER,
+                ROLE.CONTENT_CREATOR,
             ],
         },
         '/proxies/v8/discussion/forum/v2/read': {
@@ -415,6 +416,7 @@ export const API_LIST = {
                 ROLE.CONTENT_REVIEWER,
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.SPV_PUBLISHER,
+                ROLE.CONTENT_CREATOR,
             ],
         },
         '/proxies/v8/action/content/v3/review/:do_id': {
@@ -1942,6 +1944,7 @@ export const API_LIST = {
                 ROLE.CONTENT_PUBLISHER,
                 ROLE.CONTENT_REVIEWER,
                 ROLE.SPV_PUBLISHER,
+                ROLE.CONTENT_CREATOR,
             ],
             checksNeeded: [CHECK.ROLE],
         },

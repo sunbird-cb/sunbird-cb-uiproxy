@@ -28,7 +28,7 @@ publicApiV8.post('/course/batch/cert/download/mobile', async (req, res) => {
       res.type('html')
       res.status(200).send(_decodedSvg)
     } else if (req.body.outputFormat === 'pdf') {
-      const browser = await puppeteer.launch({ headless: true })
+      const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] })
       const page = await browser.newPage()
       await page.goto(svgContent, { waitUntil: 'networkidle2' })
       const buffer = await page.pdf({ path: 'certificate.pdf', printBackground: true, width: '1204px', height: '662px' })

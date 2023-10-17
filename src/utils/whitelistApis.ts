@@ -2446,6 +2446,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.PROGRAM_COORDINATOR,
                 ROLE.MDO_ADMIN,
+                ROLE.CONTENT_REVIEWER,
             ],
         },       
     },

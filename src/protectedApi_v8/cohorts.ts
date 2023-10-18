@@ -291,7 +291,7 @@ cohortsApi.get('/course/getUsersForBatch/:batchId/:deptName?', async (req, res) 
         for (const profileObj of searchresponse.data.result.response.content) {
           const user: ICohortsUser = getUsers(profileObj)
           if (!deptName || (profileObj.channel && profileObj.channel === deptName)) {
-            user.department = profileObj.channel
+            user.department = profileObj.rootOrgName
             userlist.push(user)
           }
         }
@@ -333,7 +333,8 @@ function getUsers(userprofile: IUserProfile): ICohortsUser {
 
   return {
     city: '',
-    department: userprofile.channel === undefined ? '' : userprofile.channel,
+    //department: userprofile.channel === undefined ? '' : userprofile.channel,
+    department: userprofile.rootOrgName === undefined ? '' : userprofile.rootOrgName,
     desc: '',
     designation: designationValue,
     email: primaryEmail,
@@ -364,6 +365,7 @@ export interface IUserProfile {
   id: string
   lastName: string
   profileDetails: IUserProfileDetails
+  rootOrgName: string
 }
 
 export interface IUserProfileDetails {

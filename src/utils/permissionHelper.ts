@@ -61,7 +61,7 @@ export const PERMISSION_HELPER = {
         reqObj.session.save((error: any) => {
             if (error) {
               logError('reqObj.session.save error -- ', error, '------', new Date().toString())
-              callback(null, null)
+              //callback(null, null)
             } else {
                // tslint:disable-next-line: no-console
                console.log(`setNodeBBUID::Success of save -- reqObj.session ${new Date()}--- `)
@@ -132,7 +132,7 @@ export const PERMISSION_HELPER = {
         } catch (err) {
             // tslint:disable-next-line: no-console
             console.log('Making axios call to nodeBB ERROR -- ', err, '------', new Date().toString())
-            callback(null, null)
+            //callback(null, null)
           }
     },
 }

@@ -2448,7 +2448,15 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
                 ROLE.CONTENT_REVIEWER,
             ],
-        },       
+        },
+       '/proxies/v8/user/v1/admin/extPatch': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.MDO_ADMIN,
+                    ROLE.MDO_LEADER,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -2762,5 +2770,6 @@ export const API_LIST = {
             '/proxies/v8/workflow/blendedprogram/unenrol',
             '/proxies/v8/storage/v1/reportInfo/:orgId',
             '/proxies/v8/program/v1/admin/enrol',
+            '/proxies/v8/user/v1/admin/extPatch',
            ],
 }

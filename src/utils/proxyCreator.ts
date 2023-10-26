@@ -331,7 +331,7 @@ export function proxyQuestionRead(route: Router, targetUrl: string, _timeout = 1
   route.all('/*', (req, res) => {
     // tslint:disable-next-line: no-console    
     // Split the URL into base URL and query parameters
-    const [baseUrl, queryParams] = req.originalUrl.split('?');
+    const [, queryParams] = req.originalUrl.split('?');
     // Construct the final target URL by appending query parameters
     targetUrl = targetUrl + (queryParams ? `?${queryParams}` : '');    
     console.log('REQ_URL_UPDATED proxyAssessmentRead', targetUrl)

@@ -310,7 +310,12 @@ export function proxyContentLearnerVM(route: Router, targetUrl: string, _timeout
 export function proxyAssessmentRead(route: Router, targetUrl: string, _timeout = 10000): Router {
   route.all('/*', (req, res) => {
     let url = removePrefix(`${PROXY_SLUG}/assessment/read`, req.originalUrl)
-    url = targetUrl + url + '?hierarchy=detail'
+    // Check if the target URL already contains query parameters
+    if (url.includes('?')) {
+      url = targetUrl + url + '&hierarchy=detail';
+    } else {
+      url = targetUrl + url + '?hierarchy=detail';
+    }  
     // tslint:disable-next-line: no-console
     console.log('REQ_URL_UPDATED proxyAssessmentRead', url)
     proxy.web(req, res, {

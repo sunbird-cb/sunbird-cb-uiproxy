@@ -310,7 +310,12 @@ export function proxyContentLearnerVM(route: Router, targetUrl: string, _timeout
 export function proxyAssessmentRead(route: Router, targetUrl: string, _timeout = 10000): Router {
   route.all('/*', (req, res) => {
     let url = removePrefix(`${PROXY_SLUG}/assessment/read`, req.originalUrl)
-    url = targetUrl + url + '?hierarchy=detail'
+    // Check if the target URL already contains query parameters
+    if (url.includes('?')) {
+      url = targetUrl + url + '&hierarchy=detail';
+    } else {
+      url = targetUrl + url + '?hierarchy=detail';
+    }  
     // tslint:disable-next-line: no-console
     console.log('REQ_URL_UPDATED proxyAssessmentRead', url)
     proxy.web(req, res, {
@@ -324,7 +329,13 @@ export function proxyAssessmentRead(route: Router, targetUrl: string, _timeout =
 
 export function proxyQuestionRead(route: Router, targetUrl: string, _timeout = 10000): Router {
   route.all('/*', (req, res) => {
-    // tslint:disable-next-line: no-console
+    if (!targetUrl.includes('?')) {
+    // Split the URL into base URL and query parameters
+    const [, queryParams] = req.originalUrl.split('?');
+    // Construct the final target URL by appending query parameters
+    targetUrl = targetUrl + (queryParams ? `?${queryParams}` : ''); 
+    }
+    // tslint:disable-next-line: no-console 
     console.log('REQ_URL_UPDATED proxyAssessmentRead', targetUrl)
     proxy.web(req, res, {
       changeOrigin: true,

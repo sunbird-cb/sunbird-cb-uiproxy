@@ -540,6 +540,10 @@ proxiesV8.use('/curatedprogram/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 
+proxiesV8.use('/program/*',
+  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)
+
 function removePrefix(prefix: string, s: string) {
   return s.substr(prefix.length)
 }

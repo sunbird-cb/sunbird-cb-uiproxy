@@ -104,6 +104,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
+                ROLE.SPV_ADMIN,
             ],
         },
         '/proxies/v8/event/v4/create': {
@@ -112,6 +113,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
+                ROLE.SPV_ADMIN,
             ],
         },
         '/proxies/v8/user/v1/read/:id': {

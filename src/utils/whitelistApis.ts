@@ -116,6 +116,24 @@ export const API_LIST = {
                 ROLE.SPV_ADMIN,
             ],
         },
+        '/proxies/v8/event/v4/update/:do_id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
+                ROLE.SPV_ADMIN,
+            ],
+        },
+        '/proxies/v8/event/v4/retire/:do_id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
+                ROLE.SPV_ADMIN,
+            ],
+        },        
         '/proxies/v8/user/v1/read/:id': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -285,6 +303,7 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
                 ROLE.PROGRAM_COORDINATOR,
+                ROLE.SPV_ADMIN,
             ],
         },
         '/proxies/v8/dashboard/analytics/getDashboardConfig/Karmayogi/:comp': {
@@ -2477,6 +2496,8 @@ export const API_LIST = {
             '/proxies/v8/event/v4/read/:do_id',
             '/proxies/v8/event/v4/publish/:do_id',
             '/proxies/v8/event/v4/create',
+            '/proxies/v8/event/v4/update/:do_id',
+            '/proxies/v8/event/v4/retire/:do_id',
             '/proxies/v8/user/v1/read/:id',
             '/proxies/v8/contentsearch/search',
             '/proxies/v8/sunbirdigot/read',

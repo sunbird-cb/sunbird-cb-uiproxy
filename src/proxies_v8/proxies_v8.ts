@@ -209,7 +209,7 @@ proxiesV8.use('/read/user/insights',
   proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/insights`)
 )
 
-proxiesV8.use('/content/trending/search',
+proxiesV8.use('/trending/content/search',
   // tslint:disable-next-line: max-line-length
   proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/trending/search`)
 )

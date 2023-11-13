@@ -204,6 +204,17 @@ proxiesV8.use('/read/content-progres/*',
   proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/course/v1/content/state/read`)
 )
 
+proxiesV8.use('/read/user/insights',
+  // tslint:disable-next-line: max-line-length
+  proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/user/v2/insights`)
+)
+
+proxiesV8.use('/content/trending/search',
+  // tslint:disable-next-line: max-line-length
+  proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/v2/trending/search`)
+)
+
+
 proxiesV8.get(['/api/user/v2/read', '/api/user/v2/read/:id'], async (req, res) => {
   const host = req.get('host')
   const originalUrl = req.originalUrl

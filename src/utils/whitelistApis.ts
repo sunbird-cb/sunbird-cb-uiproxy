@@ -2796,5 +2796,7 @@ export const API_LIST = {
             '/proxies/v8/storage/v1/reportInfo/:orgId',
             '/proxies/v8/program/v1/admin/enrol',
             '/proxies/v8/user/v1/admin/extPatch',
+            '/proxies/v8/content/trending/search',
+            '/proxies/v8/read/user/insights',
            ],
 }

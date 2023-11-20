@@ -104,6 +104,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
+                ROLE.SPV_ADMIN,
             ],
         },
         '/proxies/v8/event/v4/create': {
@@ -112,8 +113,27 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
+                ROLE.SPV_ADMIN,
             ],
         },
+        '/proxies/v8/event/v4/update/:do_id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
+                ROLE.SPV_ADMIN,
+            ],
+        },
+        '/proxies/v8/event/v4/retire/:do_id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
+                ROLE.SPV_ADMIN,
+            ],
+        },        
         '/proxies/v8/user/v1/read/:id': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -283,6 +303,7 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
                 ROLE.PROGRAM_COORDINATOR,
+                ROLE.SPV_ADMIN,
             ],
         },
         '/proxies/v8/dashboard/analytics/getDashboardConfig/Karmayogi/:comp': {
@@ -392,6 +413,7 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
                 ROLE.PROGRAM_COORDINATOR,
+                ROLE.SPV_ADMIN,
             ],
         },
         '/proxies/v8/v1/content/retire': {
@@ -2458,6 +2480,20 @@ export const API_LIST = {
                     ROLE.MDO_LEADER,
             ],
         },
+        '/proxies/v8/trending/content/search': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.PUBLIC,                    
+            ],
+        },
+        '/proxies/v8/read/user/insights': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.PUBLIC,                    
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -2475,6 +2511,8 @@ export const API_LIST = {
             '/proxies/v8/event/v4/read/:do_id',
             '/proxies/v8/event/v4/publish/:do_id',
             '/proxies/v8/event/v4/create',
+            '/proxies/v8/event/v4/update/:do_id',
+            '/proxies/v8/event/v4/retire/:do_id',
             '/proxies/v8/user/v1/read/:id',
             '/proxies/v8/contentsearch/search',
             '/proxies/v8/sunbirdigot/read',
@@ -2772,5 +2810,7 @@ export const API_LIST = {
             '/proxies/v8/storage/v1/reportInfo/:orgId',
             '/proxies/v8/program/v1/admin/enrol',
             '/proxies/v8/user/v1/admin/extPatch',
+            '/proxies/v8/trending/content/search',
+            '/proxies/v8/read/user/insights',
            ],
 }

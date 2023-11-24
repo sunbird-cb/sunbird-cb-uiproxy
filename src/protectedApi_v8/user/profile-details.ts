@@ -239,9 +239,13 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
             channel: sbChannel, email: sbemail_, emailVerified: sbemailVerified_,
             firstName: sbfirstName_, roles: userRoles, phone: sbphone_,
         }
+        if (sbphone_ === undefined || sbphone_ === '') {
+            sbUserProfile = _.omit(sbUserProfile, 'phone')
+        }
         if (userRoles === undefined) {
             sbUserProfile = _.omit(sbUserProfile, 'roles')
-        } else {
+        }
+         else {
             const roleExist = isMdoLeaderExist(userRoles, 'MDO_LEADER')
             if (roleExist) {
                 const roleCheckResp = await axios({

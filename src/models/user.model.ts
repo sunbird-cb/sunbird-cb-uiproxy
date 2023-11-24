@@ -135,7 +135,6 @@ export interface ISBUser {
   password: string
   roles: string[]
   phone: string
-  phoneVerified: boolean
 }
 
 export interface IPersonalDetails {

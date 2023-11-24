@@ -232,11 +232,13 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
         const sbemail_ = req.body.personalDetails.email
         const sbemailVerified_ = true
         const sbfirstName_ = req.body.personalDetails.firstName
+        const sbphone_ = req.body.personalDetails.phone
+        const sbphoneVerified_ = (req.body.personalDetails.phoneVerified) ? req.body.personalDetails.phoneVerified : false
         const isEmailRequired = (req.body.personalDetails.isEmailRequired) ? req.body.personalDetails.isEmailRequired : true
         const userRoles = (req.body.personalDetails.roles) ? req.body.personalDetails.roles : undefined
         let sbUserProfile: Partial<ISBUser> = {
             channel: sbChannel, email: sbemail_, emailVerified: sbemailVerified_,
-            firstName: sbfirstName_, roles: userRoles,
+            firstName: sbfirstName_, roles: userRoles, phone: sbphone_, phoneVerified: sbphoneVerified_,
         }
         if (userRoles === undefined) {
             sbUserProfile = _.omit(sbUserProfile, 'roles')

@@ -134,6 +134,7 @@ export interface ISBUser {
   userName: string
   password: string
   roles: string[]
+  phone: string
 }
 
 export interface IPersonalDetails {

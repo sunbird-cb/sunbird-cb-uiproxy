@@ -204,7 +204,6 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        ,
         '/proxies/v8/learner/course/v2/user/enrollment/list/:id': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys

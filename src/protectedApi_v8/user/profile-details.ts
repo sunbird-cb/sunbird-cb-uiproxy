@@ -353,7 +353,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                 }
             }
             const sbUserOrgId = sbUserReadResponse.data.result.response.rootOrgId
-            let sbProfileUpdateReq = {
+            const sbProfileUpdateReq = {
                 profileDetails: {
                     employmentDetails: {
                         departmentName: sbChannel,

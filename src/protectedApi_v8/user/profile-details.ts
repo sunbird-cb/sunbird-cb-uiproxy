@@ -231,6 +231,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
         let errMsg = ''
         const sbemail_ = req.body.personalDetails.email
         const sbemailVerified_ = true
+        const sbphoneVerified_ = false
         const sbfirstName_ = req.body.personalDetails.firstName
         const sbphone_ = req.body.personalDetails.phone
         const isEmailRequired = (req.body.personalDetails.isEmailRequired) ? req.body.personalDetails.isEmailRequired : true
@@ -352,7 +353,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                 }
             }
             const sbUserOrgId = sbUserReadResponse.data.result.response.rootOrgId
-            const sbProfileUpdateReq = {
+            let sbProfileUpdateReq = {
                 profileDetails: {
                     employmentDetails: {
                         departmentName: sbChannel,
@@ -360,12 +361,19 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                     mandatoryFieldsExists: false,
                     personalDetails: {
                         firstname: sbfirstName_,
+                        mobile: sbphone_,
+                        phoneVerified: sbphoneVerified_,
                         primaryEmail: sbemail_,
                     },
                     verifiedKarmayogi: false,
                 },
                 userId: sbUserId,
             }
+            if (sbphone_ === undefined || sbphone_ === '') {
+                sbProfileUpdateReq.profileDetails.personalDetails = _.omit(sbProfileUpdateReq.profileDetails.personalDetails, 'phoneVerified')
+                sbProfileUpdateReq.profileDetails.personalDetails = _.omit(sbProfileUpdateReq.profileDetails.personalDetails, 'mobile')
+            }
+
             if (req.body.personalDetails.designation) {
                 const arrDesignation = []
                 const objDesignation = {

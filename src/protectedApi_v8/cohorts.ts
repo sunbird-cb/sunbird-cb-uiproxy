@@ -333,7 +333,7 @@ function getUsers(userprofile: IUserProfile): ICohortsUser {
 
   return {
     city: '',
-    //department: userprofile.channel === undefined ? '' : userprofile.channel,
+    // department: userprofile.channel === undefined ? '' : userprofile.channel,
     department: userprofile.rootOrgName === undefined ? '' : userprofile.rootOrgName,
     desc: '',
     designation: designationValue,

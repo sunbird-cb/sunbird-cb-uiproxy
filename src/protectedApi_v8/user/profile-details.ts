@@ -237,15 +237,14 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
         const userRoles = (req.body.personalDetails.roles) ? req.body.personalDetails.roles : undefined
         let sbUserProfile: Partial<ISBUser> = {
             channel: sbChannel, email: sbemail_, emailVerified: sbemailVerified_,
-            firstName: sbfirstName_, phone: sbphone_, roles: userRoles, 
+            firstName: sbfirstName_, phone: sbphone_, roles: userRoles,
         }
         if (sbphone_ === undefined || sbphone_ === '') {
             sbUserProfile = _.omit(sbUserProfile, 'phone')
         }
         if (userRoles === undefined) {
             sbUserProfile = _.omit(sbUserProfile, 'roles')
-        }
-         else {
+        } else {
             const roleExist = isMdoLeaderExist(userRoles, 'MDO_LEADER')
             if (roleExist) {
                 const roleCheckResp = await axios({

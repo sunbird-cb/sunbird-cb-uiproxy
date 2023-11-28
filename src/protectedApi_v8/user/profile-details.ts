@@ -370,8 +370,11 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                 userId: sbUserId,
             }
             if (sbphone_ === undefined || sbphone_ === '') {
-                sbProfileUpdateReq.profileDetails.personalDetails = _.omit(sbProfileUpdateReq.profileDetails.personalDetails, 'phoneVerified')
-                sbProfileUpdateReq.profileDetails.personalDetails = _.omit(sbProfileUpdateReq.profileDetails.personalDetails, 'mobile')
+                sbProfileUpdateReq.profileDetails.personalDetails = 
+                _.omit(sbProfileUpdateReq.profileDetails.personalDetails, 'phoneVerified')
+                
+                sbProfileUpdateReq.profileDetails.personalDetails =
+                 _.omit(sbProfileUpdateReq.profileDetails.personalDetails, 'mobile')
             }
 
             if (req.body.personalDetails.designation) {

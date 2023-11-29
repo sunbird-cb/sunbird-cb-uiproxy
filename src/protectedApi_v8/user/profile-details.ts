@@ -361,7 +361,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                     mandatoryFieldsExists: false,
                     personalDetails: {
                         firstname: sbfirstName_,
-                        mobile: sbphone_,
+                        mobile: Number(sbphone_),
                         phoneVerified: sbphoneVerified_,
                         primaryEmail: sbemail_,
                     },

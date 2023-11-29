@@ -2494,6 +2494,28 @@ export const API_LIST = {
                     ROLE.PUBLIC,                    
             ],
         },
+        '/proxies/v8/competency/search': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.PUBLIC,                    
+            ],
+        },
+        '/proxies/v8/competency/read/:id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.PUBLIC,                    
+            ],
+        },
+        '/proxies/v8/competency/upsert': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.MDO_ADMIN,
+                    ROLE.MDO_LEADER,                    
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -2812,5 +2834,8 @@ export const API_LIST = {
             '/proxies/v8/user/v1/admin/extPatch',
             '/proxies/v8/trending/content/search',
             '/proxies/v8/read/user/insights',
+            '/proxies/v8/competency/search',
+            '/proxies/v8/competency/read/:id',
+            '/proxies/v8/competency/upsert',
            ],
 }

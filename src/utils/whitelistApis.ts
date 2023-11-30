@@ -2516,6 +2516,14 @@ export const API_LIST = {
                     ROLE.MDO_LEADER,                    
             ],
         },
+        '/proxies/v8/competency/update/relation': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.MDO_ADMIN,
+                    ROLE.MDO_LEADER,                    
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -2837,5 +2845,6 @@ export const API_LIST = {
             '/proxies/v8/competency/search',
             '/proxies/v8/competency/read/:id',
             '/proxies/v8/competency/upsert',
+            '/proxies/v8/competency/update/relation',
            ],
 }

@@ -2494,7 +2494,7 @@ export const API_LIST = {
                     ROLE.PUBLIC,                    
             ],
         },
-        '/proxies/v8/storage/sb-cb-ext-dev/profilePhotoUpload': {
+        '/proxies/v8/storage/profilePhotoUpload/:cloudFolderName': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -2819,6 +2819,6 @@ export const API_LIST = {
             '/proxies/v8/user/v1/admin/extPatch',
             '/proxies/v8/trending/content/search',
             '/proxies/v8/read/user/insights',
-            '/proxies/v8/storage/sb-cb-ext-dev/profilePhotoUpload',
+            '/proxies/v8/storage/profilePhotoUpload/:cloudFolderName',
            ],
 }

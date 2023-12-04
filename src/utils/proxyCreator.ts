@@ -48,7 +48,7 @@ proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
     console.log('REQ_URL_ORIGINAL discussion', proxyReq.path)
 
   }
-  if (!req.originalUrl.includes('/storage/upload') && !req.originalUrl.includes('/storage/sb-cb-ext-dev/profilePhotoUpload') && req.body) {
+  if (!req.originalUrl.includes('/storage/upload') && !req.originalUrl.includes('/storage/profilePhotoUpload/*') && req.body) {
     const bodyData = JSON.stringify(req.body)
     proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData))
     proxyReq.write(bodyData)

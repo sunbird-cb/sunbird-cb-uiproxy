@@ -2338,6 +2338,8 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
                 ROLE.CBP_ADMIN,
+                ROLE.PROGRAM_COORDINATOR,
+                ROLE.CONTENT_CREATOR,
             ],
         },
         '/proxies/v8/batchsesion/qrcode/:courseid/:batchid': {
@@ -2460,6 +2462,9 @@ export const API_LIST = {
            ROLE_CHECK: [
                ROLE.MDO_ADMIN,
                ROLE.MDO_LEADER,
+               ROLE.CBP_ADMIN,
+               ROLE.PROGRAM_COORDINATOR,
+               ROLE.CONTENT_CREATOR,
            ],
         },
         '/proxies/v8/program/v1/admin/enrol': {

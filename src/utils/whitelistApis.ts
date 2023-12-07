@@ -2506,21 +2506,21 @@ export const API_LIST = {
                     ROLE.PUBLIC,
             ],
         },
-        '/proxies/v8/competency/search': {
+        '/proxies/v8/competency/v4/search': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                     ROLE.PUBLIC,                    
             ],
         },
-        '/proxies/v8/competency/read/:id': {
+        '/proxies/v8/competency/v4/read/:id': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                     ROLE.PUBLIC,                    
             ],
         },
-        '/proxies/v8/competency/upsert': {
+        '/proxies/v8/competency/v4/upsert': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -2528,7 +2528,7 @@ export const API_LIST = {
                     ROLE.MDO_LEADER,                    
             ],
         },
-        '/proxies/v8/competency/update/relation': {
+        '/proxies/v8/competency/v4/update/relation': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -2855,9 +2855,9 @@ export const API_LIST = {
             '/proxies/v8/trending/content/search',
             '/proxies/v8/read/user/insights',
             '/proxies/v8/storage/profilePhotoUpload/:cloudFolderName',
-            '/proxies/v8/competency/search',
-            '/proxies/v8/competency/read/:id',
-            '/proxies/v8/competency/upsert',
-            '/proxies/v8/competency/update/relation',
+            '/proxies/v8/competency/v4/search',
+            '/proxies/v8/competency/v4/read/:id',
+            '/proxies/v8/competency/v4/upsert',
+            '/proxies/v8/competency/v4/update/relation',
            ],
 }

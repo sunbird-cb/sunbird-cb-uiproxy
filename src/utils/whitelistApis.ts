@@ -2511,6 +2511,61 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                     ROLE.MDO_ADMIN,
+                    ROLE.MDO_LEADER,       
+            ],
+        },
+        '/proxies/v8/competency/v4/search': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.PUBLIC,                    
+            ],
+        },
+        '/proxies/v8/competency/v4/read/:id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.PUBLIC,                    
+            ],
+        },
+        '/proxies/v8/competency/v4/upsert': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.MDO_ADMIN,
+                    ROLE.MDO_LEADER,                    
+            ],
+        },
+        '/proxies/v8/competency/v4/update/relation': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.MDO_ADMIN,
+                    ROLE.MDO_LEADER,                    
+            ],
+        },
+        '/proxies/v8/cbplan/v1/create': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.MDO_ADMIN,
+                    ROLE.MDO_LEADER,                    
+            ],
+        },
+        '/proxies/v8/cbplan/v1/update': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.MDO_ADMIN,
+                    ROLE.MDO_LEADER,                    
+            ],
+        },
+        '/proxies/v8/cbplan/v1/publish': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.MDO_ADMIN,
+                    ROLE.MDO_LEADER,                    
             ],
         },
     },
@@ -2833,5 +2888,12 @@ export const API_LIST = {
             '/proxies/v8/read/user/insights',
             '/proxies/v8/storage/profilePhotoUpload/:cloudFolderName',
             '/proxies/v8/user/v1/admin/autocomplete/:searchTerm',
+            '/proxies/v8/competency/v4/search',
+            '/proxies/v8/competency/v4/read/:id',
+            '/proxies/v8/competency/v4/upsert',
+            '/proxies/v8/competency/v4/update/relation',
+            '/proxies/v8/cbplan/v1/create',
+            '/proxies/v8/cbplan/v1/update',
+            '/proxies/v8/cbplan/v1/publish',
            ],
 }

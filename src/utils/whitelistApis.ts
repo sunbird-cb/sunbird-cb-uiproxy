@@ -2506,6 +2506,14 @@ export const API_LIST = {
                     ROLE.PUBLIC,
             ],
         },
+        'proxies/v8/user/v1/admin/autocomplete/:searchTerm': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.MDO_ADMIN,
+                    ROLE.MDO_LEADER,       
+            ],
+        },
         '/proxies/v8/competency/v4/search': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -2879,6 +2887,7 @@ export const API_LIST = {
             '/proxies/v8/trending/content/search',
             '/proxies/v8/read/user/insights',
             '/proxies/v8/storage/profilePhotoUpload/:cloudFolderName',
+            '/proxies/v8/user/v1/admin/autocomplete/:searchTerm',
             '/proxies/v8/competency/v4/search',
             '/proxies/v8/competency/v4/read/:id',
             '/proxies/v8/competency/v4/upsert',

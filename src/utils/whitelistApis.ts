@@ -2513,6 +2513,13 @@ export const API_LIST = {
                     ROLE.MDO_ADMIN,
             ],
         },
+        '/proxies/v8/halloffame/content/read': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.PUBLIC,                    
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -2833,5 +2840,6 @@ export const API_LIST = {
             '/proxies/v8/read/user/insights',
             '/proxies/v8/storage/profilePhotoUpload/:cloudFolderName',
             '/proxies/v8/user/v1/admin/autocomplete/:searchTerm',
+            '/proxies/v8/halloffame/content/read',
            ],
 }

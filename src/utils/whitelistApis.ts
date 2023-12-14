@@ -133,7 +133,7 @@ export const API_LIST = {
                 ROLE.MDO_LEADER,
                 ROLE.SPV_ADMIN,
             ],
-        },        
+        },
         '/proxies/v8/user/v1/read/:id': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -2489,14 +2489,14 @@ export const API_LIST = {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                    ROLE.PUBLIC,                    
+                    ROLE.PUBLIC,
             ],
         },
         '/proxies/v8/read/user/insights': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                    ROLE.PUBLIC,                    
+                    ROLE.PUBLIC,
             ],
         },
         '/proxies/v8/storage/profilePhotoUpload/:cloudFolderName': {
@@ -2511,21 +2511,21 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                     ROLE.MDO_ADMIN,
-                    ROLE.MDO_LEADER,       
+                    ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/competency/v4/search': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                    ROLE.PUBLIC,                    
+                    ROLE.PUBLIC,
             ],
         },
         '/proxies/v8/competency/v4/read/:id': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                    ROLE.PUBLIC,                    
+                    ROLE.PUBLIC,
             ],
         },
         '/proxies/v8/competency/v4/upsert': {
@@ -2533,7 +2533,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                     ROLE.MDO_ADMIN,
-                    ROLE.MDO_LEADER,                    
+                    ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/competency/v4/update/relation': {
@@ -2541,7 +2541,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                     ROLE.MDO_ADMIN,
-                    ROLE.MDO_LEADER,                    
+                    ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/cbplan/v1/create': {
@@ -2549,7 +2549,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                     ROLE.MDO_ADMIN,
-                    ROLE.MDO_LEADER,                    
+                    ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/cbplan/v1/update': {
@@ -2557,7 +2557,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                     ROLE.MDO_ADMIN,
-                    ROLE.MDO_LEADER,                    
+                    ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/cbplan/v1/publish': {
@@ -2565,7 +2565,15 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                     ROLE.MDO_ADMIN,
-                    ROLE.MDO_LEADER,                    
+                    ROLE.MDO_LEADER,
+            ],
+        },
+        '/proxies/v8/masterData/v2/deptPosition': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.MDO_ADMIN,
+                    ROLE.MDO_LEADER,
             ],
         },
     },
@@ -2895,5 +2903,6 @@ export const API_LIST = {
             '/proxies/v8/cbplan/v1/create',
             '/proxies/v8/cbplan/v1/update',
             '/proxies/v8/cbplan/v1/publish',
+            '/proxies/v8/masterData/v2/deptPosition',
            ],
 }

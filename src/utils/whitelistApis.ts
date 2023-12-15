@@ -2600,6 +2600,13 @@ export const API_LIST = {
                     ROLE.MDO_LEADER,
             ],
         },
+        '/proxies/v8/halloffame/read': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.PUBLIC,                    
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -2931,5 +2938,6 @@ export const API_LIST = {
             '/proxies/v8/cbplan/v1/archive',
             '/proxies/v8/cbplan/v1/read/:id',
             '/proxies/v8/cbplan/v1/list',
+            '/proxies/v8/halloffame/read',
            ],
 }

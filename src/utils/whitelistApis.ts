@@ -1005,6 +1005,7 @@ export const API_LIST = {
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
                 ROLE.STATE_ADMIN,
+                ROLE.PUBLIC,
             ],
         },
         '/protected/v8/workallocation/getWorkOrders': {

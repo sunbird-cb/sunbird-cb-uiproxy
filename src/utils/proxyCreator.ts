@@ -27,6 +27,11 @@ proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
     rootOrgId = req.session.rootOrgId
   }
   proxyReq.setHeader('x-authenticated-user-orgid', rootOrgId)
+  let userRoles = []
+  if (req.session.hasOwnProperty('userRoles')) {
+      userRoles = req.session.userRoles
+  }
+  proxyReq.setHeader('x-authenticated-user-roles', userRoles)
   let channel = ''
   if (req.session.hasOwnProperty('channel')) {
     channel = req.session.channel

@@ -1822,7 +1822,8 @@ export const API_LIST = {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.PUBLIC,
+                ROLE.CONTENT_CREATOR,
+                ROLE.PROGRAM_COORDINATOR,
             ],
         },
         '/proxies/v8/discussion/v2/categories': {
@@ -2514,6 +2515,22 @@ export const API_LIST = {
                     ROLE.MDO_ADMIN,
             ],
         },
+        '/proxies/v8/data/v1/system/settings/get/defaultCertTemplate': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+               ROLE.CONTENT_CREATOR,
+               ROLE.PROGRAM_COORDINATOR,
+            ],
+        },
+        '/proxies/v8/course/batch/cert/v1/template/add': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.CONTENT_CREATOR,
+                ROLE.PROGRAM_COORDINATOR,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -2834,5 +2851,7 @@ export const API_LIST = {
             '/proxies/v8/read/user/insights',
             '/proxies/v8/storage/profilePhotoUpload/:cloudFolderName',
             '/proxies/v8/user/v1/admin/autocomplete/:searchTerm',
+            '/proxies/v8/data/v1/system/settings/get/defaultCertTemplate',
+            '/proxies/v8/course/batch/cert/v1/template/add',
            ],
 }

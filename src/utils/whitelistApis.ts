@@ -1005,6 +1005,7 @@ export const API_LIST = {
                 ROLE.CBC_ADMIN,
                 ROLE.SPV_ADMIN,
                 ROLE.STATE_ADMIN,
+                ROLE.PUBLIC,
             ],
         },
         '/protected/v8/workallocation/getWorkOrders': {
@@ -1821,7 +1822,8 @@ export const API_LIST = {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.PUBLIC,
+                ROLE.CONTENT_CREATOR,
+                ROLE.PROGRAM_COORDINATOR,
             ],
         },
         '/proxies/v8/discussion/v2/categories': {
@@ -2621,6 +2623,52 @@ export const API_LIST = {
                     ROLE.PUBLIC,                    
             ],
         },
+        '/proxies/v8/data/v1/system/settings/get/defaultCertTemplate': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+               ROLE.CONTENT_CREATOR,
+               ROLE.PROGRAM_COORDINATOR,
+            ],
+        },
+        '/proxies/v8/course/batch/cert/v1/template/add': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.CONTENT_CREATOR,
+                ROLE.PROGRAM_COORDINATOR,
+            ],
+        },
+        '/proxies/v8/competency/v4/search': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/competency/v4/read/:id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/competency/v4/upsert': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.MDO_ADMIN,
+                    ROLE.MDO_LEADER,
+            ],
+        },
+        '/proxies/v8/competency/v4/update/relation': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.MDO_ADMIN,
+                    ROLE.MDO_LEADER,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -2941,6 +2989,8 @@ export const API_LIST = {
             '/proxies/v8/read/user/insights',
             '/proxies/v8/storage/profilePhotoUpload/:cloudFolderName',
             '/proxies/v8/user/v1/admin/autocomplete/:searchTerm',
+            '/proxies/v8/data/v1/system/settings/get/defaultCertTemplate',
+            '/proxies/v8/course/batch/cert/v1/template/add',
             '/proxies/v8/competency/v4/search',
             '/proxies/v8/competency/v4/read/:id',
             '/proxies/v8/competency/v4/upsert',

@@ -2606,21 +2606,21 @@ export const API_LIST = {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                    ROLE.PUBLIC,                    
+                    ROLE.PUBLIC,
             ],
         },
         '/proxies/v8/user/v1/cbplan': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                    ROLE.PUBLIC,                    
+                    ROLE.PUBLIC,
             ],
         },
         '/proxies/v8/karmapoints/read': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                    ROLE.PUBLIC,                    
+                    ROLE.PUBLIC,
             ],
         },
         '/proxies/v8/data/v1/system/settings/get/defaultCertTemplate': {
@@ -2637,36 +2637,6 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.CONTENT_CREATOR,
                 ROLE.PROGRAM_COORDINATOR,
-            ],
-        },
-        '/proxies/v8/competency/v4/search': {
-            checksNeeded: [CHECK.ROLE],
-            // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [
-                    ROLE.PUBLIC,
-            ],
-        },
-        '/proxies/v8/competency/v4/read/:id': {
-            checksNeeded: [CHECK.ROLE],
-            // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [
-                    ROLE.PUBLIC,
-            ],
-        },
-        '/proxies/v8/competency/v4/upsert': {
-            checksNeeded: [CHECK.ROLE],
-            // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [
-                    ROLE.MDO_ADMIN,
-                    ROLE.MDO_LEADER,
-            ],
-        },
-        '/proxies/v8/competency/v4/update/relation': {
-            checksNeeded: [CHECK.ROLE],
-            // tslint:disable-next-line: object-literal-sort-keys
-            ROLE_CHECK: [
-                    ROLE.MDO_ADMIN,
-                    ROLE.MDO_LEADER,
             ],
         },
     },

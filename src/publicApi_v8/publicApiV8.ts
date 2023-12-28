@@ -60,3 +60,5 @@ publicApiV8.use('/workallocation', workallocationPublic)
 publicApiV8.use('/org/v1/list', proxyCreatorRoute(express.Router(), CONSTANTS.KONG_API_BASE + '/org/v1/list'))
 
 publicApiV8.use('/parichay', parichayAuth)
+
+publicApiV8.use('/halloffame/read', proxyCreatorRoute(express.Router(), CONSTANTS.KONG_API_BASE + '/halloffame/read'))

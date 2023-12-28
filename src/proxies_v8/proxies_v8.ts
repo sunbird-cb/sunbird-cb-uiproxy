@@ -214,6 +214,15 @@ proxiesV8.use('/trending/content/search',
   proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/trending/search`)
 )
 
+proxiesV8.use('/halloffame/read',
+  // tslint:disable-next-line: max-line-length
+  proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/halloffame/read`)
+)
+
+proxiesV8.use('/karmapoints/read',
+  // tslint:disable-next-line: max-line-length
+  proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/karmapoints/read`)
+)
 
 proxiesV8.get(['/api/user/v2/read', '/api/user/v2/read/:id'], async (req, res) => {
   const host = req.get('host')
@@ -334,7 +343,7 @@ proxiesV8.use('/dashboard/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 
-proxiesV8.post(['/user/v1/bulkupload','/storage/profilePhotoUpload/*'], (req, res) => {
+proxiesV8.post(['/user/v1/bulkupload', '/storage/profilePhotoUpload/*'], (req, res) => {
   if (req.files && req.files.data) {
     const url = removePrefix('/proxies/v8', req.originalUrl)
     const file: UploadedFile = req.files.data as UploadedFile
@@ -556,6 +565,11 @@ proxiesV8.use('/program/*',
 )
 
 proxiesV8.use('/competency/*',
+  // tslint:disable-next-line: max-line-length
+  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)
+
+proxiesV8.use('/cbplan/*',
   // tslint:disable-next-line: max-line-length
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )

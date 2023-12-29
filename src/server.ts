@@ -150,9 +150,7 @@ export class Server {
     }
   }
   private serverProxies() {
-    if (this.keycloak) {
-      this.app.use('/proxies/v8', this.keycloak.protect, proxiesV8)
-    }
+    this.app.use('/proxies/v8', proxiesV8)
   }
   private authoringProxies() {
     if (this.keycloak) {
@@ -169,7 +167,10 @@ export class Server {
   }
   private resetCookies() {
     this.app.use('/reset', (_req, res) => {
-      logInfo('CLEARING RES COOKIES')
+      logInfo('CLEARING RES COOKIES -- from /reset... ' )
+      if (_req.hasOwnProperty('session') && _req.session && _req.session.hasOwnProperty('userId') ) {
+        logInfo('CLEARING COOKIES: User Id - ' + _req.session.userId )
+      }
       res.clearCookie('connect.sid', { path: '/' })
       const host = _req.get('host')
       let redirectUrl = '/public/logout'

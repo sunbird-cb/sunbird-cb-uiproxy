@@ -150,6 +150,7 @@ export class CustomKeycloak {
     } else {
       logError('Session does not have property with name: ' + keyCloakPropertyName)
     }
+    logInfo(`${process.pid}: User Deauthenticated, UserId: ` + reqObj.session.userId)
     delete reqObj.session.userRoles
     delete reqObj.session.userId
     delete reqObj.session.keycloakClientId

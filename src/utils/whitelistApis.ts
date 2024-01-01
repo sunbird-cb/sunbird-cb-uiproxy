@@ -2646,7 +2646,7 @@ export const API_LIST = {
                 ROLE.PROGRAM_COORDINATOR,
             ],
         },
-        '/proxies/v8/claimkarmapoints/read': {
+        '/proxies/v8/claimkarmapoints': {
           checksNeeded: [CHECK.ROLE],
           // tslint:disable-next-line: object-literal-sort-keys
           ROLE_CHECK: [
@@ -2990,6 +2990,6 @@ export const API_LIST = {
             '/proxies/v8/user/v1/cbplan',
             '/proxies/v8/karmapoints/read',
             '/proxies/v8/karmapoints/user/course/read',
-            '/proxies/v8/claimkarmapoints/read',		
+            '/proxies/v8/claimkarmapoints',		
            ],
 }

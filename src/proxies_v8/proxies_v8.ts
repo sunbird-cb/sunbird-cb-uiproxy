@@ -223,6 +223,10 @@ proxiesV8.use('/karmapoints/read',
   // tslint:disable-next-line: max-line-length
   proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/karmapoints/read`)
 )
+proxiesV8.use('/karmapoints/user/course/read',
+  // tslint:disable-next-line: max-line-length
+  proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/karmapoints/user/course/read`)
+)
 
 proxiesV8.get(['/api/user/v2/read', '/api/user/v2/read/:id'], async (req, res) => {
   const host = req.get('host')

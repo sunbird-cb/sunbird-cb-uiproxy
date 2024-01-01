@@ -2623,6 +2623,13 @@ export const API_LIST = {
                     ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/karmapoints/user/course/read': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.PUBLIC,
+            ],
+        },
         '/proxies/v8/data/v1/system/settings/get/defaultCertTemplate': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -2975,5 +2982,6 @@ export const API_LIST = {
             '/proxies/v8/halloffame/read',
             '/proxies/v8/user/v1/cbplan',
             '/proxies/v8/karmapoints/read',
+            '/proxies/v8/karmapoints/user/course/read',
            ],
 }

@@ -232,7 +232,7 @@ proxiesV8.use('/claimkarmapoints',
   // tslint:disable-next-line: max-line-length
   proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/claimkarmapoints`)
 )
-proxiesV8.use('/v1/user/login/*',
+proxiesV8.use('/v1/user/login',
   // tslint:disable-next-line: max-line-length
   proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/v1/user/login`)
 )

@@ -2652,7 +2652,14 @@ export const API_LIST = {
           ROLE_CHECK: [
               ROLE.PUBLIC,                    
             ],
-        },		
+        },
+        '/proxies/v8/v1/user/login': {
+          checksNeeded: [CHECK.ROLE],
+          // tslint:disable-next-line: object-literal-sort-keys
+          ROLE_CHECK: [
+              ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -2990,6 +2997,7 @@ export const API_LIST = {
             '/proxies/v8/user/v1/cbplan',
             '/proxies/v8/karmapoints/read',
             '/proxies/v8/karmapoints/user/course/read',
-            '/proxies/v8/claimkarmapoints',		
+            '/proxies/v8/claimkarmapoints',
+            '/proxies/v8/v1/user/login',
            ],
 }

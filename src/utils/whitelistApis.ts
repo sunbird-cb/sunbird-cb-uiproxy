@@ -2653,7 +2653,7 @@ export const API_LIST = {
               ROLE.PUBLIC,                    
             ],
         },
-        '/proxies/v8/v1/user/login': {
+        '/proxies/v8/v1/user/login/:id': {
           checksNeeded: [CHECK.ROLE],
           // tslint:disable-next-line: object-literal-sort-keys
           ROLE_CHECK: [
@@ -2998,6 +2998,6 @@ export const API_LIST = {
             '/proxies/v8/karmapoints/read',
             '/proxies/v8/karmapoints/user/course/read',
             '/proxies/v8/claimkarmapoints',
-            '/proxies/v8/v1/user/login',
+            '/proxies/v8/v1/user/login/:id',
            ],
 }

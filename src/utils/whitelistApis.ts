@@ -2667,6 +2667,14 @@ export const API_LIST = {
                 ROLE.PUBLIC,
               ],
           },
+        '/proxies/v8/cbplan/v1/admin/requestcontent': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.MDO_ADMIN,
+                    ROLE.MDO_LEADER,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -3007,5 +3015,6 @@ export const API_LIST = {
             '/proxies/v8/claimkarmapoints',
             '/proxies/v8/login/entry',
             '/proxies/v8/user/totalkarmapoints',
+            '/proxies/v8/cbplan/v1/admin/requestcontent'
            ],
 }

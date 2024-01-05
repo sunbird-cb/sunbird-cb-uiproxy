@@ -2675,6 +2675,20 @@ export const API_LIST = {
                     ROLE.MDO_LEADER,
             ],
         },
+        '/proxies/v8/storage/v1/spvReport/:reportType/:date/:fileName': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.SPV_ADMIN,
+            ],
+        },
+       '/proxies/v8/storage/v1/spvReportInfo': {
+           checksNeeded: [CHECK.ROLE],
+           // tslint:disable-next-line: object-literal-sort-keys
+           ROLE_CHECK: [
+               ROLE.SPV_ADMIN
+           ],
+        },
     },
     URL_PATTERN:
         [
@@ -3015,6 +3029,8 @@ export const API_LIST = {
             '/proxies/v8/claimkarmapoints',
             '/proxies/v8/login/entry',
             '/proxies/v8/user/totalkarmapoints',
-            '/proxies/v8/cbplan/v1/admin/requestcontent'
+            '/proxies/v8/cbplan/v1/admin/requestcontent',
+            '/proxies/v8/storage/v1/spvReport/:reportType/:date/:fileName',
+            '/proxies/v8/storage/v1/spvReportInfo',
            ],
 }

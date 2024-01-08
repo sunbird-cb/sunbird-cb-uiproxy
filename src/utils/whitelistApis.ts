@@ -2682,7 +2682,7 @@ export const API_LIST = {
                 ROLE.SPV_ADMIN,
             ],
         },
-       '/proxies/v8/storage/v1/spvReportInfo': {
+       '/proxies/v8/storage/v1/spvReportInfo/:date': {
            checksNeeded: [CHECK.ROLE],
            // tslint:disable-next-line: object-literal-sort-keys
            ROLE_CHECK: [
@@ -3031,6 +3031,6 @@ export const API_LIST = {
             '/proxies/v8/user/totalkarmapoints',
             '/proxies/v8/cbplan/v1/admin/requestcontent',
             '/proxies/v8/storage/v1/spvReport/:reportType/:date/:fileName',
-            '/proxies/v8/storage/v1/spvReportInfo',
+            '/proxies/v8/storage/v1/spvReportInfo/:date',
            ],
 }

@@ -174,6 +174,11 @@ proxiesV8.use('/contentsearch/*',
   proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/content/v1/search`)
 )
 
+proxiesV8.use('/sunbirdigot/v4/*',
+  // tslint:disable-next-line: max-line-length
+  proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/composite/v4/search`)
+)
+
 proxiesV8.use('/sunbirdigot/*',
   // tslint:disable-next-line: max-line-length
   proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/composite/v1/search`)
@@ -239,10 +244,6 @@ proxiesV8.use('/login/entry*',
 proxiesV8.use('/user/totalkarmapoints',
   // tslint:disable-next-line: max-line-length
   proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/user/totalkarmapoints`)
-)
-proxiesV8.use('/sunbirdigot/v4/*',
-  // tslint:disable-next-line: max-line-length
-  proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/composite/v4/search`)
 )
 proxiesV8.get(['/api/user/v2/read', '/api/user/v2/read/:id'], async (req, res) => {
   const host = req.get('host')

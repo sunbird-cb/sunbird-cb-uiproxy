@@ -2477,6 +2477,7 @@ export const API_LIST = {
                 ROLE.CBP_ADMIN,
                 ROLE.MDO_ADMIN,
                 ROLE.CONTENT_REVIEWER,
+                ROLE.CONTENT_CREATOR,
             ],
         },
        '/proxies/v8/user/v1/admin/extPatch': {

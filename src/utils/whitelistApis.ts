@@ -2476,7 +2476,6 @@ export const API_LIST = {
                 ROLE.PROGRAM_COORDINATOR,
                 ROLE.CBP_ADMIN,
                 ROLE.MDO_ADMIN,
-                ROLE.CONTENT_REVIEWER,
                 ROLE.CONTENT_CREATOR,
             ],
         },

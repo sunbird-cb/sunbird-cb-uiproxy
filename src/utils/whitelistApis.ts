@@ -1180,7 +1180,7 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        '/proxies/v8/portal/admin/listDeptNames': {
+        '/proxies/v8/portal/v1/admin/listDeptNames': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -2872,7 +2872,7 @@ export const API_LIST = {
             '/protected/v8/frac/getAllNodes/:type',
             '/protected/v8/frac/getNodeById/:id/:type',
             '/protected/v8/portal/listDeptNames',
-            '/proxies/v8/portal/admin/listDeptNames',
+            '/proxies/v8/portal/v1/admin/listDeptNames',
             '/protected/v8/scroing/getTemplate/:templateId',
             '/protected/v8/portal/cbc/department',
             '/protected/v8/portal/cbc/department/:deptId/',

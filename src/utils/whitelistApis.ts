@@ -1180,6 +1180,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/portal/admin/listDeptNames': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PROGRAM_COORDINATOR,
+            ],
+        },
         '/protected/v8/scroing/getTemplate/:templateId': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -2578,6 +2585,13 @@ export const API_LIST = {
                     ROLE.MDO_LEADER,
             ],
         },
+        '/proxies/v8/masterData/v2/admin/deptPosition': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.PROGRAM_COORDINATOR,
+            ],
+        },
         '/proxies/v8/cbplan/v1/archive': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -2650,7 +2664,7 @@ export const API_LIST = {
           checksNeeded: [CHECK.ROLE],
           // tslint:disable-next-line: object-literal-sort-keys
           ROLE_CHECK: [
-              ROLE.PUBLIC,                    
+              ROLE.PUBLIC,
             ],
         },
         '/proxies/v8/login/entry': {
@@ -2686,7 +2700,7 @@ export const API_LIST = {
            checksNeeded: [CHECK.ROLE],
            // tslint:disable-next-line: object-literal-sort-keys
            ROLE_CHECK: [
-               ROLE.SPV_ADMIN
+               ROLE.SPV_ADMIN,
            ],
         },
         '/proxies/v8/sunbirdigot/v4/search': {
@@ -2702,7 +2716,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
-        },    
+        },
     },
     URL_PATTERN:
         [
@@ -2858,6 +2872,7 @@ export const API_LIST = {
             '/protected/v8/frac/getAllNodes/:type',
             '/protected/v8/frac/getNodeById/:id/:type',
             '/protected/v8/portal/listDeptNames',
+            '/proxies/v8/portal/admin/listDeptNames',
             '/protected/v8/scroing/getTemplate/:templateId',
             '/protected/v8/portal/cbc/department',
             '/protected/v8/portal/cbc/department/:deptId/',
@@ -3033,6 +3048,7 @@ export const API_LIST = {
             '/proxies/v8/cbplan/v1/update',
             '/proxies/v8/cbplan/v1/publish',
             '/proxies/v8/masterData/v2/deptPosition',
+            '/proxies/v8/masterData/v2/admin/deptPosition',
             '/proxies/v8/cbplan/v1/archive',
             '/proxies/v8/cbplan/v1/read/:id',
             '/proxies/v8/cbplan/v1/list',

@@ -677,3 +677,8 @@ proxiesV8.post('/notifyContentState', async (req, res) => {
     res.status(200).send(stateEmailResponse.data)
   }
 })
+
+proxiesV8.use('/portal/*',
+  // tslint:disable-next-line: max-line-length
+  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)

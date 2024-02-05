@@ -2729,9 +2729,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.PROGRAM_COORDINATOR,
-                ROLE.CBP_ADMIN,
-                ROLE.MDO_ADMIN,
-                ROLE.CONTENT_REVIEWER,
+                ROLE.CONTENT_CREATOR,
               ],
           },
     },

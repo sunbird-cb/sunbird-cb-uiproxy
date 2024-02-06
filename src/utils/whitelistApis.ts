@@ -2527,7 +2527,13 @@ export const API_LIST = {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
+                    ROLE.CONTENT_CREATOR,
+                    ROLE.CONTENT_PUBLISHER,
+                    ROLE.CONTENT_REVIEWER,
+                    ROLE.MDO_ADMIN,
+                    ROLE.MDO_LEADER,
                     ROLE.PUBLIC,
+                    ROLE.SPV_PUBLISHER,
             ],
         },
         '/proxies/v8/competency/v4/read/:id': {

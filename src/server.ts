@@ -172,17 +172,15 @@ export class Server {
     this.app.use('/reset', (_req, res) => {
       logInfo('CLEARING RES COOKIES')
       res.clearCookie('connect.sid', { path: '/' })
-
       const host = _req.get('host')
       let redirectUrl = '/public/logout'
       logInfo('Reset Cookies... received host value ' + host)
       try {
-           this.logout(_req)
+           this.logout(request)
            logInfo('deauthenticated method called successfully.')
        } catch (error) {
            logInfo('Error calling deauthenticated method:', error)
        }
-
       if (host === `${CONSTANTS.KARMAYOGI_PORTAL_HOST}`) {
         redirectUrl = '/public/home'
       }
@@ -227,6 +225,6 @@ export class Server {
       delete reqObj.session.userRoles
       delete reqObj.session.userId
       reqObj.session.destroy()
-      logInfo(`${process.pid}: User Deauthenticated`)
+      logInfo(`${process.pid}: User Deauthenticated keycloak`)
     }
 }

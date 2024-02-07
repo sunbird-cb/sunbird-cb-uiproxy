@@ -176,7 +176,13 @@ export class Server {
       const host = _req.get('host')
       let redirectUrl = '/public/logout'
       logInfo('Reset Cookies... received host value ' + host)
-      this.logout(_req)
+      try {
+           this.logout(_req)
+           logInfo('deauthenticated method called successfully.')
+       } catch (error) {
+           logInfo('Error calling deauthenticated method:', error)
+       }
+
       if (host === `${CONSTANTS.KARMAYOGI_PORTAL_HOST}`) {
         redirectUrl = '/public/home'
       }

@@ -6,6 +6,7 @@ import fileUpload from 'express-fileupload'
 import expressSession from 'express-session'
 import helmet from 'helmet'
 import morgan from 'morgan'
+import request from 'request'
 import { authContent } from './authoring/authContent'
 import { authIapBackend } from './authoring/authIapBackend'
 import { authNotification } from './authoring/authNotification'
@@ -17,7 +18,7 @@ import { proxiesV8 } from './proxies_v8/proxies_v8'
 import { publicApiV8 } from './publicApi_v8/publicApiV8'
 import { CustomKeycloak } from './utils/custom-keycloak'
 import { CONSTANTS } from './utils/env'
-import { logInfo, logSuccess } from './utils/logger'
+import { logError, logInfo, logSuccess } from './utils/logger'
 const cookieParser = require('cookie-parser')
 const healthcheck = require('express-healthcheck')
 
@@ -171,13 +172,55 @@ export class Server {
     this.app.use('/reset', (_req, res) => {
       logInfo('CLEARING RES COOKIES')
       res.clearCookie('connect.sid', { path: '/' })
+
       const host = _req.get('host')
       let redirectUrl = '/public/logout'
       logInfo('Reset Cookies... received host value ' + host)
+      this.logout(_req)
       if (host === `${CONSTANTS.KARMAYOGI_PORTAL_HOST}`) {
         redirectUrl = '/public/home'
       }
       res.redirect(redirectUrl)
     })
   }
+
+// tslint:disable-next-line: no-any
+ private logout = async (reqObj: any) => {
+      logInfo('keycloakHelper::deauthenticated...')
+      const keyCloakPropertyName = 'keycloak-token'
+      if (reqObj.session.hasOwnProperty(keyCloakPropertyName)) {
+           const keycloakToken = reqObj.session[keyCloakPropertyName]
+           if (keycloakToken) {
+             const tokenObject = JSON.parse(keycloakToken)
+             const refreshToken = tokenObject.refresh_token
+             if (refreshToken) {
+               const host = reqObj.get('host')
+               const urlValue = `https://${host}` + '/auth/realms/' + CONSTANTS.KEYCLOAK_REALM + '/protocol/openid-connect/logout'
+               try {
+                   request.post({
+                       form: {
+                           client_id: CONSTANTS.KEYCLOAK_GOOGLE_CLIENT_ID,
+                           client_secret: CONSTANTS.KEYCLOAK_GOOGLE_CLIENT_SECRET,
+                           refresh_token: refreshToken,
+                       },
+                       url: urlValue,
+                   })
+               } catch (err) {
+                   // tslint:disable-next-line: no-console
+                   console.log('Failed to call keycloak logout API ', err, '------', new Date().toString())
+               }
+             } else {
+               logError('Not able to retrieve refresh_token value from Session. Logout process failed.')
+             }
+           } else {
+             logError('Not able to retrieve keycloak-token value from Session. Logout process failed.')
+           }
+         } else {
+           logError('Session does not have property with name: ' + keyCloakPropertyName)
+         }
+      delete reqObj.session.userRoles
+      delete reqObj.session.userId
+      reqObj.session.destroy()
+      logInfo(`${process.pid}: User Deauthenticated`)
+    }
 }

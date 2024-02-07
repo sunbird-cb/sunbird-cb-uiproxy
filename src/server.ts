@@ -174,10 +174,57 @@ export class Server {
       const host = _req.get('host')
       let redirectUrl = '/public/logout'
       logInfo('Reset Cookies... received host value ' + host)
+      try {
+                  await this.deauthenticated(req); 
+                  logInfo('deauthenticated method called successfully.')
+              } catch (error) {
+                  logInfo('Error calling deauthenticated method:', error)
+              }
+
       if (host === `${CONSTANTS.KARMAYOGI_PORTAL_HOST}`) {
         redirectUrl = '/public/home'
       }
       res.redirect(redirectUrl)
     })
   }
+  
+  private deauthenticated(reqObj: any) => {
+      logInfo('keycloakHelper::deauthenticated...')
+      const keyCloakPropertyName = 'keycloak-token'
+      if (reqObj.session.hasOwnProperty(keyCloakPropertyName)) {
+        const keycloakToken = reqObj.session[keyCloakPropertyName]
+        if (keycloakToken) {
+          const tokenObject = JSON.parse(keycloakToken)
+          const refreshToken = tokenObject.refresh_token
+          if (refreshToken) {
+            const host = reqObj.get('host')
+            const urlValue = `https://${host}` + '/auth/realms/' + CONSTANTS.KEYCLOAK_REALM + '/protocol/openid-connect/logout'
+            try {
+                request.post({
+                    form: {
+                        client_id: CONSTANTS.KEYCLOAK_GOOGLE_CLIENT_ID,
+                        client_secret: CONSTANTS.KEYCLOAK_GOOGLE_CLIENT_SECRET,
+                        refresh_token: refreshToken,
+                    },
+                    url: urlValue,
+                })
+            } catch (err) {
+                // tslint:disable-next-line: no-console
+                console.log('Failed to call keycloak logout API ', err, '------', new Date().toString())
+            }
+          } else {
+            logError('Not able to retrieve refresh_token value from Session. Logout process failed.')
+          }
+        } else {
+          logError('Not able to retrieve keycloak-token value from Session. Logout process failed.')
+        }
+      } else {
+        logError('Session does not have property with name: ' + keyCloakPropertyName)
+      }
+      delete reqObj.session.userRoles
+      delete reqObj.session.userId
+      reqObj.session.destroy()
+      logInfo(`${process.pid}: User Deauthenticated`)
+  }
+
 }

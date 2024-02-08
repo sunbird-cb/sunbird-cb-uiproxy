@@ -6,7 +6,6 @@ import fileUpload from 'express-fileupload'
 import expressSession from 'express-session'
 import helmet from 'helmet'
 import morgan from 'morgan'
-import request from 'request'
 import { authContent } from './authoring/authContent'
 import { authIapBackend } from './authoring/authIapBackend'
 import { authNotification } from './authoring/authNotification'
@@ -170,30 +169,27 @@ export class Server {
   }
   private resetCookies() {
     this.app.use('/reset', (_req, res) => {
-      logInfo('CLEARING RES COOKIES')
-      res.clearCookie('connect.sid', { path: '/' })
-      const host = _req.get('host')
-      let redirectUrl = '/public/logout'
-      logInfo('Reset Cookies... received host value ' + host)
-      try {
-           this.logout(_req)
-           logInfo('_req is:', _req.toString())
-           logInfo('deauthenticated method called successfully.')
-       } catch (error) {
-           logInfo('Error calling deauthenticated method:', error)
-       }
-      if (host === `${CONSTANTS.KARMAYOGI_PORTAL_HOST}`) {
-        redirectUrl = '/public/home'
-      }
+    try {
+       this.logout(_req)
+       logInfo('logout method called successfully.')
+    } catch (error) {
+        logInfo('Error calling logout method:', error)
+    }
+    logInfo('CLEARING RES COOKIES')
+    es.clearCookie('connect.sid', { path: '/' })
+    reqObj.session.destroy()
+    const host = _req.get('host')
+    let redirectUrl = '/public/logout'
+    logInfo('Reset Cookies... received host value ' + host)
+    if (host === `${CONSTANTS.KARMAYOGI_PORTAL_HOST}`) {
+      redirectUrl = '/public/home'
+    }
       res.redirect(redirectUrl)
     })
   }
 
 // tslint:disable-next-line: no-any
  private logout = async (reqObj: any) => {
-      logInfo('keycloakHelper::deauthenticated...')
-      // tslint:disable-next-line: no-any
-      logInfo('request inside logout is :', request.toString())
       const keyCloakPropertyName = 'keycloak-token'
       if (reqObj.session.hasOwnProperty(keyCloakPropertyName)) {
            const keycloakToken = reqObj.session[keyCloakPropertyName]
@@ -227,7 +223,5 @@ export class Server {
          }
       delete reqObj.session.userRoles
       delete reqObj.session.userId
-      reqObj.session.destroy()
-      logInfo(`${process.pid}: User Deauthenticated keycloak`)
     }
 }

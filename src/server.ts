@@ -176,7 +176,8 @@ export class Server {
       let redirectUrl = '/public/logout'
       logInfo('Reset Cookies... received host value ' + host)
       try {
-           this.logout(request)
+           this.logout(_req)
+           logInfo('_req is:', _req.toString())
            logInfo('deauthenticated method called successfully.')
        } catch (error) {
            logInfo('Error calling deauthenticated method:', error)
@@ -191,6 +192,8 @@ export class Server {
 // tslint:disable-next-line: no-any
  private logout = async (reqObj: any) => {
       logInfo('keycloakHelper::deauthenticated...')
+      // tslint:disable-next-line: no-any
+      logInfo('request inside logout is :', request.toString())
       const keyCloakPropertyName = 'keycloak-token'
       if (reqObj.session.hasOwnProperty(keyCloakPropertyName)) {
            const keycloakToken = reqObj.session[keyCloakPropertyName]

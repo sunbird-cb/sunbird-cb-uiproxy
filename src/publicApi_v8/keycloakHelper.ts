@@ -1,9 +1,7 @@
 const keycloak = require('keycloak-connect')
 const async = require('async')
-import request from 'request'
 import { getOAuthKeycloakConfig } from '../configs/keycloak.config'
 import { getSessionConfig } from '../configs/session.config'
-import { CONSTANTS } from '../utils/env'
 import { logError, logInfo } from '../utils/logger'
 import { PERMISSION_HELPER } from '../utils/permissionHelper'
 
@@ -18,6 +16,7 @@ export function getKeyCloakClient() {
 // tslint:disable-next-line: no-any
 const deauthenticated = async (reqObj: any) => {
     logInfo('keycloakHelper::deauthenticated...')
+    reqObj.session.destroy()
     logInfo(`${process.pid}: User Deauthenticated`)
 }
 

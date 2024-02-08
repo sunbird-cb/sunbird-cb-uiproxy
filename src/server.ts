@@ -6,6 +6,7 @@ import fileUpload from 'express-fileupload'
 import expressSession from 'express-session'
 import helmet from 'helmet'
 import morgan from 'morgan'
+import request from 'request'
 import { authContent } from './authoring/authContent'
 import { authIapBackend } from './authoring/authIapBackend'
 import { authNotification } from './authoring/authNotification'
@@ -176,15 +177,14 @@ export class Server {
         logInfo('Error calling logout method:', error)
     }
     logInfo('CLEARING RES COOKIES')
-    es.clearCookie('connect.sid', { path: '/' })
-    reqObj.session.destroy()
+    res.clearCookie('connect.sid', { path: '/' })
     const host = _req.get('host')
     let redirectUrl = '/public/logout'
     logInfo('Reset Cookies... received host value ' + host)
     if (host === `${CONSTANTS.KARMAYOGI_PORTAL_HOST}`) {
       redirectUrl = '/public/home'
     }
-      res.redirect(redirectUrl)
+    res.redirect(redirectUrl)
     })
   }
 

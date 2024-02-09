@@ -255,12 +255,13 @@ export class Server {
       } else {
         logError('Session does not have property with name: ' + keyCloakPropertyName)
       }
+      delete reqObj.session.userRoles
+      delete reqObj.session.userId
+      delete reqObj.session.keycloakClientId
+      delete reqObj.session.keycloakClientSecret
+      reqObj.session.destroy()
     } else {
       logError('Session does not exist')
     }
-    delete reqObj.session.userRoles
-    delete reqObj.session.userId
-    delete reqObj.session.keycloakClientId
-    delete reqObj.session.keycloakClientSecret
   }
 }

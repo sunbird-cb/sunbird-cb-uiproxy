@@ -83,8 +83,7 @@ export class CustomKeycloak {
   }
 
   // tslint:disable-next-line: no-any
-  deauthenticated = (reqObj: any) => {
-    reqObj.session.destroy()
+  deauthenticated = () => {
     logInfo(`${process.pid}: User Deauthenticated`)
   }
 

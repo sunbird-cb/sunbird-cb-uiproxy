@@ -17,6 +17,7 @@ export function getKeyCloakClient() {
 
 // tslint:disable-next-line: no-any
 const deauthenticated = async (reqObj: any) => {
+    logInfo('Inside keycloakHelper deauthenticated method')
     logInfo('keycloakHelper::deauthenticated...')
     const keyCloakPropertyName = 'keycloak-token'
     if (reqObj.session.hasOwnProperty(keyCloakPropertyName)) {
@@ -52,7 +53,7 @@ const deauthenticated = async (reqObj: any) => {
     delete reqObj.session.userRoles
     delete reqObj.session.userId
     reqObj.session.destroy()
-    logInfo(`${process.pid}: User Deauthenticated`)
+    logInfo(`${process.pid}: User Deauthenticated from keycloakHelper`)
 }
 
 // tslint:disable-next-line: no-any

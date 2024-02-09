@@ -1,7 +1,6 @@
 import * as express from 'express'
 import expressSession from 'express-session'
 import keycloakConnect from 'keycloak-connect'
-import request from 'request'
 import { getKeycloakConfig } from '../configs/keycloak.config'
 import { CONSTANTS } from './env'
 import { logError, logInfo } from './logger'
@@ -85,75 +84,6 @@ export class CustomKeycloak {
 
   // tslint:disable-next-line: no-any
   deauthenticated = (reqObj: any) => {
-    const keyCloakPropertyName = 'keycloak-token'
-    if (reqObj.session.hasOwnProperty(keyCloakPropertyName)) {
-      const keycloakToken = reqObj.session[keyCloakPropertyName]
-      if (keycloakToken) {
-        const tokenObject = JSON.parse(keycloakToken)
-        const refreshToken = tokenObject.refresh_token
-        if (refreshToken) {
-          const host = reqObj.get('host')
-          const urlValue = `https://${host}` + '/auth/realms/' + CONSTANTS.KEYCLOAK_REALM + '/protocol/openid-connect/logout'
-          const formData: Record<string, string> = {
-            client_id: 'portal',
-            refresh_token: refreshToken,
-          }
-
-          if (reqObj.session.hasOwnProperty('keycloakClientId') && (reqObj.session.keycloakClientId !== '')) {
-            formData.client_id = reqObj.session.keycloakClientId
-            formData.client_secret = reqObj.session.keycloakClientSecret
-          }
-          logInfo('formData used in logout: ' + JSON.stringify(formData))
-          try {
-              request.post({
-                  form: formData,
-                  url: urlValue,
-              })
-          } catch (err) {
-              // tslint:disable-next-line: no-console
-              console.log('Failed to call keycloak logout API ', err, '------', new Date().toString())
-          }
-
-          if (reqObj.session.parichayToken) {
-            logInfo('Parichay login found... trying to logout from Parichay...')
-            try {
-              request.get({
-                  headers: {
-                    Authorization: reqObj.session.parichayToken.access_token,
-                  },
-                  url: CONSTANTS.PARICHAY_REVOKE_URL,
-              }, (err, res, body) => {
-                if (err) {
-                  logError('Received error when calling Parichay logout... ')
-                  logError(JSON.stringify(err))
-                }
-                if (res) {
-                  logInfo('Received response from Parichay logout... ')
-                  logInfo(JSON.stringify(res.body))
-                }
-                if (body) {
-                  logInfo('Received body from Parichay logout...')
-                  logInfo(JSON.stringify(body))
-                }
-              })
-            } catch (err) {
-                // tslint:disable-next-line: no-console
-                console.log('Failed to call parichay revoke API ', err, '------', new Date().toString())
-            }
-          }
-        } else {
-          logError('Not able to retrieve refresh_token value from Session. Logout process failed.')
-        }
-      } else {
-        logError('Not able to retrieve keycloak-token value from Session. Logout process failed.')
-      }
-    } else {
-      logError('Session does not have property with name: ' + keyCloakPropertyName)
-    }
-    delete reqObj.session.userRoles
-    delete reqObj.session.userId
-    delete reqObj.session.keycloakClientId
-    delete reqObj.session.keycloakClientSecret
     reqObj.session.destroy()
     logInfo(`${process.pid}: User Deauthenticated`)
   }

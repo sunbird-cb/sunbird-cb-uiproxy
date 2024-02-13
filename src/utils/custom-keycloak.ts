@@ -84,7 +84,7 @@ export class CustomKeycloak {
 
   // tslint:disable-next-line: no-any
   deauthenticated = () => {
-    logInfo(`${process.pid}: User Deauthenticated`)
+    logInfo(`${process.pid}: User Deauthenticated from custom-keycloak.ts`)
   }
 
   protect = (req: express.Request, res: express.Response, next: express.NextFunction) => {

@@ -171,6 +171,7 @@ export class Server {
   private resetCookies() {
     this.app.use('/reset', (_req, res) => {
     try {
+       logInfo('before calling logout method.')
        this.logout(_req)
        logInfo('logout method called successfully.')
     } catch (error) {
@@ -190,6 +191,7 @@ export class Server {
 
 // tslint:disable-next-line: no-any
   private logout = async (reqObj: any) => {
+    logInfo('Inside logout method in server.ts.')
     const keyCloakPropertyName = 'keycloak-token'
     if (reqObj.session) {
       logInfo('session exist for reqObj')

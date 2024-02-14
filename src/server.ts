@@ -1,3 +1,4 @@
+import axios from 'axios'
 import compression from 'compression'
 import connectTimeout from 'connect-timeout'
 import cors from 'cors'
@@ -213,10 +214,9 @@ export class Server {
             }
             logInfo('formData used in logout: ' + JSON.stringify(formData))
             try {
-              request.post({
-                form: formData,
-                url: urlValue,
-              })
+              const response = await axios.post(urlValue, formData)
+              // tslint:disable-next-line: no-console
+              console.log('Response:', response.data) // For example, log response data
             } catch (err) {
               // tslint:disable-next-line: no-console
               console.log('Failed to call keycloak logout API ', err, '------', new Date().toString())

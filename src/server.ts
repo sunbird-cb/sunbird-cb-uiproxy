@@ -6,7 +6,6 @@ import fileUpload from 'express-fileupload'
 import expressSession from 'express-session'
 import helmet from 'helmet'
 import morgan from 'morgan'
-import request from 'request'
 import { authContent } from './authoring/authContent'
 import { authIapBackend } from './authoring/authIapBackend'
 import { authNotification } from './authoring/authNotification'
@@ -170,100 +169,33 @@ export class Server {
   }
   private resetCookies() {
     this.app.use('/reset', (_req, res) => {
-    try {
-       logInfo('before calling logout method.')
-       this.logout(_req)
-       logInfo('logout method called successfully.')
-    } catch (error) {
-        logInfo('Error calling logout method:', error)
-    }
-    logInfo('CLEARING RES COOKIES')
-    res.clearCookie('connect.sid', { path: '/' })
-    const host = _req.get('host')
-    let redirectUrl = '/public/logout'
-    logInfo('Reset Cookies... received host value ' + host)
-    if (host === `${CONSTANTS.KARMAYOGI_PORTAL_HOST}`) {
-      redirectUrl = '/public/home'
-    }
-    res.redirect(redirectUrl)
-    })
-  }
-
-// tslint:disable-next-line: no-any
-  private logout = async (reqObj: any) => {
-    logInfo('Inside logout method in server.ts.')
-    const keyCloakPropertyName = 'keycloak-token'
-    if (reqObj.session) {
-      logInfo('session exist for reqObj')
-      if (reqObj.session.hasOwnProperty(keyCloakPropertyName)) {
-        const keycloakToken = reqObj.session[keyCloakPropertyName]
-        if (keycloakToken) {
-          const tokenObject = JSON.parse(keycloakToken)
-          const refreshToken = tokenObject.refresh_token
-          if (refreshToken) {
-            const host = reqObj.get('host')
-            const urlValue = `https://${host}` + '/auth/realms/' + CONSTANTS.KEYCLOAK_REALM + '/protocol/openid-connect/logout'
-            const formData: Record<string, string> = {
-              client_id: 'portal',
-              refresh_token: refreshToken,
-            }
-            if (reqObj.session.hasOwnProperty('keycloakClientId') && (reqObj.session.keycloakClientId !== '')) {
-              formData.client_id = reqObj.session.keycloakClientId
-              formData.client_secret = reqObj.session.keycloakClientSecret
-            }
-            logInfo('formData used in logout: ' + JSON.stringify(formData))
-            try {
-              request.post({
-                form: formData,
-                url: urlValue,
-              })
-            } catch (err) {
-              // tslint:disable-next-line: no-console
-              console.log('Failed to call keycloak logout API ', err, '------', new Date().toString())
-            }
-            if (reqObj.session.parichayToken) {
-              logInfo('Parichay login found... trying to logout from Parichay...')
-              try {
-                request.get({
-                  headers: {
-                    Authorization: reqObj.session.parichayToken.access_token,
-                  },
-                  url: CONSTANTS.PARICHAY_REVOKE_URL,
-                }, (err, res, body) => {
-                  if (err) {
-                    logError('Received error when calling Parichay logout... ')
-                    logError(JSON.stringify(err))
-                  }
-                  if (res) {
-                    logInfo('Received response from Parichay logout... ')
-                    logInfo(JSON.stringify(res.body))
-                  }
-                  if (body) {
-                    logInfo('Received body from Parichay logout...')
-                    logInfo(JSON.stringify(body))
-                  }
-                })
-              } catch (err) {
-                // tslint:disable-next-line: no-console
-                console.log('Failed to call parichay revoke API ', err, '------', new Date().toString())
-              }
-            }
-          } else {
-            logError('Not able to retrieve refresh_token value from Session. Logout process failed.')
-          }
-        } else {
-          logError('Not able to retrieve keycloak-token value from Session. Logout process failed.')
-        }
-      } else {
-        logError('Session does not have property with name: ' + keyCloakPropertyName)
+      res.clearCookie('connect.sid', { path: '/' })
+      try {
+        logInfo('before calling logout method.')
+        // this.logout(_req)
+        logInfo('logout method called successfully.')
+      } catch (error) {
+          // tslint:disable-next-line: no-any
+          logError('Error calling logout method: ', JSON.stringify(error))
       }
-      delete reqObj.session.userRoles
-      delete reqObj.session.userId
-      delete reqObj.session.keycloakClientId
-      delete reqObj.session.keycloakClientSecret
-      reqObj.session.destroy()
-    } else {
-      logError('Session does not exist')
-    }
+      logInfo('CLEARING RES COOKIES')
+
+      const host = _req.get('host')
+      let redirectUrl = '/auth/realms/sunbird/protocol/openid-connect/logout?redirect_uri='
+      redirectUrl = redirectUrl + `${CONSTANTS.KARMAYOGI_PORTAL_HOST}` + '/public/logout'
+      logInfo('Reset Cookies... received host value ' + host)
+      if (host === `${CONSTANTS.KARMAYOGI_PORTAL_HOST}`) {
+        redirectUrl = '/public/home'
+      }
+      logInfo('redirectUrl -> ' + redirectUrl)
+      if (_req.session) {
+        delete _req.session.userRoles
+        delete _req.session.userId
+        delete _req.session.keycloakClientId
+        delete _req.session.keycloakClientSecret
+        // _req.session.destroy()
+      }
+      res.redirect(redirectUrl)
+    })
   }
 }

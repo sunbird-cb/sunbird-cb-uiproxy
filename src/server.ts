@@ -169,6 +169,7 @@ export class Server {
   }
   private resetCookies() {
     this.app.use('/reset', (_req, res) => {
+      logInfo('Handling /reset call...')
       res.clearCookie('connect.sid', { path: '/' })
       try {
         logInfo('before calling logout method.')

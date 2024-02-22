@@ -2745,6 +2745,13 @@ export const API_LIST = {
                 ROLE.CONTENT_CREATOR,
               ],
           },
+        '/proxies/v8/operationalreports/admin/grantaccess': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_LEADER,
+              ],
+          }, 
     },
     URL_PATTERN:
         [
@@ -3095,5 +3102,6 @@ export const API_LIST = {
             '/proxies/v8/user/v1/content/recommend',
             '/proxies/v8/ehrms/details',
             '/proxies/v8/program/v2/admin/bulkEnroll',
+            '/proxies/v8/operationalreports/admin/grantaccess',
            ],
 }

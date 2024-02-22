@@ -3102,6 +3102,6 @@ export const API_LIST = {
             '/proxies/v8/user/v1/content/recommend',
             '/proxies/v8/ehrms/details',
             '/proxies/v8/program/v2/admin/bulkEnroll',
-            '/proxies/v8/operational/reports/admin/grantaccess',
+            '/proxies/v8/operationalreports/admin/grantaccess',
            ],
 }

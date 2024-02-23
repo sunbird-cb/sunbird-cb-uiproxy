@@ -204,6 +204,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/learner/course/v2/user/enrollment/list/:id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/proxies/v8/learner/certreg/v1/certs/validate': {
             checksNeeded: [],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -1178,6 +1185,13 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/portal/v1/admin/listDeptNames': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PROGRAM_COORDINATOR,
             ],
         },
         '/protected/v8/scroing/getTemplate/:templateId': {
@@ -2520,7 +2534,13 @@ export const API_LIST = {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
+                    ROLE.CONTENT_CREATOR,
+                    ROLE.CONTENT_PUBLISHER,
+                    ROLE.CONTENT_REVIEWER,
+                    ROLE.MDO_ADMIN,
+                    ROLE.MDO_LEADER,
                     ROLE.PUBLIC,
+                    ROLE.SPV_PUBLISHER,
             ],
         },
         '/proxies/v8/competency/v4/read/:id': {
@@ -2576,6 +2596,13 @@ export const API_LIST = {
             ROLE_CHECK: [
                     ROLE.MDO_ADMIN,
                     ROLE.MDO_LEADER,
+            ],
+        },
+        '/proxies/v8/masterData/v2/admin/deptPosition': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                    ROLE.PROGRAM_COORDINATOR,
             ],
         },
         '/proxies/v8/cbplan/v1/archive': {
@@ -2650,7 +2677,7 @@ export const API_LIST = {
           checksNeeded: [CHECK.ROLE],
           // tslint:disable-next-line: object-literal-sort-keys
           ROLE_CHECK: [
-              ROLE.PUBLIC,                    
+              ROLE.PUBLIC,
             ],
         },
         '/proxies/v8/login/entry': {
@@ -2686,10 +2713,25 @@ export const API_LIST = {
            checksNeeded: [CHECK.ROLE],
            // tslint:disable-next-line: object-literal-sort-keys
            ROLE_CHECK: [
-               ROLE.SPV_ADMIN
+               ROLE.SPV_ADMIN,
            ],
         },
-      '/proxies/v8/ehrms/details': {
+
+        '/proxies/v8/sunbirdigot/v4/search': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/user/v1/content/recommend': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/ehrms/details': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -2703,6 +2745,21 @@ export const API_LIST = {
                 ROLE.PUBLIC,
               ],
           },
+        '/proxies/v8/program/v2/admin/bulkEnroll': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PROGRAM_COORDINATOR,
+                ROLE.CONTENT_CREATOR,
+              ],
+          },
+        '/proxies/v8/operationalreports/admin/grantaccess': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_LEADER,
+              ],
+          }, 
     },
     URL_PATTERN:
         [
@@ -2739,6 +2796,7 @@ export const API_LIST = {
             '/proxies/v8/discussion/moderation/producer',
             '/proxies/v8/discussion/moderation/consumer',
             '/proxies/v8/learner/course/v1/user/enrollment/list/:id',
+            '/proxies/v8/learner/course/v2/user/enrollment/list/:id',
             '/proxies/v8/learner/certreg/v1/certs/validate',
             '/proxies/v8/read/content-progres/:do_id',
             '/proxies/v8/content-progres/:do_id',
@@ -2858,6 +2916,7 @@ export const API_LIST = {
             '/protected/v8/frac/getAllNodes/:type',
             '/protected/v8/frac/getNodeById/:id/:type',
             '/protected/v8/portal/listDeptNames',
+            '/proxies/v8/portal/v1/admin/listDeptNames',
             '/protected/v8/scroing/getTemplate/:templateId',
             '/protected/v8/portal/cbc/department',
             '/protected/v8/portal/cbc/department/:deptId/',
@@ -3033,6 +3092,7 @@ export const API_LIST = {
             '/proxies/v8/cbplan/v1/update',
             '/proxies/v8/cbplan/v1/publish',
             '/proxies/v8/masterData/v2/deptPosition',
+            '/proxies/v8/masterData/v2/admin/deptPosition',
             '/proxies/v8/cbplan/v1/archive',
             '/proxies/v8/cbplan/v1/read/:id',
             '/proxies/v8/cbplan/v1/list',
@@ -3048,6 +3108,9 @@ export const API_LIST = {
             '/proxies/v8/storage/v1/spvReportInfo/:date',
             '/proxies/v8/ehrms/details',
             '/proxies/v8/wheebox/read',
-
+            '/proxies/v8/sunbirdigot/v4/search',
+            '/proxies/v8/user/v1/content/recommend',
+            '/proxies/v8/program/v2/admin/bulkEnroll',
+            '/proxies/v8/operationalreports/admin/grantaccess',
            ],
 }

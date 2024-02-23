@@ -174,6 +174,11 @@ proxiesV8.use('/contentsearch/*',
   proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/content/v1/search`)
 )
 
+proxiesV8.use('/sunbirdigot/v4/*',
+  // tslint:disable-next-line: max-line-length
+  proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/composite/v4/search`)
+)
+
 proxiesV8.use('/sunbirdigot/*',
   // tslint:disable-next-line: max-line-length
   proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/composite/v1/search`)
@@ -240,7 +245,6 @@ proxiesV8.use('/user/totalkarmapoints',
   // tslint:disable-next-line: max-line-length
   proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/user/totalkarmapoints`)
 )
-
 proxiesV8.get(['/api/user/v2/read', '/api/user/v2/read/:id'], async (req, res) => {
   const host = req.get('host')
   const originalUrl = req.originalUrl
@@ -599,6 +603,12 @@ proxiesV8.use('/wheebox/*',
   // tslint:disable-next-line: max-line-length
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
+
+proxiesV8.use('/operationalreports/*',
+// tslint:disable-next-line: max-line-length
+proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)
+
 function removePrefix(prefix: string, s: string) {
   return s.substr(prefix.length)
 }
@@ -681,3 +691,8 @@ proxiesV8.post('/notifyContentState', async (req, res) => {
     res.status(200).send(stateEmailResponse.data)
   }
 })
+
+proxiesV8.use('/portal/*',
+  // tslint:disable-next-line: max-line-length
+  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)

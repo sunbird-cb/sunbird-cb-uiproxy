@@ -2759,7 +2759,14 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.MDO_LEADER,
               ],
-          }, 
+          },
+          '/proxies/v8/openprogram/v1/enrol': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -3112,5 +3119,6 @@ export const API_LIST = {
             '/proxies/v8/user/v1/content/recommend',
             '/proxies/v8/program/v2/admin/bulkEnroll',
             '/proxies/v8/operationalreports/admin/grantaccess',
+            '/proxies/v8/openprogram/v1/enrol',
            ],
 }

@@ -430,7 +430,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                         meetingLink: CONSTANTS.NINE_TO_FIVE_MEETING_LINK,
                         mode: 'email',
                         orgName: sbChannel,
-                        profileUpdateLink: CONSTANTS.HTTPS_HOST +'/app/user-profile/details',
+                        profileUpdateLink: CONSTANTS.HTTPS_HOST + '/app/user-profile/details',
                         recipientEmails: [ sbemail_ ],
                         setPasswordLink: true,
                         signinLink: CONSTANTS.HTTPS_HOST + '/protected/v8/resource',

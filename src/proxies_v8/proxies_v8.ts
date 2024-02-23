@@ -599,6 +599,10 @@ proxiesV8.use('/ehrms/*',
   // tslint:disable-next-line: max-line-length
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
+proxiesV8.use('/wheebox/*',
+  // tslint:disable-next-line: max-line-length
+  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)
 
 proxiesV8.use('/operationalreports/*',
 // tslint:disable-next-line: max-line-length

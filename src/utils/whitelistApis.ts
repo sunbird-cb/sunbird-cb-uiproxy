@@ -2716,6 +2716,7 @@ export const API_LIST = {
                ROLE.SPV_ADMIN,
            ],
         },
+
         '/proxies/v8/sunbirdigot/v4/search': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -2731,6 +2732,13 @@ export const API_LIST = {
             ],
         },
         '/proxies/v8/ehrms/details': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+              ],
+          },
+       '/proxies/v8/wheebox/read': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -3098,9 +3106,10 @@ export const API_LIST = {
             '/proxies/v8/cbplan/v1/admin/requestcontent',
             '/proxies/v8/storage/v1/spvReport/:reportType/:date/:fileName',
             '/proxies/v8/storage/v1/spvReportInfo/:date',
+            '/proxies/v8/ehrms/details',
+            '/proxies/v8/wheebox/read',
             '/proxies/v8/sunbirdigot/v4/search',
             '/proxies/v8/user/v1/content/recommend',
-            '/proxies/v8/ehrms/details',
             '/proxies/v8/program/v2/admin/bulkEnroll',
             '/proxies/v8/operationalreports/admin/grantaccess',
            ],

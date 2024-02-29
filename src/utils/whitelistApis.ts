@@ -2767,6 +2767,21 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/otp/v3/generate': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/otp/v3/verify': {
+        '/proxies/v8/operationalreports/admin/grantaccess': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+              ],
+          },
     },
     URL_PATTERN:
         [
@@ -3120,5 +3135,7 @@ export const API_LIST = {
             '/proxies/v8/program/v2/admin/bulkEnroll',
             '/proxies/v8/operationalreports/admin/grantaccess',
             '/proxies/v8/openprogram/v1/enrol',
+            '/proxies/v8/otp/v3/generate',
+            '/proxies/v8/otp/v3/otp',
            ],
 }

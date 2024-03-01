@@ -7,7 +7,7 @@ import { logInfo } from '../utils/logger'
 export const youtubePlaylist = express.Router()
 
 youtubePlaylist.get('/landingpage', async (req, res) => {
-    var playListId = req.query.playListId;
+    const playListId = req.query.playListId
     let playListUrl = CONSTANTS.YOUTUBE_PLAYLIST_URL
     playListUrl += '?key=' + CONSTANTS.YOUTUBE_PLAYLIST_API_KEY
     playListUrl += '&playlistId=' + playListId

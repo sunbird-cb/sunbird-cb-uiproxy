@@ -2767,7 +2767,7 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        '/proxies/v8/operationalreports/:reportType/:date/:orgId/:fileName': {
+        '/proxies/v8/operationalreports/download/:reportType/:date/:orgId/:fileName': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -3127,6 +3127,6 @@ export const API_LIST = {
             '/proxies/v8/program/v2/admin/bulkEnroll',
             '/proxies/v8/operationalreports/admin/grantaccess',
             '/proxies/v8/openprogram/v1/enrol',
-            '/proxies/v8/operationalreports/:reportType/:date/:orgId/:fileName',
+            '/proxies/v8/operationalreports/download/:reportType/:date/:orgId/:fileName',
            ],
 }

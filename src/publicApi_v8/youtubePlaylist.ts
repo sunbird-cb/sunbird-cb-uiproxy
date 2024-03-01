@@ -12,7 +12,7 @@ youtubePlaylist.get('/landingpage', async (req, res) => {
     playListUrl += '?key=' + CONSTANTS.YOUTUBE_PLAYLIST_API_KEY
     playListUrl += '&playlistId=' + playListId
     playListUrl += '&part=snippet,id,contentDetails'
-    playListUrl += '&maxResults=' + Number(req.query.maxResults) || Number(CONSTANTS.YOUTUBE_PLAYLIST_MAX_RESULT)
+    playListUrl += '&maxResults=' + (Number(req.query.maxResults) || Number(CONSTANTS.YOUTUBE_PLAYLIST_MAX_RESULT))
     logInfo('Youtube playlist constructed url : ' + playListUrl)
     const playlistResponse = await axios({
         ...axiosRequestConfig,

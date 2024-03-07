@@ -245,6 +245,11 @@ proxiesV8.use('/user/totalkarmapoints',
   // tslint:disable-next-line: max-line-length
   proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/user/totalkarmapoints`)
 )
+
+proxiesV8.use('/halloffame/learnerleaderboard',
+  // tslint:disable-next-line: max-line-length
+  proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/halloffame/learnerleaderboard`)
+)
 proxiesV8.get(['/api/user/v2/read', '/api/user/v2/read/:id'], async (req, res) => {
   const host = req.get('host')
   const originalUrl = req.originalUrl
@@ -612,6 +617,7 @@ proxiesV8.use('/operationalreports/*',
 // tslint:disable-next-line: max-line-length
 proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
+
 
 function removePrefix(prefix: string, s: string) {
   return s.substr(prefix.length)

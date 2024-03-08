@@ -2804,6 +2804,14 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/operationalreports/v1/reportInfo': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_LEADER,
+                ROLE.MDO_ADMIN,
+              ],
+          },
     },
     URL_PATTERN:
         [
@@ -3162,5 +3170,6 @@ export const API_LIST = {
             '/proxies/v8/otp/v3/generate',
             '/proxies/v8/otp/v3/verify',
             '/proxies/v8/user/otp/v2/extPatch',
+            '/proxies/v8/operationalreports/v1/reportInfo'
            ],
 }

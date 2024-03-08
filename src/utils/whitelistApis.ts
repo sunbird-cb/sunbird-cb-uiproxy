@@ -2775,6 +2775,14 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
               ],
           },
+         '/proxies/v8/operationalreports/admin/readaccess': {
+             checksNeeded: [CHECK.ROLE],
+             // tslint:disable-next-line: object-literal-sort-keys
+             ROLE_CHECK: [
+                 ROLE.MDO_LEADER,
+          			 ROLE.MDO_ADMIN,
+               ],
+           },
     },
     URL_PATTERN:
         [
@@ -3129,5 +3137,6 @@ export const API_LIST = {
             '/proxies/v8/operationalreports/admin/grantaccess',
             '/proxies/v8/openprogram/v1/enrol',
             '/proxies/v8/operationalreports/download/:reportType/:date/:orgId/:fileName',
+            '/proxies/v8/operational/reports/admin/readaccess',	
            ],
 }

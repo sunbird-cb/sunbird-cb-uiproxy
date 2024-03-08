@@ -4,6 +4,7 @@ import { logError } from '../utils/logger'
 import { proxyCreatorRoute } from '../utils/proxyCreator'
 import { parichayAuth } from './parichayAuth'
 import { workallocationPublic } from './workallocationPublic'
+import { youtubePlaylist } from './youtubePlaylist'
 
 const puppeteer = require('puppeteer')
 export const publicApiV8 = express.Router()
@@ -62,3 +63,5 @@ publicApiV8.use('/org/v1/list', proxyCreatorRoute(express.Router(), CONSTANTS.KO
 publicApiV8.use('/parichay', parichayAuth)
 
 publicApiV8.use('/halloffame/read', proxyCreatorRoute(express.Router(), CONSTANTS.KONG_API_BASE + '/halloffame/read'))
+
+publicApiV8.use('/playlist', youtubePlaylist)

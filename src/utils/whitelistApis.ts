@@ -2760,13 +2760,13 @@ export const API_LIST = {
                 ROLE.MDO_LEADER,
               ],
           },
-          '/proxies/v8/openprogram/v1/enrol': {
+        '/proxies/v8/openprogram/v1/enrol': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
-        },
+          },
         '/proxies/v8/operationalreports/download/:reportType/:date/:orgId/:fileName': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -2775,21 +2775,21 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
               ],
           },
-         '/proxies/v8/operationalreports/admin/readaccess': {
-             checksNeeded: [CHECK.ROLE],
-             // tslint:disable-next-line: object-literal-sort-keys
+        '/proxies/v8/operationalreports/admin/readaccess': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_LEADER,
+                ROLE.MDO_ADMIN,
+              ],
+          },
+        '/proxies/v8/mligot/surveys/mlsurvey/v1/details': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
              ROLE_CHECK: [
-                 ROLE.MDO_LEADER,
-          			 ROLE.MDO_ADMIN,
-               ],
-           },
-            '/proxies/v8/mligot/surveys/mlsurvey/v1/details': {
-                checksNeeded: [CHECK.ROLE],
-                // tslint:disable-next-line: object-literal-sort-keys
-                ROLE_CHECK: [
-                    ROLE.PUBLIC,
-                ],
-            }
+                ROLE.PUBLIC,
+            ],
+          },
     },
     URL_PATTERN:
         [

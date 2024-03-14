@@ -2831,6 +2831,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
              ],
          },
          '/proxies/v8/workflow/admin/transition/bulkupdate': {
@@ -2838,6 +2839,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
              ],
          },
          '/proxies/v8/workflow/admin/bulkuploadfile/download/:fileName': {
@@ -2845,6 +2847,7 @@ export const API_LIST = {
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
              ],
          },
     },

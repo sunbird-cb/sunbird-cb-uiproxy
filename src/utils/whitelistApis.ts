@@ -2783,7 +2783,7 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
               ],
           },
-        '/proxies/v8/mligot/surveys/mlsurvey/v1/details': {
+        '/proxies/v8/surveys/mlsurvey/v1/details': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
              ROLE_CHECK: [
@@ -3145,5 +3145,6 @@ export const API_LIST = {
             '/proxies/v8/openprogram/v1/enrol',
             '/proxies/v8/operationalreports/download/:reportType/:date/:orgId/:fileName',
             '/proxies/v8/operational/reports/admin/readaccess',
+            '/proxies/v8/surveys/mlsurvey/v1/details',
            ],
 }

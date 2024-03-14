@@ -613,7 +613,7 @@ proxiesV8.use('/operationalreports/*',
 proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 
-proxiesV8.use('/proxies/v8/mligot/surveys/mlsurvey/v1/details/*',
+proxiesV8.use('/surveys/*',
 proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 

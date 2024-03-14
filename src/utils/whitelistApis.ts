@@ -2833,6 +2833,20 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
              ],
          },
+         '/proxies/v8/workflow/admin/transition/bulkupdate': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+             ],
+         },
+         '/proxies/v8/workflow/admin/bulkuploadfile/download/:fileName': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+             ],
+         },
     },
     URL_PATTERN:
         [
@@ -3195,5 +3209,7 @@ export const API_LIST = {
             '/proxies/v8/operationalreports/leader/readaccess',
             '/proxies/v8/operationalreports/admin/readaccess',
             '/proxies/v8/admin/bulkupdate/getstatus',
+            '/proxies/v8/workflow/admin/transition/bulkupdate',
+            '/proxies/v8/workflow/admin/bulkuploadfile/download/:fileName',
            ],
 }

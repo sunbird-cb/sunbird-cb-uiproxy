@@ -613,6 +613,10 @@ proxiesV8.use('/operationalreports/*',
 proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 
+proxiesV8.use('/proxies/v8/mligot/surveys/mlsurvey/v1/details/*', 
+proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)
+
 function removePrefix(prefix: string, s: string) {
   return s.substr(prefix.length)
 }

@@ -2790,6 +2790,41 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
           },
+        '/proxies/v8/surveySubmissions/mlsurvey/v1/update': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+                ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/cloud-services/mlcore/v1/files/preSignedUrls': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+                ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/observations/mlsurvey/v1/assessment': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+                ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/observationSubmissions/mlsurvey/v1/update': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+                ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/observations/mlsurvey/v1/entities': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+                ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },  
     },
     URL_PATTERN:
         [
@@ -3146,5 +3181,10 @@ export const API_LIST = {
             '/proxies/v8/operationalreports/download/:reportType/:date/:orgId/:fileName',
             '/proxies/v8/operational/reports/admin/readaccess',
             '/proxies/v8/surveys/mlsurvey/v1/details',
+            '/proxies/v8/surveySubmissions/mlsurvey/v1/update',
+            '/proxies/v8/cloud-services/mlcore/v1/files/preSignedUrls',
+            '/proxies/v8/observations/mlsurvey/v1/assessment',
+            '/proxies/v8/observationSubmissions/mlsurvey/v1/update',
+            '/proxies/v8/observations/mlsurvey/v1/entities'
            ],
 }

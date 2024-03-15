@@ -2826,7 +2826,7 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
             ],
         },
-        '/proxies/v8/admin/bulkupdate/getstatus': {
+        '/proxies/v8/workflow/admin/bulkupdate/getstatus': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -3211,7 +3211,7 @@ export const API_LIST = {
             '/proxies/v8/operationalreports/v1/reportInfo',
             '/proxies/v8/operationalreports/leader/readaccess',
             '/proxies/v8/operationalreports/admin/readaccess',
-            '/proxies/v8/admin/bulkupdate/getstatus',
+            '/proxies/v8/workflow/admin/bulkupdate/getstatus',
             '/proxies/v8/workflow/admin/transition/bulkupdate',
             '/proxies/v8/workflow/admin/bulkuploadfile/download/:fileName',
            ],

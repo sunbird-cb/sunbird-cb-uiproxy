@@ -2804,6 +2804,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/cloud-services/mlcore/v1/files/upload': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+                ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         '/proxies/v8/observations/mlsurvey/v1/assessment': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -3185,6 +3192,7 @@ export const API_LIST = {
             '/proxies/v8/cloud-services/mlcore/v1/files/preSignedUrls',
             '/proxies/v8/observations/mlsurvey/v1/assessment',
             '/proxies/v8/observationSubmissions/mlsurvey/v1/update',
-            '/proxies/v8/observations/mlsurvey/v1/entities'
+            '/proxies/v8/observations/mlsurvey/v1/entities',
+            '/proxies/v8/cloud-services/mlcore/v1/files/upload'
            ],
 }

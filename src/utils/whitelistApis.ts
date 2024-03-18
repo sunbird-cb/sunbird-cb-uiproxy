@@ -2760,13 +2760,13 @@ export const API_LIST = {
                 ROLE.MDO_LEADER,
               ],
           },
-          '/proxies/v8/openprogram/v1/enrol': {
+        '/proxies/v8/openprogram/v1/enrol': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
-        },
+          },
         '/proxies/v8/operationalreports/download/:reportType/:date/:orgId/:fileName': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
@@ -2775,14 +2775,63 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
               ],
           },
-         '/proxies/v8/operationalreports/admin/readaccess': {
-             checksNeeded: [CHECK.ROLE],
-             // tslint:disable-next-line: object-literal-sort-keys
+        '/proxies/v8/operationalreports/admin/readaccess': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_LEADER,
+                ROLE.MDO_ADMIN,
+              ],
+          },
+        '/proxies/v8/surveys/mlsurvey/v1/details': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
              ROLE_CHECK: [
-                 ROLE.MDO_LEADER,
-          			 ROLE.MDO_ADMIN,
-               ],
-           },
+                ROLE.PUBLIC,
+            ],
+          },
+        '/proxies/v8/surveySubmissions/mlsurvey/v1/update/:id/': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+                ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/cloud-services/mlcore/v1/files/preSignedUrls': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+                ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/cloud-services/mlcore/v1/files/upload': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+                ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/observations/mlsurvey/v1/assessment': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+                ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/observationSubmissions/mlsurvey/v1/update': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+                ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/observations/mlsurvey/v1/entities': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+                ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },  
     },
     URL_PATTERN:
         [
@@ -3137,6 +3186,13 @@ export const API_LIST = {
             '/proxies/v8/operationalreports/admin/grantaccess',
             '/proxies/v8/openprogram/v1/enrol',
             '/proxies/v8/operationalreports/download/:reportType/:date/:orgId/:fileName',
-            '/proxies/v8/operational/reports/admin/readaccess',	
+            '/proxies/v8/operational/reports/admin/readaccess',
+            '/proxies/v8/surveys/mlsurvey/v1/details',
+            '/proxies/v8/surveySubmissions/mlsurvey/v1/update/:id',
+            '/proxies/v8/cloud-services/mlcore/v1/files/preSignedUrls',
+            '/proxies/v8/observations/mlsurvey/v1/assessment',
+            '/proxies/v8/observationSubmissions/mlsurvey/v1/update',
+            '/proxies/v8/observations/mlsurvey/v1/entities',
+            '/proxies/v8/cloud-services/mlcore/v1/files/upload'
            ],
 }

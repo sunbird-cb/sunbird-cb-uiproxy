@@ -245,6 +245,11 @@ proxiesV8.use('/user/totalkarmapoints',
   // tslint:disable-next-line: max-line-length
   proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/user/totalkarmapoints`)
 )
+
+proxiesV8.use('/halloffame/learnerleaderboard',
+  // tslint:disable-next-line: max-line-length
+  proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/halloffame/learnerleaderboard`)
+)
 proxiesV8.get(['/api/user/v2/read', '/api/user/v2/read/:id'], async (req, res) => {
   const host = req.get('host')
   const originalUrl = req.originalUrl
@@ -364,7 +369,7 @@ proxiesV8.use('/dashboard/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 
-proxiesV8.post(['/user/v1/bulkupload', '/storage/profilePhotoUpload/*'], (req, res) => {
+proxiesV8.post(['/user/v1/bulkupload', '/storage/profilePhotoUpload/*', '/workflow/admin/transition/bulkupdate'], (req, res) => {
   if (req.files && req.files.data) {
     const url = removePrefix('/proxies/v8', req.originalUrl)
     const file: UploadedFile = req.files.data as UploadedFile

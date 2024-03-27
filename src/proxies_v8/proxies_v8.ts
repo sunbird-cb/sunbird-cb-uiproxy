@@ -25,16 +25,20 @@ import {
 import { extractUserIdFromRequest, extractUserToken } from '../utils/requestExtract'
 
 const API_END_POINTS = {
+  batchParticipantsApi: `${CONSTANTS.KONG_API_BASE}/course/v1/batch/participants/list`,
   contentNotificationEmail: `${CONSTANTS.NOTIFICATION_SERVIC_API_BASE}/v1/notification/send/sync`,
   kongExtOrgSearch: `${CONSTANTS.KONG_API_BASE}/org/v1/cb/ext/search`,
   kongSearchOrg: `${CONSTANTS.KONG_API_BASE}/org/v1/search`,
+  // tslint:disable-next-line: all
+  kongSearchUser: `${CONSTANTS.KONG_API_BASE}/user/v1/search`,
   orgTypeListEndPoint: `${CONSTANTS.KONG_API_BASE}/data/v1/system/settings/get/orgTypeList`,
 }
-
 export const proxiesV8 = express.Router()
 const _ = require('lodash')
 
 const FILE_NOT_FOUND_ERR = 'File not found in the request'
+
+const unknownError = 'Failed due to unknown reason'
 
 proxiesV8.get('/', (_req, res) => {
   res.json({
@@ -700,3 +704,165 @@ proxiesV8.use('/portal/*',
   // tslint:disable-next-line: max-line-length
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
+
+// tslint:disable-next-line: all
+function getUsers(userprofile: IUserProfile): ICohortsUser {
+  let designationValue = ''
+  let primaryEmail = ''
+  let mobileNumber = 0
+  const profileDetails = userprofile.hasOwnProperty('profileDetails') ? userprofile.profileDetails : null
+  if (profileDetails != null) {
+    const professionalDetails = profileDetails.hasOwnProperty('professionalDetails') ? profileDetails.professionalDetails : null
+    if (professionalDetails != null) {
+      if (userprofile.profileDetails.professionalDetails[0].designation !== undefined) {
+        designationValue = userprofile.profileDetails.professionalDetails[0].designation
+      } else {
+        designationValue = userprofile.profileDetails.professionalDetails[0].designationOther === undefined ? '' :
+        userprofile.profileDetails.professionalDetails[0].designationOther
+      }
+    }
+    if (userprofile.profileDetails.personalDetails !== undefined) {
+      primaryEmail = userprofile.profileDetails.personalDetails.primaryEmail
+      mobileNumber = userprofile.profileDetails.personalDetails.mobile
+    }
+  }
+
+  return {
+    city: '',
+    // department: userprofile.channel === undefined ? '' : userprofile.channel,
+    department: userprofile.rootOrgName === undefined ? '' : userprofile.rootOrgName,
+    desc: '',
+    designation: designationValue,
+    email: primaryEmail,
+    first_name: userprofile.firstName,
+    last_name: userprofile.lastName,
+    phone_No: mobileNumber,
+    userLocation: '',
+    user_id: userprofile.id,
+  }
+}
+
+proxiesV8.post('/course/v1/batch/participants/list', async (req, res) => {
+  try {
+    const { batchId, deptName, limit, currentOffset } = req.body.request.filters
+    const reqBody = {
+      request: {
+        batch: {
+          active: true,
+          batchId,
+          currentOffset,
+          limit,
+
+        },
+      },
+    }
+    const userlist: ICohortsUser[] = []
+    let totalCount = null
+    const response = await axios.post(API_END_POINTS.batchParticipantsApi, reqBody, {
+      ...axiosRequestConfig,
+      headers: {
+        Authorization: CONSTANTS.SB_API_KEY,
+        /* tslint:disable-next-line */
+        'x-authenticated-user-token': extractUserToken(req),
+      },
+    })
+    if ((typeof response.data.result.batch.participants !== 'undefined' && response.data.result.batch.participants.length > 0)) {
+      totalCount = response.data.result.batch.count
+      const searchresponse = await axios({
+        ...axiosRequestConfig,
+        data: { request: { filters: { userId: response.data.result.batch.participants } } },
+        headers: {
+          Authorization: CONSTANTS.SB_API_KEY,
+          // tslint:disable-next-line: all
+          'x-authenticated-user-token': extractUserToken(req),
+        },
+        method: 'POST',
+        // tslint:disable-next-line: all
+        url: API_END_POINTS.kongSearchUser,
+      })
+      if (searchresponse.data.result.response.count > 0) {
+        for (const profileObj of searchresponse.data.result.response.content) {
+          const user: ICohortsUser = getUsers(profileObj)
+          if (!deptName || (profileObj.channel && profileObj.channel === deptName)) {
+            user.department = profileObj.rootOrgName
+            userlist.push(user)
+          }
+        }
+      }
+    }
+    res.status(response.status).send({userlist, totalCount})
+  } catch (err) {
+    logError(err)
+
+    res.status((err && err.response && err.response.status) || 500).send(
+      (err && err.response && err.response.data) || {
+        error: unknownError,
+      }
+    )
+  }
+})
+
+export interface IUserProfile {
+  channel: string
+  firstName: string
+  id: string
+  lastName: string
+  profileDetails: IUserProfileDetails
+  rootOrgName: string
+}
+
+export interface IUserProfileDetails {
+  personalDetails: IPersonalDetails
+  professionalDetails: IProfessionalDetailsEntity[]
+  employmentDetails: IEmploymentDetails
+}
+
+export interface IPersonalDetails {
+  firstname: string
+  middlename: string
+  surname: string
+  dob: string
+  nationality: string
+  domicileMedium: string
+  gender: string
+  maritalStatus: string
+  category: string
+  countryCode: string
+  mobile: number
+  telephone: string
+  primaryEmail: string
+  officialEmail: string
+  personalEmail: string
+}
+
+export interface IEmploymentDetails {
+  departmentName: string
+}
+
+export interface IProfessionalDetailsEntity {
+  description: string
+  industry: string
+  designationOther: string
+  nameOther: string
+  organisationType: string
+  responsibilities: string
+  name: string
+  location: string
+  designation: string
+  industryOther: string
+  completePostalAddress: string
+  doj: string
+}
+
+export interface ICohortsUser {
+  first_name: string
+  last_name: string
+  email: string
+  desc: string
+  user_id: string
+  department: string
+  phone_No: number
+  designation: string
+  userLocation: string
+  city: string
+}

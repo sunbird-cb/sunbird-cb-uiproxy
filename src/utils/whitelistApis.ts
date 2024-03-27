@@ -2899,7 +2899,7 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-          '/proxies/v8/course/v1/batch/participants/list': {
+          '/proxies/v8/course/v1/batch/getParticipants': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -3277,6 +3277,6 @@ export const API_LIST = {
             '/proxies/v8/observationSubmissions/mlsurvey/v1/update/:id',
             '/proxies/v8/observations/mlsurvey/v1/entities',
             '/proxies/v8/cloud-services/mlcore/v1/files/upload',
-            '/proxies/v8/course/v1/batch/participants/list',
+            '/proxies/v8/course/v1/batch/getParticipants',
            ],
 }

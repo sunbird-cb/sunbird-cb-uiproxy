@@ -765,7 +765,7 @@ function getUsers(userprofile: IUserProfile): ICohortsUser {
   }
 }
 
-proxiesV8.post('/course/v1/batch/participants/list', async (req, res) => {
+proxiesV8.post('/course/v1/batch/getParticipants', async (req, res) => {
   try {
     const { batchId, deptName, limit, currentOffset } = req.body.request.filters
     const reqBody = {

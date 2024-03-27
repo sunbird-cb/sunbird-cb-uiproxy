@@ -2775,7 +2775,7 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
               ],
           },
-          '/proxies/v8/course/v1/batch/participants/list': {
+          '/proxies/v8/course/v1/batch/getParticipants': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -3136,6 +3136,6 @@ export const API_LIST = {
             '/proxies/v8/operationalreports/admin/grantaccess',
             '/proxies/v8/openprogram/v1/enrol',
             '/proxies/v8/operationalreports/download/:reportType/:date/:orgId/:fileName',
-            '/proxies/v8/course/v1/batch/participants/list',
+            '/proxies/v8/course/v1/batch/getParticipants',
            ],
 }

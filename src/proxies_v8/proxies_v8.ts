@@ -578,10 +578,6 @@ proxiesV8.use('/batchsesion/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 
-proxiesV8.use('/course/*',
-  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
-)
-
 proxiesV8.use('/faq/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
@@ -824,6 +820,10 @@ proxiesV8.post('/course/v1/batch/getParticipants', async (req, res) => {
     )
   }
 })
+
+proxiesV8.use('/course/*',
+  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)
 
 export interface IUserProfile {
   channel: string

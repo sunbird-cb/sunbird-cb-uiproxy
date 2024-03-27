@@ -763,13 +763,13 @@ function getUsers(userprofile: IUserProfile): ICohortsUser {
 
 proxiesV8.post('/course/v1/batch/getParticipants', async (req, res) => {
   try {
-    const { batchId, deptName, limit, currentOffset } = req.body.request.filters
+    const { batchId, deptName, limit, currentOffSet } = req.body.request.filters
     const reqBody = {
       request: {
         batch: {
           active: true,
           batchId,
-          currentOffset,
+          currentOffSet,
           limit,
 
         },

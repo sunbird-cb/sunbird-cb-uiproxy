@@ -825,6 +825,10 @@ proxiesV8.use('/course/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 
+proxiesV8.use('catalog/*',
+  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)
+
 export interface IUserProfile {
   channel: string
   firstName: string

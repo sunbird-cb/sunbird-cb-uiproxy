@@ -20,7 +20,7 @@ youtubePlaylist.get('/landingpage', async (req, res) => {
         url: playListUrl,
     })
     logInfo('Response -> ' + JSON.stringify(playlistResponse.data))
-    if (!playlistResponse.data.result.response) {
+    if (!playlistResponse.data) {
         res.status(400).send(playlistResponse.data)
     } else {
         res.status(200).send(playlistResponse.data)

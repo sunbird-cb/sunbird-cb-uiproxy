@@ -2782,6 +2782,14 @@ export const API_LIST = {
                 ROLE.PUBLIC,
               ],
           },
+          '/proxies/v8/content/v2/discard/:id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.CONTENT_CREATOR,
+                ROLE.EDITOR
+              ],
+          },          
     },
     URL_PATTERN:
         [
@@ -3137,5 +3145,6 @@ export const API_LIST = {
             '/proxies/v8/openprogram/v1/enrol',
             '/proxies/v8/operationalreports/download/:reportType/:date/:orgId/:fileName',
             '/proxies/v8/course/v1/batch/getParticipants',
+            '/proxies/v8/content/v2/discard/:id',
            ],
 }

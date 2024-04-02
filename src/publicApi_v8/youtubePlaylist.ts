@@ -8,12 +8,12 @@ export const youtubePlaylist = express.Router()
 
 youtubePlaylist.get('/landingpage', async (req, res) => {
     const playListIds = CONSTANTS.YOUTUBE_PLAYLIST_NAMES.split(',')
-    let playListUrl = CONSTANTS.YOUTUBE_PLAYLIST_URL
     const playlistDataMap = new Map()
 
     for (const playListId of playListIds) {
         logInfo('playListId -> ' + playListId)
         logInfo('playListId Constants -> ' + CONSTANTS[playListId])
+        let playListUrl = CONSTANTS.YOUTUBE_PLAYLIST_URL
         playListUrl += '?key=' + CONSTANTS.YOUTUBE_PLAYLIST_API_KEY
         playListUrl += '&playlistId=' + CONSTANTS[playListId]
         playListUrl += '&part=snippet,id,contentDetails'

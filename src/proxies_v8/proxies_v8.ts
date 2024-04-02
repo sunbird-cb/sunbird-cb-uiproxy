@@ -135,6 +135,10 @@ proxiesV8.post('/private/upload/*', (_req, _res) => {
   }
 })
 
+proxiesV8.use('/content/v2/discard',
+  proxyCreatorKnowledge(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)
+
 proxiesV8.use(
   '/content',
   proxyCreatorRoute(express.Router(), CONSTANTS.CONTENT_API_BASE + '/content')

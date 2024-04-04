@@ -409,19 +409,19 @@ proxiesV8.post(['/user/v1/bulkupload', '/storage/profilePhotoUpload/*'], (req, r
       (err, response) => {
         // tslint:disable-next-line: all
         response.on('data', (data) => {
-          if (!err && (response.statusCode === 200 || response.statusCode === 201)) {
-            res.send(JSON.parse(data.toString('utf8')))
+          if (!err && (response.statusCode === 200 || response.statusCode === 201 || response.statusCode === 406)) {
+            res.status(response.statusCode).send(JSON.parse(data.toString('utf8')))
           } else {
-            res.send(data.toString('utf8'))
+            res.status(500).send(data.toString('utf8'))
           }
         })
         if (err) {
-          res.send(err)
+          res.status(500).send(err)
         }
       }
     )
   } else {
-    res.send(FILE_NOT_FOUND_ERR)
+    res.status(500).send(FILE_NOT_FOUND_ERR)
   }
 })
 

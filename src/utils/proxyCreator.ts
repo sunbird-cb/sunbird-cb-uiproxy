@@ -53,7 +53,14 @@ proxy.on('proxyReq', (proxyReq: any, req: any, _res: any, _options: any) => {
     console.log('REQ_URL_ORIGINAL discussion', proxyReq.path)
 
   }
-  if (!req.originalUrl.includes('/storage/upload') && !req.originalUrl.includes('/storage/profilePhotoUpload/*') && req.body) {
+  // tslint:disable-next-line:max-line-length
+  if (!req.originalUrl.includes('/storage/upload') && !req.originalUrl.includes('/storage/profilePhotoUpload/*') &&  req.body) {
+    // tslint:disable-next-line: no-console
+    console.log('req in creator original url', req.originalUrl)
+    // tslint:disable-next-line: no-console
+    console.log('req in creator original url including not condition', !req.originalUrl.includes('/cloud-services/mlcore/v1/files/*'))
+    // tslint:disable-next-line: no-console
+    console.log('req in creator', req)
     const bodyData = JSON.stringify(req.body)
     proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData))
     proxyReq.write(bodyData)

@@ -349,7 +349,9 @@ proxiesV8.use('/notification/*',
 
 proxiesV8.post('/org/v1/search', async (req, res) => {
   const roleData = lodash.get(req, 'session.userRoles')
+  // tslint:disable-next-line
   const rootOrgId = lodash.get(req, 'session.rootOrgId')
+  // tslint:disable-next-line
   let urlPath = API_END_POINTS.kongSearchOrg
   if (roleData.includes('STATE_ADMIN')) {
     req.body.request.filters.sbRootOrgId = rootOrgId
@@ -378,9 +380,64 @@ proxiesV8.use('/dashboard/*',
 )
 // tslint:disable-next-line:max-line-length
 proxiesV8.post(['/user/v1/bulkupload', '/storage/profilePhotoUpload/*', '/workflow/admin/transition/bulkupdate', '/cloud-services/mlcore/v1/files/upload'], (req, res) => {
+   // tslint:disable-next-line: all
+   console.log('req for files--->', req);
+   // tslint:disable-next-line: all
+   console.log('req files--->', req.files);
   if (req.files && req.files.data) {
+    // tslint:disable-next-line:all
     const url = removePrefix('/proxies/v8', req.originalUrl)
     const file: UploadedFile = req.files.data as UploadedFile
+    const formData = new FormData()
+    formData.append('file', Buffer.from(file.data), {
+      contentType: file.mimetype,
+      filename: file.name,
+    })
+    let rootOrgId = _.get(req, 'session.rootOrgId')
+    if (!rootOrgId) {
+      rootOrgId = ''
+    }
+    // tslint:disable-next-line:all
+    let channel = _.get(req, 'session.channel')
+    if (!channel) {
+      channel = ''
+    }
+    formData.submit(
+      {
+        headers: {
+          // tslint:disable-next-line:max-line-length
+          Authorization: CONSTANTS.SB_API_KEY,
+          // tslint:disable-next-line: all
+          'x-authenticated-user-channel': encodeURIComponent(channel),
+          // tslint:disable-next-line
+          'x-authenticated-user-orgid': rootOrgId,
+          // tslint:disable-next-line
+          'x-authenticated-user-orgname': encodeURIComponent(channel),
+          'x-authenticated-user-token': extractUserToken(req),
+          'x-authenticated-userid': extractUserIdFromRequest(req),
+        },
+        host: 'kong',
+        path: url,
+        port: 8000,
+      },
+      // tslint:disable-next-line: all
+      (err, response) => {
+        // tslint:disable-next-line: all
+        response.on('data', (data) => {
+          if (!err && (response.statusCode === 200 || response.statusCode === 201 || response.statusCode === 406)) {
+            res.status(response.statusCode).send(JSON.parse(data.toString('utf8')))
+          } else {
+            res.status(500).send(data.toString('utf8'))
+          }
+        })
+        if (err) {
+          res.status(500).send(err)
+        }
+      }
+    )
+  } else if (req.files && req.files.file) {
+    const url = removePrefix('/proxies/v8', req.originalUrl)
+    const file: UploadedFile = req.files.file as UploadedFile
     const formData = new FormData()
     formData.append('file', Buffer.from(file.data), {
       contentType: file.mimetype,
@@ -425,7 +482,7 @@ proxiesV8.post(['/user/v1/bulkupload', '/storage/profilePhotoUpload/*', '/workfl
         }
       }
     )
-  } else {
+  }  else {
     res.status(500).send(FILE_NOT_FOUND_ERR)
   }
 })
@@ -833,6 +890,112 @@ proxiesV8.use('/catalog/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 
+// tslint:disable-next-line:max-line-length
+proxiesV8.patch(['/cloud-services/mlcore/v1/files/upload'], (req, res) => {
+  // tslint:disable-next-line: all
+  console.log('req for files--->', req);
+  // tslint:disable-next-line: all
+  console.log('req files--->', req.files);
+  if (req.files && req.files.data) {
+    const url = removePrefix('/proxies/v8', req.originalUrl)
+    const file: UploadedFile = req.files.data as UploadedFile
+    const formData = new FormData()
+    formData.append('file', Buffer.from(file.data), {
+      contentType: file.mimetype,
+      filename: file.name,
+    })
+    let rootOrgId = _.get(req, 'session.rootOrgId')
+    if (!rootOrgId) {
+      rootOrgId = ''
+    }
+    let channel = _.get(req, 'session.channel')
+    if (!channel) {
+      channel = ''
+    }
+    formData.submit(
+      {
+        headers: {
+          // tslint:disable-next-line:max-line-length
+          Authorization: CONSTANTS.SB_API_KEY,
+          // tslint:disable-next-line: all
+          'x-authenticated-user-channel': encodeURIComponent(channel),
+          'x-authenticated-user-orgid': rootOrgId,
+          'x-authenticated-user-orgname': encodeURIComponent(channel),
+          'x-authenticated-user-token': extractUserToken(req),
+          'x-authenticated-userid': extractUserIdFromRequest(req),
+        },
+        host: 'kong',
+        path: url,
+        port: 8000,
+      },
+      // tslint:disable-next-line: all
+      (err, response) => {
+        // tslint:disable-next-line: all
+        response.on('data', (data) => {
+          if (!err && (response.statusCode === 200 || response.statusCode === 201)) {
+            res.send(JSON.parse(data.toString('utf8')))
+          } else {
+            res.send(data.toString('utf8'))
+          }
+        })
+        if (err) {
+          res.send(err)
+        }
+      }
+    )
+  } else {
+    res.send(FILE_NOT_FOUND_ERR)
+  }
+})
+
+// proxiesV8.patch(['/cloud-services/mlcore/v1/files/upload'], (req, res) => {
+//   // tslint:disable-next-line: all
+//   console.log('req', req);
+//   if (req.files && req.files.data) {
+//     const url = removePrefix('/proxies/v8', req.originalUrl)
+//     const file: UploadedFile = req.files.data as UploadedFile
+//     // tslint:disable-next-line: all
+//     console.log('url', url);
+//     // tslint:disable-next-line: all
+//     console.log('file', file);
+//     const formData = new FormData()
+//     formData.append('file', Buffer.from(file.data), {
+//       contentType: file.mimetype,
+//       filename: file.name,
+//     })
+//     // tslint:disable-next-line: all
+//     console.log('formData', formData);
+//     formData.submit(
+//       {
+//         headers: {
+//           // tslint:disable-next-line:max-line-length
+//           Authorization: CONSTANTS.SB_API_KEY,
+//           // tslint:disable-next-line: all
+//           'x-authenticated-user-token': extractUserToken(req)
+//         },
+//         host: 'kong',
+//         path: url,
+//         port: 8000,
+//       },
+//       // tslint:disable-next-line: all
+//       (err, response) => {
+//         // tslint:disable-next-line: all
+//         response.on('data', (data) => {
+//           if (!err && (response.statusCode === 200 || response.statusCode === 201)) {
+//             res.send(JSON.parse(data.toString('utf8')))
+//           } else {
+//             res.send(data.toString('utf8'))
+//           }
+//         })
+//         if (err) {
+//           res.send(err)
+//         }
+//       }
+//     )
+//   } else {
+//     res.send(FILE_NOT_FOUND_ERR)
+//   }
+// })
 export interface IUserProfile {
   channel: string
   firstName: string

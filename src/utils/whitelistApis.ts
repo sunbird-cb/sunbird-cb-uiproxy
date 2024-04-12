@@ -2920,6 +2920,45 @@ export const API_LIST = {
                 ROLE.CONTENT_CREATOR,
               ],
           },
+        '/proxies/v8/calendar/v4/read/:do_id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/calendar/v4/publish/:do_id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.CONTENT_CREATOR,
+                ROLE.CBP_ADMIN,
+            ],
+        },
+        '/proxies/v8/calendar/v4/create': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.CONTENT_CREATOR,
+                ROLE.CBP_ADMIN,
+            ],
+        },
+        '/proxies/v8/calendar/v4/update/:do_id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.CONTENT_CREATOR,
+                ROLE.CBP_ADMIN,
+            ],
+        },
+        '/proxies/v8/calendar/v4/retire/:do_id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.CONTENT_CREATOR,
+                ROLE.CBP_ADMIN,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -3294,5 +3333,10 @@ export const API_LIST = {
             '/proxies/v8/course/v1/batch/getParticipants',
             '/proxies/v8/catalog/v1/sector',
             '/proxies/v8/content/v2/discard/:id',
+            '/proxies/v8/calendar/v4/read/:do_id',
+            '/proxies/v8/calendar/v4/publish/:do_id',
+            '/proxies/v8/calendar/v4/create',
+            '/proxies/v8/calendar/v4/update/:do_id',
+            '/proxies/v8/calendar/v4/retire/:do_id',
            ],
 }

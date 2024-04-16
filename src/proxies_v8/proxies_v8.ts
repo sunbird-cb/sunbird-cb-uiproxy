@@ -882,7 +882,7 @@ proxiesV8.use('/catalog/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 
-proxiesV8.use('/job/*',
+proxiesV8.use('/careers/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 

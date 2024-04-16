@@ -2941,6 +2941,7 @@ export const API_LIST = {
                 ROLE.SPV_ADMIN,
               ],
           },
+          
     },
     URL_PATTERN:
         [
@@ -3318,5 +3319,10 @@ export const API_LIST = {
             '/proxies/v8/catalog/v1/sector/read/:sectorId',
             '/proxies/v8/catalog/v1/sector/create',
             '/proxies/v8/catalog/v1/subsector/create',
+            '/proxies/v8/job/v4/read/:do_id',
+            '/proxies/v8/job/v4/publish/:do_id',
+            '/proxies/v8/job/v4/create',
+            '/proxies/v8/job/v4/update/:do_id',
+            '/proxies/v8/job/v4/retire/:do_id',
            ],
 }

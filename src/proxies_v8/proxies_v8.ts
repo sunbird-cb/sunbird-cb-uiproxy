@@ -379,7 +379,7 @@ proxiesV8.use('/dashboard/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 // tslint:disable-next-line:max-line-length
-proxiesV8.post(['/user/v1/bulkupload', '/storage/profilePhotoUpload/*', '/workflow/admin/transition/bulkupdate', '/cloud-services/mlcore/v1/files/upload'], (req, res) => {
+proxiesV8.post(['/user/v1/bulkupload', '/storage/profilePhotoUpload/*', '/workflow/admin/transition/bulkupdate', '/cloud-services/mlcore/v1/files/upload', '/calendar/v1/bulkUpload'], (req, res) => {
   if (req.files && req.files.data) {
     const url = removePrefix('/proxies/v8', req.originalUrl)
     const file: UploadedFile = req.files.data as UploadedFile
@@ -879,6 +879,10 @@ proxiesV8.use('/course/*',
 )
 
 proxiesV8.use('/catalog/*',
+  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)
+
+proxiesV8.use('/calendar/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 

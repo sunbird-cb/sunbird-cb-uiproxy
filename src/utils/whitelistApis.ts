@@ -2952,32 +2952,36 @@ export const API_LIST = {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.CONTENT_CREATOR,
-                ROLE.CBP_ADMIN,
+                ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
+                ROLE.SPV_ADMIN,
             ],
         },
         '/proxies/v8/careers/v4/create': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.CONTENT_CREATOR,
-                ROLE.CBP_ADMIN,
+                ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
+                ROLE.SPV_ADMIN,
             ],
         },
         '/proxies/v8/careers/v4/update/:do_id': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.CONTENT_CREATOR,
-                ROLE.CBP_ADMIN,
+                ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
+                ROLE.SPV_ADMIN,
             ],
         },
         '/proxies/v8/careers/v4/retire/:do_id': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.CONTENT_CREATOR,
-                ROLE.CBP_ADMIN,
+                ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
+                ROLE.SPV_ADMIN,
             ],
         },
           

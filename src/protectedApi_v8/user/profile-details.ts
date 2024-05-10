@@ -234,6 +234,13 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
         const sbphoneVerified_ = false
         const sbfirstName_ = req.body.personalDetails.firstName
         const sbphone_ = req.body.personalDetails.phone
+        const sbdob_ = req.body.personalDetails.dob
+        const sbdomicileMedium_ = req.body.personalDetails.domicileMedium
+        const sbgender_ = req.body.personalDetails.gender
+        const sbpincode_ = req.body.personalDetails.pincode
+        const sbcategory_ = req.body.personalDetails.category
+        const sbgroup_ = req.body.personalDetails.group
+        const sbdesignation_ = req.body.personalDetails.designation
         const isEmailRequired = (req.body.personalDetails.isEmailRequired) ? req.body.personalDetails.isEmailRequired : true
         const userRoles = (req.body.personalDetails.roles) ? req.body.personalDetails.roles : undefined
         let sbUserProfile: Partial<ISBUser> = {
@@ -360,12 +367,21 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                     },
                     mandatoryFieldsExists: false,
                     personalDetails: {
+                        category : sbcategory_,
+                        dob: sbdob_,
+                        domicileMedium: sbdomicileMedium_,
                         firstname: sbfirstName_,
+                        gender: sbgender_,
                         mobile: Number(sbphone_),
                         phoneVerified: sbphoneVerified_,
+                        pinCode: Number(sbpincode_),
                         primaryEmail: sbemail_,
                     },
-                    verifiedKarmayogi: false,
+                    professionalDetails: {
+                        designation: sbdesignation_,
+                        group: sbgroup_,
+                    },
+                    profileStatus: 'NOT-VERIFIED',
                 },
                 userId: sbUserId,
             }
@@ -376,14 +392,42 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                 sbProfileUpdateReq.profileDetails.personalDetails = _.omit(sbProfileUpdateReq.profileDetails.personalDetails, 'mobile')
             }
 
-            if (req.body.personalDetails.designation) {
-                const arrDesignation = []
-                const objDesignation = {
-                    designation: (req.body.personalDetails.designation) ? req.body.personalDetails.designation :  '',
-                }
-                arrDesignation.push(objDesignation)
-                const profDetailsPropertyName = 'professionalDetails'
-                sbProfileUpdateReq[profDetailsPropertyName] = arrDesignation
+            if (sbdob_ === undefined || sbdob_ === '') {
+                // tslint:disable-next-line: all
+                sbProfileUpdateReq.profileDetails.personalDetails = _.omit(sbProfileUpdateReq.profileDetails.personalDetails, 'dob')
+            }
+            if (sbdomicileMedium_ === undefined || sbdomicileMedium_ === '') {
+                // tslint:disable-next-line: all
+                sbProfileUpdateReq.profileDetails.personalDetails = _.omit(sbProfileUpdateReq.profileDetails.personalDetails, 'domicileMedium')
+            }
+            if (sbpincode_ === undefined || sbpincode_ === '') {
+                // tslint:disable-next-line: all
+                sbProfileUpdateReq.profileDetails.personalDetails = _.omit(sbProfileUpdateReq.profileDetails.personalDetails, 'pinCode')
+            }
+            if (sbgender_ === undefined || sbgender_ === '') {
+                // tslint:disable-next-line: all
+                sbProfileUpdateReq.profileDetails.personalDetails = _.omit(sbProfileUpdateReq.profileDetails.personalDetails, 'gender')
+            }
+            if (sbcategory_ === undefined || sbcategory_ === '') {
+                // tslint:disable-next-line: all
+                sbProfileUpdateReq.profileDetails.personalDetails = _.omit(sbProfileUpdateReq.profileDetails.personalDetails, 'category')
+            }
+            if (sbdesignation_ === undefined || sbdesignation_ === '') {
+                // tslint:disable-next-line: all
+                sbProfileUpdateReq.profileDetails.professionalDetails = _.omit(sbProfileUpdateReq.profileDetails.professionalDetails, 'designation')
+            }
+            if (sbgroup_ === undefined || sbgroup_ === '') {
+                // tslint:disable-next-line: all
+                sbProfileUpdateReq.profileDetails.professionalDetails = _.omit(sbProfileUpdateReq.profileDetails.professionalDetails, 'group')
+            }
+            if (req.body.personalDetails.tags) {
+                 const arrTags = []
+                 const objAdditionalProperties = {
+                     tag: (req.body.personalDetails.tags) ? req.body.personalDetails.tags :  '',
+                 }
+                 arrTags.push(objAdditionalProperties)
+                 const additionalPropertiesPropertyName = 'additionalProperties'
+                 sbProfileUpdateReq[additionalPropertiesPropertyName] = arrTags
             }
 
             const sbUserProfileUpdateResp = await axios({

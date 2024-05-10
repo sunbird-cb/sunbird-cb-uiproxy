@@ -377,10 +377,10 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                         pinCode: Number(sbpincode_),
                         primaryEmail: sbemail_,
                     },
-                    professionalDetails: {
+                    professionalDetails: [{
                         designation: sbdesignation_,
                         group: sbgroup_,
-                    },
+                    }],
                     profileStatus: 'NOT-VERIFIED',
                 },
                 userId: sbUserId,
@@ -421,13 +421,11 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                 sbProfileUpdateReq.profileDetails.professionalDetails = _.omit(sbProfileUpdateReq.profileDetails.professionalDetails, 'group')
             }
             if (req.body.personalDetails.tags) {
-                 const arrTags = []
                  const objAdditionalProperties = {
                      tag: (req.body.personalDetails.tags) ? req.body.personalDetails.tags :  '',
                  }
-                 arrTags.push(objAdditionalProperties)
                  const additionalPropertiesPropertyName = 'additionalProperties'
-                 sbProfileUpdateReq[additionalPropertiesPropertyName] = arrTags
+                 sbProfileUpdateReq[additionalPropertiesPropertyName] = objAdditionalProperties
             }
 
             const sbUserProfileUpdateResp = await axios({

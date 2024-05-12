@@ -3130,6 +3130,34 @@ export const API_LIST = {
             ],
           checksNeeded: [CHECK.ROLE],
        },
+       '/proxies/v8/demand/create': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/demand/read/:do_id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/demand/delete/:do_id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/demand/filter': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -3532,5 +3560,9 @@ export const API_LIST = {
             '/proxies/v8/content/aggregation/search',
             '/proxies/v8/workflow/v2/userWFApplicationFieldsSearch',
             '/proxies/v8/ratings/v1/topReviews/:orgId',
+            '/proxies/v8/demand/create',
+            '/proxies/v8/demand/read/:do_id',
+            '/proxies/v8/demand/delete/:do_id',
+            '/proxies/v8/demand/filter'
            ],
 }

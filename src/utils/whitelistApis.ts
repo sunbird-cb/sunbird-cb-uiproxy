@@ -3159,7 +3159,7 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        '/proxies/v8/demand/content/filter': {
+        '/proxies/v8/demand/content/search': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -3571,6 +3571,6 @@ export const API_LIST = {
             '/proxies/v8/demand/content/create',
             '/proxies/v8/demand/content/read/:do_id',
             '/proxies/v8/demand/content/delete/:do_id',
-            '/proxies/v8/demand/content/filter'
+            '/proxies/v8/demand/content/search'
            ],
 }

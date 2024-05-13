@@ -702,7 +702,7 @@ proxiesV8.use('/observationSubmissions/*',
 proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 
-proxiesV8.use('/demand/*',
+proxiesV8.use('/demand/content/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 

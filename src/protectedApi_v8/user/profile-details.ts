@@ -419,13 +419,16 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
             if (sbgroup_ === undefined || sbgroup_ === '') {
                 // tslint:disable-next-line: all
                 sbProfileUpdateReq.profileDetails.professionalDetails = _.omit(sbProfileUpdateReq.profileDetails.professionalDetails, 'group')
+                if (sbdesignation_ === undefined || sbdesignation_ === '') {
+                  sbProfileUpdateReq.profileDetails = _.omit(sbProfileUpdateReq.profileDetails, 'professionalDetails')
+                }
             }
             if (req.body.personalDetails.tags) {
                  const objAdditionalProperties = {
                      tag: (req.body.personalDetails.tags) ? req.body.personalDetails.tags :  '',
                  }
                  const additionalPropertiesPropertyName = 'additionalProperties'
-                 sbProfileUpdateReq[additionalPropertiesPropertyName] = objAdditionalProperties
+                 sbProfileUpdateReq.profileDetails[additionalPropertiesPropertyName] = objAdditionalProperties
             }
 
             const sbUserProfileUpdateResp = await axios({

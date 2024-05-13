@@ -3130,6 +3130,14 @@ export const API_LIST = {
             ],
           checksNeeded: [CHECK.ROLE],
        },
+        '/proxies/v8/storage/orgStoreUpload': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+              ROLE.SPV_ADMIN,
+              ROLE.MDO_ADMIN,
+            ],
+        },
     },
     URL_PATTERN:
         [

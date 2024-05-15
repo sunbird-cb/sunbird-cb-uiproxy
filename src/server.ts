@@ -184,7 +184,7 @@ export class Server {
     this.app.use('/reset', (_req, res) => {
       logInfo('CLEARING RES COOKIES')
       res.status(200).clearCookie('connect.sid', { path: '/' })
-      const redirectUrl = '/logout'
+      const redirectUrl = '/apis/logout'
       res.redirect(redirectUrl)
     })
   }

@@ -184,15 +184,15 @@ export class Server {
     this.app.use('/reset', (_req, res) => {
       logInfo('CLEARING RES COOKIES')
       res.status(200).clearCookie('connect.sid', { path: '/' })
-      const redirectUrl = '/apis/logout'
+      const redirectUrl = '/apis/signout'
       res.redirect(redirectUrl)
     })
   }
 
   private logout() {
-    this.app.use('/logout', (_req, res) => {
+    this.app.use('/signout', (_req, res) => {
       const host = _req.get('host')
-      logInfo('LOGOUT API Called, host: ' + host)
+      logInfo('SIGNOUT API Called, host: ' + host)
 
       const redirectUri = '?redirect_uri=https://' + `${host}` + '/public/home'
       const redirectUrl = '/auth/realms/' + CONSTANTS.KEYCLOAK_REALM + '/protocol/openid-connect/logout' + redirectUri

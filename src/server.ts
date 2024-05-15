@@ -185,9 +185,10 @@ export class Server {
       res.clearCookie('connect.sid', { path: '/' })
       const host = _req.get('host')
       let redirectUrl = '/public/logout'
+      const redirectUri = '?redirect_uri=https://' + `${host}` + '/public/home'
       logInfo('Reset Cookies... received host value ' + host)
       if (host === `${CONSTANTS.KARMAYOGI_PORTAL_HOST}`) {
-        redirectUrl = '/auth/realms/' + CONSTANTS.KEYCLOAK_REALM + '/protocol/openid-connect/logout'
+        redirectUrl = '/auth/realms/' + CONSTANTS.KEYCLOAK_REALM + '/protocol/openid-connect/logout' + redirectUri
       }
       res.redirect(redirectUrl)
     })

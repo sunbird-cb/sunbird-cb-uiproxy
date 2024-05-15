@@ -3166,6 +3166,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/logout': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC, 'ALL',
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -3572,5 +3579,6 @@ export const API_LIST = {
             '/proxies/v8/demand/content/read/:do_id',
             '/proxies/v8/demand/content/delete/:do_id',
             '/proxies/v8/demand/content/search',
+            '/logout',
            ],
 }

@@ -173,7 +173,6 @@ export class CustomKeycloak {
       getKeycloakConfig(url, realm)
     )
     keycloak.authenticated = this.authenticated
-    keycloak.deauthenticated = this.deauthenticated
     return keycloak
   }
 }

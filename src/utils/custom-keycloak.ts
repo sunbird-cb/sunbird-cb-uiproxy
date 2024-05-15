@@ -31,7 +31,7 @@ export class CustomKeycloak {
     const middleware = composable(
       keycloak.middleware({
         admin: '/callback',
-        logout: '/reset',
+        logout: '/logout',
       })
     )
     middleware(req, res, next)

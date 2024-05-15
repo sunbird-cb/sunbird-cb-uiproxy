@@ -63,6 +63,7 @@ export class Server {
     this.serverProxies()
     this.authoringApi()
     this.resetCookies()
+    this.logout()
     this.app.use(haltOnTimedOut)
     this.setExtFormsFramework()
   }
@@ -182,14 +183,18 @@ export class Server {
   private resetCookies() {
     this.app.use('/reset', (_req, res) => {
       logInfo('CLEARING RES COOKIES')
-      res.clearCookie('connect.sid', { path: '/' })
+      res.status(200).clearCookie('connect.sid', { path: '/' })
+      const redirectUrl = '/logout'
+      res.redirect(redirectUrl)
+    })
+  }
+
+  private logout() {
+    this.app.use('/logout', (_req, res) => {
+      logInfo('LOGOUT API Called')
       const host = _req.get('host')
-      let redirectUrl = '/public/logout'
       const redirectUri = '?redirect_uri=https://' + `${host}` + '/public/home'
-      logInfo('Reset Cookies... received host value ' + host)
-      if (host === `${CONSTANTS.KARMAYOGI_PORTAL_HOST}`) {
-        redirectUrl = '/auth/realms/' + CONSTANTS.KEYCLOAK_REALM + '/protocol/openid-connect/logout' + redirectUri
-      }
+      const redirectUrl = '/auth/realms/' + CONSTANTS.KEYCLOAK_REALM + '/protocol/openid-connect/logout' + redirectUri
       res.redirect(redirectUrl)
     })
   }

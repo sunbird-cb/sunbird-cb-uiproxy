@@ -191,8 +191,9 @@ export class Server {
 
   private logout() {
     this.app.use('/logout', (_req, res) => {
-      logInfo('LOGOUT API Called')
       const host = _req.get('host')
+      logInfo('LOGOUT API Called, host: ' + host)
+
       const redirectUri = '?redirect_uri=https://' + `${host}` + '/public/home'
       const redirectUrl = '/auth/realms/' + CONSTANTS.KEYCLOAK_REALM + '/protocol/openid-connect/logout' + redirectUri
       res.redirect(redirectUrl)

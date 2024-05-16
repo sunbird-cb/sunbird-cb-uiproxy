@@ -184,8 +184,12 @@ export class Server {
     this.app.use('/reset', (_req, res) => {
       logInfo('CLEARING RES COOKIES')
       res.status(200).clearCookie('connect.sid', { path: '/' })
-      const redirectUrl = '/apis/signout'
-      res.redirect(redirectUrl)
+      if (_req.session) {
+        _req.session.destroy((err) => {
+          logError('Failed to destroy session inside reset. Error: ' + JSON.stringify(err))
+          res.redirect('/logout')
+          })
+      }
     })
   }
 

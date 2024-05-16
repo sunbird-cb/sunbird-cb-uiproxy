@@ -30,7 +30,7 @@ export class CustomKeycloak {
     const keycloak = this.getKeyCloakObject(req)
     const middleware = composable(
       keycloak.middleware({
-        admin: '/callback',
+        admin: '/callback', logout: '/logout',
       })
     )
     middleware(req, res, next)
@@ -71,7 +71,7 @@ export class CustomKeycloak {
     })
 
     // tslint:disable-next-line: no-any
-    async.series(postLoginRequest, (err: any) =>  {
+    async.series(postLoginRequest, (err: any) => {
       if (err) {
         logError('error loggin in user', '------', new Date().toString())
         next(err, null)
@@ -80,6 +80,18 @@ export class CustomKeycloak {
         next(null, 'loggedin')
       }
     })
+  }
+
+  // tslint:disable-next-line: no-any
+  deauthenticatedNew = (reqObj: any) => {
+    delete reqObj.session.userRoles
+    delete reqObj.session.userId
+    delete reqObj.session.keycloakClientId
+    delete reqObj.session.keycloakClientSecret
+    if (reqObj.session) {
+      reqObj.session.destroy()
+    }
+    logInfo(`${process.pid}: User Deauthenticated New`)
   }
 
   // tslint:disable-next-line: no-any
@@ -104,23 +116,23 @@ export class CustomKeycloak {
           }
           logInfo('formData used in logout: ' + JSON.stringify(formData))
           try {
-              request.post({
-                  form: formData,
-                  url: urlValue,
-              })
+            request.post({
+              form: formData,
+              url: urlValue,
+            })
           } catch (err) {
-              // tslint:disable-next-line: no-console
-              console.log('Failed to call keycloak logout API ', err, '------', new Date().toString())
+            // tslint:disable-next-line: no-console
+            console.log('Failed to call keycloak logout API ', err, '------', new Date().toString())
           }
 
           if (reqObj.session.parichayToken) {
             logInfo('Parichay login found... trying to logout from Parichay...')
             try {
               request.get({
-                  headers: {
-                    Authorization: reqObj.session.parichayToken.access_token,
-                  },
-                  url: CONSTANTS.PARICHAY_REVOKE_URL,
+                headers: {
+                  Authorization: reqObj.session.parichayToken.access_token,
+                },
+                url: CONSTANTS.PARICHAY_REVOKE_URL,
               }, (err, res, body) => {
                 if (err) {
                   logError('Received error when calling Parichay logout... ')
@@ -136,8 +148,8 @@ export class CustomKeycloak {
                 }
               })
             } catch (err) {
-                // tslint:disable-next-line: no-console
-                console.log('Failed to call parichay revoke API ', err, '------', new Date().toString())
+              // tslint:disable-next-line: no-console
+              console.log('Failed to call parichay revoke API ', err, '------', new Date().toString())
             }
           }
         } else {
@@ -172,6 +184,7 @@ export class CustomKeycloak {
       getKeycloakConfig(url, realm)
     )
     keycloak.authenticated = this.authenticated
+    keycloak.deauthenticated = this.deauthenticatedNew
     return keycloak
   }
 }

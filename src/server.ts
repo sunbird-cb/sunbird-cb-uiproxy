@@ -187,14 +187,14 @@ export class Server {
       if (_req.session) {
         _req.session.destroy((err) => {
           logError('Failed to destroy session inside reset. Error: ' + JSON.stringify(err))
-          res.redirect('/logout')
+          res.redirect('/apis/logout')
           })
       }
     })
   }
 
   private logout() {
-    this.app.use('/signout', (_req, res) => {
+    this.app.use('/logout', (_req, res) => {
       const host = _req.get('host')
       logInfo('SIGNOUT API Called, host: ' + host)
 

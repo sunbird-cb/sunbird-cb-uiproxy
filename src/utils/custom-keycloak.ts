@@ -83,6 +83,7 @@ export class CustomKeycloak {
     })
   }
 
+  // tslint:disable-next-line: no-any
   deauthenticatedNew = (reqObj: any) => {
     delete reqObj.session.userRoles
     delete reqObj.session.userId

@@ -140,13 +140,13 @@ export async function updateKeycloakSession(emailId: string, req: any, res: any)
         keycloakClient.authenticated(req, (error: any) => {
             logInfo('ssoUserHelper::keycloakClient::authenticated..')
             if (error) {
-                logError('googleauthhelper:createSession error creating session')
-                result.errMessage = 'GOOGLE_CREATE_SESSION_FAILED'
+                logError('ssoUserHelper:: keycloak.authenticate failed Email: ' + emailId + ', Error: ' + JSON.stringify(error))
+                result.errMessage = 'FAILED_TO_CREATE_KEYCLOAK_SESSION'
             }
         })
         return Promise.resolve(result)
     } catch (err) {
-        logError('googleOauthHelper: createSession failed. Error: ' + JSON.stringify(err))
+        logError('ssoUserHelper: createSession failed for Email: ' + emailId + ', Error: ' + JSON.stringify(err))
         result.errMessage = 'FAILED_TO_CREATE_KEYCLOAK_SESSION'
     }
     return Promise.resolve(result)

@@ -709,6 +709,18 @@ proxiesV8.use('/demand/content/*',
 proxiesV8.use('/playList/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
+
+proxiesV8.use('/question/v5/read',
+  // tslint:disable-next-line: max-line-length
+  proxyQuestionRead(express.Router(), `${CONSTANTS.KONG_API_BASE}` + '/player/question/v5/list')
+)
+
+proxiesV8.use('/assessment/v5/read/*',
+  // tslint:disable-next-line: max-line-length
+  proxyAssessmentRead(express.Router(), `${CONSTANTS.KONG_API_BASE}` + '/player/questionset/v5/hierarchy')
+)
+
+
 function removePrefix(prefix: string, s: string) {
   return s.substr(prefix.length)
 }

@@ -3203,6 +3203,41 @@ export const API_LIST = {
                 ROLE.SPV_PUBLISHER,
             ],
         },
+        '/proxies/v8/user/assessment/v5/result': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/user/assessment/v5/retake/:id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/protected/v8/user/evaluate/assessment/submit/v5': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/assessment/v5/read/:id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/question/v5/read': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -3613,5 +3648,10 @@ export const API_LIST = {
             '/proxies/v8/playList/update',
             '/proxies/v8/playList/search',
             '/proxies/v8/playList/delete/:do_id',
+            '/proxies/v8/user/assessment/v5/result',
+            '/proxies/v8/user/assessment/v5/retake/:id',
+            '/protected/v8/user/evaluate/assessment/submit/v5',
+            '/proxies/v8/assessment/v5/read/:id',
+            '/proxies/v8/question/v5/read',
            ],
 }

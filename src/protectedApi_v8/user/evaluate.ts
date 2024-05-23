@@ -171,7 +171,7 @@ evaluateApi.post('/assessment/submit/v4', async (req, res) => {
         error: GENERAL_ERR_MSG,
       }
     )
-  }
+  }})
 
   evaluateApi.post('/assessment/submit/v5', async (req, res) => {
     try {
@@ -200,11 +200,11 @@ evaluateApi.post('/assessment/submit/v4', async (req, res) => {
         url,
       })
       res.status(response.status).send(response.data)
-    } catch (err) {
-      res.status((err && err.response && err.response.status) || 500).send(
-        (err && err.response && err.response.data) || {
+    } catch (error) {
+      res.status((error && error.response && error.response.status) || 500).send(
+        (error && error.response && error.response.data) || {
           error: GENERAL_ERR_MSG,
         }
       )
     }
-})
+  })

@@ -377,7 +377,6 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                         pinCode: Number(sbpincode_),
                         primaryEmail: sbemail_,
                     },
-                    profileStatus: 'NOT-VERIFIED',
                 },
                 userId: sbUserId,
             }
@@ -432,6 +431,12 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                sbProfileUpdateReq.profileDetails[additionalPropertiesPropertyName] = objAdditionalProperties
             }
 
+            const profileStatusPropertyName = 'profileStatus'
+            if ((sbdesignation_ !== undefined && sbdesignation_ !== '') && (sbgroup_ !== undefined && sbgroup_ !== '')) {
+              sbProfileUpdateReq.profileDetails[profileStatusPropertyName] = 'VERIFIED'
+            } else {
+              sbProfileUpdateReq.profileDetails[profileStatusPropertyName] = 'NOT-VERIFIED'
+            }
             const sbUserProfileUpdateResp = await axios({
                 ...axiosRequestConfig,
                 data: { request: sbProfileUpdateReq },

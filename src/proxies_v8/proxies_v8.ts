@@ -720,6 +720,10 @@ proxiesV8.use('/assessment/v5/read/*',
   proxyAssessmentRead(express.Router(), `${CONSTANTS.KONG_API_BASE}` + '/player/questionset/v5/hierarchy')
 )
 
+proxiesV8.use('/interest/*',
+  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)
+
 function removePrefix(prefix: string, s: string) {
   return s.substr(prefix.length)
 }

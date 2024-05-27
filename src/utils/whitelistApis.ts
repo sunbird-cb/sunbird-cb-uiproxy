@@ -3238,6 +3238,36 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
+        '/proxies/v8/interest/v1/create': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.CBP_ADMIN,
+                ROLE.CONTENT_CREATOR,
+            ],
+        },
+        '/proxies/v8/interest/v1/search': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/interest/v1/assign': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+                ROLE.SPV_ADMIN,
+            ],
+        },
+        '/proxies/v8/interest/v1/read/:id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -3653,5 +3683,9 @@ export const API_LIST = {
             '/protected/v8/user/evaluate/assessment/submit/v5',
             '/proxies/v8/assessment/v5/read/:id',
             '/proxies/v8/question/v5/read',
+            '/proxies/v8/interest/v1/create',
+            '/proxies/v8/interest/v1/search',
+            '/proxies/v8/interest/v1/assign',
+            '/proxies/v8/interest/v1/read/:id',
            ],
 }

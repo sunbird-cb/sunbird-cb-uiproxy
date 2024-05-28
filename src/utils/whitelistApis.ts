@@ -3268,11 +3268,13 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
         },
-        '/proxies/v8/demand/content/update/status': {
+        '/proxies/v8/demand/content/v1/update/status': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.PUBLIC,
+                ROLE.MDO_ADMIN,
+                ROLE.SPV_ADMIN,
+                ROLE.CBP_ADMIN,
             ],
         },
     },

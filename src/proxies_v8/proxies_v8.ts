@@ -10,6 +10,7 @@ import {
   ilpProxyCreatorRoute,
   // proxyCreatorDiscussion,
   proxyAssessmentRead,
+  proxyAssessmentReadV2,
   proxyContent,
   proxyContentLearnerVM,
   proxyCreatorForms,
@@ -717,7 +718,7 @@ proxiesV8.use('/question/v5/read',
 
 proxiesV8.use('/assessment/v5/read/*',
   // tslint:disable-next-line: max-line-length
-  proxyAssessmentRead(express.Router(), `${CONSTANTS.KONG_API_BASE}` + '/player/questionset/v5/hierarchy')
+  proxyAssessmentReadV2(express.Router(), `${CONSTANTS.KONG_API_BASE}` + '/player/questionset/v5/hierarchy')
 )
 
 proxiesV8.use('/interest/*',

@@ -364,3 +364,24 @@ export function proxyCreatorForms(route: Router, _timeout = 10000): Router {
   })
   return route
 }
+
+
+export function proxyAssessmentReadV2(route: Router, targetUrl: string, _timeout = 10000): Router {
+  route.all('/*', (req, res) => {
+    let url = removePrefix(`${PROXY_SLUG}/assessment/v5/read`, req.originalUrl)
+    // Check if the target URL already contains query parameters
+    if (url.includes('?')) {
+      url = targetUrl + url + '&hierarchy=detail'
+    } else {
+      url = targetUrl + url + '?hierarchy=detail'
+    }
+    // tslint:disable-next-line: no-console
+    console.log('REQ_URL_UPDATED proxyAssessmentRead', url)
+    proxy.web(req, res, {
+      changeOrigin: true,
+      ignorePath: true,
+      target: url,
+    })
+  })
+  return route
+}

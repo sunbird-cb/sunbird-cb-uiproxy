@@ -365,7 +365,6 @@ export function proxyCreatorForms(route: Router, _timeout = 10000): Router {
   return route
 }
 
-
 export function proxyAssessmentReadV2(route: Router, targetUrl: string, _timeout = 10000): Router {
   route.all('/*', (req, res) => {
     let url = removePrefix(`${PROXY_SLUG}/assessment/v5/read`, req.originalUrl)
@@ -376,7 +375,7 @@ export function proxyAssessmentReadV2(route: Router, targetUrl: string, _timeout
       url = targetUrl + url + '?hierarchy=detail'
     }
     // tslint:disable-next-line: no-console
-    console.log('REQ_URL_UPDATED proxyAssessmentRead', url)
+    console.log('REQ_URL_UPDATED proxyAssessmentReadV5', url)
     proxy.web(req, res, {
       changeOrigin: true,
       ignorePath: true,

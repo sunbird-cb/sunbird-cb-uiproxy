@@ -364,6 +364,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                 profileDetails: {
                     employmentDetails: {
                         departmentName: sbChannel,
+                         pincode: Number(sbpincode_),
                     },
                     mandatoryFieldsExists: false,
                     personalDetails: {
@@ -374,7 +375,6 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                         gender: sbgender_,
                         mobile: Number(sbphone_),
                         phoneVerified: sbphoneVerified_,
-                        pinCode: Number(sbpincode_),
                         primaryEmail: sbemail_,
                     },
                 },
@@ -397,7 +397,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
             }
             if (sbpincode_ === undefined || sbpincode_ === '') {
                 // tslint:disable-next-line: all
-                sbProfileUpdateReq.profileDetails.personalDetails = _.omit(sbProfileUpdateReq.profileDetails.personalDetails, 'pinCode')
+                sbProfileUpdateReq.profileDetails.employmentDetails = _.omit(sbProfileUpdateReq.profileDetails.employmentDetails, 'pincode')
             }
             if (sbgender_ === undefined || sbgender_ === '') {
                 // tslint:disable-next-line: all

@@ -3292,6 +3292,46 @@ export const API_LIST = {
                 ROLE.SPV_PUBLISHER,
               ],
         },
+        '/proxies/v8/orgBookmark/v1/create': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
+                ROLE.SPV_ADMIN,
+            ],
+        },
+        '/proxies/v8/orgBookmark/v1/update': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
+                ROLE.SPV_ADMIN,
+            ],
+        },
+        '/proxies/v8/orgBookmark/v1/search': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/orgBookmark/v1/read': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
+        '/proxies/v8/orgBookmark/v1/delete': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.MDO_LEADER,
+                ROLE.SPV_ADMIN,
+            ],
+        },      
     },
     URL_PATTERN:
         [
@@ -3713,5 +3753,10 @@ export const API_LIST = {
             '/proxies/v8/interest/v1/read/:id',
             '/proxies/v8/assessment/save',
             '/proxies/v8/demand/content/v1/update/status',
+            '/proxies/v8/orgBookmark/v1/create',
+            '/proxies/v8/orgBookmark/v1/update',
+            '/proxies/v8/orgBookmark/v1/search',
+            '/proxies/v8/orgBookmark/v1/read',
+            '/proxies/v8/orgBookmark/v1/delete',
            ],
 }

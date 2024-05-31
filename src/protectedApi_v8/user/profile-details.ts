@@ -218,6 +218,8 @@ const failedToUpdateUser = 'Failed to update user profile data.'
 const unknownError = 'Failed due to unknown reason'
 const failedToCheckMDOLeader = 'Failed to check MDO_LEADER role exist.'
 const errorMDOLeaderExist = 'MDO_LDEADER already exist in org. Can not add another MDO_LEADER.'
+const verifiedStatus = 'VERIFIED'
+const notVerifiedStatus = 'NOT-VERIFIED'
 
 // tslint:disable-next-line: all
 profileDeatailsApi.post('/createUser', async (req, res) => {
@@ -364,6 +366,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                 profileDetails: {
                     employmentDetails: {
                         departmentName: sbChannel,
+                         pinCode: Number(sbpincode_),
                     },
                     mandatoryFieldsExists: false,
                     personalDetails: {
@@ -374,10 +377,11 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                         gender: sbgender_,
                         mobile: Number(sbphone_),
                         phoneVerified: sbphoneVerified_,
-                        pinCode: Number(sbpincode_),
                         primaryEmail: sbemail_,
                     },
-                    profileStatus: 'NOT-VERIFIED',
+                    profileDesignationStatus: notVerifiedStatus,
+                    profileGroupStatus: notVerifiedStatus,
+                    profileStatus: notVerifiedStatus,
                 },
                 userId: sbUserId,
             }
@@ -398,7 +402,7 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
             }
             if (sbpincode_ === undefined || sbpincode_ === '') {
                 // tslint:disable-next-line: all
-                sbProfileUpdateReq.profileDetails.personalDetails = _.omit(sbProfileUpdateReq.profileDetails.personalDetails, 'pinCode')
+                sbProfileUpdateReq.profileDetails.employmentDetails = _.omit(sbProfileUpdateReq.profileDetails.employmentDetails, 'pinCode')
             }
             if (sbgender_ === undefined || sbgender_ === '') {
                 // tslint:disable-next-line: all
@@ -432,6 +436,11 @@ profileDeatailsApi.post('/createUser', async (req, res) => {
                sbProfileUpdateReq.profileDetails[additionalPropertiesPropertyName] = objAdditionalProperties
             }
 
+            if ((sbdesignation_ !== undefined && sbdesignation_ !== '') && (sbgroup_ !== undefined && sbgroup_ !== '')) {
+              sbProfileUpdateReq.profileDetails.profileStatus = verifiedStatus
+              sbProfileUpdateReq.profileDetails.profileGroupStatus = verifiedStatus
+              sbProfileUpdateReq.profileDetails.profileDesignationStatus = verifiedStatus
+            }
             const sbUserProfileUpdateResp = await axios({
                 ...axiosRequestConfig,
                 data: { request: sbProfileUpdateReq },

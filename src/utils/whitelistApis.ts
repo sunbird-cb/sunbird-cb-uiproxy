@@ -3144,6 +3144,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
+                ROLE.SPV_ADMIN,
             ],
         },
         '/proxies/v8/demand/content/read/:do_id': {
@@ -3153,6 +3154,8 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
                 ROLE.SPV_ADMIN,
+                ROLE.CBP_ADMIN,
+                ROLE.CONTENT_CREATOR,
             ],
         },
         '/proxies/v8/demand/content/delete/:do_id': {
@@ -3167,9 +3170,7 @@ export const API_LIST = {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.MDO_ADMIN,
-                ROLE.MDO_LEADER,
-                ROLE.SPV_ADMIN,
+               ROLE.PUBLIC,
             ],
         },
         '/proxies/v8/playList/create': {
@@ -3288,7 +3289,6 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
                 ROLE.SPV_ADMIN,
-                ROLE.CONTENT_CREATOR,
                 ROLE.SPV_PUBLISHER,
               ],
         },

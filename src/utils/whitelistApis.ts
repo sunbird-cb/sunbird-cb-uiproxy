@@ -3381,7 +3381,14 @@ export const API_LIST = {
                 ROLE.MDO_LEADER,
                 ROLE.SPV_ADMIN,
             ],
-        },      
+        },
+        '/proxies/v8/assessment/savepoint': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -3815,5 +3822,6 @@ export const API_LIST = {
             '/proxies/v8/announcements/v1/search',
             '/proxies/v8/announcements/v1/read/:id',
             '/proxies/v8/announcements/v1/delete/:id',
+            '/proxies/v8/assessment/savepoint',
            ],
 }

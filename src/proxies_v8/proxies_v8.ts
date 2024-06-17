@@ -941,6 +941,10 @@ proxiesV8.use('/orgBookmark/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 
+proxiesV8.use('/cios/*',
+  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)
+
 export interface IUserProfile {
   channel: string
   firstName: string

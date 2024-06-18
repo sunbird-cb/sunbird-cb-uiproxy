@@ -3496,6 +3496,23 @@ export const API_LIST = {
                 ROLE.SPV_ADMIN,
             ],
         },
+        '/proxies/v8/user/v2/bulkupload': {
+                    checksNeeded: [CHECK.ROLE],
+                    // tslint:disable-next-line: object-literal-sort-keys
+                    ROLE_CHECK: [
+                        ROLE.MDO_ADMIN,
+                        ROLE.MDO_LEADER,
+                    ],
+        },
+         '/proxies/v8/workflow/admin/v2/transition/bulkupdate': {
+                    checksNeeded: [CHECK.ROLE],
+                    // tslint:disable-next-line: object-literal-sort-keys
+                    ROLE_CHECK: [
+                        ROLE.MDO_ADMIN,
+                        ROLE.MDO_LEADER,
+                     ],
+         },
+        
     },
     URL_PATTERN:
         [
@@ -3943,5 +3960,7 @@ export const API_LIST = {
             '/proxies/v8/tenders/v4/publish/:do_id',
             '/proxies/v8/tenders/v4/create',
             '/proxies/v8/tenders/v4/update/:do_id',
+            '/proxies/v8/user/v2/bulkupload',
+            '/proxies/v8/workflow/admin/v2/transition/bulkupdate'
            ],
 }

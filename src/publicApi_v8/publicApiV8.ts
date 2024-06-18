@@ -72,13 +72,20 @@ publicApiV8.use('/halloffame/read', proxyCreatorRoute(express.Router(), CONSTANT
 
 publicApiV8.use('/playlist', youtubePlaylist)
 
-// tslint:disable-next-line: all
 publicApiV8.get('/careers/list', async (_, res) => {
+   await fetchList('Jobs', res)
+ })
+
+publicApiV8.get('/tenders/list', async (_, res) => {
+   await fetchList('Tenders', res)
+ })
+
+const fetchList = async (resourceCategoryString: string, res: express.Response) => {
   const reqBody = {
     request: {
       facets: ['name', 'source', 'position'],
       filters: {
-        resourceCategory: 'Jobs',
+        resourceCategory: resourceCategoryString,
         status: ['Live'],
       },
       limit: 500,
@@ -102,7 +109,7 @@ publicApiV8.get('/careers/list', async (_, res) => {
       res.status(200).send(response.data)
     }
   } catch (error) {
-    logError('Failed to get carrer listing. Error : ' + error)
+    logError(`Failed to get ${resourceCategoryString} listing. Error: ${error}`)
     res.status(500).send('Internal Server Error')
   }
-})
+}

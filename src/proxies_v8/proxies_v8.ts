@@ -909,6 +909,9 @@ proxiesV8.use('/careers/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 
+proxiesV8.use('/tenders/*',
+  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
+)
 export interface IUserProfile {
   channel: string
   firstName: string

@@ -3512,6 +3512,13 @@ export const API_LIST = {
                         ROLE.MDO_LEADER,
                      ],
          },
+          '/proxies/v8/playLis/v1/search/program': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.PUBLIC,
+            ],
+        },
         
     },
     URL_PATTERN:
@@ -3961,6 +3968,7 @@ export const API_LIST = {
             '/proxies/v8/tenders/v4/create',
             '/proxies/v8/tenders/v4/update/:do_id',
             '/proxies/v8/user/v2/bulkupload',
-            '/proxies/v8/workflow/admin/v2/transition/bulkupdate'
+            '/proxies/v8/workflow/admin/v2/transition/bulkupdate',
+            '/proxies/v8/playLis/v1/search/program',
            ],
 }

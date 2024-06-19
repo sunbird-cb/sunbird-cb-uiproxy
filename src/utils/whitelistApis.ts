@@ -3518,6 +3518,15 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
+         },
+          '/proxies/v8/action/framework/v3/publish/:id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.SPV_ADMIN,
+                ROLE.MDO_ADMIN,
+                ROLE.CBP_ADMIN
+            ],
         },
     },
     URL_PATTERN:
@@ -3969,5 +3978,6 @@ export const API_LIST = {
             '/proxies/v8/user/v2/bulkupload',
             '/proxies/v8/workflow/admin/v2/bulkupdate/transition',
             '/proxies/v8/playList/v1/search/program',
+            '/proxies/v8/action/framework/v3/publish/:id',
            ],
 }

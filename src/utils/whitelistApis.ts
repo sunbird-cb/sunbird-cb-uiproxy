@@ -3519,7 +3519,7 @@ export const API_LIST = {
                 ROLE.PUBLIC,
             ],
          },
-          '/proxies/v8/action/framework/v3/publish/:id': {
+          '/proxies/v8/action/framework/v1/publish/:id': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
@@ -3976,6 +3976,6 @@ export const API_LIST = {
             '/proxies/v8/user/v2/bulkupload',
             '/proxies/v8/workflow/admin/v2/bulkupdate/transition',
             '/proxies/v8/playList/v1/search/program',
-            '/proxies/v8/action/framework/v3/publish/:id',
+            '/proxies/v8/action/framework/v1/publish/:id',
            ],
 }

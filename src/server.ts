@@ -17,7 +17,7 @@ import { proxiesV8 } from './proxies_v8/proxies_v8'
 import { publicApiV8 } from './publicApi_v8/publicApiV8'
 import { CustomKeycloak } from './utils/custom-keycloak'
 import { CONSTANTS } from './utils/env'
-import { logInfo, logSuccess } from './utils/logger'
+import { logError, logInfo, logSuccess } from './utils/logger'
 const cookieParser = require('cookie-parser')
 const healthcheck = require('express-healthcheck')
 
@@ -169,13 +169,32 @@ export class Server {
   }
   private resetCookies() {
     this.app.use('/reset', (_req, res) => {
-      logInfo('CLEARING RES COOKIES')
+      logInfo('Handling /reset call...')
       res.clearCookie('connect.sid', { path: '/' })
+      try {
+        logInfo('before calling logout method.')
+        // this.logout(_req)
+        logInfo('logout method called successfully.')
+      } catch (error) {
+          // tslint:disable-next-line: no-any
+          logError('Error calling logout method: ', JSON.stringify(error))
+      }
+      logInfo('CLEARING RES COOKIES')
+
       const host = _req.get('host')
-      let redirectUrl = '/public/logout'
+      let redirectUrl = '/auth/realms/sunbird/protocol/openid-connect/logout?redirect_uri='
+      redirectUrl = redirectUrl + `${CONSTANTS.KARMAYOGI_PORTAL_HOST}` + '/public/logout'
       logInfo('Reset Cookies... received host value ' + host)
       if (host === `${CONSTANTS.KARMAYOGI_PORTAL_HOST}`) {
         redirectUrl = '/public/home'
+      }
+      logInfo('redirectUrl -> ' + redirectUrl)
+      if (_req.session) {
+        delete _req.session.userRoles
+        delete _req.session.userId
+        delete _req.session.keycloakClientId
+        delete _req.session.keycloakClientSecret
+        // _req.session.destroy()
       }
       res.redirect(redirectUrl)
     })

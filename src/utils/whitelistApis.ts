@@ -3504,7 +3504,7 @@ export const API_LIST = {
                         ROLE.MDO_LEADER,
                     ],
         },
-         '/proxies/v8/workflow/admin/v2/bulkupdate/transition': {
+        '/proxies/v8/workflow/admin/v2/bulkupdate/transition': {
                     checksNeeded: [CHECK.ROLE],
                     // tslint:disable-next-line: object-literal-sort-keys
                     ROLE_CHECK: [
@@ -3512,7 +3512,7 @@ export const API_LIST = {
                         ROLE.MDO_LEADER,
                      ],
          },
-          '/proxies/v8/playList/v1/search/program': {
+         '/proxies/v8/playList/v1/search/program': {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [

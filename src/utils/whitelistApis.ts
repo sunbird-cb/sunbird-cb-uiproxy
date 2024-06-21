@@ -3525,7 +3525,15 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.PUBLIC,
             ],
-        },
+         },
+          '/proxies/v8/workflow/admin/pending/request': {
+                    checksNeeded: [CHECK.ROLE],
+                    // tslint:disable-next-line: object-literal-sort-keys
+                    ROLE_CHECK: [
+                        ROLE.MDO_ADMIN,
+                        ROLE.MDO_LEADER,
+                    ],
+         },
     },
     URL_PATTERN:
         [
@@ -3977,5 +3985,6 @@ export const API_LIST = {
             '/proxies/v8/workflow/admin/v2/bulkupdate/transition',
             '/proxies/v8/playList/v1/search/program',
             '/proxies/v8/framework/v1/publish/:id',
+            '/proxies/v8/workflow/admin/pending/request',
            ],
 }

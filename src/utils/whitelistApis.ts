@@ -3523,7 +3523,7 @@ export const API_LIST = {
             checksNeeded: [CHECK.ROLE],
             // tslint:disable-next-line: object-literal-sort-keys
             ROLE_CHECK: [
-                ROLE.PUBLIC,
+                ROLE.SPV_ADMIN,
             ],
          },
           '/proxies/v8/workflow/admin/pending/request': {
@@ -3534,6 +3534,20 @@ export const API_LIST = {
                         ROLE.MDO_LEADER,
                     ],
          },
+          '/proxies/v8/framework/v1/term/create': {
+                  checksNeeded: [CHECK.ROLE],
+                  // tslint:disable-next-line: object-literal-sort-keys
+                   ROLE_CHECK: [
+                        ROLE.SPV_ADMIN,
+                   ],
+        },
+         '/proxies/v8/framework/v1/term/update': {
+                  checksNeeded: [CHECK.ROLE],
+                  // tslint:disable-next-line: object-literal-sort-keys
+                   ROLE_CHECK: [
+                        ROLE.SPV_ADMIN,
+                   ],
+        },
     },
     URL_PATTERN:
         [
@@ -3986,5 +4000,7 @@ export const API_LIST = {
             '/proxies/v8/playList/v1/search/program',
             '/proxies/v8/framework/v1/publish/:id',
             '/proxies/v8/workflow/admin/pending/request',
+            '/proxies/v8/framework/v1/term/create',
+            '/proxies/v8/framework/v1/term/update',
            ],
 }

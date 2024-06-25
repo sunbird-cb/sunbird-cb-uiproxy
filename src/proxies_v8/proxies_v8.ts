@@ -957,6 +957,10 @@ proxiesV8.use('/framework/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 
+proxiesV8.use('/v1/search/competenciesByOrg',
+  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}/v1/search/competenciesByOrg`)
+)
+
 export interface IUserProfile {
   channel: string
   firstName: string

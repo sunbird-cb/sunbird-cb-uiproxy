@@ -3556,6 +3556,13 @@ export const API_LIST = {
                         ROLE.PUBLIC,
                    ],
         },
+        '/proxies/v8/v1/search/competenciesByOrg/:id': {
+                  checksNeeded: [CHECK.ROLE],
+                  // tslint:disable-next-line: object-literal-sort-keys
+                   ROLE_CHECK: [
+                        ROLE.PUBLIC,
+                   ],
+        },
     },
     URL_PATTERN:
         [
@@ -4011,5 +4018,6 @@ export const API_LIST = {
             '/proxies/v8/framework/v1/term/create',
             '/proxies/v8/framework/v1/term/update/:id',
             '/proxies/v8/framework/v1/read/:id',
+            '/proxies/v8/v1/search/competenciesByOrg/:id',
            ],
 }

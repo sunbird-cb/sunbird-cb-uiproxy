@@ -3541,7 +3541,7 @@ export const API_LIST = {
                         ROLE.SPV_ADMIN,
                    ],
         },
-         '/proxies/v8/framework/v1/term/update': {
+         '/proxies/v8/framework/v1/term/update/:id': {
                   checksNeeded: [CHECK.ROLE],
                   // tslint:disable-next-line: object-literal-sort-keys
                    ROLE_CHECK: [
@@ -4009,7 +4009,7 @@ export const API_LIST = {
             '/proxies/v8/framework/v1/publish/:id',
             '/proxies/v8/workflow/admin/pending/request',
             '/proxies/v8/framework/v1/term/create',
-            '/proxies/v8/framework/v1/term/update',
+            '/proxies/v8/framework/v1/term/update/:id',
             '/proxies/v8/framework/v1/read/:id',
            ],
 }

@@ -3295,6 +3295,7 @@ export const API_LIST = {
             ROLE_CHECK: [
                 ROLE.MDO_ADMIN,
                 ROLE.SPV_ADMIN,
+                ROLE.MDO_LEADER,
             ],
         },
         '/proxies/v8/interest/v1/read/:id': {

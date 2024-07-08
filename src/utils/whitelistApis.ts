@@ -3567,126 +3567,175 @@ export const API_LIST = {
                         ROLE.PUBLIC,
                    ],
         },
-        '/proxies/v8/private/mentoring/v1/mentors/share/:id': {
+        '/proxies/v8/mentoring/v1/mentors/share/:id': {
                     checksNeeded: [CHECK.ROLE],
                     // tslint:disable-next-line: object-literal-sort-keys
                     ROLE_CHECK: [
                         ROLE.PUBLIC,
                    ],
         },
-        '/proxies/v8/private/mentoring/v1/mentors/createdSessions': {
+        '/proxies/v8/mentoring/v1/mentors/createdSessions': {
                     checksNeeded: [CHECK.ROLE],
                     // tslint:disable-next-line: object-literal-sort-keys
                     ROLE_CHECK: [
                         ROLE.MENTOR,
                     ],
          },
-        '/proxies/v8/private/mentoring/v1/mentors/list': {
+        '/proxies/v8/mentoring/v1/mentors/list': {
                     checksNeeded: [CHECK.ROLE],
                     // tslint:disable-next-line: object-literal-sort-keys
                     ROLE_CHECK: [
                         ROLE.PUBLIC,
                     ],
          },
-        '/proxies/v8/private/mentoring/v1/mentors/details/:id': {
+        '/proxies/v8/mentoring/v1/mentors/details/:id': {
                     checksNeeded: [CHECK.ROLE],
                     // tslint:disable-next-line: object-literal-sort-keys
                     ROLE_CHECK: [
                         ROLE.PUBLIC,
                     ],
          },
-        '/proxies/v8/private/mentoring/v1/form/read': {
+        '/proxies/v8/mentoring/v1/form/read': {
                     checksNeeded: [CHECK.ROLE],
                     // tslint:disable-next-line: object-literal-sort-keys
                     ROLE_CHECK: [
                         ROLE.PUBLIC,
                     ],
          },
-        '/proxies/v8/private/mentoring/v1/sessions/update': {
+        '/proxies/v8/mentoring/v1/sessions/update': {
                     checksNeeded: [CHECK.ROLE],
                     // tslint:disable-next-line: object-literal-sort-keys
                     ROLE_CHECK: [
                         ROLE.MENTOR,
                     ],
          },
-        '/proxies/v8/private/mentoring/v1/sessions/list': {
+        '/proxies/v8/mentoring/v1/sessions/list': {
                     checksNeeded: [CHECK.ROLE],
                     // tslint:disable-next-line: object-literal-sort-keys
                     ROLE_CHECK: [
                         ROLE.PUBLIC,
                     ],
          },
-        '/proxies/v8/private/mentoring/v1/sessions/details/:id': {
+        '/proxies/v8/mentoring/v1/sessions/details/:id': {
                     checksNeeded: [CHECK.ROLE],
                     // tslint:disable-next-line: object-literal-sort-keys
                     ROLE_CHECK: [
                         ROLE.PUBLIC,
                     ],
          },
-        '/proxies/v8/private/mentoring/v1/sessions/share': {
+        '/proxies/v8/mentoring/v1/sessions/share/:id': {
                     checksNeeded: [CHECK.ROLE],
                     // tslint:disable-next-line: object-literal-sort-keys
                     ROLE_CHECK: [
                         ROLE.PUBLIC,
                     ],
          },
-        '/proxies/v8/private/mentoring/v1/sessions/enroll/:id': {
+        '/proxies/v8/mentoring/v1/sessions/enroll/:id': {
                     checksNeeded: [CHECK.ROLE],
                     // tslint:disable-next-line: object-literal-sort-keys
                     ROLE_CHECK: [
                         ROLE.PUBLIC,
                     ],
          },
-        '/proxies/v8/private/mentoring/v1/sessions/unEnroll/:id': {
+        '/proxies/v8/mentoring/v1/sessions/unEnroll/:id': {
                     checksNeeded: [CHECK.ROLE],
                     // tslint:disable-next-line: object-literal-sort-keys
                     ROLE_CHECK: [
                         ROLE.PUBLIC,
                     ],
          },
-        '/proxies/v8/private/mentoring/v1/sessions/start/:id': {
+        '/proxies/v8/mentoring/v1/sessions/start/:id': {
                     checksNeeded: [CHECK.ROLE],
                     // tslint:disable-next-line: object-literal-sort-keys
                     ROLE_CHECK: [
                         ROLE.MENTOR,
                     ],
          },
-        '/proxies/v8/private/mentoring/v1/mentees/joinSession/:id': {
+        '/proxies/v8/mentoring/v1/mentees/joinSession/:id': {
                     checksNeeded: [CHECK.ROLE],
                     // tslint:disable-next-line: object-literal-sort-keys
                     ROLE_CHECK: [
                         ROLE.PUBLIC,
                     ],
          },
-        '/proxies/v8/private/mentoring/v1/mentors/reports': {
+        '/proxies/v8/mentoring/v1/mentors/reports': {
                     checksNeeded: [CHECK.ROLE],
                     // tslint:disable-next-line: object-literal-sort-keys
                     ROLE_CHECK: [
                         ROLE.MENTOR,
                     ],
          },
-        '/proxies/v8/private/mentoring/v1/mentees/reports': {
+        '/proxies/v8/mentoring/v1/mentees/reports': {
                     checksNeeded: [CHECK.ROLE],
                     // tslint:disable-next-line: object-literal-sort-keys
                     ROLE_CHECK: [
                         ROLE.PUBLIC,
                     ],
          },
-        '/proxies/v8/private/mentoring/v1/mentees/list': {
+        '/proxies/v8/mentoring/v1/mentees/list': {
                     checksNeeded: [CHECK.ROLE],
                     // tslint:disable-next-line: object-literal-sort-keys
                     ROLE_CHECK: [
                         ROLE.PUBLIC,
                     ],
          },
-        '/proxies/v8/private/mentoring/v1/sessions/enrolledMentees/:id': {
+        '/proxies/v8/mentoring/v1/sessions/enrolledMentees/:id': {
                     checksNeeded: [CHECK.ROLE],
                     // tslint:disable-next-line: object-literal-sort-keys
                     ROLE_CHECK: [
                         ROLE.MENTOR,
                     ],
          },
-        '/proxies/v8/private/mentoring/v1/platform/config': {
+        '/proxies/v8/mentoring/v1/platform/config': {
+                    checksNeeded: [CHECK.ROLE],
+                    // tslint:disable-next-line: object-literal-sort-keys
+                    ROLE_CHECK: [
+                        ROLE.PUBLIC,
+                    ],
+         },
+        '/proxies/v8/mentoring/v1/profile/filterList': {
+                    checksNeeded: [CHECK.ROLE],
+                    // tslint:disable-next-line: object-literal-sort-keys
+                    ROLE_CHECK: [
+                        ROLE.PUBLIC,
+                    ],
+         },
+        '/proxies/v8/mentoring/v1/profile/read': {
+                    checksNeeded: [CHECK.ROLE],
+                    // tslint:disable-next-line: object-literal-sort-keys
+                    ROLE_CHECK: [
+                        ROLE.PUBLIC,
+                    ],
+         },
+        '/proxies/v8/mentoring/v1/mentors/upcomingSessions/:id': {
+                    checksNeeded: [CHECK.ROLE],
+                    // tslint:disable-next-line: object-literal-sort-keys
+                    ROLE_CHECK: [
+                        ROLE.PUBLIC,
+                    ],
+         },
+        '/proxies/v8/mentoring/v1/feedback/submit/:id': {
+                    checksNeeded: [CHECK.ROLE],
+                    // tslint:disable-next-line: object-literal-sort-keys
+                    ROLE_CHECK: [
+                        ROLE.PUBLIC,
+                    ],
+         },
+        '/proxies/v8/mentoring/v1/cloud-services/getSignedUrl': {
+                    checksNeeded: [CHECK.ROLE],
+                    // tslint:disable-next-line: object-literal-sort-keys
+                    ROLE_CHECK: [
+                        ROLE.PUBLIC,
+                    ],
+         },
+        '/proxies/v8/mentoring/v1/mentees/sessions': {
+                    checksNeeded: [CHECK.ROLE],
+                    // tslint:disable-next-line: object-literal-sort-keys
+                    ROLE_CHECK: [
+                        ROLE.PUBLIC,
+                    ],
+         },
+        '/proxies/v8/mentoring/v1/users/list': {
                     checksNeeded: [CHECK.ROLE],
                     // tslint:disable-next-line: object-literal-sort-keys
                     ROLE_CHECK: [
@@ -4153,28 +4202,30 @@ export const API_LIST = {
             '/proxies/v8/framework/v1/term/update/:id',
             '/proxies/v8/framework/v1/read/:id',
             '/proxies/v8/v1/search/competenciesByOrg/:id',
-            '/proxies/v8/private/mentoring/v1/mentors/profile',
-            '/proxies/v8/private/mentoring/v1/mentees/sessions',
-            '/proxies/v8/private/mentoringUser/v1/cloud-services/file/upload',
-            '/proxies/v8/private/mentoring/v1/feedback/submit/:id',
-            '/proxies/v8/private/mentoring/v1/mentors/upcomingSessions/:id',
-            '/proxies/v8/private/mentoring/v1/mentors/share/:id',
-            '/proxies/v8/private/mentoring/v1/mentors/createdSessions',
-            '/proxies/v8/private/mentoring/v1/mentors/list',
-            '/proxies/v8/private/mentoring/v1/mentors/details/:id',
-            '/proxies/v8/private/mentoring/v1/form/read',
-            '/proxies/v8/private/mentoring/v1/sessions/update',
-            '/proxies/v8/private/mentoring/v1/sessions/list',
-            '/proxies/v8/private/mentoring/v1/sessions/details/:id',
-            '/proxies/v8/private/mentoring/v1/sessions/share',
-            '/proxies/v8/private/mentoring/v1/sessions/enroll/:id',
-            '/proxies/v8/private/mentoring/v1/sessions/unEnroll/:id',
-            '/proxies/v8/private/mentoring/v1/sessions/start/:id',
-            '/proxies/v8/private/mentoring/v1/mentees/joinSession/:id',
-            '/proxies/v8/private/mentoring/v1/mentors/reports',
-            '/proxies/v8/private/mentoring/v1/mentees/reports',
-            '/proxies/v8/private/mentoring/v1/mentees/list',
-            '/proxies/v8/private/mentoring/v1/sessions/enrolledMentees/:id',
-            '/proxies/v8/private/mentoring/v1/platform/config',
+            '/proxies/v8/mentoring/v1/mentors/share/:id',
+            '/proxies/v8/mentoring/v1/mentors/createdSessions',
+            '/proxies/v8/mentoring/v1/mentors/list',
+            '/proxies/v8/mentoring/v1/mentors/details/:id',
+            '/proxies/v8/mentoring/v1/form/read',
+            '/proxies/v8/mentoring/v1/sessions/update',
+            '/proxies/v8/mentoring/v1/sessions/list',
+            '/proxies/v8/mentoring/v1/sessions/details/:id',
+            '/proxies/v8/mentoring/v1/sessions/share/:id',
+            '/proxies/v8/mentoring/v1/sessions/enroll/:id',
+            '/proxies/v8/mentoring/v1/sessions/unEnroll/:id',
+            '/proxies/v8/mentoring/v1/sessions/start/:id',
+            '/proxies/v8/mentoring/v1/mentees/joinSession/:id',
+            '/proxies/v8/mentoring/v1/mentors/reports',
+            '/proxies/v8/mentoring/v1/mentees/reports',
+            '/proxies/v8/mentoring/v1/mentees/list',
+            '/proxies/v8/mentoring/v1/sessions/enrolledMentees/:id',
+            '/proxies/v8/mentoring/v1/platform/config',
+            '/proxies/v8/mentoring/v1/profile/filterList',
+            '/proxies/v8/mentoring/v1/profile/read',
+            '/proxies/v8/mentoring/v1/mentors/upcomingSessions/:id',
+            '/proxies/v8/mentoring/v1/feedback/submit/:id',
+            '/proxies/v8/mentoring/v1/cloud-services/getSignedUrl',
+            '/proxies/v8/mentoring/v1/mentees/sessions',
+            '/proxies/v8/mentoring/v1/users/list',,
            ],
 }

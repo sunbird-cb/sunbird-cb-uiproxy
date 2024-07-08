@@ -961,11 +961,7 @@ proxiesV8.use('/v1/search/competenciesByOrg',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 
-proxiesV8.use('/private/mentoring/*',
-  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
-)
-
-proxiesV8.use('/private/mentoringUser/*',
+proxiesV8.use('/mentoring/*',
   proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 

@@ -3612,6 +3612,15 @@ export const API_LIST = {
                     ROLE.PUBLIC,
                    ],
         },
+        '/proxies/v8/framework/v1/copy/:id': {
+            checksNeeded: [CHECK.ROLE],
+            // tslint:disable-next-line: object-literal-sort-keys
+            ROLE_CHECK: [
+                ROLE.SPV_ADMIN,
+                ROLE.MDO_ADMIN,
+                ROLE.MDO_LEADER,
+            ],
+        },
     },
     URL_PATTERN:
         [
@@ -4078,5 +4087,6 @@ export const API_LIST = {
             '/proxies/v8/designation/create',
             '/proxies/v8/designation/delete/:id',
             '/proxies/v8/designation/search',
+            '/proxies/v8/framework/v1/copy/:id',
            ],
 }

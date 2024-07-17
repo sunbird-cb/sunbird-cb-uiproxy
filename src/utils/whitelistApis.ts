@@ -3880,6 +3880,99 @@ export const API_LIST = {
                     ROLE.PUBLIC,
                    ],
         },
+        '/proxies/v8/competencyArea/create': {
+                  checksNeeded: [CHECK.ROLE],
+                  // tslint:disable-next-line: object-literal-sort-keys
+                   ROLE_CHECK: [
+                    ROLE.SPV_ADMIN,
+                    ROLE.MDO_ADMIN,
+                   ],
+        },
+        '/proxies/v8/competencyArea/delete/:id': {
+                  checksNeeded: [CHECK.ROLE],
+                  // tslint:disable-next-line: object-literal-sort-keys
+                   ROLE_CHECK: [
+                    ROLE.SPV_ADMIN,
+                    ROLE.MDO_ADMIN,
+                   ],
+        },
+        '/proxies/v8/competencyArea/update': {
+                  checksNeeded: [CHECK.ROLE],
+                  // tslint:disable-next-line: object-literal-sort-keys
+                   ROLE_CHECK: [
+                    ROLE.SPV_ADMIN,
+                    ROLE.MDO_ADMIN,
+                   ],
+        },
+        '/proxies/v8/competencyArea/read/:id': {
+                  checksNeeded: [CHECK.ROLE],
+                  // tslint:disable-next-line: object-literal-sort-keys
+                   ROLE_CHECK: [
+                    ROLE.PUBLIC,
+                   ],
+        },
+        '/proxies/v8/competencyTheme/create': {
+                  checksNeeded: [CHECK.ROLE],
+                  // tslint:disable-next-line: object-literal-sort-keys
+                   ROLE_CHECK: [
+                    ROLE.SPV_ADMIN,
+                    ROLE.MDO_ADMIN,
+                   ],
+        },
+        '/proxies/v8/competencyTheme/delete/:id': {
+                  checksNeeded: [CHECK.ROLE],
+                  // tslint:disable-next-line: object-literal-sort-keys
+                   ROLE_CHECK: [
+                    ROLE.SPV_ADMIN,
+                    ROLE.MDO_ADMIN,
+                   ],
+        },
+        '/proxies/v8/competencyTheme/update': {
+                  checksNeeded: [CHECK.ROLE],
+                  // tslint:disable-next-line: object-literal-sort-keys
+                   ROLE_CHECK: [
+                    ROLE.SPV_ADMIN,
+                    ROLE.MDO_ADMIN,
+                   ],
+        },
+        '/proxies/v8/competencyTheme/read/:id': {
+                  checksNeeded: [CHECK.ROLE],
+                  // tslint:disable-next-line: object-literal-sort-keys
+                   ROLE_CHECK: [
+                    ROLE.PUBLIC,
+                   ],
+        },
+        '/proxies/v8/competencySubTheme/create': {
+                  checksNeeded: [CHECK.ROLE],
+                  // tslint:disable-next-line: object-literal-sort-keys
+                   ROLE_CHECK: [
+                    ROLE.SPV_ADMIN,
+                    ROLE.MDO_ADMIN,
+                   ],
+        },
+        '/proxies/v8/competencySubTheme/delete/:id': {
+                  checksNeeded: [CHECK.ROLE],
+                  // tslint:disable-next-line: object-literal-sort-keys
+                   ROLE_CHECK: [
+                    ROLE.SPV_ADMIN,
+                    ROLE.MDO_ADMIN,
+                   ],
+        },
+        '/proxies/v8/competencySubTheme/update': {
+                  checksNeeded: [CHECK.ROLE],
+                  // tslint:disable-next-line: object-literal-sort-keys
+                   ROLE_CHECK: [
+                    ROLE.SPV_ADMIN,
+                    ROLE.MDO_ADMIN,
+                   ],
+        },
+        '/proxies/v8/competencySubTheme/read/:id': {
+                  checksNeeded: [CHECK.ROLE],
+                  // tslint:disable-next-line: object-literal-sort-keys
+                   ROLE_CHECK: [
+                    ROLE.PUBLIC,
+                   ],
+        },
     },
     URL_PATTERN:
         [
@@ -4383,5 +4476,17 @@ export const API_LIST = {
             '/proxies/v8/competencyTheme/search',
             '/proxies/v8/competencySubTheme/upload',
             '/proxies/v8/competencySubTheme/search',
+            '/proxies/v8/competencyArea/create',
+            '/proxies/v8/competencyArea/delete/:id',
+            '/proxies/v8/competencyArea/update',
+            '/proxies/v8/competencyArea/read/:id',
+            '/proxies/v8/competencyTheme/create',
+            '/proxies/v8/competencyTheme/delete/:id',
+            '/proxies/v8/competencyTheme/update',
+            '/proxies/v8/competencyTheme/read/:id',
+            '/proxies/v8/competencySubTheme/create',
+            '/proxies/v8/competencySubTheme/delete/:id',
+            '/proxies/v8/competencySubTheme/update',
+            '/proxies/v8/competencySubTheme/read/:id',
            ],
 }

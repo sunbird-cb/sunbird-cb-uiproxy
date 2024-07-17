@@ -3824,14 +3824,14 @@ export const API_LIST = {
                       ROLE.PUBLIC,
                     ],
         },
-        '/proxies/v8/cios-enroll/v1/listbyuserid/:id': {
+        '/proxies/v8/cios-enroll/v1/courselist/byuserid': {
                     checksNeeded: [CHECK.ROLE],
                     // tslint:disable-next-line: object-literal-sort-keys
                     ROLE_CHECK: [
                       ROLE.PUBLIC,
                     ],
         },
-        '/proxies/v8/cios-enroll/v1/readby/useridcourseId/:userId/:courseId': {
+        '/proxies/v8/cios-enroll/v1/readby/useridcourseid/:courseid': {
                     checksNeeded: [CHECK.ROLE],
                     // tslint:disable-next-line: object-literal-sort-keys
                     ROLE_CHECK: [
@@ -4367,8 +4367,8 @@ export const API_LIST = {
             '/proxies/v8/mentoring/v1/users/list',
             '/proxies/v8/ciosIntegration/v1/loadContentProgressFromExcel',
             '/proxies/v8/cios-enroll/v1/create',
-            '/proxies/v8/cios-enroll/v1/listbyuserid/:id',
-            '/proxies/v8/cios-enroll/v1/readby/useridcourseId/:userId/:courseId',
+            '/proxies/v8/cios-enroll/v1/courselist/byuserid',
+            '/proxies/v8/cios-enroll/v1/readby/useridcourseid/:courseid',
             '/proxies/v8/user/v1/email/approvedDomains',
             '/proxies/v8/designation/upload',
             '/proxies/v8/designation/read/:id',

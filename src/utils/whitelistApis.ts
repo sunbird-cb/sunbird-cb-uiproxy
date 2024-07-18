@@ -3980,6 +3980,27 @@ export const API_LIST = {
                     ROLE.PUBLIC,
                    ],
         },
+        '/proxies/v8/competencySubTheme/create/term': {
+                          checksNeeded: [CHECK.ROLE],
+                          // tslint:disable-next-line: object-literal-sort-keys
+                           ROLE_CHECK: [
+                            ROLE.MDO_ADMIN,
+                           ],
+        },
+        '/proxies/v8/competencyTheme/create/term': {
+                          checksNeeded: [CHECK.ROLE],
+                          // tslint:disable-next-line: object-literal-sort-keys
+                           ROLE_CHECK: [
+                            ROLE.MDO_ADMIN,
+                           ],
+        },
+         '/proxies/v8/designation/create/term': {
+                          checksNeeded: [CHECK.ROLE],
+                          // tslint:disable-next-line: object-literal-sort-keys
+                           ROLE_CHECK: [
+                            ROLE.MDO_ADMIN,
+                           ],
+        },
     },
     URL_PATTERN:
         [
@@ -4496,5 +4517,8 @@ export const API_LIST = {
             '/proxies/v8/competencySubTheme/update',
             '/proxies/v8/competencySubTheme/read/:id',
             '/proxies/v8/halloffame/top/learners',
+            '/proxies/v8/competencySubTheme/create/term',
+            '/proxies/v8/competencyTheme/create/term',
+            '/proxies/v8/designation/create/term'
            ],
 }

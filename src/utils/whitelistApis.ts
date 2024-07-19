@@ -4001,6 +4001,13 @@ export const API_LIST = {
                             ROLE.MDO_ADMIN,
                            ],
         },
+         '/proxies/v8/org/framework/read': {
+                                 checksNeeded: [CHECK.ROLE],
+                                 // tslint:disable-next-line: object-literal-sort-keys
+                                 ROLE_CHECK: [
+                                  ROLE.MDO_ADMIN,
+                                 ],
+        },
     },
     URL_PATTERN:
         [
@@ -4520,5 +4527,6 @@ export const API_LIST = {
             '/proxies/v8/competencySubTheme/create/term',
             '/proxies/v8/competencyTheme/create/term',
             '/proxies/v8/designation/create/term'
+            '/proxies/v8/org/framework/read'
            ],
 }

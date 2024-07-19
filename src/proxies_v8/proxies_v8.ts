@@ -271,6 +271,11 @@ proxiesV8.use('/msite/content/aggregation/search',
   proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/msite/content/aggregation/search`)
 )
 
+proxiesV8.use('/halloffame/top/learners',
+  // tslint:disable-next-line: max-line-length
+  proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/halloffame/top/learners`)
+)
+
 
 proxiesV8.get(['/api/user/v2/read', '/api/user/v2/read/:id'], async (req, res) => {
   const host = req.get('host')

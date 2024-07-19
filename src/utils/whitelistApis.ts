@@ -4526,7 +4526,7 @@ export const API_LIST = {
             '/proxies/v8/halloffame/top/learners',
             '/proxies/v8/competencySubTheme/create/term',
             '/proxies/v8/competencyTheme/create/term',
-            '/proxies/v8/designation/create/term'
-            '/proxies/v8/org/framework/read'
+            '/proxies/v8/designation/create/term',
+            '/proxies/v8/org/framework/read',
            ],
 }

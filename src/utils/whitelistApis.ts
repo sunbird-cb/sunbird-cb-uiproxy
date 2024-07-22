@@ -3985,6 +3985,7 @@ export const API_LIST = {
                           // tslint:disable-next-line: object-literal-sort-keys
                            ROLE_CHECK: [
                             ROLE.MDO_ADMIN,
+                            ROLE.SPV_ADMIN,
                            ],
         },
         '/proxies/v8/competencyTheme/create/term': {
@@ -3992,6 +3993,7 @@ export const API_LIST = {
                           // tslint:disable-next-line: object-literal-sort-keys
                            ROLE_CHECK: [
                             ROLE.MDO_ADMIN,
+                            ROLE.SPV_ADMIN,
                            ],
         },
          '/proxies/v8/designation/create/term': {
@@ -3999,6 +4001,7 @@ export const API_LIST = {
                           // tslint:disable-next-line: object-literal-sort-keys
                            ROLE_CHECK: [
                             ROLE.MDO_ADMIN,
+                            ROLE.SPV_ADMIN,
                            ],
         },
          '/proxies/v8/org/framework/read': {

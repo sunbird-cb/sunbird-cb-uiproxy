@@ -3177,6 +3177,8 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
                 ROLE.SPV_PUBLISHER,
+                ROLE.CONTENT_CREATOR,
+                ROLE.CBP_ADMIN,
             ],
         },
         '/proxies/v8/playList/update': {
@@ -3188,6 +3190,7 @@ export const API_LIST = {
                 ROLE.MDO_LEADER,
                 ROLE.SPV_PUBLISHER,
                 ROLE.CONTENT_CREATOR,
+                ROLE.CBP_ADMIN,
             ],
         },
         '/proxies/v8/playList/search': {
@@ -3205,6 +3208,8 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
                 ROLE.SPV_PUBLISHER,
+                ROLE.CONTENT_CREATOR,
+                ROLE.CBP_ADMIN,
             ],
         },
         // tslint:disable-next-line: all
@@ -3431,6 +3436,8 @@ export const API_LIST = {
                 ROLE.MDO_ADMIN,
                 ROLE.MDO_LEADER,
                 ROLE.SPV_PUBLISHER,
+                ROLE.CONTENT_CREATOR,
+                ROLE.CBP_ADMIN,
             ],
         },
         '/proxies/v8/playList/v2/update': {
@@ -3442,6 +3449,7 @@ export const API_LIST = {
                 ROLE.MDO_LEADER,
                 ROLE.SPV_PUBLISHER,
                 ROLE.CONTENT_CREATOR,
+                ROLE.CBP_ADMIN,
             ],
         },
         '/proxies/v8/playList/v2/read/:id/:playListId/:orgId': {

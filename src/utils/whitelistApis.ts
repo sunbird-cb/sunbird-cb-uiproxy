@@ -3981,7 +3981,7 @@ export const API_LIST = {
                     ROLE.PUBLIC,
                    ],
         },
-        '/proxies/v8/halloffame/top/learners': {
+        '/proxies/v8/halloffame/top/learners/:ministryOrgId': {
                   checksNeeded: [CHECK.ROLE],
                   // tslint:disable-next-line: object-literal-sort-keys
                    ROLE_CHECK: [

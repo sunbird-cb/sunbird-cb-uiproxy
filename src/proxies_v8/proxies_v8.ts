@@ -271,9 +271,9 @@ proxiesV8.use('/msite/content/aggregation/search',
   proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/msite/content/aggregation/search`)
 )
 
-proxiesV8.use('/halloffame/top/learners',
+proxiesV8.use('/halloffame/top/learners/:ministryOrgId',
   // tslint:disable-next-line: max-line-length
-  proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/halloffame/top/learners`)
+  proxyCreatorSunbirdSearch(express.Router(), `${CONSTANTS.KONG_API_BASE}/halloffame/top/learners/:ministryOrgId`)
 )
 
 

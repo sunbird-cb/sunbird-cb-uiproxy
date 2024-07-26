@@ -4028,6 +4028,14 @@ export const API_LIST = {
                 ROLE.SPV_ADMIN,
             ],
         },
+        '/proxies/v8/framework/v1/term/retire': {
+                              checksNeeded: [CHECK.ROLE],
+                              // tslint:disable-next-line: object-literal-sort-keys
+                               ROLE_CHECK: [
+                                 ROLE.SPV_ADMIN,
+                                 ROLE.MDO_ADMIN,
+                              ],
+        },
     },
     URL_PATTERN:
         [
@@ -4549,5 +4557,6 @@ export const API_LIST = {
             '/proxies/v8/designation/create/term',
             '/proxies/v8/org/framework/read',
             '/proxies/v8/user/v3/search',
+            '/proxies/v8/framework/v1/term/retire',
            ],
 }

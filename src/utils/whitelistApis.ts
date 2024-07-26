@@ -4033,6 +4033,7 @@ export const API_LIST = {
                               // tslint:disable-next-line: object-literal-sort-keys
                                ROLE_CHECK: [
                                  ROLE.SPV_ADMIN,
+                                 ROLE.MDO_ADMIN,
                               ],
         },
     },

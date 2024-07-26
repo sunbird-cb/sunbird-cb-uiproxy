@@ -273,7 +273,7 @@ proxiesV8.use('/msite/content/aggregation/search',
 
 proxiesV8.use('/halloffame/top/learners/*',
   // tslint:disable-next-line: max-line-length
-  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`
+  proxyCreatorSunbird(express.Router(), `${CONSTANTS.KONG_API_BASE}`)
 )
 
 

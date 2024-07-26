@@ -4543,7 +4543,7 @@ export const API_LIST = {
             '/proxies/v8/competencySubTheme/delete/:id',
             '/proxies/v8/competencySubTheme/update',
             '/proxies/v8/competencySubTheme/read/:id',
-            '/proxies/v8/halloffame/top/learners',
+            '/proxies/v8/halloffame/top/learners/:ministryOrgId',
             '/proxies/v8/competencySubTheme/create/term',
             '/proxies/v8/competencyTheme/create/term',
             '/proxies/v8/designation/create/term',

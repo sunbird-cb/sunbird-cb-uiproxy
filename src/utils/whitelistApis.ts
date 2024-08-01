@@ -4035,6 +4035,7 @@ export const API_LIST = {
                                ROLE_CHECK: [
                                  ROLE.SPV_ADMIN,
                                  ROLE.MDO_ADMIN,
+                                 ROLE.MDO_LEADER,
                               ],
         },
     },
